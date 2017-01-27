@@ -2,7 +2,7 @@
 (
 	[Id] INT IDENTITY(1, 1) NOT NULL,
 	[Name] NVARCHAR(128) NULL, 
-    [ProfilePicturePath] NCHAR(10) NULL, 
+    [ProfilePicturePath] NVARCHAR(MAX) NULL, 
 	[Phone] NVARCHAR(128) NULL, 
     [Address1] NVARCHAR(128) NULL, 
     [Address2] NVARCHAR(50) NULL, 

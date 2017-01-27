@@ -5,6 +5,5 @@ C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Entities\b
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Entities\bin\Debug\EntityFramework.SqlServer.dll
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Entities\bin\Debug\EntityFramework.xml
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Entities\bin\Debug\EntityFramework.SqlServer.xml
-C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Entities\obj\Debug\SolveChicago.Entities.csprojResolveAssemblyReference.cache
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Entities\obj\Debug\SolveChicago.Entities.dll
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Entities\obj\Debug\SolveChicago.Entities.pdb

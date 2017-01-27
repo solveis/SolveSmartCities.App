@@ -7,7 +7,7 @@ using Microsoft.Owin.Security.Google;
 using Owin;
 using SolveChicago.App.Web.Models;
 
-namespace SolveChicago.App.Web
+namespace SolveChicago.App
 {
     public partial class Startup
     {

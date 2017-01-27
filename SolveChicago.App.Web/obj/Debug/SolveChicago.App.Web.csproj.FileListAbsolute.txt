@@ -10,9 +10,9 @@ C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Web\bi
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Web\bin\roslyn\vbc.exe
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Web\bin\roslyn\VBCSCompiler.exe
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Web\bin\roslyn\VBCSCompiler.exe.config
-C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Web\bin\SolveChicago.App.Web.dll.config
-C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Web\bin\SolveChicago.App.Web.dll
-C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Web\bin\SolveChicago.App.Web.pdb
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Web\bin\SolveChicago.App.dll.config
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Web\bin\SolveChicago.App.dll
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Web\bin\SolveChicago.App.pdb
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Web\bin\Antlr3.Runtime.dll
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Web\bin\EntityFramework.dll
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Web\bin\EntityFramework.SqlServer.dll
@@ -64,8 +64,12 @@ C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Web\bi
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Web\bin\Microsoft.Owin.Security.Google.xml
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Web\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Web\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Web\obj\Debug\SolveChicago.App.Web.dll
-C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Web\obj\Debug\SolveChicago.App.Web.pdb
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Web\obj\Debug\SolveChicago.App.dll
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Web\obj\Debug\SolveChicago.App.pdb
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Web\bin\SolveChicago.App.Common.dll
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Web\bin\SolveChicago.App.Service.dll
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Web\bin\SolveChicago.Entities.dll
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Web\bin\SolveChicago.App.Common.pdb
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Web\bin\SolveChicago.App.Service.pdb
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Web\bin\SolveChicago.Entities.pdb
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Web\obj\Debug\SolveChicago.App.Web.csprojResolveAssemblyReference.cache

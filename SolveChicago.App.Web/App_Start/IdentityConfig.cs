@@ -12,7 +12,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using SolveChicago.App.Web.Models;
 
-namespace SolveChicago.App.Web
+namespace SolveChicago.App
 {
     public class EmailService : IIdentityMessageService
     {

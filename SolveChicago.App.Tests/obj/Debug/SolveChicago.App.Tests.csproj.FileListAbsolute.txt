@@ -16,7 +16,7 @@ C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Tests\
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Tests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Tests\bin\Debug\Microsoft.Web.Infrastructure.dll
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Tests\bin\Debug\Newtonsoft.Json.dll
-C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Tests\bin\Debug\SolveChicago.App.Web.dll
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Tests\bin\Debug\SolveChicago.App.dll
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Tests\bin\Debug\System.Web.Helpers.dll
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Tests\bin\Debug\System.Web.Mvc.dll
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Tests\bin\Debug\System.Web.Razor.dll
@@ -33,7 +33,8 @@ C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Tests\
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Tests\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Tests\bin\Debug\EntityFramework.dll
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Tests\bin\Debug\Microsoft.Owin.Host.SystemWeb.dll
-C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Tests\bin\Debug\SolveChicago.App.Web.pdb
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Tests\bin\Debug\SolveChicago.App.pdb
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Tests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.xml
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Tests\bin\Debug\Newtonsoft.Json.xml
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Tests\bin\Debug\System.Web.Helpers.xml
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Tests\bin\Debug\System.Web.Mvc.xml
@@ -53,3 +54,7 @@ C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Tests\
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Tests\obj\Debug\SolveChicago.App.Tests.csprojResolveAssemblyReference.cache
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Tests\obj\Debug\SolveChicago.App.Tests.dll
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Tests\obj\Debug\SolveChicago.App.Tests.pdb
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Tests\bin\Debug\SolveChicago.App.Service.dll
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Tests\bin\Debug\SolveChicago.Entities.dll
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Tests\bin\Debug\SolveChicago.App.Service.pdb
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Tests\bin\Debug\SolveChicago.Entities.pdb

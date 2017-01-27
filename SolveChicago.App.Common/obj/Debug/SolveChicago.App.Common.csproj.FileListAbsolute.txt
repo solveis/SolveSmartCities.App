@@ -1,0 +1,4 @@
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Common\bin\Debug\SolveChicago.App.Common.dll
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Common\bin\Debug\SolveChicago.App.Common.pdb
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Common\obj\Debug\SolveChicago.App.Common.dll
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Common\obj\Debug\SolveChicago.App.Common.pdb

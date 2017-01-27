@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace SolveChicago.App.Web
+namespace SolveChicago.App
 {
     public class BundleConfig
     {

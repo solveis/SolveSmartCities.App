@@ -9,12 +9,12 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{AE1401A9-6EE5-4928-ACA1-3D2331D58FB9}</ProjectGuid>
+    <ProjectGuid>{528F6CEA-76F1-47BD-8D33-2A6A2F4813DC}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SolveChicago.App.Web</RootNamespace>
-    <AssemblyName>SolveChicago.App.Web</AssemblyName>
+    <RootNamespace>SolveChicago.App</RootNamespace>
+    <AssemblyName>SolveChicago.App</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
@@ -247,8 +247,12 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SolveChicago.App.Common\SolveChicago.App.Common.csproj">
+      <Project>{adb01512-9fcd-4a25-98a6-94ca211a183e}</Project>
+      <Name>SolveChicago.App.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SolveChicago.App.Service\SolveChicago.App.Service.csproj">
-      <Project>{c9b13b9a-f985-408c-9649-4a8706cef0ab}</Project>
+      <Project>{3deb6dd4-80c7-4c47-b6e3-28906a6ee31b}</Project>
       <Name>SolveChicago.App.Service</Name>
     </ProjectReference>
   </ItemGroup>
@@ -268,9 +272,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>49833</DevelopmentServerPort>
+          <DevelopmentServerPort>2486</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:49833/</IISUrl>
+          <IISUrl>http://localhost:2486/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

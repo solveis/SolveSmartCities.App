@@ -1,8 +1,8 @@
 ﻿using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(SolveChicago.App.Web.Startup))]
-namespace SolveChicago.App.Web
+[assembly: OwinStartupAttribute(typeof(SolveChicago.App.Startup))]
+namespace SolveChicago.App
 {
     public partial class Startup
     {

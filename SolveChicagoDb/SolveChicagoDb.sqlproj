@@ -7,7 +7,7 @@
     <Name>SolveChicagoDb</Name>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
-    <ProjectGuid>{916bd20b-3567-4e60-a29c-22e0cd44fbcf}</ProjectGuid>
+    <ProjectGuid>{9f105a40-1ab6-427a-9fee-92facc174a66}</ProjectGuid>
     <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
@@ -17,7 +17,7 @@
     <ModelCollation>1033, CI</ModelCollation>
     <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <TargetLanguage>CS</TargetLanguage>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <SqlServerVerification>False</SqlServerVerification>
@@ -58,40 +58,47 @@
   <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="dbo" />
-    <Folder Include="dbo\Tables" />
     <Folder Include="dbo\Functions" />
+    <Folder Include="dbo\Tables" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="dbo\Tables\Members.sql" />
-    <Build Include="dbo\Tables\CaseManagers.sql" />
-    <Build Include="dbo\Tables\Corporations.sql" />
-    <Build Include="dbo\Tables\Nonprofits.sql" />
+    <Build Include="dbo\Tables\__MigrationHistory.sql" />
     <Build Include="dbo\Tables\Admins.sql" />
-    <Build Include="dbo\Tables\UserProfile.sql" />
-    <Build Include="dbo\Tables\UserProfileAdmins.sql" />
-    <Build Include="dbo\Tables\UserProfileMembers.sql" />
-    <Build Include="dbo\Tables\UserProfileCorporations.sql" />
-    <Build Include="dbo\Tables\UserProfileNonprofits.sql" />
-    <Build Include="dbo\Tables\UserProfileCaseManagers.sql" />
-    <Build Include="dbo\Tables\Surveys.sql" />
-    <Build Include="dbo\Tables\SurveyQuestions.sql" />
-    <Build Include="dbo\Tables\SurveyAnswers.sql" />
-    <Build Include="dbo\Tables\MemberSurveyAnswers.sql" />
-    <Build Include="dbo\Tables\CorporationSurveys.sql" />
-    <Build Include="dbo\Tables\CorporationSurveyAnswers.sql" />
-    <Build Include="dbo\Tables\MemberNonprofits.sql" />
-    <Build Include="dbo\Tables\MemberCorporations.sql" />
-    <Build Include="dbo\Tables\SurveyQuestionOptions.sql" />
-    <Build Include="dbo\Tables\GovernmentPrograms.sql" />
+    <Build Include="dbo\Tables\AspNetRoles.sql" />
+    <Build Include="dbo\Tables\AspNetUserClaims.sql" />
+    <Build Include="dbo\Tables\AspNetUserLogins.sql" />
+    <Build Include="dbo\Tables\AspNetUserRoles.sql" />
+    <Build Include="dbo\Tables\AspNetUsers.sql" />
+    <Build Include="dbo\Tables\CaseManagers.sql" />
     <Build Include="dbo\Tables\CaseNotes.sql" />
-    <Build Include="dbo\Tables\Outcomes.sql" />
+    <Build Include="dbo\Tables\Corporations.sql" />
+    <Build Include="dbo\Tables\CorporationSurveyAnswers.sql" />
+    <Build Include="dbo\Tables\CorporationSurveys.sql" />
+    <Build Include="dbo\Tables\GovernmentPrograms.sql" />
     <Build Include="dbo\Tables\MemberChildren.sql" />
     <Build Include="dbo\Tables\MemberChildrenGovernmentPrograms.sql" />
-    <Build Include="dbo\Tables\MemberGovernmentPrograms.sql" />
-    <Build Include="dbo\Tables\MemberStatuses.sql" />
+    <Build Include="dbo\Tables\MemberCorporations.sql" />
     <Build Include="dbo\Tables\MemberEmergencyContacts.sql" />
+    <Build Include="dbo\Tables\MemberGovernmentPrograms.sql" />
+    <Build Include="dbo\Tables\MemberNonprofits.sql" />
+    <Build Include="dbo\Tables\Members.sql" />
+    <Build Include="dbo\Tables\MemberStatuses.sql" />
+    <Build Include="dbo\Tables\MemberSurveyAnswers.sql" />
+    <Build Include="dbo\Tables\Nonprofits.sql" />
+    <Build Include="dbo\Tables\Outcomes.sql" />
+    <Build Include="dbo\Tables\SurveyAnswers.sql" />
+    <Build Include="dbo\Tables\SurveyQuestionOptions.sql" />
+    <Build Include="dbo\Tables\SurveyQuestions.sql" />
+    <Build Include="dbo\Tables\Surveys.sql" />
+    <Build Include="dbo\Tables\UserProfile.sql" />
+    <Build Include="dbo\Tables\UserProfileAdmins.sql" />
+    <Build Include="dbo\Tables\UserProfileCaseManagers.sql" />
+    <Build Include="dbo\Tables\UserProfileCorporations.sql" />
+    <Build Include="dbo\Tables\UserProfileMembers.sql" />
+    <Build Include="dbo\Tables\UserProfileNonprofits.sql" />
   </ItemGroup>
   <ItemGroup>
-    <RefactorLog Include="SolveChicagoDb.refactorlog" />
+    <None Include="SolveChicagoDb.dbmdl" />
+    <None Include="SolveChicagoDb.sqlproj.user" />
   </ItemGroup>
 </Project>

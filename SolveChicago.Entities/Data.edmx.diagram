@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="48a89df41dd04ddabf506654b873c82c" Name="Diagram1" ZoomLevel="44">
+      <Diagram DiagramId="2040172cdd1348a782d5eeffa0cf5aa3" Name="Diagram1">
         <EntityTypeShape EntityType="SolveChicagoDevModel.Admin" Width="1.5" PointX="9" PointY="13.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SolveChicagoDevModel.CaseManager" Width="1.5" PointX="0.75" PointY="19.125" IsExpanded="true" />
         <EntityTypeShape EntityType="SolveChicagoDevModel.CaseNote" Width="1.5" PointX="7.5" PointY="29" IsExpanded="true" />

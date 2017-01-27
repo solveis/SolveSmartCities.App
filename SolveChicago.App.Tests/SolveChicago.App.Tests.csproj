@@ -6,7 +6,7 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{38AF2977-A64C-4A19-A92A-8969B48A3C02}</ProjectGuid>
+    <ProjectGuid>{FD92FF21-335A-4E01-B02E-3AE60D6C0E4C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SolveChicago.App.Tests</RootNamespace>
@@ -92,8 +92,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\SolveChicago.App.Web\SolveChicago.App.Web.csproj">
-      <Project>{AE1401A9-6EE5-4928-ACA1-3D2331D58FB9}</Project>
+      <Project>{528f6cea-76f1-47bd-8d33-2a6a2f4813dc}</Project>
       <Name>SolveChicago.App.Web</Name>
     </ProjectReference>
   </ItemGroup>
