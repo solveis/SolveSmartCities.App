@@ -61,25 +61,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="CorporationSurveyAnswers">
-      <EntityTypeMapping TypeName="SolveChicagoDevModel.CorporationSurveyAnswer">
-        <MappingFragment StoreEntitySet="CorporationSurveyAnswers">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="SurveyId" ColumnName="SurveyId" />
-          <ScalarProperty Name="AnswerBatchId" ColumnName="AnswerBatchId" />
-          <ScalarProperty Name="CorporationId" ColumnName="CorporationId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="CorporationSurveys">
-      <EntityTypeMapping TypeName="SolveChicagoDevModel.CorporationSurvey">
-        <MappingFragment StoreEntitySet="CorporationSurveys">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="SurveyId" ColumnName="SurveyId" />
-          <ScalarProperty Name="CorporationId" ColumnName="CorporationId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="GovernmentPrograms">
       <EntityTypeMapping TypeName="SolveChicagoDevModel.GovernmentProgram">
         <MappingFragment StoreEntitySet="GovernmentPrograms">
@@ -180,12 +161,11 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="MemberSurveyAnswers">
-      <EntityTypeMapping TypeName="SolveChicagoDevModel.MemberSurveyAnswer">
-        <MappingFragment StoreEntitySet="MemberSurveyAnswers">
+    <EntitySetMapping Name="MemberSurveys">
+      <EntityTypeMapping TypeName="SolveChicagoDevModel.MemberSurvey">
+        <MappingFragment StoreEntitySet="MemberSurveys">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="SurveyId" ColumnName="SurveyId" />
-          <ScalarProperty Name="AnswerBatchId" ColumnName="AnswerBatchId" />
           <ScalarProperty Name="MemberId" ColumnName="MemberId" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -221,7 +201,7 @@
           <ScalarProperty Name="SurveyId" ColumnName="SurveyId" />
           <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
           <ScalarProperty Name="Answer" ColumnName="Answer" />
-          <ScalarProperty Name="AnswerBatchId" ColumnName="AnswerBatchId" />
+          <ScalarProperty Name="MemberSurveyId" ColumnName="MemberSurveyId" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
         </MappingFragment>
       </EntityTypeMapping>

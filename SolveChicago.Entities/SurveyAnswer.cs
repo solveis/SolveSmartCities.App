@@ -14,24 +14,14 @@ namespace SolveChicago.Entities
     
     public partial class SurveyAnswer
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public SurveyAnswer()
-        {
-            this.CorporationSurveyAnswers = new HashSet<CorporationSurveyAnswer>();
-            this.MemberSurveyAnswers = new HashSet<MemberSurveyAnswer>();
-        }
-    
         public int Id { get; set; }
         public int SurveyId { get; set; }
         public int QuestionId { get; set; }
         public string Answer { get; set; }
-        public string AnswerBatchId { get; set; }
+        public int MemberSurveyId { get; set; }
         public int UserId { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CorporationSurveyAnswer> CorporationSurveyAnswers { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MemberSurveyAnswer> MemberSurveyAnswers { get; set; }
+        public virtual MemberSurvey MemberSurvey { get; set; }
         public virtual SurveyQuestion SurveyQuestion { get; set; }
         public virtual Survey Survey { get; set; }
         public virtual UserProfile UserProfile { get; set; }

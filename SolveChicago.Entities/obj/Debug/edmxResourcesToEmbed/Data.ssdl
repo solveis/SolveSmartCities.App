@@ -21,7 +21,7 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="128" />
-    <Property Name="ProfilePicturePath" Type="nchar" MaxLength="10" />
+    <Property Name="ProfilePicturePath" Type="nvarchar(max)" />
     <Property Name="Phone" Type="nvarchar" MaxLength="128" />
     <Property Name="Address1" Type="nvarchar" MaxLength="128" />
     <Property Name="Address2" Type="nvarchar" MaxLength="50" />
@@ -55,23 +55,6 @@
     <Property Name="Province" Type="nvarchar" MaxLength="50" />
     <Property Name="Country" Type="nvarchar" MaxLength="50" />
     <Property Name="CreatedDate" Type="datetime2" Precision="7" />
-  </EntityType>
-  <EntityType Name="CorporationSurveyAnswers">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="SurveyId" Type="int" Nullable="false" />
-    <Property Name="AnswerBatchId" Type="nvarchar" MaxLength="36" Nullable="false" />
-    <Property Name="CorporationId" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="CorporationSurveys">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="SurveyId" Type="int" Nullable="false" />
-    <Property Name="CorporationId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="GovernmentPrograms">
     <Key>
@@ -166,13 +149,12 @@
     <Property Name="Status" Type="nvarchar" MaxLength="128" Nullable="false" />
     <Property Name="CreatedDate" Type="datetime2" Precision="7" Nullable="false" />
   </EntityType>
-  <EntityType Name="MemberSurveyAnswers">
+  <EntityType Name="MemberSurveys">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="SurveyId" Type="int" Nullable="false" />
-    <Property Name="AnswerBatchId" Type="nvarchar" MaxLength="36" Nullable="false" />
     <Property Name="MemberId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Nonprofits">
@@ -199,13 +181,13 @@
   </EntityType>
   <EntityType Name="SurveyAnswers">
     <Key>
-      <PropertyRef Name="AnswerBatchId" />
+      <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="SurveyId" Type="int" Nullable="false" />
     <Property Name="QuestionId" Type="int" Nullable="false" />
     <Property Name="Answer" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="AnswerBatchId" Type="nvarchar" MaxLength="36" Nullable="false" />
+    <Property Name="MemberSurveyId" Type="int" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="SurveyQuestionOptions">
@@ -320,62 +302,6 @@
       </Principal>
       <Dependent Role="CaseNotes">
         <PropertyRef Name="OutcomeId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_CorporationSurveyAnswers_Corporations">
-    <End Role="Corporations" Type="Self.Corporations" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="CorporationSurveyAnswers" Type="Self.CorporationSurveyAnswers" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Corporations">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="CorporationSurveyAnswers">
-        <PropertyRef Name="CorporationId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_CorporationSurveyAnswers_SurveyAnswers">
-    <End Role="SurveyAnswers" Type="Self.SurveyAnswers" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="CorporationSurveyAnswers" Type="Self.CorporationSurveyAnswers" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="SurveyAnswers">
-        <PropertyRef Name="AnswerBatchId" />
-      </Principal>
-      <Dependent Role="CorporationSurveyAnswers">
-        <PropertyRef Name="AnswerBatchId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_CorporationSurveyAnswers_Surveys">
-    <End Role="Surveys" Type="Self.Surveys" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="CorporationSurveyAnswers" Type="Self.CorporationSurveyAnswers" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Surveys">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="CorporationSurveyAnswers">
-        <PropertyRef Name="SurveyId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_CorporationSurveys_Surveys">
-    <End Role="Surveys" Type="Self.Surveys" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="CorporationSurveys" Type="Self.CorporationSurveys" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Surveys">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="CorporationSurveys">
-        <PropertyRef Name="SurveyId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -557,44 +483,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_MemberSurveyAnswers_Members">
+  <Association Name="FK_MemberSurveys_Members">
     <End Role="Members" Type="Self.Members" Multiplicity="1">
       <OnDelete Action="Cascade" />
     </End>
-    <End Role="MemberSurveyAnswers" Type="Self.MemberSurveyAnswers" Multiplicity="*" />
+    <End Role="MemberSurveys" Type="Self.MemberSurveys" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Members">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="MemberSurveyAnswers">
+      <Dependent Role="MemberSurveys">
         <PropertyRef Name="MemberId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_MemberSurveyAnswers_SurveyAnswers">
-    <End Role="SurveyAnswers" Type="Self.SurveyAnswers" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="MemberSurveyAnswers" Type="Self.MemberSurveyAnswers" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="SurveyAnswers">
-        <PropertyRef Name="AnswerBatchId" />
-      </Principal>
-      <Dependent Role="MemberSurveyAnswers">
-        <PropertyRef Name="AnswerBatchId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_MemberSurveyAnswers_Surveys">
+  <Association Name="FK_MemberSurveys_Surveys">
     <End Role="Surveys" Type="Self.Surveys" Multiplicity="1">
       <OnDelete Action="Cascade" />
     </End>
-    <End Role="MemberSurveyAnswers" Type="Self.MemberSurveyAnswers" Multiplicity="*" />
+    <End Role="MemberSurveys" Type="Self.MemberSurveys" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Surveys">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="MemberSurveyAnswers">
+      <Dependent Role="MemberSurveys">
         <PropertyRef Name="SurveyId" />
       </Dependent>
     </ReferentialConstraint>
@@ -608,6 +520,20 @@
       </Principal>
       <Dependent Role="Outcomes">
         <PropertyRef Name="MemberId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SurveyAnswers_MemberSurveys">
+    <End Role="MemberSurveys" Type="Self.MemberSurveys" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="SurveyAnswers" Type="Self.SurveyAnswers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MemberSurveys">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SurveyAnswers">
+        <PropertyRef Name="MemberSurveyId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -834,8 +760,6 @@
     <EntitySet Name="CaseManagers" EntityType="Self.CaseManagers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CaseNotes" EntityType="Self.CaseNotes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Corporations" EntityType="Self.Corporations" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="CorporationSurveyAnswers" EntityType="Self.CorporationSurveyAnswers" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="CorporationSurveys" EntityType="Self.CorporationSurveys" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="GovernmentPrograms" EntityType="Self.GovernmentPrograms" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="MemberChildren" EntityType="Self.MemberChildren" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="MemberChildrenGovernmentPrograms" EntityType="Self.MemberChildrenGovernmentPrograms" Schema="dbo" store:Type="Tables" />
@@ -845,7 +769,7 @@
     <EntitySet Name="MemberNonprofits" EntityType="Self.MemberNonprofits" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Members" EntityType="Self.Members" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="MemberStatuses" EntityType="Self.MemberStatuses" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="MemberSurveyAnswers" EntityType="Self.MemberSurveyAnswers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MemberSurveys" EntityType="Self.MemberSurveys" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Nonprofits" EntityType="Self.Nonprofits" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Outcomes" EntityType="Self.Outcomes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SurveyAnswers" EntityType="Self.SurveyAnswers" Schema="dbo" store:Type="Tables" />
@@ -869,22 +793,6 @@
     <AssociationSet Name="FK_CaseNotes_Outcomes" Association="Self.FK_CaseNotes_Outcomes">
       <End Role="Outcomes" EntitySet="Outcomes" />
       <End Role="CaseNotes" EntitySet="CaseNotes" />
-    </AssociationSet>
-    <AssociationSet Name="FK_CorporationSurveyAnswers_Corporations" Association="Self.FK_CorporationSurveyAnswers_Corporations">
-      <End Role="Corporations" EntitySet="Corporations" />
-      <End Role="CorporationSurveyAnswers" EntitySet="CorporationSurveyAnswers" />
-    </AssociationSet>
-    <AssociationSet Name="FK_CorporationSurveyAnswers_SurveyAnswers" Association="Self.FK_CorporationSurveyAnswers_SurveyAnswers">
-      <End Role="SurveyAnswers" EntitySet="SurveyAnswers" />
-      <End Role="CorporationSurveyAnswers" EntitySet="CorporationSurveyAnswers" />
-    </AssociationSet>
-    <AssociationSet Name="FK_CorporationSurveyAnswers_Surveys" Association="Self.FK_CorporationSurveyAnswers_Surveys">
-      <End Role="Surveys" EntitySet="Surveys" />
-      <End Role="CorporationSurveyAnswers" EntitySet="CorporationSurveyAnswers" />
-    </AssociationSet>
-    <AssociationSet Name="FK_CorporationSurveys_Surveys" Association="Self.FK_CorporationSurveys_Surveys">
-      <End Role="Surveys" EntitySet="Surveys" />
-      <End Role="CorporationSurveys" EntitySet="CorporationSurveys" />
     </AssociationSet>
     <AssociationSet Name="FK_MemberChildren_Members" Association="Self.FK_MemberChildren_Members">
       <End Role="Members" EntitySet="Members" />
@@ -938,21 +846,21 @@
       <End Role="Members" EntitySet="Members" />
       <End Role="MemberStatuses" EntitySet="MemberStatuses" />
     </AssociationSet>
-    <AssociationSet Name="FK_MemberSurveyAnswers_Members" Association="Self.FK_MemberSurveyAnswers_Members">
+    <AssociationSet Name="FK_MemberSurveys_Members" Association="Self.FK_MemberSurveys_Members">
       <End Role="Members" EntitySet="Members" />
-      <End Role="MemberSurveyAnswers" EntitySet="MemberSurveyAnswers" />
+      <End Role="MemberSurveys" EntitySet="MemberSurveys" />
     </AssociationSet>
-    <AssociationSet Name="FK_MemberSurveyAnswers_SurveyAnswers" Association="Self.FK_MemberSurveyAnswers_SurveyAnswers">
-      <End Role="SurveyAnswers" EntitySet="SurveyAnswers" />
-      <End Role="MemberSurveyAnswers" EntitySet="MemberSurveyAnswers" />
-    </AssociationSet>
-    <AssociationSet Name="FK_MemberSurveyAnswers_Surveys" Association="Self.FK_MemberSurveyAnswers_Surveys">
+    <AssociationSet Name="FK_MemberSurveys_Surveys" Association="Self.FK_MemberSurveys_Surveys">
       <End Role="Surveys" EntitySet="Surveys" />
-      <End Role="MemberSurveyAnswers" EntitySet="MemberSurveyAnswers" />
+      <End Role="MemberSurveys" EntitySet="MemberSurveys" />
     </AssociationSet>
     <AssociationSet Name="FK_Outcomes_Members" Association="Self.FK_Outcomes_Members">
       <End Role="Members" EntitySet="Members" />
       <End Role="Outcomes" EntitySet="Outcomes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SurveyAnswers_MemberSurveys" Association="Self.FK_SurveyAnswers_MemberSurveys">
+      <End Role="MemberSurveys" EntitySet="MemberSurveys" />
+      <End Role="SurveyAnswers" EntitySet="SurveyAnswers" />
     </AssociationSet>
     <AssociationSet Name="FK_SurveyAnswers_SurveyQuestions" Association="Self.FK_SurveyAnswers_SurveyQuestions">
       <End Role="SurveyQuestions" EntitySet="SurveyQuestions" />

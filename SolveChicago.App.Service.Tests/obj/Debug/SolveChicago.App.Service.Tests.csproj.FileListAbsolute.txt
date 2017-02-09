@@ -1,0 +1,7 @@
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Service.Tests\bin\Debug\SolveChicago.App.Service.Tests.dll
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Service.Tests\bin\Debug\SolveChicago.App.Service.Tests.pdb
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Service.Tests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Service.Tests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.xml
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Service.Tests\obj\Debug\SolveChicago.App.Service.Tests.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Service.Tests\obj\Debug\SolveChicago.App.Service.Tests.dll
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Service.Tests\obj\Debug\SolveChicago.App.Service.Tests.pdb

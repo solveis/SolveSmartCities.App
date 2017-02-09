@@ -63,12 +63,6 @@
     <Compile Include="Corporation.cs">
       <DependentUpon>Data.tt</DependentUpon>
     </Compile>
-    <Compile Include="CorporationSurvey.cs">
-      <DependentUpon>Data.tt</DependentUpon>
-    </Compile>
-    <Compile Include="CorporationSurveyAnswer.cs">
-      <DependentUpon>Data.tt</DependentUpon>
-    </Compile>
     <Compile Include="Data.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -111,7 +105,7 @@
     <Compile Include="MemberStatus.cs">
       <DependentUpon>Data.tt</DependentUpon>
     </Compile>
-    <Compile Include="MemberSurveyAnswer.cs">
+    <Compile Include="MemberSurvey.cs">
       <DependentUpon>Data.tt</DependentUpon>
     </Compile>
     <Compile Include="Nonprofit.cs">
@@ -138,17 +132,18 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.Config" />
     <EntityDeploy Include="Data.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Data.Designer.cs</LastGenOutput>
     </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.Config" />
     <None Include="Data.edmx.diagram">
       <DependentUpon>Data.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Data.Context.tt">
@@ -161,9 +156,6 @@
       <DependentUpon>Data.edmx</DependentUpon>
       <LastGenOutput>Data.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

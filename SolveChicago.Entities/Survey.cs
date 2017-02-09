@@ -17,9 +17,7 @@ namespace SolveChicago.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Survey()
         {
-            this.CorporationSurveyAnswers = new HashSet<CorporationSurveyAnswer>();
-            this.CorporationSurveys = new HashSet<CorporationSurvey>();
-            this.MemberSurveyAnswers = new HashSet<MemberSurveyAnswer>();
+            this.MemberSurveys = new HashSet<MemberSurvey>();
             this.SurveyAnswers = new HashSet<SurveyAnswer>();
             this.SurveyQuestions = new HashSet<SurveyQuestion>();
         }
@@ -30,11 +28,7 @@ namespace SolveChicago.Entities
         public int UserId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CorporationSurveyAnswer> CorporationSurveyAnswers { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CorporationSurvey> CorporationSurveys { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MemberSurveyAnswer> MemberSurveyAnswers { get; set; }
+        public virtual ICollection<MemberSurvey> MemberSurveys { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SurveyAnswer> SurveyAnswers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

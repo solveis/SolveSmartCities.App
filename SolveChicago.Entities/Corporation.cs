@@ -17,7 +17,6 @@ namespace SolveChicago.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Corporation()
         {
-            this.CorporationSurveyAnswers = new HashSet<CorporationSurveyAnswer>();
             this.MemberCorporations = new HashSet<MemberCorporation>();
             this.UserProfiles = new HashSet<UserProfile>();
         }
@@ -32,8 +31,6 @@ namespace SolveChicago.Entities
         public string Country { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CorporationSurveyAnswer> CorporationSurveyAnswers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MemberCorporation> MemberCorporations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -25,7 +25,7 @@ namespace SolveChicago.Entities
             this.MemberGovernmentPrograms = new HashSet<MemberGovernmentProgram>();
             this.MemberNonprofits = new HashSet<MemberNonprofit>();
             this.MemberStatuses = new HashSet<MemberStatus>();
-            this.MemberSurveyAnswers = new HashSet<MemberSurveyAnswer>();
+            this.MemberSurveys = new HashSet<MemberSurvey>();
             this.Outcomes = new HashSet<Outcome>();
             this.UserProfiles = new HashSet<UserProfile>();
         }
@@ -61,7 +61,7 @@ namespace SolveChicago.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MemberStatus> MemberStatuses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MemberSurveyAnswer> MemberSurveyAnswers { get; set; }
+        public virtual ICollection<MemberSurvey> MemberSurveys { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Outcome> Outcomes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

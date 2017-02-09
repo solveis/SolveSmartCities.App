@@ -68,8 +68,6 @@ C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Web\ob
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Web\obj\Debug\SolveChicago.App.pdb
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Web\bin\SolveChicago.App.Common.dll
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Web\bin\SolveChicago.App.Service.dll
-C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Web\bin\SolveChicago.Entities.dll
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Web\bin\SolveChicago.App.Common.pdb
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Web\bin\SolveChicago.App.Service.pdb
-C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Web\bin\SolveChicago.Entities.pdb
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Web\obj\Debug\SolveChicago.App.Web.csprojResolveAssemblyReference.cache
