@@ -41,6 +41,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
+    <Compile Include="Entities\Admin.cs" />
+    <Compile Include="Entities\CaseManager.cs" />
+    <Compile Include="Entities\CaseNote.cs" />
+    <Compile Include="Entities\GovernmentProgram.cs" />
+    <Compile Include="Entities\Member.cs" />
+    <Compile Include="Entities\MemberChildren.cs" />
+    <Compile Include="Entities\MemberChildrenGovernmentPrograms.cs" />
     <Compile Include="Enumerations.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

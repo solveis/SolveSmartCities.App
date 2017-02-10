@@ -44,6 +44,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Elmah, Version=1.2.13605.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\elmah.corelibrary.1.2\lib\Elmah.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Elmah.Mvc, Version=2.1.2.1389, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Elmah.Mvc.2.1.2\lib\net40\Elmah.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
@@ -168,8 +176,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CaseManagersController.cs" />
+    <Compile Include="Controllers\CorporationsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MembersController.cs" />
+    <Compile Include="Controllers\NonprofitsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -237,6 +249,26 @@
     <Content Include="Views\Account\NonprofitRegister.cshtml" />
     <Content Include="Views\Account\CorporationRegister.cshtml" />
     <Content Include="Views\Account\CaseManagerRegister.cshtml" />
+    <Content Include="Views\Members\Create.cshtml" />
+    <Content Include="Views\Members\Delete.cshtml" />
+    <Content Include="Views\Members\Details.cshtml" />
+    <Content Include="Views\Members\Edit.cshtml" />
+    <Content Include="Views\Members\Index.cshtml" />
+    <Content Include="Views\CaseManagers\Create.cshtml" />
+    <Content Include="Views\CaseManagers\Delete.cshtml" />
+    <Content Include="Views\CaseManagers\Details.cshtml" />
+    <Content Include="Views\CaseManagers\Edit.cshtml" />
+    <Content Include="Views\CaseManagers\Index.cshtml" />
+    <Content Include="Views\Corporations\Create.cshtml" />
+    <Content Include="Views\Corporations\Delete.cshtml" />
+    <Content Include="Views\Corporations\Details.cshtml" />
+    <Content Include="Views\Corporations\Edit.cshtml" />
+    <Content Include="Views\Corporations\Index.cshtml" />
+    <Content Include="Views\Nonprofits\Create.cshtml" />
+    <Content Include="Views\Nonprofits\Delete.cshtml" />
+    <Content Include="Views\Nonprofits\Details.cshtml" />
+    <Content Include="Views\Nonprofits\Edit.cshtml" />
+    <Content Include="Views\Nonprofits\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -257,6 +289,10 @@
     <ProjectReference Include="..\SolveChicago.App.Service\SolveChicago.App.Service.csproj">
       <Project>{3deb6dd4-80c7-4c47-b6e3-28906a6ee31b}</Project>
       <Name>SolveChicago.App.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SolveChicago.Entities\SolveChicago.Entities.csproj">
+      <Project>{aacc5236-2347-48dc-9995-313958454fe8}</Project>
+      <Name>SolveChicago.Entities</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
