@@ -32,6 +32,7 @@ namespace SolveChicago.Entities
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<System.DateTime> LastActivityDate { get; set; }
         public Nullable<bool> ReceiveEmail { get; set; }
+        public string IdentityUserId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SurveyAnswer> SurveyAnswers { get; set; }
@@ -47,5 +48,6 @@ namespace SolveChicago.Entities
         public virtual ICollection<Member> Members { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Nonprofit> Nonprofits { get; set; }
+        public virtual AspNetUser AspNetUser { get; set; }
     }
 }

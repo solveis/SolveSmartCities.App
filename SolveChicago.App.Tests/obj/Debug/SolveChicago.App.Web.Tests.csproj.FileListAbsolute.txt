@@ -62,3 +62,5 @@ C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Tests\
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Tests\obj\Debug\SolveChicago.App.Tests.pdb
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Tests\bin\Debug\SolveChicago.Entities.dll
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Tests\bin\Debug\SolveChicago.Entities.pdb
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Tests\bin\Debug\SolveChicago.App.Service.dll
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.App.Tests\bin\Debug\SolveChicago.App.Service.pdb

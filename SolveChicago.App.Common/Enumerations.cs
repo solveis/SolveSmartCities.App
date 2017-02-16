@@ -8,5 +8,13 @@ namespace SolveChicago.App.Common
 {
     public class Enumerations
     {
+        public enum Role
+        {
+            Member,
+            CaseManager,
+            Corporation,
+            Nonprofit,
+            Admin
+        }
     }
 }

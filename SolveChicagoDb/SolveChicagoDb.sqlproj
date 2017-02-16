@@ -99,4 +99,7 @@
     <None Include="SolveChicagoDb.dbmdl" />
     <None Include="SolveChicagoDb.sqlproj.user" />
   </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="SolveChicagoDb.refactorlog" />
+  </ItemGroup>
 </Project>

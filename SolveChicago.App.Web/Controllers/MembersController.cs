@@ -14,6 +14,15 @@ namespace SolveChicago.App.Controllers
     {
         private SolveChicagoEntities db = new SolveChicagoEntities();
 
+        public MembersController(SolveChicagoEntities db)
+        {
+            this.db = db;
+        }
+        public MembersController()
+        {
+            this.db = new SolveChicagoEntities();
+        }
+
         // GET: Members
         public ActionResult Index()
         {

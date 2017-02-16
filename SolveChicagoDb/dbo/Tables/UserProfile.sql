@@ -6,6 +6,8 @@
     [CreatedDate] DATETIME2 NULL, 
     [LastActivityDate] DATETIME2 NULL, 
     [ReceiveEmail] BIT NULL,
+	[IdentityUserId] NVARCHAR(128) NOT NULL, 
 
-	CONSTRAINT [PK_UserProfile] PRIMARY KEY CLUSTERED ([Id] ASC), 
+    CONSTRAINT [PK_UserProfile] PRIMARY KEY CLUSTERED ([Id] ASC), 
+	CONSTRAINT [FK_UserProfile_AspNetUsers] FOREIGN KEY (IdentityUserId) REFERENCES [AspNetUsers](Id) ON DELETE CASCADE, 
 )
