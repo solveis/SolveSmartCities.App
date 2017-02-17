@@ -1,6 +1,7 @@
 ﻿CREATE TABLE [dbo].[Members]
 (
 	[Id] INT IDENTITY(1, 1) NOT NULL,
+	[Email] NVARCHAR(128) NOT NULL,
     [Name] NVARCHAR(128) NULL, 
     [FBProfileToken] NVARCHAR(MAX) NULL, 
     [ProfilePicturePath] NVARCHAR(MAX) NULL, 

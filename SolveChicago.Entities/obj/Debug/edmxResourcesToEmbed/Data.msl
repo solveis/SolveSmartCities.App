@@ -4,6 +4,7 @@
     <EntitySetMapping Name="Admins">
       <EntityTypeMapping TypeName="SolveChicagoDevModel.Admin">
         <MappingFragment StoreEntitySet="Admins">
+          <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="ProfilePicturePath" ColumnName="ProfilePicturePath" />
@@ -20,6 +21,7 @@
     <EntitySetMapping Name="CaseManagers">
       <EntityTypeMapping TypeName="SolveChicagoDevModel.CaseManager">
         <MappingFragment StoreEntitySet="CaseManagers">
+          <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="ProfilePicturePath" ColumnName="ProfilePicturePath" />
@@ -49,6 +51,7 @@
     <EntitySetMapping Name="Corporations">
       <EntityTypeMapping TypeName="SolveChicagoDevModel.Corporation">
         <MappingFragment StoreEntitySet="Corporations">
+          <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Phone" ColumnName="Phone" />
@@ -136,6 +139,7 @@
     <EntitySetMapping Name="Members">
       <EntityTypeMapping TypeName="SolveChicagoDevModel.Member">
         <MappingFragment StoreEntitySet="Members">
+          <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="FBProfileToken" ColumnName="FBProfileToken" />

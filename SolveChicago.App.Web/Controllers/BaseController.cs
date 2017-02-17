@@ -10,19 +10,28 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using SolveChicago.App.Web.Models;
 using SolveChicago.App.Common;
-using SolveChicago.App.Controllers;
+using SolveChicago.App.Web.Controllers;
 using Microsoft.AspNet.Identity.EntityFramework;
 using SolveChicago.Entities;
 using SolveChicago.App.Service;
 
-namespace SolveChicago.App.Controllers
+namespace SolveChicago.App.Web.Controllers
 {
     public class BaseController : Controller
     {
-        public static SolveChicagoEntities db = new SolveChicagoEntities();
+        protected SolveChicagoEntities db = new SolveChicagoEntities();
         protected ApplicationSignInManager _signInManager;
         protected ApplicationUserManager _userManager;
 
+        public BaseController(SolveChicagoEntities db)
+        {
+            this.db = db;
+        }
+
+        public BaseController()
+        {
+            this.db = new SolveChicagoEntities();
+        }
         
         public ApplicationSignInManager SignInManager
         {
@@ -65,7 +74,7 @@ namespace SolveChicago.App.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        protected static void AssertRole(string roleName)
+        protected void AssertRole(string roleName)
         {
             if(!db.AspNetRoles.Any(x => x.Name == roleName))
                 db.AspNetRoles.Add(new AspNetRole { Name = roleName });
@@ -75,52 +84,114 @@ namespace SolveChicago.App.Controllers
         protected async Task<ActionResult> CreateAccount(string userName, string password, Enumerations.Role role)
         {
             var user = new ApplicationUser { UserName = userName, Email = userName };
-            // Attempt to register the user
-            try
+           
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                var result = await UserManager.CreateAsync(user, password);
+                if (result.Succeeded)
                 {
-                    var result = await UserManager.CreateAsync(user, password);
-                    if (result.Succeeded)
-                    {
-                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                        // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                        // Send an email with this link
-                        // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                        // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                        // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                    // Send an email with this link
+                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
                         
-                    }
-                    AddErrors(result);
                 }
-                switch (role)
-                {
-                    case Enumerations.Role.Nonprofit:
-                    {
-                        AssertRole(Common.Constants.Roles.Nonprofit);
-                        await this.UserManager.AddToRoleAsync(user.Id, Common.Constants.Roles.Nonprofit);
-                        using (UserProfileService service = new UserProfileService())
-                        {
-                            int userId = service.Create(user.UserName, user.Id);
-                            if (!service.UserProfileHasValidMappings(userId))
-                            {
-                                using (NonprofitService npService = new NonprofitService())
-                                {
-                                    npService.Create(userName, userId);
-                                }
-                                return RedirectToAction("Profile", "ExpertOnboarding");
-                            }
-                        }
-
-                        return RedirectToAction("Index");
-                    }
-
-                }
+                AddErrors(result);
             }
-            catch
+            switch (role)
             {
-                //    log.LogException(ex);
-                //    ModelState.AddModelError(string.Empty, ex.StatusCode.ToString());
+                case Enumerations.Role.Member:
+                {
+                    AssertRole(Common.Constants.Roles.Member);
+                    await this.UserManager.AddToRoleAsync(user.Id, Common.Constants.Roles.Member);
+                    using (UserProfileService service = new UserProfileService(db))
+                    {
+                        int userId = service.Create(user.UserName, user.Id);
+                        if (!service.UserProfileHasValidMappings(userId))
+                        {
+                            using (MemberService innerService = new MemberService(db))
+                            {
+                                innerService.Create(userName, userId);
+                            }
+                            return RedirectToAction("Profile", "Member");
+                        }
+                    }
+                    return RedirectToAction("Index");
+                }
+                case Enumerations.Role.CaseManager:
+                {
+                    AssertRole(Common.Constants.Roles.CaseManager);
+                    await this.UserManager.AddToRoleAsync(user.Id, Common.Constants.Roles.CaseManager);
+                    using (UserProfileService service = new UserProfileService(db))
+                    {
+                        int userId = service.Create(user.UserName, user.Id);
+                        if (!service.UserProfileHasValidMappings(userId))
+                        {
+                            using (CaseManagerService innerService = new CaseManagerService(db))
+                            {
+                                innerService.Create(userName, userId);
+                            }
+                            return RedirectToAction("Profile", "CaseManager");
+                        }
+                    }
+                    return RedirectToAction("Index");
+                }
+                case Enumerations.Role.Nonprofit:
+                {
+                    AssertRole(Common.Constants.Roles.Nonprofit);
+                    await this.UserManager.AddToRoleAsync(user.Id, Common.Constants.Roles.Nonprofit);
+                    using (UserProfileService service = new UserProfileService(db))
+                    {
+                        int userId = service.Create(user.UserName, user.Id);
+                        if (!service.UserProfileHasValidMappings(userId))
+                        {
+                            using (NonprofitService innerService = new NonprofitService(db))
+                            {
+                                    innerService.Create(userName, userId);
+                            }
+                            return RedirectToAction("Profile", "Nonprofit");
+                        }
+                    }
+                    return RedirectToAction("Index");
+                }
+                case Enumerations.Role.Corporation:
+                {
+                    AssertRole(Common.Constants.Roles.Corporation);
+                    await this.UserManager.AddToRoleAsync(user.Id, Common.Constants.Roles.Corporation);
+                    using (UserProfileService service = new UserProfileService(db))
+                    {
+                        int userId = service.Create(user.UserName, user.Id);
+                        if (!service.UserProfileHasValidMappings(userId))
+                        {
+                            using (CorporationService innerService = new CorporationService(db))
+                            {
+                                    innerService.Create(userName, userId);
+                            }
+                            return RedirectToAction("Profile", "Corporation");
+                        }
+                    }
+                    return RedirectToAction("Index");
+                }
+                case Enumerations.Role.Admin:
+                {
+                    AssertRole(Common.Constants.Roles.Admin);
+                    await this.UserManager.AddToRoleAsync(user.Id, Common.Constants.Roles.Admin);
+                    using (UserProfileService service = new UserProfileService(db))
+                    {
+                        int userId = service.Create(user.UserName, user.Id);
+                        if (!service.UserProfileHasValidMappings(userId))
+                        {
+                            using (AdminService innerService = new AdminService(db))
+                            {
+                                innerService.Create(userName, userId);
+                            }
+                            return RedirectToAction("Profile", "Admin");
+                        }
+                    }
+                    return RedirectToAction("Index");
+                }
             }
             return RedirectToAction("Index", "Home");
         }

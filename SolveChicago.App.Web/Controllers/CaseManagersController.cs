@@ -8,12 +8,10 @@ using System.Web;
 using System.Web.Mvc;
 using SolveChicago.Entities;
 
-namespace SolveChicago.App.Controllers
+namespace SolveChicago.App.Web.Controllers
 {
-    public class CaseManagersController : Controller
+    public class CaseManagersController : BaseController
     {
-        private SolveChicagoEntities db = new SolveChicagoEntities();
-
         // GET: CaseManagers
         public ActionResult Index()
         {

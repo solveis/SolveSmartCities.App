@@ -4,10 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using SolveChicago.App.Service;
+using SolveChicago.App.Web.Controllers;
 
 namespace SolveChicago.App.Web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         public ActionResult Index()
         {

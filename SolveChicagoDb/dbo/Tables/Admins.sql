@@ -1,6 +1,7 @@
 ﻿CREATE TABLE [dbo].[Admins]
 (
 	[Id] INT IDENTITY(1, 1) NOT NULL,
+    [Email] NVARCHAR(128) NOT NULL, 
 	[Name] NVARCHAR(128) NULL, 
     [ProfilePicturePath] NCHAR(10) NULL, 
 	[Phone] NVARCHAR(128) NULL, 

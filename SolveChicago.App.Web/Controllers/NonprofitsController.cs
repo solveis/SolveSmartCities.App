@@ -8,12 +8,10 @@ using System.Web;
 using System.Web.Mvc;
 using SolveChicago.Entities;
 
-namespace SolveChicago.App.Controllers
+namespace SolveChicago.App.Web.Controllers
 {
-    public class NonprofitsController : Controller
+    public class NonprofitsController : BaseController
     {
-        private SolveChicagoEntities db = new SolveChicagoEntities();
-
         // GET: Nonprofits
         public ActionResult Index()
         {

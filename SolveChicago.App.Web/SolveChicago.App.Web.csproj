@@ -183,6 +183,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MembersController.cs" />
     <Compile Include="Controllers\NonprofitsController.cs" />
+    <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -234,7 +235,7 @@
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\MemberRegister.cshtml" />
+    <Content Include="Views\Register\Member.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\SendCode.cshtml" />
@@ -247,9 +248,9 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Account\NonprofitRegister.cshtml" />
-    <Content Include="Views\Account\CorporationRegister.cshtml" />
-    <Content Include="Views\Account\CaseManagerRegister.cshtml" />
+    <Content Include="Views\Register\Nonprofit.cshtml" />
+    <Content Include="Views\Register\Corporation.cshtml" />
+    <Content Include="Views\Register\CaseManager.cshtml" />
     <Content Include="Views\Members\Create.cshtml" />
     <Content Include="Views\Members\Delete.cshtml" />
     <Content Include="Views\Members\Details.cshtml" />
@@ -270,6 +271,7 @@
     <Content Include="Views\Nonprofits\Details.cshtml" />
     <Content Include="Views\Nonprofits\Edit.cshtml" />
     <Content Include="Views\Nonprofits\Index.cshtml" />
+    <Content Include="Views\Register\Admin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

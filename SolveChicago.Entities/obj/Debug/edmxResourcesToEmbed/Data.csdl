@@ -15,6 +15,7 @@
     <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="CreatedDate" Type="DateTime" Precision="7" />
     <NavigationProperty Name="UserProfiles" Relationship="Self.UserProfileAdmins" FromRole="Admins" ToRole="UserProfile" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="CaseManager">
     <Key>
@@ -33,6 +34,7 @@
     <NavigationProperty Name="CaseNotes" Relationship="Self.FK_CaseNotes_CaseManagers" FromRole="CaseManagers" ToRole="CaseNotes" />
     <NavigationProperty Name="Members" Relationship="Self.FK_Members_CaseManagers" FromRole="CaseManagers" ToRole="Members" />
     <NavigationProperty Name="UserProfiles" Relationship="Self.UserProfileCaseManagers" FromRole="CaseManagers" ToRole="UserProfile" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="CaseNote">
     <Key>
@@ -64,6 +66,7 @@
     <Property Name="CreatedDate" Type="DateTime" Precision="7" />
     <NavigationProperty Name="MemberCorporations" Relationship="Self.FK_MemberCorporations_Corporations" FromRole="Corporations" ToRole="MemberCorporations" />
     <NavigationProperty Name="UserProfiles" Relationship="Self.UserProfileCorporations" FromRole="Corporations" ToRole="UserProfile" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="GovernmentProgram">
     <Key>
@@ -174,6 +177,7 @@
     <NavigationProperty Name="MemberSurveys" Relationship="Self.FK_MemberSurveys_Members" FromRole="Members" ToRole="MemberSurveys" />
     <NavigationProperty Name="Outcomes" Relationship="Self.FK_Outcomes_Members" FromRole="Members" ToRole="Outcomes" />
     <NavigationProperty Name="UserProfiles" Relationship="Self.UserProfileMembers" FromRole="Members" ToRole="UserProfile" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="MemberStatus">
     <Key>

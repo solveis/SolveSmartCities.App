@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolveChicago.App.Web", "SolveChicago.App.Web\SolveChicago.App.Web.csproj", "{528F6CEA-76F1-47BD-8D33-2A6A2F4813DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolveChicago.App.Web.Tests", "SolveChicago.App.Tests\SolveChicago.App.Web.Tests.csproj", "{FD92FF21-335A-4E01-B02E-3AE60D6C0E4C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolveChicago.App.Tests", "SolveChicago.App.Tests\SolveChicago.App.Tests.csproj", "{FD92FF21-335A-4E01-B02E-3AE60D6C0E4C}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "SolveChicagoDb", "SolveChicagoDb\SolveChicagoDb.sqlproj", "{9F105A40-1AB6-427A-9FEE-92FACC174A66}"
 EndProject
@@ -14,8 +14,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolveChicago.App.Service", "SolveChicago.App.Service\SolveChicago.App.Service.csproj", "{3DEB6DD4-80C7-4C47-B6E3-28906A6EE31B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolveChicago.App.Common", "SolveChicago.App.Common\SolveChicago.App.Common.csproj", "{ADB01512-9FCD-4A25-98A6-94CA211A183E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolveChicago.App.Service.Tests", "SolveChicago.App.Service.Tests\SolveChicago.App.Service.Tests.csproj", "{C43C897A-F4E8-497F-B715-29D92C5FBFCB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,10 +47,6 @@ Global
 		{ADB01512-9FCD-4A25-98A6-94CA211A183E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADB01512-9FCD-4A25-98A6-94CA211A183E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ADB01512-9FCD-4A25-98A6-94CA211A183E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C43C897A-F4E8-497F-B715-29D92C5FBFCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C43C897A-F4E8-497F-B715-29D92C5FBFCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C43C897A-F4E8-497F-B715-29D92C5FBFCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C43C897A-F4E8-497F-B715-29D92C5FBFCB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

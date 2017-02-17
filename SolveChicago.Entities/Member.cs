@@ -42,6 +42,7 @@ namespace SolveChicago.Entities
         public string Country { get; set; }
         public Nullable<int> CaseManagerId { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
+        public string Email { get; set; }
     
         public virtual CaseManager CaseManager { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

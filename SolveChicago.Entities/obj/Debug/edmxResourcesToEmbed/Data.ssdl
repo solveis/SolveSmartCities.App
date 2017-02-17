@@ -5,6 +5,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="128" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="128" />
     <Property Name="ProfilePicturePath" Type="nchar" MaxLength="10" />
     <Property Name="Phone" Type="nvarchar" MaxLength="128" />
@@ -71,6 +72,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="128" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="128" />
     <Property Name="ProfilePicturePath" Type="nvarchar(max)" />
     <Property Name="Phone" Type="nvarchar" MaxLength="128" />
@@ -98,6 +100,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="128" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="128" />
     <Property Name="Phone" Type="nvarchar" MaxLength="128" />
     <Property Name="Address1" Type="nvarchar" MaxLength="128" />
@@ -179,6 +182,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="128" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="128" />
     <Property Name="FBProfileToken" Type="nvarchar(max)" />
     <Property Name="ProfilePicturePath" Type="nvarchar(max)" />
