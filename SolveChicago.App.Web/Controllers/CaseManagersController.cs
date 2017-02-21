@@ -13,7 +13,7 @@ namespace SolveChicago.App.Web.Controllers
     public class CaseManagersController : BaseController
     {
         // GET: CaseManagers
-        public ActionResult Index()
+        public ActionResult List()
         {
             return View(db.CaseManagers.ToList());
         }

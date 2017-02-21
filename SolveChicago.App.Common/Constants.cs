@@ -16,5 +16,14 @@ namespace SolveChicago.App.Common
             public static string Corporation = "Corporation";
             public static string Nonprofit = "Nonprofit";
         }
+
+        public static class Upload
+        {
+            public static string AdminPhotos = "adminphotos";
+            public static string MemberPhotos = "memberphotos";
+            public static string CaseManagerPhotos = "casemanagerphotos";
+            public static string CorporationPhotos = "corporationphotos";
+            public static string NonprofitPhotos = "nonprofitphotos";
+        }
     }
 }

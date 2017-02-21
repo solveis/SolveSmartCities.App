@@ -96,6 +96,9 @@
     <Compile Include="Member.cs">
       <DependentUpon>Data.tt</DependentUpon>
     </Compile>
+    <Compile Include="MemberCaseManager.cs">
+      <DependentUpon>Data.tt</DependentUpon>
+    </Compile>
     <Compile Include="MemberChildren.cs">
       <DependentUpon>Data.tt</DependentUpon>
     </Compile>

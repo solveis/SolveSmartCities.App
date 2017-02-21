@@ -11,9 +11,11 @@ using Microsoft.Owin.Security;
 using SolveChicago.App.Web.Models;
 using SolveChicago.App.Common;
 using SolveChicago.App.Web.Controllers;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SolveChicago.App.Web.Controllers
 {
+    [ExcludeFromCodeCoverage]
     public class RegisterController : BaseController
     {
         //
@@ -31,7 +33,9 @@ namespace SolveChicago.App.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Member(RegisterViewModel model)
         {
-            await CreateAccount(model.Email, model.Password, Enumerations.Role.Member);
+            var result = await CreateAccount(model.Email, model.Password, Enumerations.Role.Member);
+            if (result != null)
+                return result;
             // If we got this far, something failed, redisplay form
             return View(model);
         }
@@ -51,7 +55,9 @@ namespace SolveChicago.App.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Corporation(RegisterViewModel model)
         {
-            await CreateAccount(model.Email, model.Password, Enumerations.Role.Corporation);
+            var result = await CreateAccount(model.Email, model.Password, Enumerations.Role.Corporation);
+            if (result != null)
+                return result;
             // If we got this far, something failed, redisplay form
             return View(model);
         }
@@ -71,7 +77,9 @@ namespace SolveChicago.App.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> CaseManager(RegisterViewModel model)
         {
-            await CreateAccount(model.Email, model.Password, Enumerations.Role.CaseManager);
+            var result = await CreateAccount(model.Email, model.Password, Enumerations.Role.CaseManager);
+            if (result != null)
+                return result;
             // If we got this far, something failed, redisplay form
             return View(model);
         }
@@ -91,8 +99,9 @@ namespace SolveChicago.App.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Nonprofit(RegisterViewModel model)
         {
-            await CreateAccount(model.Email, model.Password, Enumerations.Role.Nonprofit);
-            
+            var result = await CreateAccount(model.Email, model.Password, Enumerations.Role.Nonprofit);
+            if (result != null)
+                return result;
             // If we got this far, something failed, redisplay form
             return View(model);
         }

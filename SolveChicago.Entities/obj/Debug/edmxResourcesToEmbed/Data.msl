@@ -136,25 +136,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Members">
-      <EntityTypeMapping TypeName="SolveChicagoDevModel.Member">
-        <MappingFragment StoreEntitySet="Members">
-          <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="FBProfileToken" ColumnName="FBProfileToken" />
-          <ScalarProperty Name="ProfilePicturePath" ColumnName="ProfilePicturePath" />
-          <ScalarProperty Name="Phone" ColumnName="Phone" />
-          <ScalarProperty Name="Address1" ColumnName="Address1" />
-          <ScalarProperty Name="Address2" ColumnName="Address2" />
-          <ScalarProperty Name="City" ColumnName="City" />
-          <ScalarProperty Name="Province" ColumnName="Province" />
-          <ScalarProperty Name="Country" ColumnName="Country" />
-          <ScalarProperty Name="CaseManagerId" ColumnName="CaseManagerId" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="MemberStatuses">
       <EntityTypeMapping TypeName="SolveChicagoDevModel.MemberStatus">
         <MappingFragment StoreEntitySet="MemberStatuses">
@@ -277,14 +258,6 @@
         <ScalarProperty Name="Id" ColumnName="UserId" />
       </EndProperty>
     </AssociationSetMapping>
-    <AssociationSetMapping Name="UserProfileMembers" TypeName="SolveChicagoDevModel.UserProfileMembers" StoreEntitySet="UserProfileMembers">
-      <EndProperty Name="Members">
-        <ScalarProperty Name="Id" ColumnName="MemberId" />
-      </EndProperty>
-      <EndProperty Name="UserProfile">
-        <ScalarProperty Name="Id" ColumnName="UserId" />
-      </EndProperty>
-    </AssociationSetMapping>
     <AssociationSetMapping Name="UserProfileNonprofits" TypeName="SolveChicagoDevModel.UserProfileNonprofits" StoreEntitySet="UserProfileNonprofits">
       <EndProperty Name="Nonprofits">
         <ScalarProperty Name="Id" ColumnName="NonprofitId" />
@@ -344,6 +317,42 @@
       </EndProperty>
       <EndProperty Name="AspNetRole">
         <ScalarProperty Name="Id" ColumnName="RoleId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <EntitySetMapping Name="MemberCaseManagers">
+      <EntityTypeMapping TypeName="SolveChicagoDevModel.MemberCaseManager">
+        <MappingFragment StoreEntitySet="MemberCaseManagers">
+          <ScalarProperty Name="End" ColumnName="End" />
+          <ScalarProperty Name="Start" ColumnName="Start" />
+          <ScalarProperty Name="CaseManagerId" ColumnName="CaseManagerId" />
+          <ScalarProperty Name="MemberId" ColumnName="MemberId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Members">
+      <EntityTypeMapping TypeName="SolveChicagoDevModel.Member">
+        <MappingFragment StoreEntitySet="Members">
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="Province" ColumnName="Province" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Address2" ColumnName="Address2" />
+          <ScalarProperty Name="Address1" ColumnName="Address1" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="ProfilePicturePath" ColumnName="ProfilePicturePath" />
+          <ScalarProperty Name="FBProfileToken" ColumnName="FBProfileToken" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="UserProfileMembers" TypeName="SolveChicagoDevModel.UserProfileMembers" StoreEntitySet="UserProfileMembers">
+      <EndProperty Name="UserProfile">
+        <ScalarProperty Name="Id" ColumnName="UserId" />
+      </EndProperty>
+      <EndProperty Name="Member">
+        <ScalarProperty Name="Id" ColumnName="MemberId" />
       </EndProperty>
     </AssociationSetMapping>
   </EntityContainerMapping>

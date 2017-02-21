@@ -5,6 +5,7 @@ using SolveChicago.Entities;
 using System.Data.Entity;
 using System.Collections.Generic;
 using SolveChicago.App.Service;
+using SolveChicago.App.Common.Entities;
 
 namespace SolveChicago.App.Tests.Services
 {
@@ -39,6 +40,41 @@ namespace SolveChicago.App.Tests.Services
             int nonprofitId = service.Create(email, 1);
 
             Assert.IsNotNull(nonprofitId);
+        }
+
+        [TestMethod]
+        public void Can_Update_Nonprofit_Profile()
+        {
+            List<Nonprofit> data = new List<Nonprofit>
+            {
+                new Nonprofit { Id = 1 }
+            };
+
+            NonprofitEntity nonprofit = new NonprofitEntity
+            {
+                Address1 = "123 Main Street",
+                Address2 = "Apt 2",
+                City = "Chicago",
+                Province = "IL",
+                Country = "USA",
+                Email = "nonprofit@solvechicago.com",
+                CreatedDate = DateTime.UtcNow.AddDays(-10),
+                Id = 1,
+                Name = "Tom Elliot",
+                Phone = "1234567890",
+            };
+
+            var nonprofitSet = new Mock<DbSet<Nonprofit>>().SetupData(data);
+
+            var context = new Mock<SolveChicagoEntities>();
+            context.Setup(c => c.Nonprofits).Returns(nonprofitSet.Object);
+
+            using (NonprofitService service = new NonprofitService(context.Object))
+            {
+                var result = service.UpdateProfile(nonprofit);
+                Assert.IsTrue(result);
+            }
+
         }
     }
 }

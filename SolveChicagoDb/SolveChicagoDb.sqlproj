@@ -94,6 +94,7 @@
     <Build Include="dbo\Tables\UserProfileCorporations.sql" />
     <Build Include="dbo\Tables\UserProfileMembers.sql" />
     <Build Include="dbo\Tables\UserProfileNonprofits.sql" />
+    <Build Include="dbo\Tables\MemberCaseManagers.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SolveChicagoDb.dbmdl" />

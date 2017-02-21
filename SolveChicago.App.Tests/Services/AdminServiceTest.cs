@@ -5,6 +5,7 @@ using SolveChicago.Entities;
 using System.Data.Entity;
 using System.Collections.Generic;
 using SolveChicago.App.Service;
+using SolveChicago.App.Common.Entities;
 
 namespace SolveChicago.App.Tests.Services
 {
@@ -39,6 +40,42 @@ namespace SolveChicago.App.Tests.Services
             int adminId = service.Create(email, 1);
 
             Assert.IsNotNull(adminId);
+        }
+
+        [TestMethod]
+        public void Can_Update_Admin_Profile()
+        {
+            List<Admin> data = new List<Admin>
+            {
+                new Admin { Id = 1 }
+            };
+
+            AdminEntity admin = new AdminEntity
+            {
+                Address1 = "123 Main Street",
+                Address2 = "Apt 2",
+                City = "Chicago",
+                Province = "IL",
+                Country = "USA",
+                Email = "admin@solvechicago.com",
+                CreatedDate = DateTime.UtcNow.AddDays(-10),
+                Id = 1,
+                Name = "Tom Elliot",
+                Phone = "1234567890",
+                ProfilePicturePath = "../image.jpg"
+            };
+
+            var adminSet = new Mock<DbSet<Admin>>().SetupData(data);
+
+            var context = new Mock<SolveChicagoEntities>();
+            context.Setup(c => c.Admins).Returns(adminSet.Object);
+
+            using (AdminService service = new AdminService(context.Object))
+            {
+                var result = service.UpdateProfile(admin);
+                Assert.IsTrue(result);
+            }
+
         }
     }
 }

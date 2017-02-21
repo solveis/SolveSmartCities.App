@@ -25,8 +25,8 @@ namespace SolveChicago.Entities
         public int MemberId { get; set; }
         public System.DateTime BirthDate { get; set; }
     
-        public virtual Member Member { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MemberChildrenGovernmentProgram> MemberChildrenGovernmentPrograms { get; set; }
+        public virtual Member Member { get; set; }
     }
 }

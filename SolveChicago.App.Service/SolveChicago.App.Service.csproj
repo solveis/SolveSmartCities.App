@@ -41,6 +41,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -59,6 +60,10 @@
     <Compile Include="UserProfileService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SolveChicago.App.Common\SolveChicago.App.Common.csproj">
+      <Project>{ADB01512-9FCD-4A25-98A6-94CA211A183E}</Project>
+      <Name>SolveChicago.App.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SolveChicago.Entities\SolveChicago.Entities.csproj">
       <Project>{AACC5236-2347-48DC-9995-313958454FE8}</Project>
       <Name>SolveChicago.Entities</Name>

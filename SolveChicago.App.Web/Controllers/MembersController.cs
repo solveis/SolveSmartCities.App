@@ -13,9 +13,9 @@ namespace SolveChicago.App.Web.Controllers
     public class MembersController : BaseController
     {
         // GET: Members
-        public ActionResult Index()
+        public ActionResult List()
         {
-            var members = db.Members.Include(m => m.CaseManager);
+            var members = db.Members;
             return View(members.ToList());
         }
 
@@ -54,8 +54,6 @@ namespace SolveChicago.App.Web.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.CaseManagerId = new SelectList(db.CaseManagers, "Id", "Name", member.CaseManagerId);
             return View(member);
         }
 
@@ -71,7 +69,6 @@ namespace SolveChicago.App.Web.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CaseManagerId = new SelectList(db.CaseManagers, "Id", "Name", member.CaseManagerId);
             return View(member);
         }
 
@@ -88,7 +85,6 @@ namespace SolveChicago.App.Web.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CaseManagerId = new SelectList(db.CaseManagers, "Id", "Name", member.CaseManagerId);
             return View(member);
         }
 

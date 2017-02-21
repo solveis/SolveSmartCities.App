@@ -14,7 +14,7 @@ namespace SolveChicago.App.Web.Controllers
     {
 
         // GET: Corporations
-        public ActionResult Index()
+        public ActionResult List()
         {
             return View(db.Corporations.ToList());
         }

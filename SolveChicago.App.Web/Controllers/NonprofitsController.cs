@@ -13,7 +13,7 @@ namespace SolveChicago.App.Web.Controllers
     public class NonprofitsController : BaseController
     {
         // GET: Nonprofits
-        public ActionResult Index()
+        public ActionResult List()
         {
             return View(db.Nonprofits.ToList());
         }

@@ -117,6 +117,16 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
+  <EntityType Name="MemberCaseManagers">
+    <Key>
+      <PropertyRef Name="MemberId" />
+      <PropertyRef Name="CaseManagerId" />
+    </Key>
+    <Property Name="MemberId" Type="int" Nullable="false" />
+    <Property Name="CaseManagerId" Type="int" Nullable="false" />
+    <Property Name="Start" Type="datetime2" Precision="7" Nullable="false" />
+    <Property Name="End" Type="datetime2" Precision="7" />
+  </EntityType>
   <EntityType Name="MemberChildren">
     <Key>
       <PropertyRef Name="Id" />
@@ -192,7 +202,6 @@
     <Property Name="City" Type="nvarchar" MaxLength="50" />
     <Property Name="Province" Type="nvarchar" MaxLength="50" />
     <Property Name="Country" Type="nvarchar" MaxLength="50" />
-    <Property Name="CaseManagerId" Type="int" />
     <Property Name="CreatedDate" Type="datetime2" Precision="7" />
   </EntityType>
   <EntityType Name="MemberStatuses">
@@ -570,15 +579,31 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Members_CaseManagers">
-    <End Role="CaseManagers" Type="Self.CaseManagers" Multiplicity="0..1" />
-    <End Role="Members" Type="Self.Members" Multiplicity="*" />
+  <Association Name="FK_MembersCaseManagers_CaseManagers">
+    <End Role="CaseManagers" Type="Self.CaseManagers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="MemberCaseManagers" Type="Self.MemberCaseManagers" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="CaseManagers">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="Members">
+      <Dependent Role="MemberCaseManagers">
         <PropertyRef Name="CaseManagerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MembersCaseManagers_Members">
+    <End Role="Members" Type="Self.Members" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="MemberCaseManagers" Type="Self.MemberCaseManagers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Members">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MemberCaseManagers">
+        <PropertyRef Name="MemberId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -893,6 +918,7 @@
     <EntitySet Name="CaseNotes" EntityType="Self.CaseNotes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Corporations" EntityType="Self.Corporations" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="GovernmentPrograms" EntityType="Self.GovernmentPrograms" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MemberCaseManagers" EntityType="Self.MemberCaseManagers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="MemberChildren" EntityType="Self.MemberChildren" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="MemberChildrenGovernmentPrograms" EntityType="Self.MemberChildrenGovernmentPrograms" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="MemberCorporations" EntityType="Self.MemberCorporations" Schema="dbo" store:Type="Tables" />
@@ -986,9 +1012,13 @@
       <End Role="Nonprofits" EntitySet="Nonprofits" />
       <End Role="MemberNonprofits" EntitySet="MemberNonprofits" />
     </AssociationSet>
-    <AssociationSet Name="FK_Members_CaseManagers" Association="Self.FK_Members_CaseManagers">
+    <AssociationSet Name="FK_MembersCaseManagers_CaseManagers" Association="Self.FK_MembersCaseManagers_CaseManagers">
       <End Role="CaseManagers" EntitySet="CaseManagers" />
+      <End Role="MemberCaseManagers" EntitySet="MemberCaseManagers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MembersCaseManagers_Members" Association="Self.FK_MembersCaseManagers_Members">
       <End Role="Members" EntitySet="Members" />
+      <End Role="MemberCaseManagers" EntitySet="MemberCaseManagers" />
     </AssociationSet>
     <AssociationSet Name="FK_MemberStatuses_Members" Association="Self.FK_MemberStatuses_Members">
       <End Role="Members" EntitySet="Members" />

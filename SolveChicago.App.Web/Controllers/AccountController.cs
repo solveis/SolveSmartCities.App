@@ -11,10 +11,12 @@ using Microsoft.Owin.Security;
 using SolveChicago.App.Web.Models;
 using SolveChicago.App.Common;
 using SolveChicago.App.Web.Controllers;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SolveChicago.App.Web.Controllers
 {
     [Authorize]
+    [ExcludeFromCodeCoverage]
     public class AccountController : BaseController
     {
         public AccountController()
@@ -54,6 +56,7 @@ namespace SolveChicago.App.Web.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    RefreshState(model.Email);
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");

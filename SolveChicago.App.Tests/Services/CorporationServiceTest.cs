@@ -5,6 +5,7 @@ using SolveChicago.Entities;
 using System.Data.Entity;
 using System.Collections.Generic;
 using SolveChicago.App.Service;
+using SolveChicago.App.Common.Entities;
 
 namespace SolveChicago.App.Tests.Services
 {
@@ -39,6 +40,41 @@ namespace SolveChicago.App.Tests.Services
             int corporationId = service.Create(email, 1);
 
             Assert.IsNotNull(corporationId);
+        }
+
+        [TestMethod]
+        public void Can_Update_Corporation_Profile()
+        {
+            List<Corporation> data = new List<Corporation>
+            {
+                new Corporation { Id = 1 }
+            };
+
+            CorporationEntity corporation = new CorporationEntity
+            {
+                Address1 = "123 Main Street",
+                Address2 = "Apt 2",
+                City = "Chicago",
+                Province = "IL",
+                Country = "USA",
+                Email = "corporation@solvechicago.com",
+                CreatedDate = DateTime.UtcNow.AddDays(-10),
+                Id = 1,
+                Name = "Tom Elliot",
+                Phone = "1234567890",
+            };
+
+            var corporationSet = new Mock<DbSet<Corporation>>().SetupData(data);
+
+            var context = new Mock<SolveChicagoEntities>();
+            context.Setup(c => c.Corporations).Returns(corporationSet.Object);
+
+            using (CorporationService service = new CorporationService(context.Object))
+            {
+                var result = service.UpdateProfile(corporation);
+                Assert.IsTrue(result);
+            }
+
         }
     }
 }

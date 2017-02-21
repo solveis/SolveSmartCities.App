@@ -24,9 +24,9 @@ namespace SolveChicago.Entities
         public int SurveyId { get; set; }
         public int MemberId { get; set; }
     
-        public virtual Member Member { get; set; }
         public virtual Survey Survey { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SurveyAnswer> SurveyAnswers { get; set; }
+        public virtual Member Member { get; set; }
     }
 }

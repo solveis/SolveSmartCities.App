@@ -11,9 +11,7 @@
     [City] NVARCHAR(50) NULL, 
     [Province] NVARCHAR(50) NULL, 
     [Country] NVARCHAR(50) NULL, 
-    [CaseManagerId] INT NULL, 
     [CreatedDate] DATETIME2 NULL, 
 
-    CONSTRAINT [PK_Members] PRIMARY KEY CLUSTERED ([Id] ASC), 
-	CONSTRAINT [FK_Members_CaseManagers] FOREIGN KEY ([CaseManagerId]) REFERENCES [dbo].[CaseManagers] ([Id]) ON DELETE SET NULL
+    CONSTRAINT [PK_Members] PRIMARY KEY CLUSTERED ([Id] ASC)
 )

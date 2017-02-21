@@ -1,4 +1,5 @@
-﻿using SolveChicago.Entities;
+﻿using SolveChicago.App.Common.Entities;
+using SolveChicago.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,30 @@ namespace SolveChicago.App.Service
             db.SaveChanges();
 
             return corporation.Id;
+        }
+        
+        public bool UpdateProfile(CorporationEntity model)
+        {
+            try
+            {
+                Corporation corporation = db.Corporations.Single(x => x.Id == model.Id);
+                corporation.Address1 = model.Address1;
+                corporation.Address2 = model.Address2;
+                corporation.City = model.City;
+                corporation.Country = model.Country;
+                corporation.Email = model.Email;
+                corporation.Name = model.Name;
+                corporation.Phone = model.Phone;
+                corporation.Province = model.Province;
+
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
         }
     }
 }

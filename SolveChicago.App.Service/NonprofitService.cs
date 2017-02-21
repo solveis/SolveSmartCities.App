@@ -1,4 +1,5 @@
-﻿using SolveChicago.Entities;
+﻿using SolveChicago.App.Common.Entities;
+using SolveChicago.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,30 @@ namespace SolveChicago.App.Service
             db.SaveChanges();
 
             return nonprofit.Id;
+        }
+
+        public bool UpdateProfile(NonprofitEntity model)
+        {
+            try
+            {
+                Nonprofit nonprofit = db.Nonprofits.Single(x => x.Id == model.Id);
+                nonprofit.Address1 = model.Address1;
+                nonprofit.Address2 = model.Address2;
+                nonprofit.City = model.City;
+                nonprofit.Country = model.Country;
+                nonprofit.Email = model.Email;
+                nonprofit.Name = model.Name;
+                nonprofit.Phone = model.Phone;
+                nonprofit.Province = model.Province;
+
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
         }
     }
 }
