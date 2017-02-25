@@ -18,8 +18,10 @@ namespace SolveChicago.Entities
         public int NonprofitId { get; set; }
         public System.DateTime Start { get; set; }
         public Nullable<System.DateTime> End { get; set; }
+        public Nullable<int> CaseManagerId { get; set; }
     
         public virtual Nonprofit Nonprofit { get; set; }
         public virtual Member Member { get; set; }
+        public virtual CaseManager CaseManager { get; set; }
     }
 }

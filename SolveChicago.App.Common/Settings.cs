@@ -8,7 +8,7 @@ using Microsoft.Azure;
 
 namespace SolveChicago.App.Common
 {
-    public class Settings
+    public static class Settings
     {
         public static string StorageConnectionString
         {
@@ -17,6 +17,27 @@ namespace SolveChicago.App.Common
                 return GetSetting("StorageConnectionString", "UseDevelopmentStorage=true;");
             }
         }
+
+        public class Crypto
+        {
+            public static string SharedSecret
+            {
+                get
+                {
+                    return GetSetting<string>("SharedSecret", "JBHVCRES#%$^&*(OIUH");
+                }
+            }
+
+            public static string Salt
+            {
+                get
+                {
+                    return GetSetting<string>("Salt", "o6806642kbM7c5");
+                }
+            }
+        }
+
+        
 
 
         /// <summary>

@@ -1,0 +1,66 @@
+﻿@model SolveChicago.App.Data.CaseNote
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>CaseNote</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Note)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Note)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OutcomeWeight)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OutcomeWeight)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CaseManager.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CaseManager.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Member.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Member.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Outcome.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Outcome.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

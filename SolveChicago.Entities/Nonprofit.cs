@@ -19,6 +19,7 @@ namespace SolveChicago.Entities
         {
             this.MemberNonprofits = new HashSet<MemberNonprofit>();
             this.UserProfiles = new HashSet<UserProfile>();
+            this.NonprofitCaseManagers = new HashSet<NonprofitCaseManager>();
         }
     
         public int Id { get; set; }
@@ -36,5 +37,7 @@ namespace SolveChicago.Entities
         public virtual ICollection<MemberNonprofit> MemberNonprofits { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserProfile> UserProfiles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NonprofitCaseManager> NonprofitCaseManagers { get; set; }
     }
 }

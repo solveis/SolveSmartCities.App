@@ -59,7 +59,7 @@ namespace SolveChicago.App.Common.Entities
             this.ProfilePicturePath = model.ProfilePicturePath;
             this.Province = model.Province;
 
-            this.CaseManagers = model.MemberCaseManagers.Select(x => new CaseManagerEntity().Map(x.CaseManager));
+            this.CaseManagers = model.MemberNonprofits.Select(x => new CaseManagerEntity().Map(x.CaseManager));
             this.CaseNotes = model.CaseNotes.Select(x => new CaseNoteEntity().Map(x));
             this.MemberChildrens = model.MemberChildrens.Select(x => new MemberChildrenEntity().Map(x));
             this.MemberChildrenGovernmentPrograms = model.MemberChildrenGovernmentPrograms.Select(x => new MemberChildrenGovernmentProgramEntity().Map(x));

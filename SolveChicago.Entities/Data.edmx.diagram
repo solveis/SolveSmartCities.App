@@ -52,11 +52,8 @@
         <AssociationConnector Association="SolveChicagoDevModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="SolveChicagoDevModel.AspNetUserRoles" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_UserProfile_AspNetUsers" />
-        <EntityTypeShape EntityType="SolveChicagoDevModel.MemberCaseManager" Width="1.5" PointX="10.25" PointY="26.125" />
         <EntityTypeShape EntityType="SolveChicagoDevModel.Member" Width="1.5" PointX="3" PointY="24.125" />
-        <AssociationConnector Association="SolveChicagoDevModel.FK_MembersCaseManagers_CaseManagers" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_CaseNotes_Members" />
-        <AssociationConnector Association="SolveChicagoDevModel.FK_MembersCaseManagers_Members" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_MemberChildren_Members" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_MemberChildrenGovernmentPrograms_Members" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_MemberCorporations_Members" />
@@ -67,6 +64,13 @@
         <AssociationConnector Association="SolveChicagoDevModel.FK_MemberSurveys_Members" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_Outcomes_Members" />
         <AssociationConnector Association="SolveChicagoDevModel.UserProfileMembers" />
+        <AssociationConnector Association="SolveChicagoDevModel.FK_MemberNonprofits_CaseManagers" />
+        <EntityTypeShape EntityType="SolveChicagoDevModel.NonprofitCaseManager" Width="1.5" PointX="11.25" PointY="24.375" />
+        <AssociationConnector Association="SolveChicagoDevModel.FK_NonprofitCaseManagers_CaseManagers" />
+        <AssociationConnector Association="SolveChicagoDevModel.FK_NonprofitCaseManagers_Nonprofits" />
+        <EntityTypeShape EntityType="SolveChicagoDevModel.Family" Width="1.5" PointX="0.75" PointY="26.125" />
+        <AssociationConnector Association="SolveChicagoDevModel.FK_Members_Families" />
+        <AssociationConnector Association="SolveChicagoDevModel.FK_Admins_UserProfile" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -90,13 +90,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Data.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Family.cs">
+      <DependentUpon>Data.tt</DependentUpon>
+    </Compile>
     <Compile Include="GovernmentProgram.cs">
       <DependentUpon>Data.tt</DependentUpon>
     </Compile>
     <Compile Include="Member.cs">
-      <DependentUpon>Data.tt</DependentUpon>
-    </Compile>
-    <Compile Include="MemberCaseManager.cs">
       <DependentUpon>Data.tt</DependentUpon>
     </Compile>
     <Compile Include="MemberChildren.cs">
@@ -124,6 +124,9 @@
       <DependentUpon>Data.tt</DependentUpon>
     </Compile>
     <Compile Include="Nonprofit.cs">
+      <DependentUpon>Data.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NonprofitCaseManager.cs">
       <DependentUpon>Data.tt</DependentUpon>
     </Compile>
     <Compile Include="Outcome.cs">

@@ -52,7 +52,7 @@ namespace SolveChicago.App.Common.Entities
             this.Email = model.Email;
 
             this.CaseNotes = model.CaseNotes.Select(x => new CaseNoteEntity().Map(x));
-            this.Members = model.MemberCaseManagers.Select(x => new MemberEntity().Map(x.Member));
+            this.Members = model.MemberNonprofits.Select(x => new MemberEntity().Map(x.Member));
             this.UserProfiles = model.UserProfiles.Select(x => new UserProfileEntity().Map(x));
 
             return this;

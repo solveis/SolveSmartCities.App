@@ -1,12 +1,15 @@
-﻿using SolveChicago.App.Common.Entities;
+﻿using SolveChicago.App.Common;
+using SolveChicago.App.Common.Entities;
 using SolveChicago.Entities;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SolveChicago.App.Service
+namespace SolveChicago.Web.Service
 {
     public class CorporationService : BaseService
     {
@@ -14,25 +17,43 @@ namespace SolveChicago.App.Service
         {
             this.db = db;
         }
+
+        [ExcludeFromCodeCoverage]
         public CorporationService()
         {
             this.db = new SolveChicagoEntities();
         }
 
-        public int Create(string email, int userId)
+        public int Create(CorporationEntity entity, int? userId = null)
         {
             Corporation corporation = new Corporation
             {
-                Email = email,
+                Address1 = entity.Address1,
+                Address2 = entity.Address2,
+                City = entity.City,
+                Country = entity.Country,
                 CreatedDate = DateTime.UtcNow,
+                Email = entity.Email,
+                Name = entity.Name,
+                Phone = entity.Phone,
+                Province = entity.Province,
             };
             db.Corporations.Add(corporation);
-            corporation.UserProfiles.Add(db.UserProfiles.Single(x => x.Id == userId));
+            if (userId.HasValue)
+                corporation.UserProfiles.Add(db.UserProfiles.Single(x => x.Id == userId.Value));
             db.SaveChanges();
 
             return corporation.Id;
         }
-        
+
+        public void Delete(int id)
+        {
+            Corporation entity = db.Corporations.Single(x => x.Id == id);
+            db.Corporations.Remove(entity);
+
+            db.SaveChanges();
+        }
+
         public bool UpdateProfile(CorporationEntity model)
         {
             try
@@ -54,7 +75,17 @@ namespace SolveChicago.App.Service
             {
                 return false;
             }
-
         }
+
+        public CorporationEntity GetCorporation(int corporationId)
+        {
+            return new CorporationEntity().Map(db.Corporations.Single(x => x.Id == corporationId));
+        }
+
+        public CorporationEntity[] GetCorporations()
+        {
+            return db.Corporations.Select(x => new CorporationEntity().Map(x)).ToArray();
+        }
+
     }
 }

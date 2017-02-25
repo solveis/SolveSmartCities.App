@@ -20,6 +20,7 @@
           <Property Name="Province" Type="nvarchar" MaxLength="50" />
           <Property Name="Country" Type="nvarchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime2" Precision="7" />
+          <Property Name="InvitedBy" Type="int" />
         </EntityType>
         <EntityType Name="AspNetRoles">
           <Key>
@@ -115,22 +116,20 @@
           <Property Name="Country" Type="nvarchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime2" Precision="7" />
         </EntityType>
+        <EntityType Name="Families">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FamilyName" Type="nvarchar" MaxLength="128" />
+          <Property Name="HeadOfFamily" Type="nvarchar" MaxLength="128" />
+        </EntityType>
         <EntityType Name="GovernmentPrograms">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-        </EntityType>
-        <EntityType Name="MemberCaseManagers">
-          <Key>
-            <PropertyRef Name="MemberId" />
-            <PropertyRef Name="CaseManagerId" />
-          </Key>
-          <Property Name="MemberId" Type="int" Nullable="false" />
-          <Property Name="CaseManagerId" Type="int" Nullable="false" />
-          <Property Name="Start" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="End" Type="datetime2" Precision="7" />
         </EntityType>
         <EntityType Name="MemberChildren">
           <Key>
@@ -189,6 +188,7 @@
           </Key>
           <Property Name="MemberId" Type="int" Nullable="false" />
           <Property Name="NonprofitId" Type="int" Nullable="false" />
+          <Property Name="CaseManagerId" Type="int" />
           <Property Name="Start" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="End" Type="datetime2" Precision="7" />
         </EntityType>
@@ -199,7 +199,6 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="128" />
-          <Property Name="FBProfileToken" Type="nvarchar(max)" />
           <Property Name="ProfilePicturePath" Type="nvarchar(max)" />
           <Property Name="Phone" Type="nvarchar" MaxLength="128" />
           <Property Name="Address1" Type="nvarchar" MaxLength="128" />
@@ -208,6 +207,7 @@
           <Property Name="Province" Type="nvarchar" MaxLength="50" />
           <Property Name="Country" Type="nvarchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime2" Precision="7" />
+          <Property Name="FamilyId" Type="int" />
         </EntityType>
         <EntityType Name="MemberStatuses">
           <Key>
@@ -225,6 +225,16 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SurveyId" Type="int" Nullable="false" />
           <Property Name="MemberId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NonprofitCaseManagers">
+          <Key>
+            <PropertyRef Name="NonprofitId" />
+            <PropertyRef Name="CaseManagerId" />
+          </Key>
+          <Property Name="NonprofitId" Type="int" Nullable="false" />
+          <Property Name="CaseManagerId" Type="int" Nullable="false" />
+          <Property Name="Start" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="End" Type="datetime2" Precision="7" />
         </EntityType>
         <EntityType Name="Nonprofits">
           <Key>
@@ -338,6 +348,18 @@
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="NonprofitId" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Admins_UserProfile">
+          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1" />
+          <End Role="Admins" Type="Self.Admins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Admins">
+              <PropertyRef Name="InvitedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CaseNotes_CaseManagers">
           <End Role="CaseManagers" Type="Self.CaseManagers" Multiplicity="0..1" />
           <End Role="CaseNotes" Type="Self.CaseNotes" Multiplicity="*" />
@@ -556,6 +578,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_MemberNonprofits_CaseManagers">
+          <End Role="CaseManagers" Type="Self.CaseManagers" Multiplicity="0..1" />
+          <End Role="MemberNonprofits" Type="Self.MemberNonprofits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CaseManagers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MemberNonprofits">
+              <PropertyRef Name="CaseManagerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_MemberNonprofits_Members">
           <End Role="Members" Type="Self.Members" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -584,31 +618,17 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_MembersCaseManagers_CaseManagers">
-          <End Role="CaseManagers" Type="Self.CaseManagers" Multiplicity="1">
+        <Association Name="FK_Members_Families">
+          <End Role="Families" Type="Self.Families" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="MemberCaseManagers" Type="Self.MemberCaseManagers" Multiplicity="*" />
+          <End Role="Members" Type="Self.Members" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="CaseManagers">
+            <Principal Role="Families">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="MemberCaseManagers">
-              <PropertyRef Name="CaseManagerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_MembersCaseManagers_Members">
-          <End Role="Members" Type="Self.Members" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="MemberCaseManagers" Type="Self.MemberCaseManagers" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Members">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="MemberCaseManagers">
-              <PropertyRef Name="MemberId" />
+            <Dependent Role="Members">
+              <PropertyRef Name="FamilyId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -651,6 +671,34 @@
             </Principal>
             <Dependent Role="MemberSurveys">
               <PropertyRef Name="SurveyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NonprofitCaseManagers_CaseManagers">
+          <End Role="CaseManagers" Type="Self.CaseManagers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="NonprofitCaseManagers" Type="Self.NonprofitCaseManagers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CaseManagers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NonprofitCaseManagers">
+              <PropertyRef Name="CaseManagerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NonprofitCaseManagers_Nonprofits">
+          <End Role="Nonprofits" Type="Self.Nonprofits" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="NonprofitCaseManagers" Type="Self.NonprofitCaseManagers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nonprofits">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NonprofitCaseManagers">
+              <PropertyRef Name="NonprofitId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -922,8 +970,8 @@
           <EntitySet Name="CaseManagers" EntityType="Self.CaseManagers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CaseNotes" EntityType="Self.CaseNotes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Corporations" EntityType="Self.Corporations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Families" EntityType="Self.Families" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GovernmentPrograms" EntityType="Self.GovernmentPrograms" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="MemberCaseManagers" EntityType="Self.MemberCaseManagers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MemberChildren" EntityType="Self.MemberChildren" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MemberChildrenGovernmentPrograms" EntityType="Self.MemberChildrenGovernmentPrograms" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MemberCorporations" EntityType="Self.MemberCorporations" Schema="dbo" store:Type="Tables" />
@@ -933,6 +981,7 @@
           <EntitySet Name="Members" EntityType="Self.Members" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MemberStatuses" EntityType="Self.MemberStatuses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MemberSurveys" EntityType="Self.MemberSurveys" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NonprofitCaseManagers" EntityType="Self.NonprofitCaseManagers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Nonprofits" EntityType="Self.Nonprofits" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Outcomes" EntityType="Self.Outcomes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SurveyAnswers" EntityType="Self.SurveyAnswers" Schema="dbo" store:Type="Tables" />
@@ -945,6 +994,10 @@
           <EntitySet Name="UserProfileCorporations" EntityType="Self.UserProfileCorporations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserProfileMembers" EntityType="Self.UserProfileMembers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserProfileNonprofits" EntityType="Self.UserProfileNonprofits" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Admins_UserProfile" Association="Self.FK_Admins_UserProfile">
+            <End Role="UserProfile" EntitySet="UserProfile" />
+            <End Role="Admins" EntitySet="Admins" />
+          </AssociationSet>
           <AssociationSet Name="FK_CaseNotes_CaseManagers" Association="Self.FK_CaseNotes_CaseManagers">
             <End Role="CaseManagers" EntitySet="CaseManagers" />
             <End Role="CaseNotes" EntitySet="CaseNotes" />
@@ -1009,6 +1062,10 @@
             <End Role="Members" EntitySet="Members" />
             <End Role="MemberGovernmentPrograms" EntitySet="MemberGovernmentPrograms" />
           </AssociationSet>
+          <AssociationSet Name="FK_MemberNonprofits_CaseManagers" Association="Self.FK_MemberNonprofits_CaseManagers">
+            <End Role="CaseManagers" EntitySet="CaseManagers" />
+            <End Role="MemberNonprofits" EntitySet="MemberNonprofits" />
+          </AssociationSet>
           <AssociationSet Name="FK_MemberNonprofits_Members" Association="Self.FK_MemberNonprofits_Members">
             <End Role="Members" EntitySet="Members" />
             <End Role="MemberNonprofits" EntitySet="MemberNonprofits" />
@@ -1017,13 +1074,9 @@
             <End Role="Nonprofits" EntitySet="Nonprofits" />
             <End Role="MemberNonprofits" EntitySet="MemberNonprofits" />
           </AssociationSet>
-          <AssociationSet Name="FK_MembersCaseManagers_CaseManagers" Association="Self.FK_MembersCaseManagers_CaseManagers">
-            <End Role="CaseManagers" EntitySet="CaseManagers" />
-            <End Role="MemberCaseManagers" EntitySet="MemberCaseManagers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MembersCaseManagers_Members" Association="Self.FK_MembersCaseManagers_Members">
+          <AssociationSet Name="FK_Members_Families" Association="Self.FK_Members_Families">
+            <End Role="Families" EntitySet="Families" />
             <End Role="Members" EntitySet="Members" />
-            <End Role="MemberCaseManagers" EntitySet="MemberCaseManagers" />
           </AssociationSet>
           <AssociationSet Name="FK_MemberStatuses_Members" Association="Self.FK_MemberStatuses_Members">
             <End Role="Members" EntitySet="Members" />
@@ -1036,6 +1089,14 @@
           <AssociationSet Name="FK_MemberSurveys_Surveys" Association="Self.FK_MemberSurveys_Surveys">
             <End Role="Surveys" EntitySet="Surveys" />
             <End Role="MemberSurveys" EntitySet="MemberSurveys" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NonprofitCaseManagers_CaseManagers" Association="Self.FK_NonprofitCaseManagers_CaseManagers">
+            <End Role="CaseManagers" EntitySet="CaseManagers" />
+            <End Role="NonprofitCaseManagers" EntitySet="NonprofitCaseManagers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NonprofitCaseManagers_Nonprofits" Association="Self.FK_NonprofitCaseManagers_Nonprofits">
+            <End Role="Nonprofits" EntitySet="Nonprofits" />
+            <End Role="NonprofitCaseManagers" EntitySet="NonprofitCaseManagers" />
           </AssociationSet>
           <AssociationSet Name="FK_Outcomes_Members" Association="Self.FK_Outcomes_Members">
             <End Role="Members" EntitySet="Members" />
@@ -1134,6 +1195,8 @@
           <Property Name="CreatedDate" Type="DateTime" Precision="7" />
           <NavigationProperty Name="UserProfiles" Relationship="Self.UserProfileAdmins" FromRole="Admins" ToRole="UserProfile" />
           <Property Name="Email" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="InvitedBy" Type="Int32" />
+          <NavigationProperty Name="UserProfile" Relationship="SolveChicagoDevModel.FK_Admins_UserProfile" FromRole="Admin" ToRole="UserProfile" />
         </EntityType>
         <EntityType Name="CaseManager">
           <Key>
@@ -1152,7 +1215,8 @@
           <NavigationProperty Name="CaseNotes" Relationship="Self.FK_CaseNotes_CaseManagers" FromRole="CaseManagers" ToRole="CaseNotes" />
           <NavigationProperty Name="UserProfiles" Relationship="Self.UserProfileCaseManagers" FromRole="CaseManagers" ToRole="UserProfile" />
           <Property Name="Email" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="MemberCaseManagers" Relationship="SolveChicagoDevModel.FK_MembersCaseManagers_CaseManagers" FromRole="CaseManager" ToRole="MemberCaseManager" />
+          <NavigationProperty Name="MemberNonprofits" Relationship="SolveChicagoDevModel.FK_MemberNonprofits_CaseManagers" FromRole="CaseManager" ToRole="MemberNonprofit" />
+          <NavigationProperty Name="NonprofitCaseManagers" Relationship="SolveChicagoDevModel.FK_NonprofitCaseManagers_CaseManagers" FromRole="CaseManager" ToRole="NonprofitCaseManager" />
         </EntityType>
         <EntityType Name="CaseNote">
           <Key>
@@ -1266,6 +1330,8 @@
           <Property Name="End" Type="DateTime" Precision="7" />
           <NavigationProperty Name="Nonprofit" Relationship="Self.FK_MemberNonprofits_Nonprofits" FromRole="MemberNonprofits" ToRole="Nonprofits" />
           <NavigationProperty Name="Member" Relationship="SolveChicagoDevModel.FK_MemberNonprofits_Members" FromRole="MemberNonprofit" ToRole="Member" />
+          <Property Name="CaseManagerId" Type="Int32" />
+          <NavigationProperty Name="CaseManager" Relationship="SolveChicagoDevModel.FK_MemberNonprofits_CaseManagers" FromRole="MemberNonprofit" ToRole="CaseManager" />
         </EntityType>
         <EntityType Name="MemberStatus">
           <Key>
@@ -1304,6 +1370,7 @@
           <NavigationProperty Name="MemberNonprofits" Relationship="Self.FK_MemberNonprofits_Nonprofits" FromRole="Nonprofits" ToRole="MemberNonprofits" />
           <NavigationProperty Name="UserProfiles" Relationship="Self.UserProfileNonprofits" FromRole="Nonprofits" ToRole="UserProfile" />
           <Property Name="Email" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="NonprofitCaseManagers" Relationship="SolveChicagoDevModel.FK_NonprofitCaseManagers_Nonprofits" FromRole="Nonprofit" ToRole="NonprofitCaseManager" />
         </EntityType>
         <EntityType Name="Outcome">
           <Key>
@@ -1383,6 +1450,7 @@
           <Property Name="IdentityUserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUser" Relationship="SolveChicagoDevModel.FK_UserProfile_AspNetUsers" FromRole="UserProfile" ToRole="AspNetUser" />
           <NavigationProperty Name="Members" Relationship="SolveChicagoDevModel.UserProfileMembers" FromRole="UserProfile" ToRole="Member" />
+          <NavigationProperty Name="Admins1" Relationship="SolveChicagoDevModel.FK_Admins_UserProfile" FromRole="UserProfile" ToRole="Admin" />
         </EntityType>
         <Association Name="FK_CaseNotes_CaseManagers">
           <End Role="CaseManagers" Type="Self.CaseManager" Multiplicity="0..1" />
@@ -1717,19 +1785,10 @@
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="UserProfile" EntitySet="UserProfiles" />
           </AssociationSet>
-          <EntitySet Name="MemberCaseManagers" EntityType="SolveChicagoDevModel.MemberCaseManager" />
           <EntitySet Name="Members" EntityType="SolveChicagoDevModel.Member" />
-          <AssociationSet Name="FK_MembersCaseManagers_CaseManagers" Association="SolveChicagoDevModel.FK_MembersCaseManagers_CaseManagers">
-            <End Role="CaseManager" EntitySet="CaseManagers" />
-            <End Role="MemberCaseManager" EntitySet="MemberCaseManagers" />
-          </AssociationSet>
           <AssociationSet Name="FK_CaseNotes_Members" Association="SolveChicagoDevModel.FK_CaseNotes_Members">
             <End Role="Member" EntitySet="Members" />
             <End Role="CaseNote" EntitySet="CaseNotes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MembersCaseManagers_Members" Association="SolveChicagoDevModel.FK_MembersCaseManagers_Members">
-            <End Role="Member" EntitySet="Members" />
-            <End Role="MemberCaseManager" EntitySet="MemberCaseManagers" />
           </AssociationSet>
           <AssociationSet Name="FK_MemberChildren_Members" Association="SolveChicagoDevModel.FK_MemberChildren_Members">
             <End Role="Member" EntitySet="Members" />
@@ -1770,6 +1829,28 @@
           <AssociationSet Name="UserProfileMembers" Association="SolveChicagoDevModel.UserProfileMembers">
             <End Role="Member" EntitySet="Members" />
             <End Role="UserProfile" EntitySet="UserProfiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MemberNonprofits_CaseManagers" Association="SolveChicagoDevModel.FK_MemberNonprofits_CaseManagers">
+            <End Role="CaseManager" EntitySet="CaseManagers" />
+            <End Role="MemberNonprofit" EntitySet="MemberNonprofits" />
+          </AssociationSet>
+          <EntitySet Name="NonprofitCaseManagers" EntityType="SolveChicagoDevModel.NonprofitCaseManager" />
+          <AssociationSet Name="FK_NonprofitCaseManagers_CaseManagers" Association="SolveChicagoDevModel.FK_NonprofitCaseManagers_CaseManagers">
+            <End Role="CaseManager" EntitySet="CaseManagers" />
+            <End Role="NonprofitCaseManager" EntitySet="NonprofitCaseManagers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NonprofitCaseManagers_Nonprofits" Association="SolveChicagoDevModel.FK_NonprofitCaseManagers_Nonprofits">
+            <End Role="Nonprofit" EntitySet="Nonprofits" />
+            <End Role="NonprofitCaseManager" EntitySet="NonprofitCaseManagers" />
+          </AssociationSet>
+          <EntitySet Name="Families" EntityType="SolveChicagoDevModel.Family" />
+          <AssociationSet Name="FK_Members_Families" Association="SolveChicagoDevModel.FK_Members_Families">
+            <End Role="Family" EntitySet="Families" />
+            <End Role="Member" EntitySet="Members" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Admins_UserProfile" Association="SolveChicagoDevModel.FK_Admins_UserProfile">
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+            <End Role="Admin" EntitySet="Admins" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="AspNetRole">
@@ -1868,18 +1949,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="MemberCaseManager">
-          <Key>
-            <PropertyRef Name="MemberId" />
-            <PropertyRef Name="CaseManagerId" />
-          </Key>
-          <Property Name="MemberId" Type="Int32" Nullable="false" />
-          <Property Name="CaseManagerId" Type="Int32" Nullable="false" />
-          <Property Name="Start" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="End" Type="DateTime" Precision="7" />
-          <NavigationProperty Name="CaseManager" Relationship="SolveChicagoDevModel.FK_MembersCaseManagers_CaseManagers" FromRole="MemberCaseManager" ToRole="CaseManager" />
-          <NavigationProperty Name="Member" Relationship="SolveChicagoDevModel.FK_MembersCaseManagers_Members" FromRole="MemberCaseManager" ToRole="Member" />
-        </EntityType>
         <EntityType Name="Member">
           <Key>
             <PropertyRef Name="Id" />
@@ -1887,7 +1956,6 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Email" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="FBProfileToken" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ProfilePicturePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Phone" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Address1" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
@@ -1897,7 +1965,6 @@
           <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Precision="7" />
           <NavigationProperty Name="CaseNotes" Relationship="SolveChicagoDevModel.FK_CaseNotes_Members" FromRole="Member" ToRole="CaseNote" />
-          <NavigationProperty Name="MemberCaseManagers" Relationship="SolveChicagoDevModel.FK_MembersCaseManagers_Members" FromRole="Member" ToRole="MemberCaseManager" />
           <NavigationProperty Name="MemberChildrens" Relationship="SolveChicagoDevModel.FK_MemberChildren_Members" FromRole="Member" ToRole="MemberChildren" />
           <NavigationProperty Name="MemberChildrenGovernmentPrograms" Relationship="SolveChicagoDevModel.FK_MemberChildrenGovernmentPrograms_Members" FromRole="Member" ToRole="MemberChildrenGovernmentProgram" />
           <NavigationProperty Name="MemberCorporations" Relationship="SolveChicagoDevModel.FK_MemberCorporations_Members" FromRole="Member" ToRole="MemberCorporation" />
@@ -1908,21 +1975,9 @@
           <NavigationProperty Name="MemberSurveys" Relationship="SolveChicagoDevModel.FK_MemberSurveys_Members" FromRole="Member" ToRole="MemberSurvey" />
           <NavigationProperty Name="Outcomes" Relationship="SolveChicagoDevModel.FK_Outcomes_Members" FromRole="Member" ToRole="Outcome" />
           <NavigationProperty Name="UserProfiles" Relationship="SolveChicagoDevModel.UserProfileMembers" FromRole="Member" ToRole="UserProfile" />
+          <Property Name="FamilyId" Type="Int32" />
+          <NavigationProperty Name="Family" Relationship="SolveChicagoDevModel.FK_Members_Families" FromRole="Member" ToRole="Family" />
         </EntityType>
-        <Association Name="FK_MembersCaseManagers_CaseManagers">
-          <End Type="SolveChicagoDevModel.CaseManager" Role="CaseManager" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="SolveChicagoDevModel.MemberCaseManager" Role="MemberCaseManager" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CaseManager">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="MemberCaseManager">
-              <PropertyRef Name="CaseManagerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_CaseNotes_Members">
           <End Type="SolveChicagoDevModel.Member" Role="Member" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -1933,20 +1988,6 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="CaseNote">
-              <PropertyRef Name="MemberId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_MembersCaseManagers_Members">
-          <End Type="SolveChicagoDevModel.Member" Role="Member" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="SolveChicagoDevModel.MemberCaseManager" Role="MemberCaseManager" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Member">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="MemberCaseManager">
               <PropertyRef Name="MemberId" />
             </Dependent>
           </ReferentialConstraint>
@@ -2077,6 +2118,93 @@
           <End Type="SolveChicagoDevModel.Member" Role="Member" Multiplicity="*" />
           <End Type="SolveChicagoDevModel.UserProfile" Role="UserProfile" Multiplicity="*" />
         </Association>
+        <Association Name="FK_MemberNonprofits_CaseManagers">
+          <End Type="SolveChicagoDevModel.CaseManager" Role="CaseManager" Multiplicity="0..1" />
+          <End Type="SolveChicagoDevModel.MemberNonprofit" Role="MemberNonprofit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CaseManager">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MemberNonprofit">
+              <PropertyRef Name="CaseManagerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="NonprofitCaseManager">
+          <Key>
+            <PropertyRef Name="NonprofitId" />
+            <PropertyRef Name="CaseManagerId" />
+          </Key>
+          <Property Name="NonprofitId" Type="Int32" Nullable="false" />
+          <Property Name="CaseManagerId" Type="Int32" Nullable="false" />
+          <Property Name="Start" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="End" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="CaseManager" Relationship="SolveChicagoDevModel.FK_NonprofitCaseManagers_CaseManagers" FromRole="NonprofitCaseManager" ToRole="CaseManager" />
+          <NavigationProperty Name="Nonprofit" Relationship="SolveChicagoDevModel.FK_NonprofitCaseManagers_Nonprofits" FromRole="NonprofitCaseManager" ToRole="Nonprofit" />
+        </EntityType>
+        <Association Name="FK_NonprofitCaseManagers_CaseManagers">
+          <End Type="SolveChicagoDevModel.CaseManager" Role="CaseManager" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="SolveChicagoDevModel.NonprofitCaseManager" Role="NonprofitCaseManager" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CaseManager">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NonprofitCaseManager">
+              <PropertyRef Name="CaseManagerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NonprofitCaseManagers_Nonprofits">
+          <End Type="SolveChicagoDevModel.Nonprofit" Role="Nonprofit" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="SolveChicagoDevModel.NonprofitCaseManager" Role="NonprofitCaseManager" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nonprofit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NonprofitCaseManager">
+              <PropertyRef Name="NonprofitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Family">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FamilyName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="HeadOfFamily" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Members" Relationship="SolveChicagoDevModel.FK_Members_Families" FromRole="Family" ToRole="Member" />
+        </EntityType>
+        <Association Name="FK_Members_Families">
+          <End Type="SolveChicagoDevModel.Family" Role="Family" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="SolveChicagoDevModel.Member" Role="Member" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Family">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Member">
+              <PropertyRef Name="FamilyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Admins_UserProfile">
+          <End Type="SolveChicagoDevModel.UserProfile" Role="UserProfile" Multiplicity="0..1" />
+          <End Type="SolveChicagoDevModel.Admin" Role="Admin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Admin">
+              <PropertyRef Name="InvitedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2086,6 +2214,7 @@
           <EntitySetMapping Name="Admins">
             <EntityTypeMapping TypeName="SolveChicagoDevModel.Admin">
               <MappingFragment StoreEntitySet="Admins">
+                <ScalarProperty Name="InvitedBy" ColumnName="InvitedBy" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -2211,6 +2340,7 @@
           <EntitySetMapping Name="MemberNonprofits">
             <EntityTypeMapping TypeName="SolveChicagoDevModel.MemberNonprofit">
               <MappingFragment StoreEntitySet="MemberNonprofits">
+                <ScalarProperty Name="CaseManagerId" ColumnName="CaseManagerId" />
                 <ScalarProperty Name="MemberId" ColumnName="MemberId" />
                 <ScalarProperty Name="NonprofitId" ColumnName="NonprofitId" />
                 <ScalarProperty Name="Start" ColumnName="Start" />
@@ -2401,19 +2531,10 @@
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="MemberCaseManagers">
-            <EntityTypeMapping TypeName="SolveChicagoDevModel.MemberCaseManager">
-              <MappingFragment StoreEntitySet="MemberCaseManagers">
-                <ScalarProperty Name="End" ColumnName="End" />
-                <ScalarProperty Name="Start" ColumnName="Start" />
-                <ScalarProperty Name="CaseManagerId" ColumnName="CaseManagerId" />
-                <ScalarProperty Name="MemberId" ColumnName="MemberId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Members">
             <EntityTypeMapping TypeName="SolveChicagoDevModel.Member">
               <MappingFragment StoreEntitySet="Members">
+                <ScalarProperty Name="FamilyId" ColumnName="FamilyId" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="Country" ColumnName="Country" />
                 <ScalarProperty Name="Province" ColumnName="Province" />
@@ -2422,7 +2543,6 @@
                 <ScalarProperty Name="Address1" ColumnName="Address1" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="ProfilePicturePath" ColumnName="ProfilePicturePath" />
-                <ScalarProperty Name="FBProfileToken" ColumnName="FBProfileToken" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -2437,6 +2557,25 @@
               <ScalarProperty Name="Id" ColumnName="MemberId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="NonprofitCaseManagers">
+            <EntityTypeMapping TypeName="SolveChicagoDevModel.NonprofitCaseManager">
+              <MappingFragment StoreEntitySet="NonprofitCaseManagers">
+                <ScalarProperty Name="End" ColumnName="End" />
+                <ScalarProperty Name="Start" ColumnName="Start" />
+                <ScalarProperty Name="CaseManagerId" ColumnName="CaseManagerId" />
+                <ScalarProperty Name="NonprofitId" ColumnName="NonprofitId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Families">
+            <EntityTypeMapping TypeName="SolveChicagoDevModel.Family">
+              <MappingFragment StoreEntitySet="Families">
+                <ScalarProperty Name="HeadOfFamily" ColumnName="HeadOfFamily" />
+                <ScalarProperty Name="FamilyName" ColumnName="FamilyName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

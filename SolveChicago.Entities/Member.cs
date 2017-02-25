@@ -18,7 +18,6 @@ namespace SolveChicago.Entities
         public Member()
         {
             this.CaseNotes = new HashSet<CaseNote>();
-            this.MemberCaseManagers = new HashSet<MemberCaseManager>();
             this.MemberChildrens = new HashSet<MemberChildren>();
             this.MemberChildrenGovernmentPrograms = new HashSet<MemberChildrenGovernmentProgram>();
             this.MemberCorporations = new HashSet<MemberCorporation>();
@@ -34,7 +33,6 @@ namespace SolveChicago.Entities
         public int Id { get; set; }
         public string Email { get; set; }
         public string Name { get; set; }
-        public string FBProfileToken { get; set; }
         public string ProfilePicturePath { get; set; }
         public string Phone { get; set; }
         public string Address1 { get; set; }
@@ -43,11 +41,10 @@ namespace SolveChicago.Entities
         public string Province { get; set; }
         public string Country { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<int> FamilyId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CaseNote> CaseNotes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MemberCaseManager> MemberCaseManagers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MemberChildren> MemberChildrens { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -68,5 +65,6 @@ namespace SolveChicago.Entities
         public virtual ICollection<Outcome> Outcomes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserProfile> UserProfiles { get; set; }
+        public virtual Family Family { get; set; }
     }
 }

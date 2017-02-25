@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SolveChicago.App.Service
+namespace SolveChicago.Web.Service
 {
     public class UserProfileService : BaseService
     {

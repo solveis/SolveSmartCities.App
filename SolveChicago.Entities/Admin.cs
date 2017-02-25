@@ -31,8 +31,10 @@ namespace SolveChicago.Entities
         public string Country { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string Email { get; set; }
+        public Nullable<int> InvitedBy { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserProfile> UserProfiles { get; set; }
+        public virtual UserProfile UserProfile { get; set; }
     }
 }
