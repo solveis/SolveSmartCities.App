@@ -6,7 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using SolveChicago.App.Data;
+using SolveChicago.Web.Data;
 
 namespace SolveChicago.Web.Controllers
 {

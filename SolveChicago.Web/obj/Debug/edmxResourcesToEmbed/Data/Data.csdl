@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="SolveChicagoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+<Schema Namespace="SolveChicagoDevModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityType Name="Admin">
     <Key>
       <PropertyRef Name="Id" />
@@ -138,7 +138,14 @@
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="FamilyName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-    <Property Name="HeadOfFamily" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HeadOfHousehold" Type="Int32" />
+    <Property Name="Phone" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Address1" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Address2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Province" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="7" />
     <NavigationProperty Name="Members" Relationship="Self.FK_Members_Families" FromRole="Families" ToRole="Members" />
   </EntityType>
   <EntityType Name="GovernmentProgram">
@@ -240,6 +247,7 @@
     <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="CreatedDate" Type="DateTime" Precision="7" />
     <Property Name="FamilyId" Type="Int32" />
+    <Property Name="FamilyRole" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="CaseNotes" Relationship="Self.FK_CaseNotes_Members" FromRole="Members" ToRole="CaseNotes" />
     <NavigationProperty Name="Family" Relationship="Self.FK_Members_Families" FromRole="Members" ToRole="Families" />
     <NavigationProperty Name="MemberChildrens" Relationship="Self.FK_MemberChildren_Members" FromRole="Members" ToRole="MemberChildren" />

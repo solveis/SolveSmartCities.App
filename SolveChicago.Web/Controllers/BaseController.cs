@@ -12,9 +12,10 @@ using SolveChicago.Web.Models;
 using SolveChicago.Web.Common;
 using SolveChicago.Web.Controllers;
 using Microsoft.AspNet.Identity.EntityFramework;
-using SolveChicago.Entities;
 using System.IO;
 using System.Collections.Generic;
+using DonorPath.Web.Common;
+using SolveChicago.Web.Data;
 
 namespace SolveChicago.Web.Controllers
 {
@@ -109,13 +110,13 @@ namespace SolveChicago.Web.Controllers
             _state = new StateModel();
             _state.UserName = userName;
             _state.Roles = GetRoles(userName);
-            int userId = GetUserId(userName);
+            string userId = GetUserId(userName);
             _state.FirstName = _state.DisplayName != null ? _state.DisplayName.Split(' ')[0] : "";
             ViewBag.Email = userName;
 
             if (_state.Roles.Contains(Enumerations.Role.Member))
             {
-                Member member = db.UserProfiles.Single(x => x.Id == userId).Members.First();
+                Member member = db.AspNetUsers.Single(x => x.Id == userId).Members.First();
 
                 if (member != null)
                 {
@@ -138,7 +139,7 @@ namespace SolveChicago.Web.Controllers
             }
             if (_state.Roles.Contains(Enumerations.Role.CaseManager))
             {
-                CaseManager caseManager = db.UserProfiles.Single(x => x.Id == userId).CaseManagers.First();
+                CaseManager caseManager = db.AspNetUsers.Single(x => x.Id == userId).CaseManagers.First();
 
                 if (caseManager != null)
                 {
@@ -152,7 +153,7 @@ namespace SolveChicago.Web.Controllers
             }
             if (_state.Roles.Contains(Enumerations.Role.Corporation))
             {
-                Corporation corporation = db.UserProfiles.Single(x => x.Id == userId).Corporations.First();
+                Corporation corporation = db.AspNetUsers.Single(x => x.Id == userId).Corporations.First();
 
                 if (corporation != null)
                 {
@@ -166,7 +167,7 @@ namespace SolveChicago.Web.Controllers
             }
             if (_state.Roles.Contains(Enumerations.Role.Nonprofit))
             {
-                Nonprofit nonprofit = db.UserProfiles.Single(x => x.Id == userId).Nonprofits.First();
+                Nonprofit nonprofit = db.AspNetUsers.Single(x => x.Id == userId).Nonprofits.First();
 
                 if (nonprofit != null)
                 {
@@ -181,7 +182,7 @@ namespace SolveChicago.Web.Controllers
 
             if (_state.Roles.Contains(Enumerations.Role.Admin))
             {
-                Admin admin = db.UserProfiles.Single(x => x.Id == userId).Admins.First();
+                Admin admin = db.AspNetUsers.Single(x => x.Id == userId).Admins.First();
 
                 if (admin != null)
                 {
@@ -333,9 +334,9 @@ namespace SolveChicago.Web.Controllers
             return result.ToArray();
         }
 
-        protected int GetUserId(string userName)
+        protected string GetUserId(string userName)
         {
-            return db.UserProfiles.First(x => x.UserName == userName).Id;
+            return db.AspNetUsers.First(x => x.UserName == userName).Id;
         }
 
 
@@ -435,9 +436,22 @@ namespace SolveChicago.Web.Controllers
             return true;// profile.Corporations.Any() || profile.Admins.Any() || profile.Nonprofits.Any() || profile.Members.Any() || profile.CaseManagers.Any();
         }
 
-        public int GetUserIdFromUsername(string userName)
+        public string GetUserIdFromUsername(string userName)
         {
-            return db.AspNetUsers.Single(x => x.UserName == userName).UserProfiles.First().Id;
+            return db.AspNetUsers.Single(x => x.UserName == userName).Id;
+        }
+
+        public bool ValidateAdminInvite(string inviteCode, ref string userId)
+        {
+            string decodedCryptoId = inviteCode.Replace('_', '/').Replace('$', '+');
+            string decryptedUserId = Crypto.DecryptStringAES(decodedCryptoId, Settings.Crypto.SharedSecret);
+            if(db.AspNetUsers.Single(x => x.Id == decryptedUserId).Admins.Any())
+            {
+                userId = decryptedUserId;
+                return true;
+            }   
+            else
+                return false;
         }
 
     }

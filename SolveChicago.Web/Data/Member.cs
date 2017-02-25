@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SolveChicago.App.Data
+namespace SolveChicago.Web.Data
 {
     using System;
     using System.Collections.Generic;
@@ -42,6 +42,7 @@ namespace SolveChicago.App.Data
         public string Country { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> FamilyId { get; set; }
+        public string FamilyRole { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CaseNote> CaseNotes { get; set; }

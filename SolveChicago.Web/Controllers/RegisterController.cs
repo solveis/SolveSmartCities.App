@@ -23,11 +23,11 @@ namespace SolveChicago.Web.Controllers
         [AllowAnonymous]
         public ActionResult Admin(string inviteCode)
         {
-            //using(AdminService service = new AdminService())
-            //if(service.ValidateAdminInvite(inviteCode)) // refactor to be encryption check
-            //{
-                //return HttpNotFound();
-            //}
+            string userId = string.Empty;
+            if (!ValidateAdminInvite(inviteCode, ref userId)) // refactor to be encryption check
+            {
+                return HttpNotFound();
+            }
             return View();
         }
 
@@ -92,8 +92,11 @@ namespace SolveChicago.Web.Controllers
         //
         // GET: /Register/CaseManager
         [AllowAnonymous]
-        public ActionResult CaseManager()
+        public ActionResult CaseManager(int? nonprofitId)
         {
+            if (!nonprofitId.HasValue)
+                return HttpNotFound();
+            ViewBag.NonProfitId = nonprofitId.Value;
             return View();
         }
 

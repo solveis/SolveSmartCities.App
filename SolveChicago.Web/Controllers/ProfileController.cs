@@ -1,6 +1,5 @@
 ﻿using SolveChicago.Web.Common;
 using SolveChicago.Web.Controllers;
-using SolveChicago.Entities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
+using SolveChicago.Web.Data;
 
 namespace SolveChicago.Web.Controllers
 {

@@ -511,20 +511,6 @@
     <Content Include="Scripts\jquery-3.1.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SolveChicago.App.Common\SolveChicago.App.Common.csproj">
-      <Project>{adb01512-9fcd-4a25-98a6-94ca211a183e}</Project>
-      <Name>SolveChicago.App.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SolveChicago.App.Service\SolveChicago.App.Service.csproj">
-      <Project>{3deb6dd4-80c7-4c47-b6e3-28906a6ee31b}</Project>
-      <Name>SolveChicago.App.Service</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SolveChicago.Entities\SolveChicago.Entities.csproj">
-      <Project>{aacc5236-2347-48dc-9995-313958454fe8}</Project>
-      <Name>SolveChicago.Entities</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>

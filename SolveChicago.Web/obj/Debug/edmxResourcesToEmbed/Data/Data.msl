@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="SolveChicagoModelStoreContainer" CdmEntityContainer="SolveChicagoEntities">
+  <EntityContainerMapping StorageEntityContainer="SolveChicagoDevModelStoreContainer" CdmEntityContainer="SolveChicagoEntities">
     <EntitySetMapping Name="Admins">
-      <EntityTypeMapping TypeName="SolveChicagoModel.Admin">
+      <EntityTypeMapping TypeName="SolveChicagoDevModel.Admin">
         <MappingFragment StoreEntitySet="Admins">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Email" ColumnName="Email" />
@@ -20,7 +20,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="AspNetRoles">
-      <EntityTypeMapping TypeName="SolveChicagoModel.AspNetRole">
+      <EntityTypeMapping TypeName="SolveChicagoDevModel.AspNetRole">
         <MappingFragment StoreEntitySet="AspNetRoles">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
@@ -28,7 +28,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="AspNetUsers">
-      <EntityTypeMapping TypeName="SolveChicagoModel.AspNetUser">
+      <EntityTypeMapping TypeName="SolveChicagoDevModel.AspNetUser">
         <MappingFragment StoreEntitySet="AspNetUser">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Email" ColumnName="Email" />
@@ -50,7 +50,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="AspNetUserClaims">
-      <EntityTypeMapping TypeName="SolveChicagoModel.AspNetUserClaim">
+      <EntityTypeMapping TypeName="SolveChicagoDevModel.AspNetUserClaim">
         <MappingFragment StoreEntitySet="AspNetUserClaims">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -60,7 +60,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="AspNetUserLogins">
-      <EntityTypeMapping TypeName="SolveChicagoModel.AspNetUserLogin">
+      <EntityTypeMapping TypeName="SolveChicagoDevModel.AspNetUserLogin">
         <MappingFragment StoreEntitySet="AspNetUserLogins">
           <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
           <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
@@ -69,7 +69,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="CaseManagers">
-      <EntityTypeMapping TypeName="SolveChicagoModel.CaseManager">
+      <EntityTypeMapping TypeName="SolveChicagoDevModel.CaseManager">
         <MappingFragment StoreEntitySet="CaseManagers">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Email" ColumnName="Email" />
@@ -86,7 +86,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="CaseNotes">
-      <EntityTypeMapping TypeName="SolveChicagoModel.CaseNote">
+      <EntityTypeMapping TypeName="SolveChicagoDevModel.CaseNote">
         <MappingFragment StoreEntitySet="CaseNotes">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="MemberId" ColumnName="MemberId" />
@@ -99,7 +99,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Corporations">
-      <EntityTypeMapping TypeName="SolveChicagoModel.Corporation">
+      <EntityTypeMapping TypeName="SolveChicagoDevModel.Corporation">
         <MappingFragment StoreEntitySet="Corporations">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Email" ColumnName="Email" />
@@ -115,16 +115,23 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Families">
-      <EntityTypeMapping TypeName="SolveChicagoModel.Family">
+      <EntityTypeMapping TypeName="SolveChicagoDevModel.Family">
         <MappingFragment StoreEntitySet="Families">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="FamilyName" ColumnName="FamilyName" />
-          <ScalarProperty Name="HeadOfFamily" ColumnName="HeadOfFamily" />
+          <ScalarProperty Name="HeadOfHousehold" ColumnName="HeadOfHousehold" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Address1" ColumnName="Address1" />
+          <ScalarProperty Name="Address2" ColumnName="Address2" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Province" ColumnName="Province" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="GovernmentPrograms">
-      <EntityTypeMapping TypeName="SolveChicagoModel.GovernmentProgram">
+      <EntityTypeMapping TypeName="SolveChicagoDevModel.GovernmentProgram">
         <MappingFragment StoreEntitySet="GovernmentPrograms">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
@@ -132,7 +139,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="MemberChildrens">
-      <EntityTypeMapping TypeName="SolveChicagoModel.MemberChildren">
+      <EntityTypeMapping TypeName="SolveChicagoDevModel.MemberChildren">
         <MappingFragment StoreEntitySet="MemberChildren">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
@@ -142,7 +149,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="MemberChildrenGovernmentPrograms">
-      <EntityTypeMapping TypeName="SolveChicagoModel.MemberChildrenGovernmentProgram">
+      <EntityTypeMapping TypeName="SolveChicagoDevModel.MemberChildrenGovernmentProgram">
         <MappingFragment StoreEntitySet="MemberChildrenGovernmentPrograms">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="MemberId" ColumnName="MemberId" />
@@ -154,7 +161,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="MemberCorporations">
-      <EntityTypeMapping TypeName="SolveChicagoModel.MemberCorporation">
+      <EntityTypeMapping TypeName="SolveChicagoDevModel.MemberCorporation">
         <MappingFragment StoreEntitySet="MemberCorporations">
           <ScalarProperty Name="MemberId" ColumnName="MemberId" />
           <ScalarProperty Name="CorporationId" ColumnName="CorporationId" />
@@ -164,7 +171,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="MemberEmergencyContacts">
-      <EntityTypeMapping TypeName="SolveChicagoModel.MemberEmergencyContact">
+      <EntityTypeMapping TypeName="SolveChicagoDevModel.MemberEmergencyContact">
         <MappingFragment StoreEntitySet="MemberEmergencyContacts">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="MemberId" ColumnName="MemberId" />
@@ -175,7 +182,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="MemberGovernmentPrograms">
-      <EntityTypeMapping TypeName="SolveChicagoModel.MemberGovernmentProgram">
+      <EntityTypeMapping TypeName="SolveChicagoDevModel.MemberGovernmentProgram">
         <MappingFragment StoreEntitySet="MemberGovernmentPrograms">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="MemberId" ColumnName="MemberId" />
@@ -186,7 +193,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="MemberNonprofits">
-      <EntityTypeMapping TypeName="SolveChicagoModel.MemberNonprofit">
+      <EntityTypeMapping TypeName="SolveChicagoDevModel.MemberNonprofit">
         <MappingFragment StoreEntitySet="MemberNonprofits">
           <ScalarProperty Name="MemberId" ColumnName="MemberId" />
           <ScalarProperty Name="NonprofitId" ColumnName="NonprofitId" />
@@ -197,7 +204,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Members">
-      <EntityTypeMapping TypeName="SolveChicagoModel.Member">
+      <EntityTypeMapping TypeName="SolveChicagoDevModel.Member">
         <MappingFragment StoreEntitySet="Members">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Email" ColumnName="Email" />
@@ -211,11 +218,12 @@
           <ScalarProperty Name="Country" ColumnName="Country" />
           <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
           <ScalarProperty Name="FamilyId" ColumnName="FamilyId" />
+          <ScalarProperty Name="FamilyRole" ColumnName="FamilyRole" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="MemberStatuses">
-      <EntityTypeMapping TypeName="SolveChicagoModel.MemberStatus">
+      <EntityTypeMapping TypeName="SolveChicagoDevModel.MemberStatus">
         <MappingFragment StoreEntitySet="MemberStatuses">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="MemberId" ColumnName="MemberId" />
@@ -225,7 +233,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="MemberSurveys">
-      <EntityTypeMapping TypeName="SolveChicagoModel.MemberSurvey">
+      <EntityTypeMapping TypeName="SolveChicagoDevModel.MemberSurvey">
         <MappingFragment StoreEntitySet="MemberSurveys">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="SurveyId" ColumnName="SurveyId" />
@@ -234,7 +242,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="NonprofitCaseManagers">
-      <EntityTypeMapping TypeName="SolveChicagoModel.NonprofitCaseManager">
+      <EntityTypeMapping TypeName="SolveChicagoDevModel.NonprofitCaseManager">
         <MappingFragment StoreEntitySet="NonprofitCaseManagers">
           <ScalarProperty Name="NonprofitId" ColumnName="NonprofitId" />
           <ScalarProperty Name="CaseManagerId" ColumnName="CaseManagerId" />
@@ -244,7 +252,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Nonprofits">
-      <EntityTypeMapping TypeName="SolveChicagoModel.Nonprofit">
+      <EntityTypeMapping TypeName="SolveChicagoDevModel.Nonprofit">
         <MappingFragment StoreEntitySet="Nonprofits">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Email" ColumnName="Email" />
@@ -260,7 +268,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Outcomes">
-      <EntityTypeMapping TypeName="SolveChicagoModel.Outcome">
+      <EntityTypeMapping TypeName="SolveChicagoDevModel.Outcome">
         <MappingFragment StoreEntitySet="Outcomes">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="MemberId" ColumnName="MemberId" />
@@ -269,7 +277,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="SurveyAnswers">
-      <EntityTypeMapping TypeName="SolveChicagoModel.SurveyAnswer">
+      <EntityTypeMapping TypeName="SolveChicagoDevModel.SurveyAnswer">
         <MappingFragment StoreEntitySet="SurveyAnswers">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="SurveyId" ColumnName="SurveyId" />
@@ -281,7 +289,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="SurveyQuestionOptions">
-      <EntityTypeMapping TypeName="SolveChicagoModel.SurveyQuestionOption">
+      <EntityTypeMapping TypeName="SolveChicagoDevModel.SurveyQuestionOption">
         <MappingFragment StoreEntitySet="SurveyQuestionOptions">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
@@ -290,7 +298,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="SurveyQuestions">
-      <EntityTypeMapping TypeName="SolveChicagoModel.SurveyQuestion">
+      <EntityTypeMapping TypeName="SolveChicagoDevModel.SurveyQuestion">
         <MappingFragment StoreEntitySet="SurveyQuestions">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="SurveyId" ColumnName="SurveyId" />
@@ -300,7 +308,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Surveys">
-      <EntityTypeMapping TypeName="SolveChicagoModel.Survey">
+      <EntityTypeMapping TypeName="SolveChicagoDevModel.Survey">
         <MappingFragment StoreEntitySet="Surveys">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
@@ -309,7 +317,7 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <AssociationSetMapping Name="AspNetUserAdmins" TypeName="SolveChicagoModel.AspNetUserAdmins" StoreEntitySet="AspNetUserAdmins">
+    <AssociationSetMapping Name="AspNetUserAdmins" TypeName="SolveChicagoDevModel.AspNetUserAdmins" StoreEntitySet="AspNetUserAdmins">
       <EndProperty Name="Admins">
         <ScalarProperty Name="Id" ColumnName="AdminId" />
       </EndProperty>
@@ -317,7 +325,7 @@
         <ScalarProperty Name="Id" ColumnName="UserId" />
       </EndProperty>
     </AssociationSetMapping>
-    <AssociationSetMapping Name="AspNetUserCaseManagers" TypeName="SolveChicagoModel.AspNetUserCaseManagers" StoreEntitySet="AspNetUserCaseManagers">
+    <AssociationSetMapping Name="AspNetUserCaseManagers" TypeName="SolveChicagoDevModel.AspNetUserCaseManagers" StoreEntitySet="AspNetUserCaseManagers">
       <EndProperty Name="AspNetUser">
         <ScalarProperty Name="Id" ColumnName="UserId" />
       </EndProperty>
@@ -325,7 +333,7 @@
         <ScalarProperty Name="Id" ColumnName="CaseManagerId" />
       </EndProperty>
     </AssociationSetMapping>
-    <AssociationSetMapping Name="AspNetUserCorporations" TypeName="SolveChicagoModel.AspNetUserCorporations" StoreEntitySet="AspNetUserCorporations">
+    <AssociationSetMapping Name="AspNetUserCorporations" TypeName="SolveChicagoDevModel.AspNetUserCorporations" StoreEntitySet="AspNetUserCorporations">
       <EndProperty Name="AspNetUser">
         <ScalarProperty Name="Id" ColumnName="UserId" />
       </EndProperty>
@@ -333,7 +341,7 @@
         <ScalarProperty Name="Id" ColumnName="CorporationId" />
       </EndProperty>
     </AssociationSetMapping>
-    <AssociationSetMapping Name="AspNetUserMembers" TypeName="SolveChicagoModel.AspNetUserMembers" StoreEntitySet="AspNetUserMembers">
+    <AssociationSetMapping Name="AspNetUserMembers" TypeName="SolveChicagoDevModel.AspNetUserMembers" StoreEntitySet="AspNetUserMembers">
       <EndProperty Name="AspNetUser">
         <ScalarProperty Name="Id" ColumnName="UserId" />
       </EndProperty>
@@ -341,7 +349,7 @@
         <ScalarProperty Name="Id" ColumnName="MemberId" />
       </EndProperty>
     </AssociationSetMapping>
-    <AssociationSetMapping Name="AspNetUserNonprofits" TypeName="SolveChicagoModel.AspNetUserNonprofits" StoreEntitySet="AspNetUserNonprofits">
+    <AssociationSetMapping Name="AspNetUserNonprofits" TypeName="SolveChicagoDevModel.AspNetUserNonprofits" StoreEntitySet="AspNetUserNonprofits">
       <EndProperty Name="AspNetUser">
         <ScalarProperty Name="Id" ColumnName="UserId" />
       </EndProperty>
@@ -349,7 +357,7 @@
         <ScalarProperty Name="Id" ColumnName="NonprofitId" />
       </EndProperty>
     </AssociationSetMapping>
-    <AssociationSetMapping Name="AspNetUserRoles" TypeName="SolveChicagoModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+    <AssociationSetMapping Name="AspNetUserRoles" TypeName="SolveChicagoDevModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
       <EndProperty Name="AspNetRoles">
         <ScalarProperty Name="Id" ColumnName="RoleId" />
       </EndProperty>

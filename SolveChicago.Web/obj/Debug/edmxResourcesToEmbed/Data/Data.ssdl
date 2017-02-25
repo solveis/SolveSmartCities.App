@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="SolveChicagoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="SolveChicagoDevModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="Admins">
     <Key>
       <PropertyRef Name="Id" />
@@ -161,7 +161,14 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="FamilyName" Type="nvarchar" MaxLength="128" />
-    <Property Name="HeadOfFamily" Type="nvarchar" MaxLength="128" />
+    <Property Name="HeadOfHousehold" Type="int" />
+    <Property Name="Phone" Type="nvarchar" MaxLength="128" />
+    <Property Name="Address1" Type="nvarchar" MaxLength="128" />
+    <Property Name="Address2" Type="nvarchar" MaxLength="50" />
+    <Property Name="City" Type="nvarchar" MaxLength="50" />
+    <Property Name="Province" Type="nvarchar" MaxLength="50" />
+    <Property Name="Country" Type="nvarchar" MaxLength="50" />
+    <Property Name="CreatedDate" Type="datetime2" Precision="7" />
   </EntityType>
   <EntityType Name="GovernmentPrograms">
     <Key>
@@ -247,6 +254,7 @@
     <Property Name="Country" Type="nvarchar" MaxLength="50" />
     <Property Name="CreatedDate" Type="datetime2" Precision="7" />
     <Property Name="FamilyId" Type="int" />
+    <Property Name="FamilyRole" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="MemberStatuses">
     <Key>
@@ -933,7 +941,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="SolveChicagoModelStoreContainer">
+  <EntityContainer Name="SolveChicagoDevModelStoreContainer">
     <EntitySet Name="Admins" EntityType="Self.Admins" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetUser" EntityType="Self.AspNetUser" Schema="dbo" store:Type="Tables" />

@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SolveChicago.App.Data
+namespace SolveChicago.Web.Data
 {
     using System;
     using System.Data.Entity;
