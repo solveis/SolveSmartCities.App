@@ -28,6 +28,7 @@ namespace SolveChicago.Web.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.InviteUserId = userId;
             return View();
         }
 

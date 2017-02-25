@@ -7,10 +7,12 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using SolveChicago.Web.Data;
+using DonorPath.Web.Common;
+using SolveChicago.Web.Common;
 
 namespace SolveChicago.Web.Controllers
 {
-    public class AdminsController : Controller
+    public class AdminsController : BaseController
     {
         private SolveChicagoEntities db = new SolveChicagoEntities();
 
@@ -119,6 +121,19 @@ namespace SolveChicago.Web.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        // GET: Admins/Invite
+        [ValidateAntiForgeryToken]
+        public ActionResult Invite(string userName, string inviteEmail)
+        {
+            string userId = GetUserId(userName);
+            string inviteCode = Crypto.EncryptStringAES(userId, Settings.Crypto.SharedSecret);
+            //send email
+            
+            return RedirectToAction("Index");
+        }
+
+
 
         protected override void Dispose(bool disposing)
         {

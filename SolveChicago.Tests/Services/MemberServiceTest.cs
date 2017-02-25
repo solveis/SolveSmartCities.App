@@ -18,9 +18,9 @@
 //        {
 //            string email = string.Format("{0}@solvechicago.com", Guid.NewGuid().ToString());
             
-//            List<UserProfile> users = new List<UserProfile>
+//            List<AspNetUser> users = new List<AspNetUser>
 //            {
-//                new UserProfile
+//                new AspNetUser
 //                {
 //                    Id = 1,
 //                    IdentityUserId = Guid.NewGuid().ToString(),
@@ -29,11 +29,11 @@
 //            };
 //            List<Member> members = new List<Member>();
 
-//            var userSet = new Mock<DbSet<UserProfile>>().SetupData(users);
+//            var userSet = new Mock<DbSet<AspNetUser>>().SetupData(users);
 //            var memberSet = new Mock<DbSet<Member>>().SetupData(members);
 
 //            var context = new Mock<SolveChicagoEntities>();
-//            context.Setup(c => c.UserProfiles).Returns(userSet.Object);
+//            context.Setup(c => c.AspNetUsers).Returns(userSet.Object);
 //            context.Setup(c => c.Members).Returns(memberSet.Object);
 
 

@@ -195,8 +195,6 @@ C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\Mi
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\Microsoft.WindowsAzure.Storage.dll
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\Newtonsoft.Json.dll
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\Owin.dll
-C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\SolveChicago.App.Common.dll
-C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\SolveChicago.App.Service.dll
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\System.Spatial.dll
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\System.Web.Helpers.dll
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\System.Web.Mvc.dll
@@ -206,9 +204,6 @@ C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\Sy
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\System.Web.WebPages.dll
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\System.Web.WebPages.Razor.dll
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\WebGrease.dll
-C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\SolveChicago.Entities.dll
-C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\SolveChicago.App.Common.pdb
-C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\SolveChicago.App.Service.pdb
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\Antlr3.Runtime.pdb
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\Microsoft.Data.Edm.xml
@@ -240,7 +235,6 @@ C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\Mi
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\Microsoft.Owin.Security.Google.xml
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\SolveChicago.Entities.pdb
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\de\Microsoft.Data.Edm.resources.dll
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\es\Microsoft.Data.Edm.resources.dll
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\fr\Microsoft.Data.Edm.resources.dll

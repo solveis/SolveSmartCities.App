@@ -132,10 +132,6 @@
       <Project>{528f6cea-76f1-47bd-8d33-2a6a2f4813dc}</Project>
       <Name>SolveChicago.Web</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SolveChicago.Entities\SolveChicago.Entities.csproj">
-      <Project>{aacc5236-2347-48dc-9995-313958454fe8}</Project>
-      <Name>SolveChicago.Entities</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
