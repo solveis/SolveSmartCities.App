@@ -13,7 +13,7 @@ build:
   verbosity: minimal
 notifications:
 - provider: Slack
-  incoming_webhook: https://hooks.slack.com/services/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
+  incoming_webhook: https://hooks.slack.com/services/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
   channel: '#development'
   on_build_success: true
   on_build_failure: true
