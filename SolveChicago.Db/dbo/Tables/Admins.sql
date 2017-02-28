@@ -11,7 +11,7 @@
     [Province] NVARCHAR(50) NULL, 
     [Country] NVARCHAR(50) NULL, 
     [CreatedDate] DATETIME2 NULL, 
-	[InvitedBy] NVARCHAR(128) NULL, 
+	[InvitedBy] INT NULL, 
 
     CONSTRAINT [PK_Admins] PRIMARY KEY CLUSTERED ([Id] ASC), 
 )

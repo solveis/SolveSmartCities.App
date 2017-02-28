@@ -340,7 +340,7 @@ namespace SolveChicago.Web.Controllers
         }
 
 
-        protected async Task<ActionResult> CreateAccount(string userName, string password, Enumerations.Role role)
+        protected async Task<ActionResult> CreateAccount(string userName, string password, Enumerations.Role role, string invitedByUserId = "")
         {
             var user = new ApplicationUser { UserName = userName, Email = userName };
             AspNetUser aspnetUser = new AspNetUser();
@@ -424,7 +424,7 @@ namespace SolveChicago.Web.Controllers
                         await this.UserManager.AddToRoleAsync(user.Id, Common.Constants.Roles.Admin);
                         if (!UserProfileHasValidMappings(user.Id))
                         {
-                            Admin model = new Admin { Email = userName };
+                            Admin model = new Admin { Email = userName, InvitedBy = invitedByUserId };
                             model.AspNetUsers.Add(aspnetUser);
                             db.Admins.Add(model);
                             db.SaveChanges();
@@ -452,15 +452,16 @@ namespace SolveChicago.Web.Controllers
             return db.AspNetUsers.Single(x => x.Id == userId);
         }
 
-        public bool ValidateAdminInvite(string inviteCode, ref string userId)
+        public bool ValidateAdminInvite(string inviteCode, ref int userId)
         {
             try
             {
                 string decodedCryptoId = inviteCode.Replace('_', '/').Replace('$', '+');
                 string decryptedUserId = Crypto.DecryptStringAES(decodedCryptoId, Settings.Crypto.SharedSecret);
-                if (db.AspNetUsers.Single(x => x.Id == decryptedUserId).Admins.Any())
+                int adminId = Convert.ToInt32(decryptedUserId);
+                if (db.Admins.Any(x => x.Id == adminId))
                 {
-                    userId = decryptedUserId;
+                    userId = adminId;
                     return true;
                 }
                 else

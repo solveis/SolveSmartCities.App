@@ -13,6 +13,7 @@ using SolveChicago.Web.Models;
 
 namespace SolveChicago.Web.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminsController : BaseController
     {
         public AdminsController(SolveChicagoEntities db) : base(db) { }
@@ -125,7 +126,6 @@ namespace SolveChicago.Web.Controllers
         }
 
         // GET: Admins/Invite
-        [HttpPost]
         public ActionResult Invite()
         {
             AdminInviteModel model = new AdminInviteModel() { AdminId = State.AdminIds.First() };
@@ -135,12 +135,11 @@ namespace SolveChicago.Web.Controllers
         // POST: Admins/Invite
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Invite(string userName, string inviteEmail)
+        public ActionResult Invite(AdminInviteModel model)
         {
-            string userId = GetUserId(userName);
-            string inviteCode = Crypto.EncryptStringAES(userId, Settings.Crypto.SharedSecret);
+            string inviteCode = Crypto.EncryptStringAES(model.AdminId.ToString(), Settings.Crypto.SharedSecret);
             EmailService service = new EmailService();
-            service.SendAsync(new Microsoft.AspNet.Identity.IdentityMessage { Destination = inviteEmail, Body = string.Format("http://localhost:2486/admins/register?invitecode={0}", inviteCode), Subject = "admin invite" });
+            service.SendAsync(new Microsoft.AspNet.Identity.IdentityMessage { Destination = model.EmailToInvite, Body = string.Format("http://localhost:2486/register/admin?invitecode={0}", HttpUtility.UrlEncode(inviteCode)), Subject = "admin invite" });
             
             return RedirectToAction("Index");
         }

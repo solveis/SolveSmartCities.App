@@ -5,10 +5,10 @@
 }
 
 <h2>Invite</h2>
-@Html.BeginForm("Invite", "Admin", FormMethod.Post)
+@using (Html.BeginForm("Invite", "Admins", FormMethod.Post))
 {
+    @Html.AntiForgeryToken();
     @Html.HiddenFor(m => m.AdminId)
     @Html.TextBoxFor(x => x.EmailToInvite)
     <button>Continue</button>
 }
-

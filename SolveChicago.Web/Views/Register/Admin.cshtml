@@ -8,6 +8,7 @@
 @using (Html.BeginForm("Admin", "Register", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
+    @Html.Hidden("InvitedByUserId", (object)ViewBag.InviteUserId)
     <h4>Create a new account.</h4>
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })

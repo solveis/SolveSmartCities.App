@@ -25,12 +25,12 @@ namespace SolveChicago.Web.Controllers
         [AllowAnonymous]
         public ActionResult Admin(string inviteCode)
         {
-            //string userId = string.Empty;
-            //if (!ValidateAdminInvite(inviteCode, ref userId)) // refactor to be encryption check
-            //{
-            //    return HttpNotFound();
-            //}
-            //ViewBag.InviteUserId = userId;
+            int userId = 0;
+            if (!ValidateAdminInvite(HttpUtility.UrlDecode(inviteCode), ref userId)) // refactor to be encryption check
+            {
+                return HttpNotFound();
+            }
+            ViewBag.InviteUserId = userId;
             return View();
         }
 
@@ -41,7 +41,7 @@ namespace SolveChicago.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Admin(RegisterViewModel model)
         {
-            var result = await CreateAccount(model.Email, model.Password, Enumerations.Role.Admin);
+            var result = await CreateAccount(model.Email, model.Password, Enumerations.Role.Admin, model.InvitedByUserId);
             if (result != null)
                 return result;
             // If we got this far, something failed, redisplay form
