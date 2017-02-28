@@ -14,6 +14,9 @@ namespace SolveChicago.Web.Controllers
     [Authorize]
     public class ProfileController : BaseController
     {
+        public ProfileController(SolveChicagoEntities db) : base(db) { }
+        public ProfileController() : base() { }
+
         // GET: Profile/Member
         public ActionResult Member()
         {

@@ -37,7 +37,16 @@ namespace SolveChicago.Web.Common
             }
         }
 
-        
+        public class Mail
+        {
+            public static string FromAddress
+            {
+                get
+                {
+                    return GetSetting<string>("FromAddress", "dev@solvechicago.com");
+                }
+            }
+        }
 
 
         /// <summary>

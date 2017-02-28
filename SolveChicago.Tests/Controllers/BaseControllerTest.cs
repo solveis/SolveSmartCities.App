@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using System.Web;
 using SolveChicago.Web.Controllers;
 using System.IO;
@@ -16,10 +16,9 @@ using SolveChicago.Web.Data;
 
 namespace SolveChicago.Tests.Controllers
 {
-    [TestClass]
     public class BaseControllerTest
     {
-        [TestMethod]
+        [Fact]
         public void MemberRedirect_WithEntity_Returns_Member_Index()
         {
             List<Member> data = new List<Member>
@@ -48,11 +47,11 @@ namespace SolveChicago.Tests.Controllers
             BaseController controller = new BaseController(context.Object);
             var result = (RedirectToRouteResult)controller.MemberRedirect(1);
 
-            Assert.AreEqual("Index", result.RouteValues["action"]);
-            Assert.AreEqual("Members", result.RouteValues["controller"]);
+            Assert.Equal("Index", result.RouteValues["action"]);
+            Assert.Equal("Members", result.RouteValues["controller"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void MemberRedirect_WithEntity_Returns_Profile_Member()
         {
             List<Member> data = new List<Member>
@@ -68,11 +67,11 @@ namespace SolveChicago.Tests.Controllers
             BaseController controller = new BaseController(context.Object);
             var result = (RedirectToRouteResult)controller.MemberRedirect(1);
 
-            Assert.AreEqual("Member", result.RouteValues["action"]);
-            Assert.AreEqual("Profile", result.RouteValues["controller"]);
+            Assert.Equal("Member", result.RouteValues["action"]);
+            Assert.Equal("Profile", result.RouteValues["controller"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void MemberRedirect_NoEntity_Returns_Member_Index()
         {
             List<Member> data = new List<Member>
@@ -101,11 +100,11 @@ namespace SolveChicago.Tests.Controllers
             BaseController controller = new BaseController(context.Object);
             var result = (RedirectToRouteResult)controller.MemberRedirect(1);
 
-            Assert.AreEqual("Index", result.RouteValues["action"]);
-            Assert.AreEqual("Members", result.RouteValues["controller"]);
+            Assert.Equal("Index", result.RouteValues["action"]);
+            Assert.Equal("Members", result.RouteValues["controller"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void MemberRedirect_NoEntity_Returns_Profile_Member()
         {
             List<Member> data = new List<Member>
@@ -121,11 +120,11 @@ namespace SolveChicago.Tests.Controllers
             BaseController controller = new BaseController(context.Object);
             var result = (RedirectToRouteResult)controller.MemberRedirect(1);
 
-            Assert.AreEqual("Member", result.RouteValues["action"]);
-            Assert.AreEqual("Profile", result.RouteValues["controller"]);
+            Assert.Equal("Member", result.RouteValues["action"]);
+            Assert.Equal("Profile", result.RouteValues["controller"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void CaseManagerRedirect_WithEntity_Returns_CaseManager_Index()
         {
             CaseManager entity = new CaseManager
@@ -145,22 +144,22 @@ namespace SolveChicago.Tests.Controllers
             BaseController controller = new BaseController();
             var result = (RedirectToRouteResult)controller.CaseManagerRedirect(entity);
 
-            Assert.AreEqual("Index", result.RouteValues["action"]);
-            Assert.AreEqual("CaseManagers", result.RouteValues["controller"]);
+            Assert.Equal("Index", result.RouteValues["action"]);
+            Assert.Equal("CaseManagers", result.RouteValues["controller"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void CaseManagerRedirect_WithEntity_Returns_Profile_CaseManager()
         {
             CaseManager entity = new CaseManager();
             BaseController controller = new BaseController();
             var result = (RedirectToRouteResult)controller.CaseManagerRedirect(entity);
 
-            Assert.AreEqual("CaseManager", result.RouteValues["action"]);
-            Assert.AreEqual("Profile", result.RouteValues["controller"]);
+            Assert.Equal("CaseManager", result.RouteValues["action"]);
+            Assert.Equal("Profile", result.RouteValues["controller"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void CaseManagerRedirect_NoEntity_Returns_CaseManager_Index()
         {
             List<CaseManager> data = new List<CaseManager>
@@ -189,11 +188,11 @@ namespace SolveChicago.Tests.Controllers
             BaseController controller = new BaseController(context.Object);
             var result = (RedirectToRouteResult)controller.CaseManagerRedirect(1);
 
-            Assert.AreEqual("Index", result.RouteValues["action"]);
-            Assert.AreEqual("CaseManagers", result.RouteValues["controller"]);
+            Assert.Equal("Index", result.RouteValues["action"]);
+            Assert.Equal("CaseManagers", result.RouteValues["controller"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void CaseManagerRedirect_NoEntity_Returns_Profile_CaseManager()
         {
             List<CaseManager> data = new List<CaseManager>
@@ -209,11 +208,11 @@ namespace SolveChicago.Tests.Controllers
             BaseController controller = new BaseController(context.Object);
             var result = (RedirectToRouteResult)controller.CaseManagerRedirect(1);
 
-            Assert.AreEqual("CaseManager", result.RouteValues["action"]);
-            Assert.AreEqual("Profile", result.RouteValues["controller"]);
+            Assert.Equal("CaseManager", result.RouteValues["action"]);
+            Assert.Equal("Profile", result.RouteValues["controller"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void CorporationRedirect_WithEntity_Returns_Corporation_Index()
         {
             Corporation entity = new Corporation
@@ -232,22 +231,22 @@ namespace SolveChicago.Tests.Controllers
             BaseController controller = new BaseController();
             var result = (RedirectToRouteResult)controller.CorporationRedirect(entity);
 
-            Assert.AreEqual("Index", result.RouteValues["action"]);
-            Assert.AreEqual("Corporations", result.RouteValues["controller"]);
+            Assert.Equal("Index", result.RouteValues["action"]);
+            Assert.Equal("Corporations", result.RouteValues["controller"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void CorporationRedirect_WithEntity_Returns_Profile_Corporation()
         {
             Corporation entity = new Corporation();
             BaseController controller = new BaseController();
             var result = (RedirectToRouteResult)controller.CorporationRedirect(entity);
 
-            Assert.AreEqual("Corporation", result.RouteValues["action"]);
-            Assert.AreEqual("Profile", result.RouteValues["controller"]);
+            Assert.Equal("Corporation", result.RouteValues["action"]);
+            Assert.Equal("Profile", result.RouteValues["controller"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void CorporationRedirect_NoEntity_Returns_Corporation_Index()
         {
             List<Corporation> data = new List<Corporation>
@@ -275,11 +274,11 @@ namespace SolveChicago.Tests.Controllers
             BaseController controller = new BaseController(context.Object);
             var result = (RedirectToRouteResult)controller.CorporationRedirect(1);
 
-            Assert.AreEqual("Index", result.RouteValues["action"]);
-            Assert.AreEqual("Corporations", result.RouteValues["controller"]);
+            Assert.Equal("Index", result.RouteValues["action"]);
+            Assert.Equal("Corporations", result.RouteValues["controller"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void CorporationRedirect_NoEntity_Returns_Profile_Corporation()
         {
             List<Corporation> data = new List<Corporation>
@@ -295,11 +294,11 @@ namespace SolveChicago.Tests.Controllers
             BaseController controller = new BaseController(context.Object);
             var result = (RedirectToRouteResult)controller.CorporationRedirect(1);
 
-            Assert.AreEqual("Corporation", result.RouteValues["action"]);
-            Assert.AreEqual("Profile", result.RouteValues["controller"]);
+            Assert.Equal("Corporation", result.RouteValues["action"]);
+            Assert.Equal("Profile", result.RouteValues["controller"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void NonprofitRedirect_WithEntity_Returns_Nonprofit_Index()
         {
             Nonprofit entity = new Nonprofit
@@ -318,22 +317,22 @@ namespace SolveChicago.Tests.Controllers
             BaseController controller = new BaseController();
             var result = (RedirectToRouteResult)controller.NonprofitRedirect(entity);
 
-            Assert.AreEqual("Index", result.RouteValues["action"]);
-            Assert.AreEqual("Nonprofits", result.RouteValues["controller"]);
+            Assert.Equal("Index", result.RouteValues["action"]);
+            Assert.Equal("Nonprofits", result.RouteValues["controller"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void NonprofitRedirect_WithEntity_Returns_Profile_Nonprofit()
         {
             Nonprofit entity = new Nonprofit();
             BaseController controller = new BaseController();
             var result = (RedirectToRouteResult)controller.NonprofitRedirect(entity);
 
-            Assert.AreEqual("Nonprofit", result.RouteValues["action"]);
-            Assert.AreEqual("Profile", result.RouteValues["controller"]);
+            Assert.Equal("Nonprofit", result.RouteValues["action"]);
+            Assert.Equal("Profile", result.RouteValues["controller"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void NonprofitRedirect_NoEntity_Returns_Nonprofit_Index()
         {
             List<Nonprofit> data = new List<Nonprofit>
@@ -361,11 +360,11 @@ namespace SolveChicago.Tests.Controllers
             BaseController controller = new BaseController(context.Object);
             var result = (RedirectToRouteResult)controller.NonprofitRedirect(1);
 
-            Assert.AreEqual("Index", result.RouteValues["action"]);
-            Assert.AreEqual("Nonprofits", result.RouteValues["controller"]);
+            Assert.Equal("Index", result.RouteValues["action"]);
+            Assert.Equal("Nonprofits", result.RouteValues["controller"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void NonprofitRedirect_NoEntity_Returns_Profile_Nonprofit()
         {
             List<Nonprofit> data = new List<Nonprofit>
@@ -381,11 +380,11 @@ namespace SolveChicago.Tests.Controllers
             BaseController controller = new BaseController(context.Object);
             var result = (RedirectToRouteResult)controller.NonprofitRedirect(1);
 
-            Assert.AreEqual("Nonprofit", result.RouteValues["action"]);
-            Assert.AreEqual("Profile", result.RouteValues["controller"]);
+            Assert.Equal("Nonprofit", result.RouteValues["action"]);
+            Assert.Equal("Profile", result.RouteValues["controller"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void AdminRedirect_WithEntity_Returns_Admin_Index()
         {
             Admin entity = new Admin
@@ -405,22 +404,22 @@ namespace SolveChicago.Tests.Controllers
             BaseController controller = new BaseController();
             var result = (RedirectToRouteResult)controller.AdminRedirect(entity);
 
-            Assert.AreEqual("Index", result.RouteValues["action"]);
-            Assert.AreEqual("Admins", result.RouteValues["controller"]);
+            Assert.Equal("Index", result.RouteValues["action"]);
+            Assert.Equal("Admins", result.RouteValues["controller"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void AdminRedirect_WithEntity_Returns_Profile_Admin()
         {
             Admin entity = new Admin();
             BaseController controller = new BaseController();
             var result = (RedirectToRouteResult)controller.AdminRedirect(entity);
 
-            Assert.AreEqual("Admin", result.RouteValues["action"]);
-            Assert.AreEqual("Profile", result.RouteValues["controller"]);
+            Assert.Equal("Admin", result.RouteValues["action"]);
+            Assert.Equal("Profile", result.RouteValues["controller"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void AdminRedirect_NoEntity_Returns_Admin_Index()
         {
             List<Admin> data = new List<Admin>
@@ -449,11 +448,11 @@ namespace SolveChicago.Tests.Controllers
             BaseController controller = new BaseController(context.Object);
             var result = (RedirectToRouteResult)controller.AdminRedirect(1);
 
-            Assert.AreEqual("Index", result.RouteValues["action"]);
-            Assert.AreEqual("Admins", result.RouteValues["controller"]);
+            Assert.Equal("Index", result.RouteValues["action"]);
+            Assert.Equal("Admins", result.RouteValues["controller"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void AdminRedirect_NoEntity_Returns_Profile_Admin()
         {
             List<Admin> data = new List<Admin>
@@ -469,11 +468,11 @@ namespace SolveChicago.Tests.Controllers
             BaseController controller = new BaseController(context.Object);
             var result = (RedirectToRouteResult)controller.AdminRedirect(1);
 
-            Assert.AreEqual("Admin", result.RouteValues["action"]);
-            Assert.AreEqual("Profile", result.RouteValues["controller"]);
+            Assert.Equal("Admin", result.RouteValues["action"]);
+            Assert.Equal("Profile", result.RouteValues["controller"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void RefreshState_WithCaseManager_Member()
         {
             List<AspNetUser> users = new List<AspNetUser>
@@ -525,8 +524,7 @@ namespace SolveChicago.Tests.Controllers
                                     {
                                         Id = 1,
                                         Name = "Terry Jones"
-                                    },
-                                    Start = DateTime.UtcNow.AddMonths(-1)
+                                    }
                                 }
                             }
                         }
@@ -552,14 +550,14 @@ namespace SolveChicago.Tests.Controllers
             controller.ControllerContext = controllerContext.Object;
 
             string name = controller.State.Members.First().Name;
-            Assert.AreEqual("Tom Elliot", name);
+            Assert.Equal("Tom Elliot", name);
 
             string caseManagerName = controller.State.Members.First().MemberNonprofits.Select(x => x.CaseManager).First().Name;
-            Assert.AreEqual("Terry Jones", caseManagerName);
+            Assert.Equal("Terry Jones", caseManagerName);
 
         }
 
-        [TestMethod]
+        [Fact]
         public void RefreshState_CaseManager()
         {
             List<AspNetUser> data = new List<AspNetUser>
@@ -610,11 +608,11 @@ namespace SolveChicago.Tests.Controllers
             controller.ControllerContext = controllerContext.Object;
 
             string name = controller.State.CaseManagers.First().Name;
-            Assert.AreEqual("Terry Jones", name);
+            Assert.Equal("Terry Jones", name);
 
         }
 
-        [TestMethod]
+        [Fact]
         public void RefreshState_Corporation()
         {
             List<AspNetUser> users = new List<AspNetUser>
@@ -664,11 +662,11 @@ namespace SolveChicago.Tests.Controllers
             controller.ControllerContext = controllerContext.Object;
 
             string name = controller.State.Corporations.First().Name;
-            Assert.AreEqual("Honda Ferguson", name);
+            Assert.Equal("Honda Ferguson", name);
 
         }
 
-        [TestMethod]
+        [Fact]
         public void RefreshState_Nonprofit()
         {
             List<AspNetUser> users = new List<AspNetUser>
@@ -718,11 +716,11 @@ namespace SolveChicago.Tests.Controllers
             controller.ControllerContext = controllerContext.Object;
 
             string name = controller.State.Nonprofits.First().Name;
-            Assert.AreEqual("Vladimir Kruschev", name);
+            Assert.Equal("Vladimir Kruschev", name);
 
         }
 
-        [TestMethod]
+        [Fact]
         public void RefreshState_Admin()
         {
             
@@ -774,7 +772,7 @@ namespace SolveChicago.Tests.Controllers
             controller.ControllerContext = controllerContext.Object;
 
             string name = controller.State.Admins.First().Name;
-            Assert.AreEqual("Peter Thompson", name);
+            Assert.Equal("Peter Thompson", name);
 
         }
     }

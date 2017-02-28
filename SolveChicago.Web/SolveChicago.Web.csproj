@@ -285,9 +285,6 @@
     <Compile Include="Data\MemberChildrenGovernmentProgram.cs">
       <DependentUpon>data.tt</DependentUpon>
     </Compile>
-    <Compile Include="Data\MemberCorporation.cs">
-      <DependentUpon>data.tt</DependentUpon>
-    </Compile>
     <Compile Include="Data\MemberEmergencyContact.cs">
       <DependentUpon>data.tt</DependentUpon>
     </Compile>
@@ -304,9 +301,6 @@
       <DependentUpon>data.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\Nonprofit.cs">
-      <DependentUpon>data.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\NonprofitCaseManager.cs">
       <DependentUpon>data.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\Outcome.cs">
@@ -328,10 +322,12 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AdminInviteModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Profile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\EmailService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -499,10 +495,10 @@
     <Content Include="Views\Outcomes\Details.cshtml" />
     <Content Include="Views\Outcomes\Edit.cshtml" />
     <Content Include="Views\Outcomes\Index.cshtml" />
+    <Content Include="Views\Admins\Invite.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

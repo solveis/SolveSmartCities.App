@@ -273,3 +273,4 @@ C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\zh
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\zh-Hant\System.Spatial.resources.dll
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\obj\Debug\SolveChicago.Web.dll
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\obj\Debug\SolveChicago.Web.pdb
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\obj\Debug\SolveChicago.Web.csprojResolveAssemblyReference.cache

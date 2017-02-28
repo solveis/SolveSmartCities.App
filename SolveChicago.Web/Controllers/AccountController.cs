@@ -13,6 +13,7 @@ using SolveChicago.Web.Common;
 using SolveChicago.Web.Controllers;
 using System.Diagnostics.CodeAnalysis;
 using SolveChicago.Web;
+using SolveChicago.Web.Data;
 
 namespace SolveChicago.Web.Controllers
 {
@@ -20,9 +21,8 @@ namespace SolveChicago.Web.Controllers
     [ExcludeFromCodeCoverage]
     public class AccountController : BaseController
     {
-        public AccountController()
-        {
-        }
+        public AccountController(SolveChicagoEntities db) : base(db) { }
+        public AccountController() : base() { }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {

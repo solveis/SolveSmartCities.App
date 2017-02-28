@@ -10,6 +10,6 @@
 	CONSTRAINT [PK_SurveyAnswers] PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_SurveyAnswers_Surveys] FOREIGN KEY (SurveyId) REFERENCES [Surveys](Id) ON DELETE NO ACTION, 
     CONSTRAINT [FK_SurveyAnswers_SurveyQuestions] FOREIGN KEY (QuestionId) REFERENCES [SurveyQuestions]([Id]) ON DELETE NO ACTION,
-    CONSTRAINT [FK_SurveyAnswers_AspNetUser] FOREIGN KEY (UserId) REFERENCES [AspNetUser]([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_SurveyAnswers_AspNetUser] FOREIGN KEY (UserId) REFERENCES [AspNetUsers]([Id]) ON DELETE NO ACTION,
     CONSTRAINT [FK_SurveyAnswers_MemberSurveys] FOREIGN KEY (MemberSurveyId) REFERENCES [MemberSurveys]([Id]) ON DELETE CASCADE,
 )

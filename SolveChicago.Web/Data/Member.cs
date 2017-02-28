@@ -20,13 +20,13 @@ namespace SolveChicago.Web.Data
             this.CaseNotes = new HashSet<CaseNote>();
             this.MemberChildrens = new HashSet<MemberChildren>();
             this.MemberChildrenGovernmentPrograms = new HashSet<MemberChildrenGovernmentProgram>();
-            this.MemberCorporations = new HashSet<MemberCorporation>();
             this.MemberEmergencyContacts = new HashSet<MemberEmergencyContact>();
             this.MemberGovernmentPrograms = new HashSet<MemberGovernmentProgram>();
-            this.MemberNonprofits = new HashSet<MemberNonprofit>();
             this.MemberStatuses = new HashSet<MemberStatus>();
             this.MemberSurveys = new HashSet<MemberSurvey>();
             this.Outcomes = new HashSet<Outcome>();
+            this.MemberNonprofits = new HashSet<MemberNonprofit>();
+            this.Corporations = new HashSet<Corporation>();
             this.AspNetUsers = new HashSet<AspNetUser>();
         }
     
@@ -52,19 +52,19 @@ namespace SolveChicago.Web.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MemberChildrenGovernmentProgram> MemberChildrenGovernmentPrograms { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MemberCorporation> MemberCorporations { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MemberEmergencyContact> MemberEmergencyContacts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MemberGovernmentProgram> MemberGovernmentPrograms { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MemberNonprofit> MemberNonprofits { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MemberStatus> MemberStatuses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MemberSurvey> MemberSurveys { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Outcome> Outcomes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MemberNonprofit> MemberNonprofits { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Corporation> Corporations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
     }

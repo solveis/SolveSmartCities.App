@@ -12,23 +12,25 @@ using SolveChicago.Web.Models;
 using SolveChicago.Web.Common;
 using SolveChicago.Web.Controllers;
 using System.Diagnostics.CodeAnalysis;
+using SolveChicago.Web.Data;
 
 namespace SolveChicago.Web.Controllers
 {
     [ExcludeFromCodeCoverage]
     public class RegisterController : BaseController
     {
+
         //
         // GET: /Register/Admin
         [AllowAnonymous]
         public ActionResult Admin(string inviteCode)
         {
-            string userId = string.Empty;
-            if (!ValidateAdminInvite(inviteCode, ref userId)) // refactor to be encryption check
-            {
-                return HttpNotFound();
-            }
-            ViewBag.InviteUserId = userId;
+            //string userId = string.Empty;
+            //if (!ValidateAdminInvite(inviteCode, ref userId)) // refactor to be encryption check
+            //{
+            //    return HttpNotFound();
+            //}
+            //ViewBag.InviteUserId = userId;
             return View();
         }
 

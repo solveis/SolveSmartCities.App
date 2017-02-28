@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[AspNetUser] (
+﻿CREATE TABLE [dbo].[AspNetUsers] (
     [Id]                   NVARCHAR (128) NOT NULL,
     [Email]                NVARCHAR (256) NULL,
     [EmailConfirmed]       BIT            NOT NULL,
@@ -20,6 +20,6 @@
 GO
 
 CREATE UNIQUE NONCLUSTERED INDEX [UserNameIndex]
-    ON [dbo].[AspNetUser]([UserName] ASC);
+    ON [dbo].[AspNetUsers]([UserName] ASC);
 GO
 

@@ -1,0 +1,14 @@
+﻿@model SolveChicago.Web.Models.AdminInviteModel
+
+@{
+    ViewBag.Title = "Invite";
+}
+
+<h2>Invite</h2>
+@Html.BeginForm("Invite", "Admin", FormMethod.Post)
+{
+    @Html.HiddenFor(m => m.AdminId)
+    @Html.TextBoxFor(x => x.EmailToInvite)
+    <button>Continue</button>
+}
+

@@ -11,6 +11,9 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using SolveChicago.Web.Models;
+using System.Net.Mail;
+using System.IO;
+using SolveChicago.Web.Common;
 
 namespace SolveChicago.Web
 {
@@ -18,7 +21,44 @@ namespace SolveChicago.Web
     {
         public Task SendAsync(IdentityMessage message)
         {
-            // Plug in your email service here to send an email.
+            try
+            {
+                MailMessage mailMessage = new MailMessage(Settings.Mail.FromAddress, message.Destination)
+                {
+                    Subject = message.Subject,
+                    Body = message.Body,
+                    IsBodyHtml = true
+                };
+                List<MemoryStream> aMs = new List<MemoryStream>();
+                List<System.Net.Mail.Attachment> att = new List<System.Net.Mail.Attachment>();
+                //if (attachments != null)
+                //{
+                //    foreach (KeyValuePair<string, byte[]> a in attachments)
+                //    {
+                //        var ms = new MemoryStream(a.Value);
+                //        aMs.Add(ms);
+                //        var at = new System.Net.Mail.Attachment(ms, a.Key);
+                //        att.Add(at);
+                //        mailMessage.Attachments.Add(at);
+                //    }
+                //}
+                SmtpClient smtpClient = new SmtpClient();
+                smtpClient.Send(mailMessage);
+                foreach (var a in att)
+                {
+                    a.Dispose();
+                }
+                foreach (var m in aMs)
+                    m.Dispose();
+            }
+            catch (Exception ex)
+            {
+                string errorMessage;
+                if (!string.IsNullOrEmpty(message.Destination) && !string.IsNullOrEmpty(message.Subject))
+                    errorMessage = string.Format("Could not send email to {0} with subject {1}", message.Destination, message.Subject);
+                else
+                    errorMessage = "Could not send email, but could not parse additional details as to why or to whom.";
+            }
             return Task.FromResult(0);
         }
     }

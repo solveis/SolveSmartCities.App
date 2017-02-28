@@ -4,11 +4,15 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using SolveChicago.Web.Controllers;
+using SolveChicago.Web.Data;
 
 namespace SolveChicago.Web.Controllers
 {
     public class HomeController : BaseController
     {
+        public HomeController(SolveChicagoEntities db) : base(db) { }
+        public HomeController() : base() { }
+
         public ActionResult Index()
         {
             return View();

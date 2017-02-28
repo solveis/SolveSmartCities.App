@@ -343,10 +343,11 @@ namespace SolveChicago.Web.Controllers
         protected async Task<ActionResult> CreateAccount(string userName, string password, Enumerations.Role role)
         {
             var user = new ApplicationUser { UserName = userName, Email = userName };
-
+            AspNetUser aspnetUser = new AspNetUser();
             if (ModelState.IsValid)
             {
                 var result = await UserManager.CreateAsync(user, password);
+                aspnetUser = GetUserById(user.Id);
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
@@ -368,6 +369,7 @@ namespace SolveChicago.Web.Controllers
                         if (!UserProfileHasValidMappings(user.Id))
                         {
                             Member model = new Member { Email = userName };
+                            model.AspNetUsers.Add(aspnetUser);
                             db.Members.Add(model);
                             db.SaveChanges();
                             return MemberRedirect(model.Id);
@@ -381,6 +383,7 @@ namespace SolveChicago.Web.Controllers
                         if (!UserProfileHasValidMappings(user.Id))
                         {
                             CaseManager model = new CaseManager { Email = userName };
+                            model.AspNetUsers.Add(aspnetUser);
                             db.CaseManagers.Add(model);
                             db.SaveChanges();
                             return CaseManagerRedirect(model.Id);
@@ -394,6 +397,7 @@ namespace SolveChicago.Web.Controllers
                         if (!UserProfileHasValidMappings(user.Id))
                         {
                             Nonprofit model = new Nonprofit { Email = userName };
+                            model.AspNetUsers.Add(aspnetUser);
                             db.Nonprofits.Add(model);
                             db.SaveChanges();
                             return NonprofitRedirect(model.Id);
@@ -407,6 +411,7 @@ namespace SolveChicago.Web.Controllers
                         if (!UserProfileHasValidMappings(user.Id))
                         {
                             Corporation model = new Corporation { Email = userName };
+                            model.AspNetUsers.Add(aspnetUser);
                             db.Corporations.Add(model);
                             db.SaveChanges();
                             return CorporationRedirect(model.Id);
@@ -420,6 +425,7 @@ namespace SolveChicago.Web.Controllers
                         if (!UserProfileHasValidMappings(user.Id))
                         {
                             Admin model = new Admin { Email = userName };
+                            model.AspNetUsers.Add(aspnetUser);
                             db.Admins.Add(model);
                             db.SaveChanges();
                             return AdminRedirect(model.Id);
@@ -433,7 +439,7 @@ namespace SolveChicago.Web.Controllers
         public bool UserProfileHasValidMappings(string userId)
         {
             AspNetUser profile = db.AspNetUsers.Single(x => x.Id == userId);
-            return true;// profile.Corporations.Any() || profile.Admins.Any() || profile.Nonprofits.Any() || profile.Members.Any() || profile.CaseManagers.Any();
+            return profile.Corporations.Any() || profile.Admins.Any() || profile.Nonprofits.Any() || profile.Members.Any() || profile.CaseManagers.Any();
         }
 
         public string GetUserIdFromUsername(string userName)
@@ -441,17 +447,29 @@ namespace SolveChicago.Web.Controllers
             return db.AspNetUsers.Single(x => x.UserName == userName).Id;
         }
 
+        public AspNetUser GetUserById(string userId)
+        {
+            return db.AspNetUsers.Single(x => x.Id == userId);
+        }
+
         public bool ValidateAdminInvite(string inviteCode, ref string userId)
         {
-            string decodedCryptoId = inviteCode.Replace('_', '/').Replace('$', '+');
-            string decryptedUserId = Crypto.DecryptStringAES(decodedCryptoId, Settings.Crypto.SharedSecret);
-            if(db.AspNetUsers.Single(x => x.Id == decryptedUserId).Admins.Any())
+            try
             {
-                userId = decryptedUserId;
-                return true;
-            }   
-            else
+                string decodedCryptoId = inviteCode.Replace('_', '/').Replace('$', '+');
+                string decryptedUserId = Crypto.DecryptStringAES(decodedCryptoId, Settings.Crypto.SharedSecret);
+                if (db.AspNetUsers.Single(x => x.Id == decryptedUserId).Admins.Any())
+                {
+                    userId = decryptedUserId;
+                    return true;
+                }
+                else
+                    return false;
+            }
+            catch
+            {
                 return false;
+            }
         }
 
     }

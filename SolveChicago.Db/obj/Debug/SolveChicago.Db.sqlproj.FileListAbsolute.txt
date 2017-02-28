@@ -8,3 +8,7 @@ C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Db\bin\Deb
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Db\bin\Debug\SolveChicagoDb.pdb
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Db\obj\Debug\SolveChicagoDb.dll
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Db\obj\Debug\SolveChicagoDb.pdb
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Db\obj\Debug\Model.xml
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Db\obj\Debug\refactor.xml
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Db\obj\Debug\postdeploy.sql
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Db\obj\Debug\predeploy.sql

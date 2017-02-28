@@ -24,7 +24,34 @@
     <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
   </EntityType>
-  <EntityType Name="AspNetUser">
+  <EntityType Name="AspNetUserClaims">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="ClaimType" Type="nvarchar(max)" />
+    <Property Name="ClaimValue" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="AspNetUserLogins">
+    <Key>
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetUserRoles">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetUsers">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
@@ -44,73 +71,6 @@
     <Property Name="LastActivityDate" Type="datetime2" Precision="7" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="128" />
     <Property Name="CreatedDate" Type="datetime2" Precision="7" Nullable="false" />
-  </EntityType>
-  <EntityType Name="AspNetUserAdmins">
-    <Key>
-      <PropertyRef Name="UserId" />
-      <PropertyRef Name="AdminId" />
-    </Key>
-    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="AdminId" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="AspNetUserCaseManagers">
-    <Key>
-      <PropertyRef Name="UserId" />
-      <PropertyRef Name="CaseManagerId" />
-    </Key>
-    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="CaseManagerId" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="AspNetUserClaims">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="ClaimType" Type="nvarchar(max)" />
-    <Property Name="ClaimValue" Type="nvarchar(max)" />
-  </EntityType>
-  <EntityType Name="AspNetUserCorporations">
-    <Key>
-      <PropertyRef Name="UserId" />
-      <PropertyRef Name="CorporationId" />
-    </Key>
-    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="CorporationId" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="AspNetUserLogins">
-    <Key>
-      <PropertyRef Name="LoginProvider" />
-      <PropertyRef Name="ProviderKey" />
-      <PropertyRef Name="UserId" />
-    </Key>
-    <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
-  </EntityType>
-  <EntityType Name="AspNetUserMembers">
-    <Key>
-      <PropertyRef Name="UserId" />
-      <PropertyRef Name="MemberId" />
-    </Key>
-    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="MemberId" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="AspNetUserNonprofits">
-    <Key>
-      <PropertyRef Name="UserId" />
-      <PropertyRef Name="NonprofitId" />
-    </Key>
-    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="NonprofitId" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="AspNetUserRoles">
-    <Key>
-      <PropertyRef Name="UserId" />
-      <PropertyRef Name="RoleId" />
-    </Key>
-    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
   </EntityType>
   <EntityType Name="CaseManagers">
     <Key>
@@ -204,8 +164,6 @@
     </Key>
     <Property Name="MemberId" Type="int" Nullable="false" />
     <Property Name="CorporationId" Type="int" Nullable="false" />
-    <Property Name="Start" Type="datetime2" Precision="7" Nullable="false" />
-    <Property Name="End" Type="datetime2" Precision="7" />
   </EntityType>
   <EntityType Name="MemberEmergencyContacts">
     <Key>
@@ -235,8 +193,6 @@
     <Property Name="MemberId" Type="int" Nullable="false" />
     <Property Name="NonprofitId" Type="int" Nullable="false" />
     <Property Name="CaseManagerId" Type="int" />
-    <Property Name="Start" Type="datetime2" Precision="7" Nullable="false" />
-    <Property Name="End" Type="datetime2" Precision="7" />
   </EntityType>
   <EntityType Name="Members">
     <Key>
@@ -280,8 +236,6 @@
     </Key>
     <Property Name="NonprofitId" Type="int" Nullable="false" />
     <Property Name="CaseManagerId" Type="int" Nullable="false" />
-    <Property Name="Start" Type="datetime2" Precision="7" Nullable="false" />
-    <Property Name="End" Type="datetime2" Precision="7" />
   </EntityType>
   <EntityType Name="Nonprofits">
     <Key>
@@ -343,158 +297,46 @@
     <Property Name="Audience" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
   </EntityType>
-  <Association Name="FK_Admins_AspNetUser">
-    <End Role="AspNetUser" Type="Self.AspNetUser" Multiplicity="0..1" />
-    <End Role="Admins" Type="Self.Admins" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AspNetUser">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Admins">
-        <PropertyRef Name="InvitedBy" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_AspNetUserAdmins_Admin">
-    <End Role="Admins" Type="Self.Admins" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="AspNetUserAdmins" Type="Self.AspNetUserAdmins" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Admins">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="AspNetUserAdmins">
-        <PropertyRef Name="AdminId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_AspNetUserAdmins_AspNetUser">
-    <End Role="AspNetUser" Type="Self.AspNetUser" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="AspNetUserAdmins" Type="Self.AspNetUserAdmins" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AspNetUser">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="AspNetUserAdmins">
-        <PropertyRef Name="UserId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_AspNetUserCaseManagers_AspNetUser">
-    <End Role="AspNetUser" Type="Self.AspNetUser" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="AspNetUserCaseManagers" Type="Self.AspNetUserCaseManagers" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AspNetUser">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="AspNetUserCaseManagers">
-        <PropertyRef Name="UserId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_AspNetUserCaseManagers_Nonprofit">
-    <End Role="CaseManagers" Type="Self.CaseManagers" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="AspNetUserCaseManagers" Type="Self.AspNetUserCaseManagers" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="CaseManagers">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="AspNetUserCaseManagers">
-        <PropertyRef Name="CaseManagerId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_AspNetUserCorporations_AspNetUser">
-    <End Role="AspNetUser" Type="Self.AspNetUser" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="AspNetUserCorporations" Type="Self.AspNetUserCorporations" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AspNetUser">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="AspNetUserCorporations">
-        <PropertyRef Name="UserId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_AspNetUserCorporations_Corporation">
-    <End Role="Corporations" Type="Self.Corporations" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="AspNetUserCorporations" Type="Self.AspNetUserCorporations" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Corporations">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="AspNetUserCorporations">
-        <PropertyRef Name="CorporationId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_AspNetUserMembers_AspNetUser">
-    <End Role="AspNetUser" Type="Self.AspNetUser" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="AspNetUserMembers" Type="Self.AspNetUserMembers" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AspNetUser">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="AspNetUserMembers">
-        <PropertyRef Name="UserId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_AspNetUserMembers_Member">
-    <End Role="Members" Type="Self.Members" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="AspNetUserMembers" Type="Self.AspNetUserMembers" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Members">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="AspNetUserMembers">
-        <PropertyRef Name="MemberId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_AspNetUserNonprofits_AspNetUser">
-    <End Role="AspNetUser" Type="Self.AspNetUser" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="AspNetUserNonprofits" Type="Self.AspNetUserNonprofits" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AspNetUser">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="AspNetUserNonprofits">
-        <PropertyRef Name="UserId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_AspNetUserNonprofits_Nonprofit">
-    <End Role="Nonprofits" Type="Self.Nonprofits" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="AspNetUserNonprofits" Type="Self.AspNetUserNonprofits" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Nonprofits">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="AspNetUserNonprofits">
-        <PropertyRef Name="NonprofitId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
+  <EntityType Name="UserProfileAdmins">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="AdminId" />
+    </Key>
+    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="AdminId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserProfileCasemanagers">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="CaseManagerId" />
+    </Key>
+    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="CaseManagerId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserProfileCorporations">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="CorporationId" />
+    </Key>
+    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="CorporationId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserProfileMembers">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="MemberId" />
+    </Key>
+    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="MemberId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserProfileNonprofits">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="NonprofitId" />
+    </Key>
+    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="NonprofitId" Type="int" Nullable="false" />
+  </EntityType>
   <Association Name="FK_CaseNotes_CaseManagers">
     <End Role="CaseManagers" Type="Self.CaseManagers" Multiplicity="0..1" />
     <End Role="CaseNotes" Type="Self.CaseNotes" Multiplicity="*" />
@@ -534,12 +376,12 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUser_UserId">
-    <End Role="AspNetUser" Type="Self.AspNetUser" Multiplicity="1">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
       <OnDelete Action="Cascade" />
     </End>
     <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="AspNetUser">
+      <Principal Role="AspNetUsers">
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="AspNetUserClaims">
@@ -548,12 +390,12 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUser_UserId">
-    <End Role="AspNetUser" Type="Self.AspNetUser" Multiplicity="1">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
       <OnDelete Action="Cascade" />
     </End>
     <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="AspNetUser">
+      <Principal Role="AspNetUsers">
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="AspNetUserLogins">
@@ -576,12 +418,12 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUser_UserId">
-    <End Role="AspNetUser" Type="Self.AspNetUser" Multiplicity="1">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
       <OnDelete Action="Cascade" />
     </End>
     <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="AspNetUser">
+      <Principal Role="AspNetUsers">
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="AspNetUserRoles">
@@ -850,10 +692,10 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_SurveyAnswers_AspNetUser">
-    <End Role="AspNetUser" Type="Self.AspNetUser" Multiplicity="1" />
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
     <End Role="SurveyAnswers" Type="Self.SurveyAnswers" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="AspNetUser">
+      <Principal Role="AspNetUsers">
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="SurveyAnswers">
@@ -928,12 +770,12 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Surveys_AspNetUser">
-    <End Role="AspNetUser" Type="Self.AspNetUser" Multiplicity="1">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
       <OnDelete Action="Cascade" />
     </End>
     <End Role="Surveys" Type="Self.Surveys" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="AspNetUser">
+      <Principal Role="AspNetUsers">
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="Surveys">
@@ -941,18 +783,153 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_UserProfileAdmins_Admin">
+    <End Role="Admins" Type="Self.Admins" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="UserProfileAdmins" Type="Self.UserProfileAdmins" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admins">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserProfileAdmins">
+        <PropertyRef Name="AdminId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserProfileAdmins_AspNetUser">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="UserProfileAdmins" Type="Self.UserProfileAdmins" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserProfileAdmins">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserProfileCaseManagers_AspNetUser">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="UserProfileCasemanagers" Type="Self.UserProfileCasemanagers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserProfileCasemanagers">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserProfileCaseManagers_Nonprofit">
+    <End Role="CaseManagers" Type="Self.CaseManagers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="UserProfileCasemanagers" Type="Self.UserProfileCasemanagers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CaseManagers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserProfileCasemanagers">
+        <PropertyRef Name="CaseManagerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserProfileCorporations_AspNetUser">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="UserProfileCorporations" Type="Self.UserProfileCorporations" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserProfileCorporations">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserProfileCorporations_Corporation">
+    <End Role="Corporations" Type="Self.Corporations" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="UserProfileCorporations" Type="Self.UserProfileCorporations" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Corporations">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserProfileCorporations">
+        <PropertyRef Name="CorporationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserProfileMembers_AspNetUser">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="UserProfileMembers" Type="Self.UserProfileMembers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserProfileMembers">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserProfileMembers_Member">
+    <End Role="Members" Type="Self.Members" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="UserProfileMembers" Type="Self.UserProfileMembers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Members">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserProfileMembers">
+        <PropertyRef Name="MemberId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserProfileNonprofits_AspNetUser">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="UserProfileNonprofits" Type="Self.UserProfileNonprofits" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserProfileNonprofits">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserProfileNonprofits_Nonprofit">
+    <End Role="Nonprofits" Type="Self.Nonprofits" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="UserProfileNonprofits" Type="Self.UserProfileNonprofits" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Nonprofits">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserProfileNonprofits">
+        <PropertyRef Name="NonprofitId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="SolveChicagoDevModelStoreContainer">
     <EntitySet Name="Admins" EntityType="Self.Admins" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="AspNetUser" EntityType="Self.AspNetUser" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="AspNetUserAdmins" EntityType="Self.AspNetUserAdmins" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="AspNetUserCaseManagers" EntityType="Self.AspNetUserCaseManagers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="AspNetUserCorporations" EntityType="Self.AspNetUserCorporations" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="AspNetUserMembers" EntityType="Self.AspNetUserMembers" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="AspNetUserNonprofits" EntityType="Self.AspNetUserNonprofits" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CaseManagers" EntityType="Self.CaseManagers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CaseNotes" EntityType="Self.CaseNotes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Corporations" EntityType="Self.Corporations" Schema="dbo" store:Type="Tables" />
@@ -974,50 +951,11 @@
     <EntitySet Name="SurveyQuestionOptions" EntityType="Self.SurveyQuestionOptions" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SurveyQuestions" EntityType="Self.SurveyQuestions" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Surveys" EntityType="Self.Surveys" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK_Admins_AspNetUser" Association="Self.FK_Admins_AspNetUser">
-      <End Role="AspNetUser" EntitySet="AspNetUser" />
-      <End Role="Admins" EntitySet="Admins" />
-    </AssociationSet>
-    <AssociationSet Name="FK_AspNetUserAdmins_Admin" Association="Self.FK_AspNetUserAdmins_Admin">
-      <End Role="Admins" EntitySet="Admins" />
-      <End Role="AspNetUserAdmins" EntitySet="AspNetUserAdmins" />
-    </AssociationSet>
-    <AssociationSet Name="FK_AspNetUserAdmins_AspNetUser" Association="Self.FK_AspNetUserAdmins_AspNetUser">
-      <End Role="AspNetUser" EntitySet="AspNetUser" />
-      <End Role="AspNetUserAdmins" EntitySet="AspNetUserAdmins" />
-    </AssociationSet>
-    <AssociationSet Name="FK_AspNetUserCaseManagers_AspNetUser" Association="Self.FK_AspNetUserCaseManagers_AspNetUser">
-      <End Role="AspNetUser" EntitySet="AspNetUser" />
-      <End Role="AspNetUserCaseManagers" EntitySet="AspNetUserCaseManagers" />
-    </AssociationSet>
-    <AssociationSet Name="FK_AspNetUserCaseManagers_Nonprofit" Association="Self.FK_AspNetUserCaseManagers_Nonprofit">
-      <End Role="CaseManagers" EntitySet="CaseManagers" />
-      <End Role="AspNetUserCaseManagers" EntitySet="AspNetUserCaseManagers" />
-    </AssociationSet>
-    <AssociationSet Name="FK_AspNetUserCorporations_AspNetUser" Association="Self.FK_AspNetUserCorporations_AspNetUser">
-      <End Role="AspNetUser" EntitySet="AspNetUser" />
-      <End Role="AspNetUserCorporations" EntitySet="AspNetUserCorporations" />
-    </AssociationSet>
-    <AssociationSet Name="FK_AspNetUserCorporations_Corporation" Association="Self.FK_AspNetUserCorporations_Corporation">
-      <End Role="Corporations" EntitySet="Corporations" />
-      <End Role="AspNetUserCorporations" EntitySet="AspNetUserCorporations" />
-    </AssociationSet>
-    <AssociationSet Name="FK_AspNetUserMembers_AspNetUser" Association="Self.FK_AspNetUserMembers_AspNetUser">
-      <End Role="AspNetUser" EntitySet="AspNetUser" />
-      <End Role="AspNetUserMembers" EntitySet="AspNetUserMembers" />
-    </AssociationSet>
-    <AssociationSet Name="FK_AspNetUserMembers_Member" Association="Self.FK_AspNetUserMembers_Member">
-      <End Role="Members" EntitySet="Members" />
-      <End Role="AspNetUserMembers" EntitySet="AspNetUserMembers" />
-    </AssociationSet>
-    <AssociationSet Name="FK_AspNetUserNonprofits_AspNetUser" Association="Self.FK_AspNetUserNonprofits_AspNetUser">
-      <End Role="AspNetUser" EntitySet="AspNetUser" />
-      <End Role="AspNetUserNonprofits" EntitySet="AspNetUserNonprofits" />
-    </AssociationSet>
-    <AssociationSet Name="FK_AspNetUserNonprofits_Nonprofit" Association="Self.FK_AspNetUserNonprofits_Nonprofit">
-      <End Role="Nonprofits" EntitySet="Nonprofits" />
-      <End Role="AspNetUserNonprofits" EntitySet="AspNetUserNonprofits" />
-    </AssociationSet>
+    <EntitySet Name="UserProfileAdmins" EntityType="Self.UserProfileAdmins" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserProfileCasemanagers" EntityType="Self.UserProfileCasemanagers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserProfileCorporations" EntityType="Self.UserProfileCorporations" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserProfileMembers" EntityType="Self.UserProfileMembers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserProfileNonprofits" EntityType="Self.UserProfileNonprofits" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_CaseNotes_CaseManagers" Association="Self.FK_CaseNotes_CaseManagers">
       <End Role="CaseManagers" EntitySet="CaseManagers" />
       <End Role="CaseNotes" EntitySet="CaseNotes" />
@@ -1031,11 +969,11 @@
       <End Role="CaseNotes" EntitySet="CaseNotes" />
     </AssociationSet>
     <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUser_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUser_UserId">
-      <End Role="AspNetUser" EntitySet="AspNetUser" />
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
     </AssociationSet>
     <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUser_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUser_UserId">
-      <End Role="AspNetUser" EntitySet="AspNetUser" />
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
     </AssociationSet>
     <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
@@ -1043,7 +981,7 @@
       <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
     </AssociationSet>
     <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUser_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUser_UserId">
-      <End Role="AspNetUser" EntitySet="AspNetUser" />
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
     </AssociationSet>
     <AssociationSet Name="FK_MemberChildren_Members" Association="Self.FK_MemberChildren_Members">
@@ -1123,7 +1061,7 @@
       <End Role="Outcomes" EntitySet="Outcomes" />
     </AssociationSet>
     <AssociationSet Name="FK_SurveyAnswers_AspNetUser" Association="Self.FK_SurveyAnswers_AspNetUser">
-      <End Role="AspNetUser" EntitySet="AspNetUser" />
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="SurveyAnswers" EntitySet="SurveyAnswers" />
     </AssociationSet>
     <AssociationSet Name="FK_SurveyAnswers_MemberSurveys" Association="Self.FK_SurveyAnswers_MemberSurveys">
@@ -1147,8 +1085,48 @@
       <End Role="SurveyQuestions" EntitySet="SurveyQuestions" />
     </AssociationSet>
     <AssociationSet Name="FK_Surveys_AspNetUser" Association="Self.FK_Surveys_AspNetUser">
-      <End Role="AspNetUser" EntitySet="AspNetUser" />
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="Surveys" EntitySet="Surveys" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserProfileAdmins_Admin" Association="Self.FK_UserProfileAdmins_Admin">
+      <End Role="Admins" EntitySet="Admins" />
+      <End Role="UserProfileAdmins" EntitySet="UserProfileAdmins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserProfileAdmins_AspNetUser" Association="Self.FK_UserProfileAdmins_AspNetUser">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="UserProfileAdmins" EntitySet="UserProfileAdmins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserProfileCaseManagers_AspNetUser" Association="Self.FK_UserProfileCaseManagers_AspNetUser">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="UserProfileCasemanagers" EntitySet="UserProfileCasemanagers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserProfileCaseManagers_Nonprofit" Association="Self.FK_UserProfileCaseManagers_Nonprofit">
+      <End Role="CaseManagers" EntitySet="CaseManagers" />
+      <End Role="UserProfileCasemanagers" EntitySet="UserProfileCasemanagers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserProfileCorporations_AspNetUser" Association="Self.FK_UserProfileCorporations_AspNetUser">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="UserProfileCorporations" EntitySet="UserProfileCorporations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserProfileCorporations_Corporation" Association="Self.FK_UserProfileCorporations_Corporation">
+      <End Role="Corporations" EntitySet="Corporations" />
+      <End Role="UserProfileCorporations" EntitySet="UserProfileCorporations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserProfileMembers_AspNetUser" Association="Self.FK_UserProfileMembers_AspNetUser">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="UserProfileMembers" EntitySet="UserProfileMembers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserProfileMembers_Member" Association="Self.FK_UserProfileMembers_Member">
+      <End Role="Members" EntitySet="Members" />
+      <End Role="UserProfileMembers" EntitySet="UserProfileMembers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserProfileNonprofits_AspNetUser" Association="Self.FK_UserProfileNonprofits_AspNetUser">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="UserProfileNonprofits" EntitySet="UserProfileNonprofits" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserProfileNonprofits_Nonprofit" Association="Self.FK_UserProfileNonprofits_Nonprofit">
+      <End Role="Nonprofits" EntitySet="Nonprofits" />
+      <End Role="UserProfileNonprofits" EntitySet="UserProfileNonprofits" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

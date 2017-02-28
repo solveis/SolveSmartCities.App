@@ -9,12 +9,14 @@ using System.Web.Mvc;
 using SolveChicago.Web.Data;
 using DonorPath.Web.Common;
 using SolveChicago.Web.Common;
+using SolveChicago.Web.Models;
 
 namespace SolveChicago.Web.Controllers
 {
     public class AdminsController : BaseController
     {
-        private SolveChicagoEntities db = new SolveChicagoEntities();
+        public AdminsController(SolveChicagoEntities db) : base(db) { }
+        public AdminsController() : base() { }
 
         // GET: Admins
         public ActionResult Index()
@@ -123,12 +125,22 @@ namespace SolveChicago.Web.Controllers
         }
 
         // GET: Admins/Invite
+        [HttpPost]
+        public ActionResult Invite()
+        {
+            AdminInviteModel model = new AdminInviteModel() { AdminId = State.AdminIds.First() };
+            return View(model);
+        }
+
+        // POST: Admins/Invite
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Invite(string userName, string inviteEmail)
         {
             string userId = GetUserId(userName);
             string inviteCode = Crypto.EncryptStringAES(userId, Settings.Crypto.SharedSecret);
-            //send email
+            EmailService service = new EmailService();
+            service.SendAsync(new Microsoft.AspNet.Identity.IdentityMessage { Destination = inviteEmail, Body = string.Format("http://localhost:2486/admins/register?invitecode={0}", inviteCode), Subject = "admin invite" });
             
             return RedirectToAction("Index");
         }

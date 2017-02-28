@@ -1,5 +1,5 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using Moq;
 using System.Data.Entity;
 using System.Collections.Generic;
@@ -7,10 +7,9 @@ using SolveChicago.Web.Controllers;
 
 namespace SolveChicago.Tests.Controllers
 {     
-    [TestClass]
     public class RegisterControllerTest
     {
-        //[TestMethod]
+        //[Fact]
         public void Can_Register_Member()
         {
             string email = string.Format("{0}@solvechicago.com", Guid.NewGuid().ToString());

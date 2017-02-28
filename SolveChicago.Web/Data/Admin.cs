@@ -33,7 +33,6 @@ namespace SolveChicago.Web.Data
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string InvitedBy { get; set; }
     
-        public virtual AspNetUser AspNetUser { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
     }

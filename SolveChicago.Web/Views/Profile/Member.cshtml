@@ -1,4 +1,4 @@
-﻿@model SolveChicago.Web.Common.Entities.MemberEntity
+﻿@model SolveChicago.Web.Data.Member
 
 @{
     ViewBag.Title = "Edit";
@@ -25,7 +25,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        @*<div class="form-group">
             @Html.LabelFor(model => model.ProfilePicture, "Profile Picture", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @if (!string.IsNullOrEmpty(Model.ProfilePicturePath) && Model.ProfilePicturePath != "/img/noPhoto.png")
@@ -37,7 +37,7 @@
                 <input type="file" id="ProfilPicture" name="ProfilePicture" class="form-control" />
                 @Html.ValidationMessageFor(model => model.ProfilePicture, "", new { @class = "text-danger" })
             </div>
-        </div>
+        </div>*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })

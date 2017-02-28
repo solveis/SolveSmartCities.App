@@ -10,9 +10,10 @@ using SolveChicago.Web.Data;
 
 namespace SolveChicago.Web.Controllers
 {
-    public class MemberEmergencyContactsController : Controller
+    public class MemberEmergencyContactsController : BaseController
     {
-        private SolveChicagoEntities db = new SolveChicagoEntities();
+        public MemberEmergencyContactsController(SolveChicagoEntities db) : base(db) { }
+        public MemberEmergencyContactsController() : base() { }
 
         // GET: MemberEmergencyContacts
         public ActionResult Index()

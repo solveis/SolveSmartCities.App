@@ -8,12 +8,16 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using SolveChicago.Web.Models;
 using SolveChicago.Web.Controllers;
+using SolveChicago.Web.Data;
 
 namespace SolveChicago.Web.Controllers
 {
     [Authorize]
     public class ManageController : BaseController
     {
+        public ManageController(SolveChicagoEntities db) : base(db) { }
+        public ManageController() : base() { }
+
         //
         // GET: /Manage/Index
         public async Task<ActionResult> Index(ManageMessageId? message)

@@ -17,7 +17,7 @@ namespace SolveChicago.Web.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Corporation()
         {
-            this.MemberCorporations = new HashSet<MemberCorporation>();
+            this.Members = new HashSet<Member>();
             this.AspNetUsers = new HashSet<AspNetUser>();
         }
     
@@ -33,7 +33,7 @@ namespace SolveChicago.Web.Data
         public Nullable<System.DateTime> CreatedDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MemberCorporation> MemberCorporations { get; set; }
+        public virtual ICollection<Member> Members { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
     }

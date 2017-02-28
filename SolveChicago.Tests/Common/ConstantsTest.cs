@@ -1,5 +1,5 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using Moq;
 using System.Data.Entity;
 using System.Collections.Generic;
@@ -7,10 +7,9 @@ using SolveChicago.Web.Common;
 
 namespace SolveChicago.Tests.Common
 {
-    [TestClass]
     public class ConstantsTest
     {
-        [TestMethod]
+        [Fact]
         public void Can_Instantiate_Roles()
         {
             string admin = Constants.Roles.Admin;
@@ -19,14 +18,14 @@ namespace SolveChicago.Tests.Common
             string corporation = Constants.Roles.Corporation;
             string nonprofit = Constants.Roles.Nonprofit;
 
-            Assert.AreEqual("Admin", admin);
-            Assert.AreEqual("Member", member);
-            Assert.AreEqual("CaseManager", caseManager);
-            Assert.AreEqual("Corporation", corporation);
-            Assert.AreEqual("Nonprofit", nonprofit);
+            Assert.Equal("Admin", admin);
+            Assert.Equal("Member", member);
+            Assert.Equal("CaseManager", caseManager);
+            Assert.Equal("Corporation", corporation);
+            Assert.Equal("Nonprofit", nonprofit);
         }
 
-        [TestMethod]
+        [Fact]
         public void Can_Instantiate_Uploads()
         {
             string AdminPhotos = Constants.Upload.AdminPhotos;
@@ -35,11 +34,11 @@ namespace SolveChicago.Tests.Common
             string CorporationPhotos = Constants.Upload.CorporationPhotos;
             string NonprofitPhotos = Constants.Upload.NonprofitPhotos;
 
-            Assert.AreEqual("adminphotos", AdminPhotos);
-            Assert.AreEqual("memberphotos", MemberPhotos);
-            Assert.AreEqual("casemanagerphotos", CaseManagerPhotos);
-            Assert.AreEqual("corporationphotos", CorporationPhotos);
-            Assert.AreEqual("nonprofitphotos", NonprofitPhotos);
+            Assert.Equal("adminphotos", AdminPhotos);
+            Assert.Equal("memberphotos", MemberPhotos);
+            Assert.Equal("casemanagerphotos", CaseManagerPhotos);
+            Assert.Equal("corporationphotos", CorporationPhotos);
+            Assert.Equal("nonprofitphotos", NonprofitPhotos);
         }
     }
 }
