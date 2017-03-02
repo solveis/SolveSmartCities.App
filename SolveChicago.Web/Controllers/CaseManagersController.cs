@@ -12,7 +12,9 @@ namespace SolveChicago.Web.Controllers
 {
     [Authorize(Roles = "Admin, Nonprofit")]
     public class CaseManagersController : BaseController
-    {        
+    {
+        public CaseManagersController(SolveChicagoEntities db) : base(db) { }
+        public CaseManagersController() : base() { }
         // GET: CaseManagers
         public ActionResult Index()
         {

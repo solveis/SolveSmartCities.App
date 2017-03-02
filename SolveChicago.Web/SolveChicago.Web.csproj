@@ -486,11 +486,6 @@
     <Content Include="Views\CaseManagers\Details.cshtml" />
     <Content Include="Views\CaseManagers\Edit.cshtml" />
     <Content Include="Views\CaseManagers\Index.cshtml" />
-    <Content Include="Views\Members\Create.cshtml" />
-    <Content Include="Views\Members\Delete.cshtml" />
-    <Content Include="Views\Members\Details.cshtml" />
-    <Content Include="Views\Members\Edit.cshtml" />
-    <Content Include="Views\Members\Index.cshtml" />
     <Content Include="Views\Families\Create.cshtml" />
     <Content Include="Views\Families\Delete.cshtml" />
     <Content Include="Views\Families\Details.cshtml" />
@@ -501,6 +496,11 @@
     <Content Include="Views\Corporations\Details.cshtml" />
     <Content Include="Views\Corporations\Edit.cshtml" />
     <Content Include="Views\Corporations\Index.cshtml" />
+    <Content Include="Views\Members\Create.cshtml" />
+    <Content Include="Views\Members\Delete.cshtml" />
+    <Content Include="Views\Members\Details.cshtml" />
+    <Content Include="Views\Members\Edit.cshtml" />
+    <Content Include="Views\Members\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

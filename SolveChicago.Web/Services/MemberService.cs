@@ -19,28 +19,37 @@ namespace SolveChicago.Web.Services
                 return null;
             else
             {
+                Nonprofit npo = member.MemberNonprofits.Single(x => x.NonprofitId == nonprofitId).Nonprofit;
+                MemberCorporation memberCorporation = member.MemberCorporations.Any() ? member.MemberCorporations.OrderByDescending(x => x.Start).First(): null;
                 return new MemberProfile
                 {
-                    Address1 = member.Family.Address1,
-                    Address2 = member.Family.Address2,
+                    Address1 = member.Address1,
+                    Address2 = member.Address2,
                     Birthday = member.Birthday,
-                    City = member.Family.City,
-                    Country = member.Family.Country,
+                    City = member.City,
+                    Country = member.Country,
                     Degree = member.Degree,
                     Email = member.Email,
-                    Employer = member.MemberCorporations.Any() ? member.MemberCorporations.OrderByDescending(x => x.Start).First().Corporation : new Corporation(),
+                    Employer = memberCorporation.Corporation,
+                    EmployerName = memberCorporation.Corporation.Name,
+                    EmployerEnd = memberCorporation.End,
+                    EmployerPay = memberCorporation.Pay,
+                    EmployerReasonForLeaving = memberCorporation.ReasonForLeaving,
+                    EmployerStart = memberCorporation.Start,
                     Family = member.Family,
                     FirstName = member.FirstName,
                     Gender = member.Gender,
                     HighestEducation = member.HighestEducation,
                     Id = member.Id,
-                    Interests = member.Interests.Select(x => x.Name).ToArray(),
+                    Interests = member.Interests.Any() ? member.Interests.Select(x => x.Name).ToArray() : new string[0],
                     LastName = member.LastName,
                     LastSchool = member.LastSchool,
-                    Nonprofit = member.MemberNonprofits.Single(x => x.NonprofitId == nonprofitId).Nonprofit,
+                    Nonprofit = npo,
+                    NonprofitSkillsAcquired = member.MemberSkills.Where(x => x.NonprofitId == nonprofitId).Select(x => x.Skill.Name) .ToArray(),
+                    NonprofitName = npo.Name,
                     Phone = member.Phone,
                     ProfilePicturePath = member.ProfilePicturePath,
-                    Province = member.Family.Province
+                    Province = member.Province,
                 };
             }
         }

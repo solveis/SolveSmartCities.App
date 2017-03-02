@@ -23,7 +23,7 @@ namespace SolveChicago.Web.Data
         public Nullable<decimal> OutcomeWeight { get; set; }
     
         public virtual CaseManager CaseManager { get; set; }
-        public virtual Member Member { get; set; }
         public virtual Outcome Outcome { get; set; }
+        public virtual Member Member { get; set; }
     }
 }

@@ -31,9 +31,16 @@ namespace SolveChicago.Web.Models.Profile
 
         public string[] Interests { get; set; }
         public Nonprofit Nonprofit { get; set; }
-        public string NpoEnjoyed { get; set; }
-        public string NpoStruggled { get; set; }
+        public string NonprofitName { get; set; }
+        public string[] NonprofitSkillsAcquired { get; set; }
+        public string NonprofitEnjoyed { get; set; }
+        public string NonprofitStruggled { get; set; }
         public Corporation Employer { get; set; }
+        public string EmployerName { get; set; }
+        public DateTime? EmployerStart { get; set; }
+        public DateTime? EmployerEnd { get; set; }
+        public string EmployerReasonForLeaving { get; set; }
+        public decimal? EmployerPay { get; set; }
 
     }
 }

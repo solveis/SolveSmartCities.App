@@ -12,6 +12,8 @@ namespace SolveChicago.Web.Controllers
 {
     public class FamiliesController : BaseController
     {
+        public FamiliesController(SolveChicagoEntities db) : base(db) { }
+        public FamiliesController() : base() { }
         // GET: Families
         public ActionResult Index()
         {

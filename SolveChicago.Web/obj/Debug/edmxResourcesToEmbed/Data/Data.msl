@@ -168,26 +168,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Members">
-      <EntityTypeMapping TypeName="SolveChicagoDevModel.Member">
-        <MappingFragment StoreEntitySet="Members">
-          <ScalarProperty Name="Degree" ColumnName="Degree" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-          <ScalarProperty Name="LastName" ColumnName="LastName" />
-          <ScalarProperty Name="ProfilePicturePath" ColumnName="ProfilePicturePath" />
-          <ScalarProperty Name="Phone" ColumnName="Phone" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="FamilyId" ColumnName="FamilyId" />
-          <ScalarProperty Name="FamilyRole" ColumnName="FamilyRole" />
-          <ScalarProperty Name="Gender" ColumnName="Gender" />
-          <ScalarProperty Name="Birthday" ColumnName="Birthday" />
-          <ScalarProperty Name="HighestEducation" ColumnName="HighestEducation" />
-          <ScalarProperty Name="LastSchool" ColumnName="LastSchool" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="MemberSkills">
       <EntityTypeMapping TypeName="SolveChicagoDevModel.MemberSkill">
         <MappingFragment StoreEntitySet="MemberSkills">
@@ -314,14 +294,6 @@
         <ScalarProperty Name="Id" ColumnName="CorporationId" />
       </EndProperty>
     </AssociationSetMapping>
-    <AssociationSetMapping Name="UserProfileMembers" TypeName="SolveChicagoDevModel.UserProfileMembers" StoreEntitySet="UserProfileMembers">
-      <EndProperty Name="AspNetUsers">
-        <ScalarProperty Name="Id" ColumnName="UserId" />
-      </EndProperty>
-      <EndProperty Name="Members">
-        <ScalarProperty Name="Id" ColumnName="MemberId" />
-      </EndProperty>
-    </AssociationSetMapping>
     <AssociationSetMapping Name="UserProfileNonprofits" TypeName="SolveChicagoDevModel.UserProfileNonprofits" StoreEntitySet="UserProfileNonprofits">
       <EndProperty Name="AspNetUsers">
         <ScalarProperty Name="Id" ColumnName="UserId" />
@@ -346,12 +318,46 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Members">
+      <EntityTypeMapping TypeName="SolveChicagoDevModel.Member">
+        <MappingFragment StoreEntitySet="Members">
+          <ScalarProperty Name="Degree" ColumnName="Degree" />
+          <ScalarProperty Name="LastSchool" ColumnName="LastSchool" />
+          <ScalarProperty Name="HighestEducation" ColumnName="HighestEducation" />
+          <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="FamilyRole" ColumnName="FamilyRole" />
+          <ScalarProperty Name="FamilyId" ColumnName="FamilyId" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="ProfilePicturePath" ColumnName="ProfilePicturePath" />
+          <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="Province" ColumnName="Province" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Address2" ColumnName="Address2" />
+          <ScalarProperty Name="Address1" ColumnName="Address1" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <AssociationSetMapping Name="MemberInterests" TypeName="SolveChicagoDevModel.MemberInterests" StoreEntitySet="MemberInterests">
       <EndProperty Name="Member">
         <ScalarProperty Name="Id" ColumnName="MemberId" />
       </EndProperty>
       <EndProperty Name="Interest">
         <ScalarProperty Name="Id" ColumnName="InterestId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="UserProfileMembers" TypeName="SolveChicagoDevModel.UserProfileMembers" StoreEntitySet="UserProfileMembers">
+      <EndProperty Name="Member">
+        <ScalarProperty Name="Id" ColumnName="MemberId" />
+      </EndProperty>
+      <EndProperty Name="AspNetUser">
+        <ScalarProperty Name="Id" ColumnName="UserId" />
       </EndProperty>
     </AssociationSetMapping>
   </EntityContainerMapping>

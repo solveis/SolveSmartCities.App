@@ -39,7 +39,6 @@ namespace SolveChicago.Web.Data
         public virtual DbSet<MemberEmergencyContact> MemberEmergencyContacts { get; set; }
         public virtual DbSet<MemberGovernmentProgram> MemberGovernmentPrograms { get; set; }
         public virtual DbSet<MemberNonprofit> MemberNonprofits { get; set; }
-        public virtual DbSet<Member> Members { get; set; }
         public virtual DbSet<MemberSkill> MemberSkills { get; set; }
         public virtual DbSet<MemberSurvey> MemberSurveys { get; set; }
         public virtual DbSet<Nonprofit> Nonprofits { get; set; }
@@ -50,5 +49,6 @@ namespace SolveChicago.Web.Data
         public virtual DbSet<Survey> Surveys { get; set; }
         public virtual DbSet<Interest> Interests { get; set; }
         public virtual DbSet<Skill> Skills { get; set; }
+        public virtual DbSet<Member> Members { get; set; }
     }
 }

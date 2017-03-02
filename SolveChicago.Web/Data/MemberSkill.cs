@@ -18,8 +18,8 @@ namespace SolveChicago.Web.Data
         public int SkillId { get; set; }
         public Nullable<int> NonprofitId { get; set; }
     
-        public virtual Member Member { get; set; }
         public virtual Nonprofit Nonprofit { get; set; }
         public virtual Skill Skill { get; set; }
+        public virtual Member Member { get; set; }
     }
 }
