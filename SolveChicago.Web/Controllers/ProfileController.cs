@@ -25,21 +25,24 @@ namespace SolveChicago.Web.Controllers
         {
             using (MemberService service = new MemberService(db))
             {
-                MemberProfile model = service.GetMember(id, nonprofitId);
+                MemberProfile model = service.Get(id, nonprofitId);
                 return View(model);
             }
         }
 
         // POST: Profile/Member
         [HttpPost]
-        public ActionResult Member(Member model)
+        public ActionResult Member(MemberProfile model)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(model).State = EntityState.Modified;
-                db.SaveChanges();
+                using (MemberService service = new MemberService(db))
+                {
+                    service.Post(model);
+                    return MemberRedirect(model.Id);
+                }
             }
-            return MemberRedirect(model);
+            return View(model);
         }
 
         // GET: Profile/CaseManager
