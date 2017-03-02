@@ -25,20 +25,22 @@ namespace SolveChicago.Web.Data
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Admin> Admins { get; set; }
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
+        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<CaseManager> CaseManagers { get; set; }
         public virtual DbSet<CaseNote> CaseNotes { get; set; }
         public virtual DbSet<Corporation> Corporations { get; set; }
         public virtual DbSet<Family> Families { get; set; }
         public virtual DbSet<GovernmentProgram> GovernmentPrograms { get; set; }
-        public virtual DbSet<MemberChildren> MemberChildrens { get; set; }
-        public virtual DbSet<MemberChildrenGovernmentProgram> MemberChildrenGovernmentPrograms { get; set; }
+        public virtual DbSet<MemberCorporation> MemberCorporations { get; set; }
         public virtual DbSet<MemberEmergencyContact> MemberEmergencyContacts { get; set; }
         public virtual DbSet<MemberGovernmentProgram> MemberGovernmentPrograms { get; set; }
+        public virtual DbSet<MemberNonprofit> MemberNonprofits { get; set; }
         public virtual DbSet<Member> Members { get; set; }
-        public virtual DbSet<MemberStatus> MemberStatuses { get; set; }
+        public virtual DbSet<MemberSkill> MemberSkills { get; set; }
         public virtual DbSet<MemberSurvey> MemberSurveys { get; set; }
         public virtual DbSet<Nonprofit> Nonprofits { get; set; }
         public virtual DbSet<Outcome> Outcomes { get; set; }
@@ -46,8 +48,7 @@ namespace SolveChicago.Web.Data
         public virtual DbSet<SurveyQuestionOption> SurveyQuestionOptions { get; set; }
         public virtual DbSet<SurveyQuestion> SurveyQuestions { get; set; }
         public virtual DbSet<Survey> Surveys { get; set; }
-        public virtual DbSet<MemberNonprofit> MemberNonprofits { get; set; }
-        public virtual DbSet<Admin> Admins { get; set; }
-        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
+        public virtual DbSet<Interest> Interests { get; set; }
+        public virtual DbSet<Skill> Skills { get; set; }
     }
 }

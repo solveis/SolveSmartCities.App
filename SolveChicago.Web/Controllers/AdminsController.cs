@@ -10,6 +10,7 @@ using SolveChicago.Web.Data;
 using DonorPath.Web.Common;
 using SolveChicago.Web.Common;
 using SolveChicago.Web.Models;
+using SolveChicago.Web.Models.Admin;
 
 namespace SolveChicago.Web.Controllers
 {
@@ -128,7 +129,7 @@ namespace SolveChicago.Web.Controllers
         // GET: Admins/Invite
         public ActionResult Invite()
         {
-            AdminInviteModel model = new AdminInviteModel() { AdminId = State.AdminIds.First() };
+            AdminInviteModel model = new AdminInviteModel() { AdminId = State.AdminId };
             return View(model);
         }
 

@@ -12,17 +12,16 @@ namespace SolveChicago.Web.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class MemberChildrenGovernmentProgram
+    public partial class MemberCorporation
     {
-        public int Id { get; set; }
         public int MemberId { get; set; }
-        public int MemberChildrenId { get; set; }
-        public int GovernmentProgramId { get; set; }
+        public int CorporationId { get; set; }
         public System.DateTime Start { get; set; }
         public Nullable<System.DateTime> End { get; set; }
+        public string ReasonForLeaving { get; set; }
+        public Nullable<decimal> Pay { get; set; }
     
-        public virtual GovernmentProgram GovernmentProgram { get; set; }
-        public virtual MemberChildren MemberChildren { get; set; }
+        public virtual Corporation Corporation { get; set; }
         public virtual Member Member { get; set; }
     }
 }

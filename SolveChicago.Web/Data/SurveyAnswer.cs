@@ -21,9 +21,9 @@ namespace SolveChicago.Web.Data
         public int MemberSurveyId { get; set; }
         public string UserId { get; set; }
     
+        public virtual AspNetUser AspNetUser { get; set; }
         public virtual MemberSurvey MemberSurvey { get; set; }
         public virtual SurveyQuestion SurveyQuestion { get; set; }
         public virtual Survey Survey { get; set; }
-        public virtual AspNetUser AspNetUser { get; set; }
     }
 }

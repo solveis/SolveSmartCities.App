@@ -18,6 +18,7 @@ namespace SolveChicago.Web.Data
         public Nonprofit()
         {
             this.MemberNonprofits = new HashSet<MemberNonprofit>();
+            this.MemberSkills = new HashSet<MemberSkill>();
             this.CaseManagers = new HashSet<CaseManager>();
             this.AspNetUsers = new HashSet<AspNetUser>();
         }
@@ -32,9 +33,13 @@ namespace SolveChicago.Web.Data
         public string Province { get; set; }
         public string Country { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
+        public string ProfilePicturePath { get; set; }
+        public string ZipCode { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MemberNonprofit> MemberNonprofits { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MemberSkill> MemberSkills { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CaseManager> CaseManagers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

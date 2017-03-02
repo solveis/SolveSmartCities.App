@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using SolveChicago.Web.Data;
+using SolveChicago.Web.Services;
 
 namespace SolveChicago.Web.Controllers
 {
@@ -18,7 +19,11 @@ namespace SolveChicago.Web.Controllers
         // GET: Nonprofits
         public ActionResult Index()
         {
-            return View(db.Nonprofits.ToList());
+            using (NonprofitService service = new NonprofitService())
+            {
+                CaseManager[] caseManagers = service.GetCaseManagers(State.NonprofitId);
+                return View(caseManagers.ToList());
+            }
         }
 
         // GET: Nonprofits/Details/5
@@ -66,28 +71,7 @@ namespace SolveChicago.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Nonprofit nonprofit = db.Nonprofits.Find(id);
-            if (nonprofit == null)
-            {
-                return HttpNotFound();
-            }
-            return View(nonprofit);
-        }
-
-        // POST: Nonprofits/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Email,Name,Phone,Address1,Address2,City,Province,Country,CreatedDate")] Nonprofit nonprofit)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(nonprofit).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(nonprofit);
+            return RedirectToAction("Nonprofit", "Profile", new { id = id });
         }
 
         // GET: Nonprofits/Delete/5

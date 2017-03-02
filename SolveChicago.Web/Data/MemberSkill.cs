@@ -12,13 +12,14 @@ namespace SolveChicago.Web.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class MemberStatus
+    public partial class MemberSkill
     {
-        public int Id { get; set; }
         public int MemberId { get; set; }
-        public string Status { get; set; }
-        public System.DateTime CreatedDate { get; set; }
+        public int SkillId { get; set; }
+        public Nullable<int> NonprofitId { get; set; }
     
         public virtual Member Member { get; set; }
+        public virtual Nonprofit Nonprofit { get; set; }
+        public virtual Skill Skill { get; set; }
     }
 }

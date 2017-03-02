@@ -18,54 +18,52 @@ namespace SolveChicago.Web.Data
         public Member()
         {
             this.CaseNotes = new HashSet<CaseNote>();
-            this.MemberChildrens = new HashSet<MemberChildren>();
-            this.MemberChildrenGovernmentPrograms = new HashSet<MemberChildrenGovernmentProgram>();
+            this.MemberCorporations = new HashSet<MemberCorporation>();
             this.MemberEmergencyContacts = new HashSet<MemberEmergencyContact>();
             this.MemberGovernmentPrograms = new HashSet<MemberGovernmentProgram>();
-            this.MemberStatuses = new HashSet<MemberStatus>();
+            this.MemberNonprofits = new HashSet<MemberNonprofit>();
+            this.MemberSkills = new HashSet<MemberSkill>();
             this.MemberSurveys = new HashSet<MemberSurvey>();
             this.Outcomes = new HashSet<Outcome>();
-            this.MemberNonprofits = new HashSet<MemberNonprofit>();
-            this.Corporations = new HashSet<Corporation>();
             this.AspNetUsers = new HashSet<AspNetUser>();
+            this.Interests = new HashSet<Interest>();
         }
     
         public int Id { get; set; }
         public string Email { get; set; }
-        public string Name { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public string ProfilePicturePath { get; set; }
         public string Phone { get; set; }
-        public string Address1 { get; set; }
-        public string Address2 { get; set; }
-        public string City { get; set; }
-        public string Province { get; set; }
-        public string Country { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> FamilyId { get; set; }
         public string FamilyRole { get; set; }
+        public string Gender { get; set; }
+        public Nullable<System.DateTime> Birthday { get; set; }
+        public string HighestEducation { get; set; }
+        public string LastSchool { get; set; }
+        public string Degree { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CaseNote> CaseNotes { get; set; }
         public virtual Family Family { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MemberChildren> MemberChildrens { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MemberChildrenGovernmentProgram> MemberChildrenGovernmentPrograms { get; set; }
+        public virtual ICollection<MemberCorporation> MemberCorporations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MemberEmergencyContact> MemberEmergencyContacts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MemberGovernmentProgram> MemberGovernmentPrograms { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MemberStatus> MemberStatuses { get; set; }
+        public virtual ICollection<MemberNonprofit> MemberNonprofits { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MemberSkill> MemberSkills { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MemberSurvey> MemberSurveys { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Outcome> Outcomes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MemberNonprofit> MemberNonprofits { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Corporation> Corporations { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Interest> Interests { get; set; }
     }
 }

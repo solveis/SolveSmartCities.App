@@ -12,21 +12,18 @@ namespace SolveChicago.Web.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class MemberChildren
+    public partial class Skill
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public MemberChildren()
+        public Skill()
         {
-            this.MemberChildrenGovernmentPrograms = new HashSet<MemberChildrenGovernmentProgram>();
+            this.MemberSkills = new HashSet<MemberSkill>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
-        public int MemberId { get; set; }
-        public System.DateTime BirthDate { get; set; }
     
-        public virtual Member Member { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MemberChildrenGovernmentProgram> MemberChildrenGovernmentPrograms { get; set; }
+        public virtual ICollection<MemberSkill> MemberSkills { get; set; }
     }
 }

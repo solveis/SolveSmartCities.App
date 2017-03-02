@@ -221,12 +221,9 @@
     <Compile Include="Controllers\GovernmentProgramsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\MemberChildrenGovernmentProgramsController.cs" />
-    <Compile Include="Controllers\MemberChildrensController.cs" />
     <Compile Include="Controllers\MemberEmergencyContactsController.cs" />
     <Compile Include="Controllers\MemberGovernmentProgramsController.cs" />
     <Compile Include="Controllers\MembersController.cs" />
-    <Compile Include="Controllers\MemberStatusController.cs" />
     <Compile Include="Controllers\NonprofitsController.cs" />
     <Compile Include="Controllers\OutcomesController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
@@ -276,13 +273,13 @@
     <Compile Include="Data\GovernmentProgram.cs">
       <DependentUpon>data.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\Interest.cs">
+      <DependentUpon>data.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\Member.cs">
       <DependentUpon>data.tt</DependentUpon>
     </Compile>
-    <Compile Include="Data\MemberChildren.cs">
-      <DependentUpon>data.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\MemberChildrenGovernmentProgram.cs">
+    <Compile Include="Data\MemberCorporation.cs">
       <DependentUpon>data.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\MemberEmergencyContact.cs">
@@ -294,7 +291,7 @@
     <Compile Include="Data\MemberNonprofit.cs">
       <DependentUpon>data.tt</DependentUpon>
     </Compile>
-    <Compile Include="Data\MemberStatus.cs">
+    <Compile Include="Data\MemberSkill.cs">
       <DependentUpon>data.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\MemberSurvey.cs">
@@ -304,6 +301,9 @@
       <DependentUpon>data.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\Outcome.cs">
+      <DependentUpon>data.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Skill.cs">
       <DependentUpon>data.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\Survey.cs">
@@ -322,12 +322,17 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\AdminInviteModel.cs" />
+    <Compile Include="Models\Admin\AdminInviteModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Profile\MemberProfile.cs" />
+    <Compile Include="Models\Profile\NonprofitProfile.cs" />
     <Compile Include="Profile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\BaseService.cs" />
     <Compile Include="Services\EmailService.cs" />
+    <Compile Include="Services\MemberService.cs" />
+    <Compile Include="Services\NonprofitService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -430,36 +435,16 @@
     <Content Include="Views\Admins\Details.cshtml" />
     <Content Include="Views\Admins\Edit.cshtml" />
     <Content Include="Views\Admins\Index.cshtml" />
-    <Content Include="Views\CaseManagers\Create.cshtml" />
-    <Content Include="Views\CaseManagers\Delete.cshtml" />
-    <Content Include="Views\CaseManagers\Details.cshtml" />
-    <Content Include="Views\CaseManagers\Edit.cshtml" />
-    <Content Include="Views\CaseManagers\Index.cshtml" />
     <Content Include="Views\CaseNotes\Create.cshtml" />
     <Content Include="Views\CaseNotes\Delete.cshtml" />
     <Content Include="Views\CaseNotes\Details.cshtml" />
     <Content Include="Views\CaseNotes\Edit.cshtml" />
     <Content Include="Views\CaseNotes\Index.cshtml" />
-    <Content Include="Views\Corporations\Create.cshtml" />
-    <Content Include="Views\Corporations\Delete.cshtml" />
-    <Content Include="Views\Corporations\Details.cshtml" />
-    <Content Include="Views\Corporations\Edit.cshtml" />
-    <Content Include="Views\Corporations\Index.cshtml" />
-    <Content Include="Views\Families\Create.cshtml" />
-    <Content Include="Views\Families\Delete.cshtml" />
-    <Content Include="Views\Families\Details.cshtml" />
-    <Content Include="Views\Families\Edit.cshtml" />
-    <Content Include="Views\Families\Index.cshtml" />
     <Content Include="Views\GovernmentPrograms\Create.cshtml" />
     <Content Include="Views\GovernmentPrograms\Delete.cshtml" />
     <Content Include="Views\GovernmentPrograms\Details.cshtml" />
     <Content Include="Views\GovernmentPrograms\Edit.cshtml" />
     <Content Include="Views\GovernmentPrograms\Index.cshtml" />
-    <Content Include="Views\Members\Create.cshtml" />
-    <Content Include="Views\Members\Delete.cshtml" />
-    <Content Include="Views\Members\Details.cshtml" />
-    <Content Include="Views\Members\Edit.cshtml" />
-    <Content Include="Views\Members\Index.cshtml" />
     <Content Include="Views\MemberChildrens\Create.cshtml" />
     <Content Include="Views\MemberChildrens\Delete.cshtml" />
     <Content Include="Views\MemberChildrens\Details.cshtml" />
@@ -496,6 +481,26 @@
     <Content Include="Views\Outcomes\Edit.cshtml" />
     <Content Include="Views\Outcomes\Index.cshtml" />
     <Content Include="Views\Admins\Invite.cshtml" />
+    <Content Include="Views\CaseManagers\Create.cshtml" />
+    <Content Include="Views\CaseManagers\Delete.cshtml" />
+    <Content Include="Views\CaseManagers\Details.cshtml" />
+    <Content Include="Views\CaseManagers\Edit.cshtml" />
+    <Content Include="Views\CaseManagers\Index.cshtml" />
+    <Content Include="Views\Members\Create.cshtml" />
+    <Content Include="Views\Members\Delete.cshtml" />
+    <Content Include="Views\Members\Details.cshtml" />
+    <Content Include="Views\Members\Edit.cshtml" />
+    <Content Include="Views\Members\Index.cshtml" />
+    <Content Include="Views\Families\Create.cshtml" />
+    <Content Include="Views\Families\Delete.cshtml" />
+    <Content Include="Views\Families\Details.cshtml" />
+    <Content Include="Views\Families\Edit.cshtml" />
+    <Content Include="Views\Families\Index.cshtml" />
+    <Content Include="Views\Corporations\Create.cshtml" />
+    <Content Include="Views\Corporations\Delete.cshtml" />
+    <Content Include="Views\Corporations\Details.cshtml" />
+    <Content Include="Views\Corporations\Edit.cshtml" />
+    <Content Include="Views\Corporations\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

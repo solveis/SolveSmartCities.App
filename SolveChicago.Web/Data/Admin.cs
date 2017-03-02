@@ -22,16 +22,12 @@ namespace SolveChicago.Web.Data
     
         public int Id { get; set; }
         public string Email { get; set; }
-        public string Name { get; set; }
         public string ProfilePicturePath { get; set; }
         public string Phone { get; set; }
-        public string Address1 { get; set; }
-        public string Address2 { get; set; }
-        public string City { get; set; }
-        public string Province { get; set; }
-        public string Country { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
-        public string InvitedBy { get; set; }
+        public Nullable<int> InvitedBy { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetUser> AspNetUsers { get; set; }

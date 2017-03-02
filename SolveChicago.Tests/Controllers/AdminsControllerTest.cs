@@ -24,7 +24,8 @@ namespace SolveChicago.App.Tests.Controllers
                 new Admin
                 {
                     Id = 1,
-                    Name = "John Doe",
+                    FirstName = "John",
+                    LastName = " Doe",
                     AspNetUsers = new List<AspNetUser>
                     {
                         new AspNetUser
@@ -36,7 +37,8 @@ namespace SolveChicago.App.Tests.Controllers
                 new Admin
                 {
                     Id = 2,
-                    Name = "Sayid Khan",
+                    FirstName = "Sayid",
+                    LastName = "Khan",
                     AspNetUsers = new List<AspNetUser>
                     {
                         new AspNetUser
@@ -48,7 +50,8 @@ namespace SolveChicago.App.Tests.Controllers
                 new Admin
                 {
                     Id = 3,
-                    Name = "Jerry Ellis",
+                    FirstName = "Jerry",
+                    LastName = "Ellis",
                     AspNetUsers = new List<AspNetUser>
                     {
                         new AspNetUser
@@ -96,7 +99,7 @@ namespace SolveChicago.App.Tests.Controllers
             var viewResult = Assert.IsType<ViewResult>(result);
             var model = Assert.IsAssignableFrom<Admin>(
                 viewResult.ViewData.Model);
-            Assert.Equal("Jerry Ellis", model.Name);
+            Assert.Equal("Jerry Ellis", string.Format("{0} {1}", model.FirstName, model.LastName));
         }
     }
 }

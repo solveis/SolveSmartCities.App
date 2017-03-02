@@ -9,6 +9,7 @@
     [City] NVARCHAR(50) NULL, 
     [Province] NVARCHAR(50) NULL, 
     [Country] NVARCHAR(50) NULL, 
+	[ZipCode] NVARCHAR(10) NULL,
     [CreatedDate] DATETIME2 NULL, 
 
     CONSTRAINT [PK_Families] PRIMARY KEY CLUSTERED ([Id] ASC)

@@ -51,7 +51,7 @@ namespace SolveChicago.Web
                 foreach (var m in aMs)
                     m.Dispose();
             }
-            catch (Exception ex)
+            catch
             {
                 string errorMessage;
                 if (!string.IsNullOrEmpty(message.Destination) && !string.IsNullOrEmpty(message.Subject))

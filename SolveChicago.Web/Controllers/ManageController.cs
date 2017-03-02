@@ -313,14 +313,6 @@ namespace SolveChicago.Web.Controllers
             }
         }
 
-        private void AddErrors(IdentityResult result)
-        {
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error);
-            }
-        }
-
         private bool HasPassword()
         {
             var user = UserManager.FindById(User.Identity.GetUserId());

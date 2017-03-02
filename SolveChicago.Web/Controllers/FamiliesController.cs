@@ -12,9 +12,6 @@ namespace SolveChicago.Web.Controllers
 {
     public class FamiliesController : BaseController
     {
-        public FamiliesController(SolveChicagoEntities db) : base(db) { }
-        public FamiliesController() : base() { }
-
         // GET: Families
         public ActionResult Index()
         {
@@ -47,7 +44,7 @@ namespace SolveChicago.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,FamilyName,HeadOfFamily")] Family family)
+        public ActionResult Create([Bind(Include = "Id,FamilyName,HeadOfHousehold,Phone,Address1,Address2,City,Province,Country,CreatedDate,ZipCode")] Family family)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +76,7 @@ namespace SolveChicago.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,FamilyName,HeadOfFamily")] Family family)
+        public ActionResult Edit([Bind(Include = "Id,FamilyName,HeadOfHousehold,Phone,Address1,Address2,City,Province,Country,CreatedDate,ZipCode")] Family family)
         {
             if (ModelState.IsValid)
             {

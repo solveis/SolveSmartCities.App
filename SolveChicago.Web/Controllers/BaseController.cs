@@ -72,16 +72,16 @@ namespace SolveChicago.Web.Controllers
             public string DisplayName { get; set; }
             public string FirstName { get; set; }
             public string UserName { get; set; }
-            public List<int> MemberIds { get; set; }
-            public List<Member> Members { get; set; }
-            public List<int> CaseManagerIds { get; set; }
-            public List<CaseManager> CaseManagers { get; set; }
-            public List<int> CorporationIds { get; set; }
-            public List<Corporation> Corporations { get; set; }
-            public List<int> NonprofitIds { get; set; }
-            public List<Nonprofit> Nonprofits { get; set; }
-            public List<int> AdminIds { get; set; }
-            public List<Admin> Admins { get; set; }
+            public int MemberId { get; set; }
+            public Member Member { get; set; }
+            public int CaseManagerId { get; set; }
+            public CaseManager CaseManager { get; set; }
+            public int CorporationId { get; set; }
+            public Corporation Corporation { get; set; }
+            public int NonprofitId { get; set; }
+            public Nonprofit Nonprofit { get; set; }
+            public int AdminId { get; set; }
+            public Admin Admin { get; set; }
             public Enumerations.Role[] Roles { get; set; }
         }
 
@@ -120,20 +120,12 @@ namespace SolveChicago.Web.Controllers
 
                 if (member != null)
                 {
-                    if (_state.Members == null)
-                        _state.Members = new List<Member>();
-                    if (_state.MemberIds == null)
-                        _state.MemberIds = new List<int>();
-                    _state.Members.Add(member);
-                    _state.MemberIds.Add(member.Id);
-                    if (member.MemberNonprofits.Select(x => x.CaseManager) != null && member.MemberNonprofits.Select(x => x.CaseManager).Count() > 0)
+                    _state.Member = member;
+                    _state.MemberId = member.Id;
+                    if (member.MemberNonprofits.Select(x => x.CaseManager) != null)
                     {
-                        if (_state.CaseManagers == null)
-                            _state.CaseManagers = new List<CaseManager>();
-                        if (_state.CaseManagerIds == null)
-                            _state.CaseManagerIds = new List<int>();
-                        _state.CaseManagers.AddRange(member.MemberNonprofits.Select(x => x.CaseManager));
-                        _state.CaseManagerIds.AddRange(member.MemberNonprofits.Select(x => x.CaseManager).Select(x => x.Id));
+                        _state.CaseManager = member.MemberNonprofits.Select(x => x.CaseManager).First();
+                        _state.CaseManagerId = member.MemberNonprofits.Select(x => x.CaseManager).First().Id;
                     }
                 }
             }
@@ -143,12 +135,8 @@ namespace SolveChicago.Web.Controllers
 
                 if (caseManager != null)
                 {
-                    if (_state.CaseManagers == null)
-                        _state.CaseManagers = new List<CaseManager>();
-                    if (_state.CaseManagerIds == null)
-                        _state.CaseManagerIds = new List<int>();
-                    _state.CaseManagers.Add(caseManager);
-                    _state.CaseManagerIds.Add(caseManager.Id);
+                    _state.CaseManager = caseManager;
+                    _state.CaseManagerId = caseManager.Id;
                 }
             }
             if (_state.Roles.Contains(Enumerations.Role.Corporation))
@@ -157,12 +145,8 @@ namespace SolveChicago.Web.Controllers
 
                 if (corporation != null)
                 {
-                    if (_state.Corporations == null)
-                        _state.Corporations = new List<Corporation>();
-                    if (_state.CorporationIds == null)
-                        _state.CorporationIds = new List<int>();
-                    _state.Corporations.Add(corporation);
-                    _state.CorporationIds.Add(corporation.Id);
+                    _state.Corporation = corporation;
+                    _state.CorporationId = corporation.Id;
                 }
             }
             if (_state.Roles.Contains(Enumerations.Role.Nonprofit))
@@ -171,12 +155,8 @@ namespace SolveChicago.Web.Controllers
 
                 if (nonprofit != null)
                 {
-                    if (_state.Nonprofits == null)
-                        _state.Nonprofits = new List<Nonprofit>();
-                    if (_state.NonprofitIds == null)
-                        _state.NonprofitIds = new List<int>();
-                    _state.Nonprofits.Add(nonprofit);
-                    _state.NonprofitIds.Add(nonprofit.Id);
+                    _state.Nonprofit = nonprofit;
+                    _state.NonprofitId = nonprofit.Id;
                 }
             }
 
@@ -186,16 +166,30 @@ namespace SolveChicago.Web.Controllers
 
                 if (admin != null)
                 {
-                    if (_state.Admins == null)
-                        _state.Admins = new List<Admin>();
-                    if (_state.AdminIds == null)
-                        _state.AdminIds = new List<int>();
-                    _state.Admins.Add(admin);
-                    _state.AdminIds.Add(admin.Id);
+                    _state.Admin = admin;
+                    _state.AdminId = admin.Id;
                 }
             }
         }
 
+        public ActionResult UserRedirect()
+        {
+            switch(State.Roles.First())
+            {
+                case Enumerations.Role.Admin:
+                    return AdminRedirect(State.Admin);
+                case Enumerations.Role.CaseManager:
+                    return CaseManagerRedirect(State.CaseManager);
+                case Enumerations.Role.Corporation:
+                    return CorporationRedirect(State.Corporation);
+                case Enumerations.Role.Member:
+                    return MemberRedirect(State.Member);
+                case Enumerations.Role.Nonprofit:
+                    return NonprofitRedirect(State.Nonprofit);
+                default:
+                    return HttpNotFound();
+            }
+        }
 
         public ActionResult MemberRedirect(int memberId)
         {
@@ -205,9 +199,7 @@ namespace SolveChicago.Web.Controllers
 
         public ActionResult MemberRedirect(Member entity)
         {
-            if (string.IsNullOrEmpty(entity.Address1) || string.IsNullOrEmpty(entity.City) || string.IsNullOrEmpty(entity.Country)
-                 || string.IsNullOrEmpty(entity.Name) || string.IsNullOrEmpty(entity.Phone) || string.IsNullOrEmpty(entity.ProfilePicturePath)
-                 || string.IsNullOrEmpty(entity.Province))
+            if (string.IsNullOrEmpty(entity.FirstName) || string.IsNullOrEmpty(entity.LastName) || string.IsNullOrEmpty(entity.Phone) || string.IsNullOrEmpty(entity.ProfilePicturePath))
             {
                 return RedirectToAction("Member", "Profile");
             }
@@ -226,9 +218,7 @@ namespace SolveChicago.Web.Controllers
 
         public ActionResult CaseManagerRedirect(CaseManager entity)
         {
-            if (string.IsNullOrEmpty(entity.Address1) || string.IsNullOrEmpty(entity.City) || string.IsNullOrEmpty(entity.Country)
-                 || string.IsNullOrEmpty(entity.Name) || string.IsNullOrEmpty(entity.Phone) || string.IsNullOrEmpty(entity.ProfilePicturePath)
-                 || string.IsNullOrEmpty(entity.Province))
+            if (string.IsNullOrEmpty(entity.FirstName) || string.IsNullOrEmpty(entity.LastName) || string.IsNullOrEmpty(entity.Phone) || string.IsNullOrEmpty(entity.ProfilePicturePath))
             {
                 return RedirectToAction("CaseManager", "Profile");
             }
@@ -246,8 +236,7 @@ namespace SolveChicago.Web.Controllers
 
         public ActionResult CorporationRedirect(Corporation entity)
         {
-            if (string.IsNullOrEmpty(entity.Address1) || string.IsNullOrEmpty(entity.City) || string.IsNullOrEmpty(entity.Country)
-                    || string.IsNullOrEmpty(entity.Name) || string.IsNullOrEmpty(entity.Phone) || string.IsNullOrEmpty(entity.Province))
+            if (string.IsNullOrEmpty(entity.Name))
             {
                 return RedirectToAction("Corporation", "Profile");
             }
@@ -284,9 +273,7 @@ namespace SolveChicago.Web.Controllers
 
         public ActionResult AdminRedirect(Admin entity)
         {
-            if (string.IsNullOrEmpty(entity.Address1) || string.IsNullOrEmpty(entity.City) || string.IsNullOrEmpty(entity.Country)
-                 || string.IsNullOrEmpty(entity.Name) || string.IsNullOrEmpty(entity.Phone) || string.IsNullOrEmpty(entity.ProfilePicturePath)
-                 || string.IsNullOrEmpty(entity.Province))
+            if (string.IsNullOrEmpty(entity.FirstName) || string.IsNullOrEmpty(entity.LastName) || string.IsNullOrEmpty(entity.Phone) || string.IsNullOrEmpty(entity.ProfilePicturePath))
             {
                 return RedirectToAction("Admin", "Profile");
             }
@@ -310,7 +297,7 @@ namespace SolveChicago.Web.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return UserRedirect();
         }
 
         protected void AssertRole(string roleName)
@@ -340,7 +327,7 @@ namespace SolveChicago.Web.Controllers
         }
 
 
-        protected async Task<ActionResult> CreateAccount(string userName, string password, Enumerations.Role role, string invitedByUserId = "")
+        protected async Task<ActionResult> CreateAccount(string userName, string password, Enumerations.Role role, int? invitedByUserId = null)
         {
             var user = new ApplicationUser { UserName = userName, Email = userName };
             AspNetUser aspnetUser = new AspNetUser();

@@ -30,6 +30,7 @@ namespace SolveChicago.Web.Data
         public string Province { get; set; }
         public string Country { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
+        public string ZipCode { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Member> Members { get; set; }

@@ -12,9 +12,6 @@ namespace SolveChicago.Web.Controllers
 {
     public class MembersController : BaseController
     {
-        public MembersController(SolveChicagoEntities db) : base(db) { }
-        public MembersController() : base() { }
-
         // GET: Members
         public ActionResult Index()
         {
@@ -49,7 +46,7 @@ namespace SolveChicago.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Email,Name,ProfilePicturePath,Phone,Address1,Address2,City,Province,Country,CreatedDate,FamilyId")] Member member)
+        public ActionResult Create([Bind(Include = "Id,Email,FirstName,LastName,ProfilePicturePath,Phone,CreatedDate,FamilyId,FamilyRole,Gender,Birthday,HighestEducation,LastSchool,Degree")] Member member)
         {
             if (ModelState.IsValid)
             {
@@ -83,7 +80,7 @@ namespace SolveChicago.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Email,Name,ProfilePicturePath,Phone,Address1,Address2,City,Province,Country,CreatedDate,FamilyId")] Member member)
+        public ActionResult Edit([Bind(Include = "Id,Email,FirstName,LastName,ProfilePicturePath,Phone,CreatedDate,FamilyId,FamilyRole,Gender,Birthday,HighestEducation,LastSchool,Degree")] Member member)
         {
             if (ModelState.IsValid)
             {

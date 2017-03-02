@@ -10,17 +10,15 @@ using SolveChicago.Web.Data;
 
 namespace SolveChicago.Web.Controllers
 {
+    [Authorize(Roles = "Admin, Nonprofit")]
     public class CaseManagersController : BaseController
-    {
-        public CaseManagersController(SolveChicagoEntities db) : base(db) { }
-        public CaseManagersController() : base() { }
-
+    {        
         // GET: CaseManagers
         public ActionResult Index()
         {
             return View(db.CaseManagers.ToList());
         }
-
+        
         // GET: CaseManagers/Details/5
         public ActionResult Details(int? id)
         {
@@ -47,13 +45,14 @@ namespace SolveChicago.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Email,Name,ProfilePicturePath,Phone,Address1,Address2,City,Province,Country,CreatedDate")] CaseManager caseManager)
+        public ActionResult Create([Bind(Include = "Id,Email,FirstName,LastName")] CaseManager caseManager)
         {
             if (ModelState.IsValid)
             {
-                db.CaseManagers.Add(caseManager);
+                caseManager.CreatedDate = DateTime.UtcNow;
+                db.Nonprofits.Single(x => x.Id == State.NonprofitId).CaseManagers.Add(caseManager);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return UserRedirect();
             }
 
             return View(caseManager);
@@ -66,28 +65,7 @@ namespace SolveChicago.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CaseManager caseManager = db.CaseManagers.Find(id);
-            if (caseManager == null)
-            {
-                return HttpNotFound();
-            }
-            return View(caseManager);
-        }
-
-        // POST: CaseManagers/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Email,Name,ProfilePicturePath,Phone,Address1,Address2,City,Province,Country,CreatedDate")] CaseManager caseManager)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(caseManager).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(caseManager);
+            return RedirectToAction("CaseManager", "Profile", new { id = id });
         }
 
         // GET: CaseManagers/Delete/5

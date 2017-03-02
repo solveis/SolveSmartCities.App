@@ -25,15 +25,11 @@ namespace SolveChicago.Tests.Controllers
             {
                 new Member
                 {
-                    Address1 = "123 Main Street",
-                    Address2 = "Apt 2",
-                    City = "Chicago",
-                    Province = "IL",
-                    Country = "USA",
                     Email = "member@solvechicago.com",
                     CreatedDate = DateTime.UtcNow.AddDays(-10),
                     Id = 1,
-                    Name = "Tom Elliot",
+                    FirstName = "Tom",
+                    LastName = "Elliot",
                     Phone = "1234567890",
                     ProfilePicturePath = "../image.jpg",
                 }
@@ -78,15 +74,11 @@ namespace SolveChicago.Tests.Controllers
             {
                 new Member()
                 {
-                    Address1 = "123 Main Street",
-                    Address2 = "Apt 2",
-                    City = "Chicago",
-                    Province = "IL",
-                    Country = "USA",
                     Email = "member@solvechicago.com",
                     CreatedDate = DateTime.UtcNow.AddDays(-10),
                     Id = 1,
-                    Name = "Tom Elliot",
+                    FirstName = "Tom",
+                    LastName = "Elliot",
                     Phone = "1234567890",
                     ProfilePicturePath = "../image.jpg",
                 }
@@ -129,15 +121,11 @@ namespace SolveChicago.Tests.Controllers
         {
             CaseManager entity = new CaseManager
             {
-                Address1 = "123 Main Street",
-                Address2 = "Apt 2",
-                City = "Chicago",
-                Province = "IL",
-                Country = "USA",
                 Email = "casemanager@solvechicago.com",
                 CreatedDate = DateTime.UtcNow.AddDays(-10),
                 Id = 1,
-                Name = "Tom Elliot",
+                FirstName = "Tom",
+                LastName = "Elliot",
                 Phone = "1234567890",
                 ProfilePicturePath = "../image.jpg",
             };
@@ -166,15 +154,11 @@ namespace SolveChicago.Tests.Controllers
             {
                 new CaseManager()
                 {
-                    Address1 = "123 Main Street",
-                    Address2 = "Apt 2",
-                    City = "Chicago",
-                    Province = "IL",
-                    Country = "USA",
                     Email = "casemanager@solvechicago.com",
                     CreatedDate = DateTime.UtcNow.AddDays(-10),
                     Id = 1,
-                    Name = "Tom Elliot",
+                    FirstName = "Tom",
+                    LastName = "Elliot",
                     Phone = "1234567890",
                     ProfilePicturePath = "../image.jpg",
                 }
@@ -217,16 +201,10 @@ namespace SolveChicago.Tests.Controllers
         {
             Corporation entity = new Corporation
             {
-                Address1 = "123 Main Street",
-                Address2 = "Apt 2",
-                City = "Chicago",
-                Province = "IL",
-                Country = "USA",
                 Email = "corporation@solvechicago.com",
                 CreatedDate = DateTime.UtcNow.AddDays(-10),
                 Id = 1,
                 Name = "Tom Elliot",
-                Phone = "1234567890",
             };
             BaseController controller = new BaseController();
             var result = (RedirectToRouteResult)controller.CorporationRedirect(entity);
@@ -253,16 +231,10 @@ namespace SolveChicago.Tests.Controllers
             {
                 new Corporation()
                 {
-                    Address1 = "123 Main Street",
-                    Address2 = "Apt 2",
-                    City = "Chicago",
-                    Province = "IL",
-                    Country = "USA",
                     Email = "corporation@solvechicago.com",
                     CreatedDate = DateTime.UtcNow.AddDays(-10),
                     Id = 1,
                     Name = "Tom Elliot",
-                    Phone = "1234567890",
                 }
             };
 
@@ -389,15 +361,11 @@ namespace SolveChicago.Tests.Controllers
         {
             Admin entity = new Admin
             {
-                Address1 = "123 Main Street",
-                Address2 = "Apt 2",
-                City = "Chicago",
-                Province = "IL",
-                Country = "USA",
                 Email = "admin@solvechicago.com",
                 CreatedDate = DateTime.UtcNow.AddDays(-10),
                 Id = 1,
-                Name = "Tom Elliot",
+                FirstName = "Tom",
+                LastName = "Elliot",
                 Phone = "1234567890",
                 ProfilePicturePath = "../image.jpg",
             };
@@ -426,15 +394,11 @@ namespace SolveChicago.Tests.Controllers
             {
                 new Admin()
                 {
-                    Address1 = "123 Main Street",
-                    Address2 = "Apt 2",
-                    City = "Chicago",
-                    Province = "IL",
-                    Country = "USA",
                     Email = "admin@solvechicago.com",
                     CreatedDate = DateTime.UtcNow.AddDays(-10),
                     Id = 1,
-                    Name = "Tom Elliot",
+                    FirstName = "Tom",
+                    LastName = "Elliot",
                     Phone = "1234567890",
                     ProfilePicturePath = "../image.jpg",
                 }
@@ -489,15 +453,11 @@ namespace SolveChicago.Tests.Controllers
                     {
                         new Member()
                         {
-                            Address1 = "123 Main Street",
-                            Address2 = "Apt 2",
-                            City = "Chicago",
-                            Province = "IL",
-                            Country = "USA",
                             Email = "member@solvechicago.com",
                             CreatedDate = DateTime.UtcNow.AddDays(-10),
                             Id = 1,
-                            Name = "Tom Elliot",
+                            FirstName = "Tom",
+                            LastName = "Elliot",
                             Phone = "1234567890",
                             ProfilePicturePath = "../image.jpg",
                             MemberNonprofits = new List<MemberNonprofit>
@@ -508,22 +468,19 @@ namespace SolveChicago.Tests.Controllers
                                     MemberId = 1,
                                     Member = new Member
                                     {
-                                        Address1 = "123 Main Street",
-                                        Address2 = "Apt 2",
-                                        City = "Chicago",
-                                        Province = "IL",
-                                        Country = "USA",
                                         Email = "member@solvechicago.com",
                                         CreatedDate = DateTime.UtcNow.AddDays(-10),
                                         Id = 1,
-                                        Name = "Tom Elliot",
+                                        FirstName = "Tom",
+                                        LastName = "Elliot",
                                         Phone = "1234567890",
                                         ProfilePicturePath = "../image.jpg",
                                     },
                                     CaseManager = new CaseManager
                                     {
                                         Id = 1,
-                                        Name = "Terry Jones"
+                                        FirstName = "Terry",
+                                        LastName = "Jones",
                                     }
                                 }
                             }
@@ -549,11 +506,11 @@ namespace SolveChicago.Tests.Controllers
             //Set your controller ControllerContext with fake context
             controller.ControllerContext = controllerContext.Object;
 
-            string name = controller.State.Members.First().Name;
-            Assert.Equal("Tom Elliot", name);
+            string name = controller.State.Member.FirstName;
+            Assert.Equal("Tom", name);
 
-            string caseManagerName = controller.State.Members.First().MemberNonprofits.Select(x => x.CaseManager).First().Name;
-            Assert.Equal("Terry Jones", caseManagerName);
+            string caseManagerName = controller.State.Member.MemberNonprofits.Select(x => x.CaseManager).First().FirstName;
+            Assert.Equal("Terry", caseManagerName);
 
         }
 
@@ -574,15 +531,11 @@ namespace SolveChicago.Tests.Controllers
                     {
                         new CaseManager()
                         {
-                            Address1 = "123 Main Street",
-                            Address2 = "Apt 2",
-                            City = "Chicago",
-                            Province = "IL",
-                            Country = "USA",
                             Email = "casemanager@solvechicago.com",
                             CreatedDate = DateTime.UtcNow.AddDays(-10),
                             Id = 1,
-                            Name = "Terry Jones",
+                            FirstName = "Terry",
+                            LastName = "Jones",
                             Phone = "1234567890",
                             ProfilePicturePath = "../image.jpg",
                         }
@@ -607,8 +560,8 @@ namespace SolveChicago.Tests.Controllers
             //Set your controller ControllerContext with fake context
             controller.ControllerContext = controllerContext.Object;
 
-            string name = controller.State.CaseManagers.First().Name;
-            Assert.Equal("Terry Jones", name);
+            string name = controller.State.CaseManager.FirstName;
+            Assert.Equal("Terry", name);
 
         }
 
@@ -629,16 +582,10 @@ namespace SolveChicago.Tests.Controllers
                     {
                         new Corporation()
                         {
-                            Address1 = "123 Main Street",
-                            Address2 = "Apt 2",
-                            City = "Chicago",
-                            Province = "IL",
-                            Country = "USA",
                             Email = "corporation@solvechicago.com",
                             CreatedDate = DateTime.UtcNow.AddDays(-10),
                             Id = 1,
                             Name = "Honda Ferguson",
-                            Phone = "1234567890",
                         }
                     },
                 }
@@ -661,7 +608,7 @@ namespace SolveChicago.Tests.Controllers
             //Set your controller ControllerContext with fake context
             controller.ControllerContext = controllerContext.Object;
 
-            string name = controller.State.Corporations.First().Name;
+            string name = controller.State.Corporation.Name;
             Assert.Equal("Honda Ferguson", name);
 
         }
@@ -715,7 +662,7 @@ namespace SolveChicago.Tests.Controllers
             //Set your controller ControllerContext with fake context
             controller.ControllerContext = controllerContext.Object;
 
-            string name = controller.State.Nonprofits.First().Name;
+            string name = controller.State.Nonprofit.Name;
             Assert.Equal("Vladimir Kruschev", name);
 
         }
@@ -738,15 +685,11 @@ namespace SolveChicago.Tests.Controllers
                     {
                         new Admin()
                         {
-                            Address1 = "123 Main Street",
-                            Address2 = "Apt 2",
-                            City = "Chicago",
-                            Province = "IL",
-                            Country = "USA",
                             Email = "admin@solvechicago.com",
                             CreatedDate = DateTime.UtcNow.AddDays(-10),
                             Id = 1,
-                            Name = "Peter Thompson",
+                            FirstName = "Peter",
+                            LastName = "Thompson",
                             Phone = "1234567890",
                             ProfilePicturePath = "../image.jpg",
                         }
@@ -771,8 +714,8 @@ namespace SolveChicago.Tests.Controllers
             //Set your controller ControllerContext with fake context
             controller.ControllerContext = controllerContext.Object;
 
-            string name = controller.State.Admins.First().Name;
-            Assert.Equal("Peter Thompson", name);
+            string name = controller.State.Admin.FirstName;
+            Assert.Equal("Peter", name);
 
         }
     }

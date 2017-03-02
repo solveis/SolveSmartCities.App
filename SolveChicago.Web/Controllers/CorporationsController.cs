@@ -12,9 +12,6 @@ namespace SolveChicago.Web.Controllers
 {
     public class CorporationsController : BaseController
     {
-        public CorporationsController(SolveChicagoEntities db) : base(db) { }
-        public CorporationsController() : base() { }
-
         // GET: Corporations
         public ActionResult Index()
         {
@@ -47,7 +44,7 @@ namespace SolveChicago.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Email,Name,Phone,Address1,Address2,City,Province,Country,CreatedDate")] Corporation corporation)
+        public ActionResult Create([Bind(Include = "Id,Email,Name,CreatedDate")] Corporation corporation)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +76,7 @@ namespace SolveChicago.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Email,Name,Phone,Address1,Address2,City,Province,Country,CreatedDate")] Corporation corporation)
+        public ActionResult Edit([Bind(Include = "Id,Email,Name,CreatedDate")] Corporation corporation)
         {
             if (ModelState.IsValid)
             {
