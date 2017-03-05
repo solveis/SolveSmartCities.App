@@ -7,18 +7,34 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using SolveChicago.Web.Data;
+using SolveChicago.Web.Services;
 
 namespace SolveChicago.Web.Controllers
 {
     [Authorize(Roles = "Admin, Nonprofit")]
-    public class CaseManagersController : BaseController
+    public class CaseManagersController : BaseController, IDisposable
     {
-        public CaseManagersController(SolveChicagoEntities db) : base(db) { }
-        public CaseManagersController() : base() { }
-        // GET: CaseManagers
-        public ActionResult Index()
+        public CaseManagersController(SolveChicagoEntities entities = null)
         {
-            return View(db.CaseManagers.ToList());
+            if (entities == null)
+                db = new SolveChicagoEntities();
+            else
+                db = entities;
+        }
+
+        public new void Dispose()
+        {
+            base.Dispose();
+        }
+        
+        // GET: CaseManagers
+        public ActionResult Index(int? caseManagerId)
+        {
+            ImpersonateCaseManager(caseManagerId);
+            CaseManagerService service = new CaseManagerService(this.db);
+            
+                Member[] caseManagers = service.GetMembersForCaseManager(State.CaseManagerId);
+                return View(caseManagers.ToList());
         }
         
         // GET: CaseManagers/Details/5

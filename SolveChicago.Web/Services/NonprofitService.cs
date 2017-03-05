@@ -11,7 +11,6 @@ namespace SolveChicago.Web.Services
     public class NonprofitService : BaseService
     {
         public NonprofitService(SolveChicagoEntities db) : base(db) { }
-        public NonprofitService() : base() { }
 
         public NonprofitProfile Get(int id)
         {
@@ -60,7 +59,8 @@ namespace SolveChicago.Web.Services
 
         public CaseManager[] GetCaseManagers(int id)
         {
-            return db.CaseManagers.Where(x => x.Nonprofits.Select(y => y.Id).Contains(id)).ToArray();
+            return new CaseManager[0];
+            //return db.CaseManagers.Where(x => x.Nonprofits.Select(y => y.Id).Contains(id)).ToArray();
         }
     }
 }

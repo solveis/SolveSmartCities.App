@@ -1,5 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="SolveChicagoDevModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Addresses">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Address1" Type="nvarchar" MaxLength="128" />
+    <Property Name="Address2" Type="nvarchar" MaxLength="50" />
+    <Property Name="City" Type="nvarchar" MaxLength="50" />
+    <Property Name="Province" Type="nvarchar" MaxLength="50" />
+    <Property Name="Country" Type="nvarchar" MaxLength="50" />
+    <Property Name="ZipCode" Type="nvarchar" MaxLength="10" />
+  </EntityType>
   <EntityType Name="Admins">
     <Key>
       <PropertyRef Name="Id" />
@@ -79,6 +91,7 @@
     <Property Name="ProfilePicturePath" Type="nvarchar(max)" />
     <Property Name="Phone" Type="nvarchar" MaxLength="128" />
     <Property Name="CreatedDate" Type="datetime2" Precision="7" />
+    <Property Name="NonprofitId" Type="int" />
   </EntityType>
   <EntityType Name="CaseNotes">
     <Key>
@@ -107,15 +120,23 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="FamilyName" Type="nvarchar" MaxLength="128" />
-    <Property Name="HeadOfHousehold" Type="int" />
-    <Property Name="Phone" Type="nvarchar" MaxLength="128" />
-    <Property Name="Address1" Type="nvarchar" MaxLength="128" />
-    <Property Name="Address2" Type="nvarchar" MaxLength="50" />
-    <Property Name="City" Type="nvarchar" MaxLength="50" />
-    <Property Name="Province" Type="nvarchar" MaxLength="50" />
-    <Property Name="Country" Type="nvarchar" MaxLength="50" />
-    <Property Name="ZipCode" Type="nvarchar" MaxLength="10" />
     <Property Name="CreatedDate" Type="datetime2" Precision="7" />
+  </EntityType>
+  <EntityType Name="FamilyAddresses">
+    <Key>
+      <PropertyRef Name="AddressId" />
+      <PropertyRef Name="FamilyId" />
+    </Key>
+    <Property Name="AddressId" Type="int" Nullable="false" />
+    <Property Name="FamilyId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FamilyPhoneNumbers">
+    <Key>
+      <PropertyRef Name="FamilyId" />
+      <PropertyRef Name="PhoneNumberId" />
+    </Key>
+    <Property Name="FamilyId" Type="int" Nullable="false" />
+    <Property Name="PhoneNumberId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="GovernmentPrograms">
     <Key>
@@ -130,6 +151,14 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MemberAddresses">
+    <Key>
+      <PropertyRef Name="AddressId" />
+      <PropertyRef Name="MemberId" />
+    </Key>
+    <Property Name="AddressId" Type="int" Nullable="false" />
+    <Property Name="MemberId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="MemberCorporations">
     <Key>
@@ -180,6 +209,23 @@
     <Property Name="NonprofitId" Type="int" Nullable="false" />
     <Property Name="CaseManagerId" Type="int" />
   </EntityType>
+  <EntityType Name="MemberParents">
+    <Key>
+      <PropertyRef Name="ParentId" />
+      <PropertyRef Name="ChildId" />
+    </Key>
+    <Property Name="ParentId" Type="int" Nullable="false" />
+    <Property Name="ChildId" Type="int" Nullable="false" />
+    <Property Name="IsBiological" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MemberPhoneNumbers">
+    <Key>
+      <PropertyRef Name="MemberId" />
+      <PropertyRef Name="PhoneNumberId" />
+    </Key>
+    <Property Name="MemberId" Type="int" Nullable="false" />
+    <Property Name="PhoneNumberId" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="Members">
     <Key>
       <PropertyRef Name="Id" />
@@ -188,21 +234,23 @@
     <Property Name="Email" Type="nvarchar" MaxLength="128" Nullable="false" />
     <Property Name="FirstName" Type="nvarchar" MaxLength="128" />
     <Property Name="LastName" Type="nvarchar" MaxLength="128" />
-    <Property Name="Address1" Type="nvarchar" MaxLength="128" />
-    <Property Name="Address2" Type="nvarchar" MaxLength="50" />
-    <Property Name="City" Type="nvarchar" MaxLength="50" />
-    <Property Name="Province" Type="nvarchar" MaxLength="50" />
-    <Property Name="Country" Type="nvarchar" MaxLength="50" />
-    <Property Name="ZipCode" Type="nvarchar" MaxLength="10" />
     <Property Name="ProfilePicturePath" Type="nvarchar(max)" />
-    <Property Name="Phone" Type="nvarchar" MaxLength="128" />
     <Property Name="CreatedDate" Type="datetime2" Precision="7" />
-    <Property Name="FamilyId" Type="int" />
-    <Property Name="FamilyRole" Type="nvarchar" MaxLength="50" />
     <Property Name="Gender" Type="nvarchar" MaxLength="50" />
     <Property Name="Birthday" Type="datetime2" Precision="7" />
-    <Property Name="HighestEducation" Type="nvarchar" MaxLength="128" />
-    <Property Name="LastSchool" Type="nvarchar(max)" />
+    <Property Name="FamilyId" Type="int" />
+    <Property Name="IsHeadOfHousehold" Type="bit" />
+  </EntityType>
+  <EntityType Name="MemberSchools">
+    <Key>
+      <PropertyRef Name="MemberId" />
+      <PropertyRef Name="SchoolId" />
+    </Key>
+    <Property Name="MemberId" Type="int" Nullable="false" />
+    <Property Name="SchoolId" Type="int" Nullable="false" />
+    <Property Name="Start" Type="datetime2" Precision="7" Nullable="false" />
+    <Property Name="End" Type="datetime2" Precision="7" />
+    <Property Name="IsCurrent" Type="bit" Nullable="false" />
     <Property Name="Degree" Type="nvarchar" MaxLength="128" />
   </EntityType>
   <EntityType Name="MemberSkills">
@@ -214,6 +262,15 @@
     <Property Name="SkillId" Type="int" Nullable="false" />
     <Property Name="NonprofitId" Type="int" />
   </EntityType>
+  <EntityType Name="MemberSpouses">
+    <Key>
+      <PropertyRef Name="Spouse_1_Id" />
+      <PropertyRef Name="Spouse_2_Id" />
+    </Key>
+    <Property Name="Spouse_1_Id" Type="int" Nullable="false" />
+    <Property Name="Spouse_2_Id" Type="int" Nullable="false" />
+    <Property Name="IsCurrent" Type="bit" Nullable="false" />
+  </EntityType>
   <EntityType Name="MemberSurveys">
     <Key>
       <PropertyRef Name="Id" />
@@ -221,14 +278,6 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="SurveyId" Type="int" Nullable="false" />
     <Property Name="MemberId" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="NonprofitCaseManagers">
-    <Key>
-      <PropertyRef Name="NonprofitId" />
-      <PropertyRef Name="CaseManagerId" />
-    </Key>
-    <Property Name="NonprofitId" Type="int" Nullable="false" />
-    <Property Name="CaseManagerId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Nonprofits">
     <Key>
@@ -254,6 +303,21 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="MemberId" Type="int" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="128" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PhoneNumbers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Number" Type="nvarchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Schools">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SchoolName" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="Type" Type="nvarchar" MaxLength="255" Nullable="false" />
   </EntityType>
   <EntityType Name="Skills">
     <Key>
@@ -339,6 +403,18 @@
     <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
     <Property Name="NonprofitId" Type="int" Nullable="false" />
   </EntityType>
+  <Association Name="FK_CaseManagers_Nonprofit">
+    <End Role="Nonprofits" Type="Self.Nonprofits" Multiplicity="0..1" />
+    <End Role="CaseManagers" Type="Self.CaseManagers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Nonprofits">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CaseManagers">
+        <PropertyRef Name="NonprofitId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_CaseNotes_CaseManagers">
     <End Role="CaseManagers" Type="Self.CaseManagers" Multiplicity="0..1" />
     <End Role="CaseNotes" Type="Self.CaseNotes" Multiplicity="*" />
@@ -430,6 +506,104 @@
       </Principal>
       <Dependent Role="AspNetUserRoles">
         <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FamilyAddresses_Addresses">
+    <End Role="Addresses" Type="Self.Addresses" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="FamilyAddresses" Type="Self.FamilyAddresses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Addresses">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="FamilyAddresses">
+        <PropertyRef Name="AddressId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FamilyAddresses_Families">
+    <End Role="Families" Type="Self.Families" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="FamilyAddresses" Type="Self.FamilyAddresses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Families">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="FamilyAddresses">
+        <PropertyRef Name="FamilyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FamilyPhoneNumbers_Family">
+    <End Role="Families" Type="Self.Families" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="FamilyPhoneNumbers" Type="Self.FamilyPhoneNumbers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Families">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="FamilyPhoneNumbers">
+        <PropertyRef Name="FamilyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FamilyPhoneNumbers_PhoneNumber">
+    <End Role="PhoneNumbers" Type="Self.PhoneNumbers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="FamilyPhoneNumbers" Type="Self.FamilyPhoneNumbers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PhoneNumbers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="FamilyPhoneNumbers">
+        <PropertyRef Name="PhoneNumberId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Member_Family">
+    <End Role="Families" Type="Self.Families" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Members" Type="Self.Members" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Families">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Members">
+        <PropertyRef Name="FamilyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MemberAddresses_Addresses">
+    <End Role="Addresses" Type="Self.Addresses" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="MemberAddresses" Type="Self.MemberAddresses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Addresses">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MemberAddresses">
+        <PropertyRef Name="AddressId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MemberAddresses_Members">
+    <End Role="Members" Type="Self.Members" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="MemberAddresses" Type="Self.MemberAddresses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Members">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MemberAddresses">
+        <PropertyRef Name="MemberId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -571,17 +745,83 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Members_Families">
-    <End Role="Families" Type="Self.Families" Multiplicity="0..1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="Members" Type="Self.Members" Multiplicity="*" />
+  <Association Name="FK_MemberParents_Child">
+    <End Role="Members" Type="Self.Members" Multiplicity="1" />
+    <End Role="MemberParents" Type="Self.MemberParents" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Families">
+      <Principal Role="Members">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="Members">
-        <PropertyRef Name="FamilyId" />
+      <Dependent Role="MemberParents">
+        <PropertyRef Name="ChildId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MemberParents_Parent">
+    <End Role="Members" Type="Self.Members" Multiplicity="1" />
+    <End Role="MemberParents" Type="Self.MemberParents" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Members">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MemberParents">
+        <PropertyRef Name="ParentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MemberPhoneNumbers_Member">
+    <End Role="Members" Type="Self.Members" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="MemberPhoneNumbers" Type="Self.MemberPhoneNumbers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Members">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MemberPhoneNumbers">
+        <PropertyRef Name="MemberId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MemberPhoneNumbers_PhoneNumber">
+    <End Role="PhoneNumbers" Type="Self.PhoneNumbers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="MemberPhoneNumbers" Type="Self.MemberPhoneNumbers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PhoneNumbers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MemberPhoneNumbers">
+        <PropertyRef Name="PhoneNumberId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MemberSchools_Member">
+    <End Role="Members" Type="Self.Members" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="MemberSchools" Type="Self.MemberSchools" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Members">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MemberSchools">
+        <PropertyRef Name="MemberId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MemberSchools_School">
+    <End Role="Schools" Type="Self.Schools" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="MemberSchools" Type="Self.MemberSchools" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Schools">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MemberSchools">
+        <PropertyRef Name="SchoolId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -625,6 +865,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_MemberSpouses_Spouse1">
+    <End Role="Members" Type="Self.Members" Multiplicity="1" />
+    <End Role="MemberSpouses" Type="Self.MemberSpouses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Members">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MemberSpouses">
+        <PropertyRef Name="Spouse_1_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MemberSpouses_Spouse2">
+    <End Role="Members" Type="Self.Members" Multiplicity="1" />
+    <End Role="MemberSpouses" Type="Self.MemberSpouses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Members">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MemberSpouses">
+        <PropertyRef Name="Spouse_2_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_MemberSurveys_Members">
     <End Role="Members" Type="Self.Members" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -650,34 +914,6 @@
       </Principal>
       <Dependent Role="MemberSurveys">
         <PropertyRef Name="SurveyId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_NonprofitCaseManagers_CaseManagers">
-    <End Role="CaseManagers" Type="Self.CaseManagers" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="NonprofitCaseManagers" Type="Self.NonprofitCaseManagers" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="CaseManagers">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="NonprofitCaseManagers">
-        <PropertyRef Name="CaseManagerId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_NonprofitCaseManagers_Nonprofits">
-    <End Role="Nonprofits" Type="Self.Nonprofits" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="NonprofitCaseManagers" Type="Self.NonprofitCaseManagers" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Nonprofits">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="NonprofitCaseManagers">
-        <PropertyRef Name="NonprofitId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -926,6 +1162,7 @@
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="SolveChicagoDevModelStoreContainer">
+    <EntitySet Name="Addresses" EntityType="Self.Addresses" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Admins" EntityType="Self.Admins" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
@@ -936,19 +1173,27 @@
     <EntitySet Name="CaseNotes" EntityType="Self.CaseNotes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Corporations" EntityType="Self.Corporations" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Families" EntityType="Self.Families" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FamilyAddresses" EntityType="Self.FamilyAddresses" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FamilyPhoneNumbers" EntityType="Self.FamilyPhoneNumbers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="GovernmentPrograms" EntityType="Self.GovernmentPrograms" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Interests" EntityType="Self.Interests" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MemberAddresses" EntityType="Self.MemberAddresses" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="MemberCorporations" EntityType="Self.MemberCorporations" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="MemberEmergencyContacts" EntityType="Self.MemberEmergencyContacts" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="MemberGovernmentPrograms" EntityType="Self.MemberGovernmentPrograms" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="MemberInterests" EntityType="Self.MemberInterests" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="MemberNonprofits" EntityType="Self.MemberNonprofits" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MemberParents" EntityType="Self.MemberParents" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MemberPhoneNumbers" EntityType="Self.MemberPhoneNumbers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Members" EntityType="Self.Members" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MemberSchools" EntityType="Self.MemberSchools" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="MemberSkills" EntityType="Self.MemberSkills" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MemberSpouses" EntityType="Self.MemberSpouses" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="MemberSurveys" EntityType="Self.MemberSurveys" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="NonprofitCaseManagers" EntityType="Self.NonprofitCaseManagers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Nonprofits" EntityType="Self.Nonprofits" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Outcomes" EntityType="Self.Outcomes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PhoneNumbers" EntityType="Self.PhoneNumbers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Schools" EntityType="Self.Schools" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Skills" EntityType="Self.Skills" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SurveyAnswers" EntityType="Self.SurveyAnswers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SurveyQuestionOptions" EntityType="Self.SurveyQuestionOptions" Schema="dbo" store:Type="Tables" />
@@ -959,6 +1204,10 @@
     <EntitySet Name="UserProfileCorporations" EntityType="Self.UserProfileCorporations" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserProfileMembers" EntityType="Self.UserProfileMembers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserProfileNonprofits" EntityType="Self.UserProfileNonprofits" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_CaseManagers_Nonprofit" Association="Self.FK_CaseManagers_Nonprofit">
+      <End Role="Nonprofits" EntitySet="Nonprofits" />
+      <End Role="CaseManagers" EntitySet="CaseManagers" />
+    </AssociationSet>
     <AssociationSet Name="FK_CaseNotes_CaseManagers" Association="Self.FK_CaseNotes_CaseManagers">
       <End Role="CaseManagers" EntitySet="CaseManagers" />
       <End Role="CaseNotes" EntitySet="CaseNotes" />
@@ -986,6 +1235,34 @@
     <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUser_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUser_UserId">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FamilyAddresses_Addresses" Association="Self.FK_FamilyAddresses_Addresses">
+      <End Role="Addresses" EntitySet="Addresses" />
+      <End Role="FamilyAddresses" EntitySet="FamilyAddresses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FamilyAddresses_Families" Association="Self.FK_FamilyAddresses_Families">
+      <End Role="Families" EntitySet="Families" />
+      <End Role="FamilyAddresses" EntitySet="FamilyAddresses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FamilyPhoneNumbers_Family" Association="Self.FK_FamilyPhoneNumbers_Family">
+      <End Role="Families" EntitySet="Families" />
+      <End Role="FamilyPhoneNumbers" EntitySet="FamilyPhoneNumbers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FamilyPhoneNumbers_PhoneNumber" Association="Self.FK_FamilyPhoneNumbers_PhoneNumber">
+      <End Role="PhoneNumbers" EntitySet="PhoneNumbers" />
+      <End Role="FamilyPhoneNumbers" EntitySet="FamilyPhoneNumbers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Member_Family" Association="Self.FK_Member_Family">
+      <End Role="Families" EntitySet="Families" />
+      <End Role="Members" EntitySet="Members" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MemberAddresses_Addresses" Association="Self.FK_MemberAddresses_Addresses">
+      <End Role="Addresses" EntitySet="Addresses" />
+      <End Role="MemberAddresses" EntitySet="MemberAddresses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MemberAddresses_Members" Association="Self.FK_MemberAddresses_Members">
+      <End Role="Members" EntitySet="Members" />
+      <End Role="MemberAddresses" EntitySet="MemberAddresses" />
     </AssociationSet>
     <AssociationSet Name="FK_MemberCorporations_Corporations" Association="Self.FK_MemberCorporations_Corporations">
       <End Role="Corporations" EntitySet="Corporations" />
@@ -1027,9 +1304,29 @@
       <End Role="Nonprofits" EntitySet="Nonprofits" />
       <End Role="MemberNonprofits" EntitySet="MemberNonprofits" />
     </AssociationSet>
-    <AssociationSet Name="FK_Members_Families" Association="Self.FK_Members_Families">
-      <End Role="Families" EntitySet="Families" />
+    <AssociationSet Name="FK_MemberParents_Child" Association="Self.FK_MemberParents_Child">
       <End Role="Members" EntitySet="Members" />
+      <End Role="MemberParents" EntitySet="MemberParents" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MemberParents_Parent" Association="Self.FK_MemberParents_Parent">
+      <End Role="Members" EntitySet="Members" />
+      <End Role="MemberParents" EntitySet="MemberParents" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MemberPhoneNumbers_Member" Association="Self.FK_MemberPhoneNumbers_Member">
+      <End Role="Members" EntitySet="Members" />
+      <End Role="MemberPhoneNumbers" EntitySet="MemberPhoneNumbers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MemberPhoneNumbers_PhoneNumber" Association="Self.FK_MemberPhoneNumbers_PhoneNumber">
+      <End Role="PhoneNumbers" EntitySet="PhoneNumbers" />
+      <End Role="MemberPhoneNumbers" EntitySet="MemberPhoneNumbers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MemberSchools_Member" Association="Self.FK_MemberSchools_Member">
+      <End Role="Members" EntitySet="Members" />
+      <End Role="MemberSchools" EntitySet="MemberSchools" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MemberSchools_School" Association="Self.FK_MemberSchools_School">
+      <End Role="Schools" EntitySet="Schools" />
+      <End Role="MemberSchools" EntitySet="MemberSchools" />
     </AssociationSet>
     <AssociationSet Name="FK_MemberSkills_Members" Association="Self.FK_MemberSkills_Members">
       <End Role="Members" EntitySet="Members" />
@@ -1043,6 +1340,14 @@
       <End Role="Skills" EntitySet="Skills" />
       <End Role="MemberSkills" EntitySet="MemberSkills" />
     </AssociationSet>
+    <AssociationSet Name="FK_MemberSpouses_Spouse1" Association="Self.FK_MemberSpouses_Spouse1">
+      <End Role="Members" EntitySet="Members" />
+      <End Role="MemberSpouses" EntitySet="MemberSpouses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MemberSpouses_Spouse2" Association="Self.FK_MemberSpouses_Spouse2">
+      <End Role="Members" EntitySet="Members" />
+      <End Role="MemberSpouses" EntitySet="MemberSpouses" />
+    </AssociationSet>
     <AssociationSet Name="FK_MemberSurveys_Members" Association="Self.FK_MemberSurveys_Members">
       <End Role="Members" EntitySet="Members" />
       <End Role="MemberSurveys" EntitySet="MemberSurveys" />
@@ -1050,14 +1355,6 @@
     <AssociationSet Name="FK_MemberSurveys_Surveys" Association="Self.FK_MemberSurveys_Surveys">
       <End Role="Surveys" EntitySet="Surveys" />
       <End Role="MemberSurveys" EntitySet="MemberSurveys" />
-    </AssociationSet>
-    <AssociationSet Name="FK_NonprofitCaseManagers_CaseManagers" Association="Self.FK_NonprofitCaseManagers_CaseManagers">
-      <End Role="CaseManagers" EntitySet="CaseManagers" />
-      <End Role="NonprofitCaseManagers" EntitySet="NonprofitCaseManagers" />
-    </AssociationSet>
-    <AssociationSet Name="FK_NonprofitCaseManagers_Nonprofits" Association="Self.FK_NonprofitCaseManagers_Nonprofits">
-      <End Role="Nonprofits" EntitySet="Nonprofits" />
-      <End Role="NonprofitCaseManagers" EntitySet="NonprofitCaseManagers" />
     </AssociationSet>
     <AssociationSet Name="FK_Outcomes_Members" Association="Self.FK_Outcomes_Members">
       <End Role="Members" EntitySet="Members" />

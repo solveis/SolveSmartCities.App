@@ -13,10 +13,20 @@ using SolveChicago.Web.Data;
 namespace SolveChicago.Web.Controllers
 {
     [Authorize]
-    public class ManageController : BaseController
+    public class ManageController : BaseController, IDisposable
     {
-        public ManageController(SolveChicagoEntities db) : base(db) { }
-        public ManageController() : base() { }
+        public ManageController(SolveChicagoEntities entities = null)
+        {
+            if (entities == null)
+                db = new SolveChicagoEntities();
+            else
+                db = entities;
+        }
+
+        public new void Dispose()
+        {
+            base.Dispose();
+        }
 
         //
         // GET: /Manage/Index

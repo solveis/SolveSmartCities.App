@@ -223,11 +223,13 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MemberEmergencyContactsController.cs" />
     <Compile Include="Controllers\MemberGovernmentProgramsController.cs" />
-    <Compile Include="Controllers\MembersController.cs" />
     <Compile Include="Controllers\NonprofitsController.cs" />
     <Compile Include="Controllers\OutcomesController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
+    <Compile Include="Data\Address.cs">
+      <DependentUpon>data.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\Admin.cs">
       <DependentUpon>data.tt</DependentUpon>
     </Compile>
@@ -291,7 +293,16 @@
     <Compile Include="Data\MemberNonprofit.cs">
       <DependentUpon>data.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\MemberParent.cs">
+      <DependentUpon>data.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\MemberSchool.cs">
+      <DependentUpon>data.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\MemberSkill.cs">
+      <DependentUpon>data.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\MemberSpous.cs">
       <DependentUpon>data.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\MemberSurvey.cs">
@@ -301,6 +312,12 @@
       <DependentUpon>data.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\Outcome.cs">
+      <DependentUpon>data.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\PhoneNumber.cs">
+      <DependentUpon>data.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\School.cs">
       <DependentUpon>data.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\Skill.cs">
@@ -330,6 +347,7 @@
     <Compile Include="Profile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\BaseService.cs" />
+    <Compile Include="Services\CaseManagerService.cs" />
     <Compile Include="Services\EmailService.cs" />
     <Compile Include="Services\MemberService.cs" />
     <Compile Include="Services\NonprofitService.cs" />
@@ -496,11 +514,6 @@
     <Content Include="Views\Corporations\Details.cshtml" />
     <Content Include="Views\Corporations\Edit.cshtml" />
     <Content Include="Views\Corporations\Index.cshtml" />
-    <Content Include="Views\Members\Create.cshtml" />
-    <Content Include="Views\Members\Delete.cshtml" />
-    <Content Include="Views\Members\Details.cshtml" />
-    <Content Include="Views\Members\Edit.cshtml" />
-    <Content Include="Views\Members\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

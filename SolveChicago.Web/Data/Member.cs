@@ -27,32 +27,28 @@ namespace SolveChicago.Web.Data
             this.Outcomes = new HashSet<Outcome>();
             this.Interests = new HashSet<Interest>();
             this.AspNetUsers = new HashSet<AspNetUser>();
+            this.MemberSpouses = new HashSet<MemberSpous>();
+            this.MemberSpouses1 = new HashSet<MemberSpous>();
+            this.Addresses = new HashSet<Address>();
+            this.Children = new HashSet<MemberParent>();
+            this.Parents = new HashSet<MemberParent>();
+            this.PhoneNumbers = new HashSet<PhoneNumber>();
+            this.MemberSchools = new HashSet<MemberSchool>();
         }
     
         public int Id { get; set; }
         public string Email { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string Address1 { get; set; }
-        public string Address2 { get; set; }
-        public string City { get; set; }
-        public string Province { get; set; }
-        public string Country { get; set; }
-        public string ZipCode { get; set; }
         public string ProfilePicturePath { get; set; }
-        public string Phone { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
-        public Nullable<int> FamilyId { get; set; }
-        public string FamilyRole { get; set; }
         public string Gender { get; set; }
         public Nullable<System.DateTime> Birthday { get; set; }
-        public string HighestEducation { get; set; }
-        public string LastSchool { get; set; }
-        public string Degree { get; set; }
+        public Nullable<int> FamilyId { get; set; }
+        public Nullable<bool> IsHeadOfHousehold { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CaseNote> CaseNotes { get; set; }
-        public virtual Family Family { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MemberCorporation> MemberCorporations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -71,5 +67,20 @@ namespace SolveChicago.Web.Data
         public virtual ICollection<Interest> Interests { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MemberSpous> MemberSpouses { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MemberSpous> MemberSpouses1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Address> Addresses { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MemberParent> Children { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MemberParent> Parents { get; set; }
+        public virtual Family Family { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PhoneNumber> PhoneNumbers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MemberSchool> MemberSchools { get; set; }
     }
 }

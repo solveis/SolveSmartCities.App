@@ -18,8 +18,8 @@ namespace SolveChicago.Web.Data
         public int NonprofitId { get; set; }
         public Nullable<int> CaseManagerId { get; set; }
     
-        public virtual CaseManager CaseManager { get; set; }
         public virtual Nonprofit Nonprofit { get; set; }
+        public virtual CaseManager CaseManager { get; set; }
         public virtual Member Member { get; set; }
     }
 }

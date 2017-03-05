@@ -10,10 +10,21 @@ using SolveChicago.Web.Data;
 
 namespace SolveChicago.Web.Controllers
 {
-    public class CorporationsController : BaseController
+    public class CorporationsController : BaseController, IDisposable
     {
-        public CorporationsController(SolveChicagoEntities db) : base(db) { }
-        public CorporationsController() : base() { }
+        public CorporationsController(SolveChicagoEntities entities = null)
+        {
+            if (entities == null)
+                db = new SolveChicagoEntities();
+            else
+                db = entities;
+        }
+
+        public new void Dispose()
+        {
+            base.Dispose();
+        }
+
         // GET: Corporations
         public ActionResult Index()
         {

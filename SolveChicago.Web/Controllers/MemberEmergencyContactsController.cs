@@ -10,10 +10,20 @@ using SolveChicago.Web.Data;
 
 namespace SolveChicago.Web.Controllers
 {
-    public class MemberEmergencyContactsController : BaseController
+    public class MemberEmergencyContactsController : BaseController, IDisposable
     {
-        public MemberEmergencyContactsController(SolveChicagoEntities db) : base(db) { }
-        public MemberEmergencyContactsController() : base() { }
+        public MemberEmergencyContactsController(SolveChicagoEntities entities = null)
+        {
+            if (entities == null)
+                db = new SolveChicagoEntities();
+            else
+                db = entities;
+        }
+
+        public new void Dispose()
+        {
+            base.Dispose();
+        }
 
         // GET: MemberEmergencyContacts
         public ActionResult Index()

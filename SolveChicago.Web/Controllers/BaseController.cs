@@ -19,21 +19,32 @@ using SolveChicago.Web.Data;
 
 namespace SolveChicago.Web.Controllers
 {
-    public class BaseController : Controller
+    public class BaseController : Controller, IDisposable
     {
-        protected SolveChicagoEntities db = new SolveChicagoEntities();
+        public BaseController(SolveChicagoEntities entities = null) : base()
+        {
+            if(entities == null)
+            {
+                db = new SolveChicagoEntities();
+            }
+            else
+            {
+                db = entities;
+            }
+            
+        }
+
+
+        protected override void Dispose(bool disposing)
+        {
+            db.Dispose();
+            base.Dispose(disposing);
+        }
+
+
+        protected SolveChicagoEntities db;
         protected ApplicationSignInManager _signInManager;
         protected ApplicationUserManager _userManager;
-
-        public BaseController(SolveChicagoEntities db)
-        {
-            this.db = db;
-        }
-
-        public BaseController()
-        {
-            this.db = new SolveChicagoEntities();
-        }
 
         public ApplicationSignInManager SignInManager
         {
@@ -199,7 +210,7 @@ namespace SolveChicago.Web.Controllers
 
         public ActionResult MemberRedirect(Member entity)
         {
-            if (string.IsNullOrEmpty(entity.FirstName) || string.IsNullOrEmpty(entity.LastName) || string.IsNullOrEmpty(entity.Phone) || string.IsNullOrEmpty(entity.ProfilePicturePath))
+            if (string.IsNullOrEmpty(entity.FirstName) || string.IsNullOrEmpty(entity.LastName) || string.IsNullOrEmpty(entity.ProfilePicturePath))
             {
                 return RedirectToAction("Member", "Profile");
             }
@@ -460,5 +471,34 @@ namespace SolveChicago.Web.Controllers
             }
         }
 
+        public void ImpersonateCaseManager(int? caseManagerId)
+        {
+            if ((caseManagerId.HasValue) && (caseManagerId > 0))
+            {
+                if (State.Roles.Contains(Enumerations.Role.Admin) || State.Roles.Contains(Enumerations.Role.Nonprofit))
+                {
+                    CaseManager caseManager = db.CaseManagers.Find(caseManagerId.Value);
+                    if (State.Roles.Contains(Enumerations.Role.Admin) ||
+                       (State.Roles.Contains(Enumerations.Role.Nonprofit) && caseManager.Nonprofit.Id == State.NonprofitId) || State.Roles.Contains(Enumerations.Role.Admin))
+                    {
+                        State.CaseManager = caseManager;
+                        State.CaseManagerId = caseManager.Id;
+                    }
+                }
+            }
+        }
+
+        public void ImpersonateNonprofit(int? nonprofitId)
+        {
+            if ((nonprofitId.HasValue) && (nonprofitId > 0))
+            {
+                if (State.Roles.Contains(Enumerations.Role.Admin))
+                {
+                    Nonprofit nonprofit = db.Nonprofits.Find(nonprofitId.Value);
+                    State.NonprofitId = nonprofit.Id;
+                    State.Nonprofit = nonprofit;
+                }
+            }
+        }
     }
 }

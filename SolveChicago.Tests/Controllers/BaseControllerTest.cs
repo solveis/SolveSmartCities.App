@@ -30,7 +30,6 @@ namespace SolveChicago.Tests.Controllers
                     Id = 1,
                     FirstName = "Tom",
                     LastName = "Elliot",
-                    Phone = "1234567890",
                     ProfilePicturePath = "../image.jpg",
                 }
             };
@@ -79,7 +78,6 @@ namespace SolveChicago.Tests.Controllers
                     Id = 1,
                     FirstName = "Tom",
                     LastName = "Elliot",
-                    Phone = "1234567890",
                     ProfilePicturePath = "../image.jpg",
                 }
             };
@@ -458,7 +456,6 @@ namespace SolveChicago.Tests.Controllers
                             Id = 1,
                             FirstName = "Tom",
                             LastName = "Elliot",
-                            Phone = "1234567890",
                             ProfilePicturePath = "../image.jpg",
                             MemberNonprofits = new List<MemberNonprofit>
                             {
@@ -473,7 +470,6 @@ namespace SolveChicago.Tests.Controllers
                                         Id = 1,
                                         FirstName = "Tom",
                                         LastName = "Elliot",
-                                        Phone = "1234567890",
                                         ProfilePicturePath = "../image.jpg",
                                     },
                                     CaseManager = new CaseManager

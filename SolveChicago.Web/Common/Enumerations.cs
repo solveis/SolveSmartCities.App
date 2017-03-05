@@ -16,5 +16,28 @@ namespace SolveChicago.Web.Common
             Nonprofit,
             Admin
         }
+
+        public enum FamilyRelationshipTypes
+        {
+            Spouse,
+            ParentChild,
+            Cousin,
+            UncleNephew,
+            Sibling
+        }
+
+        public enum FamilyRelationshipRoles
+        {
+            Husband,
+            Wife,
+            Child,
+            Father,
+            Mother,
+            Uncle, 
+            Aunt,
+            Brother,
+            Sister,
+            Cousin
+        }
     }
 }

@@ -12,18 +12,13 @@ using SolveChicago.Web.Common;
 
 namespace SolveChicago.Web.Services
 {
-    public class BaseService : IDisposable
+    public class BaseService
     {
-        protected SolveChicagoEntities db = new SolveChicagoEntities();
+        protected SolveChicagoEntities db;
 
         public BaseService(SolveChicagoEntities db)
         {
             this.db = db;
-        }
-
-        public BaseService()
-        {
-            this.db = new SolveChicagoEntities();
         }
 
         protected string UploadPhoto(string directory, HttpPostedFileBase image, int id)
@@ -85,12 +80,6 @@ namespace SolveChicago.Web.Services
 
             blockBlob.UploadFromStream(stream);
             return blockBlob.Uri;
-        }
-
-
-        public void Dispose()
-        {
-            db.Dispose();
         }
     }
 }

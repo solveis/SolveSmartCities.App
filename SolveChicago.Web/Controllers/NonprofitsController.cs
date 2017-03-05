@@ -11,19 +11,28 @@ using SolveChicago.Web.Services;
 
 namespace SolveChicago.Web.Controllers
 {
-    public class NonprofitsController : BaseController
+    public class NonprofitsController : BaseController, IDisposable
     {
-        public NonprofitsController(SolveChicagoEntities db) : base(db) { }
-        public NonprofitsController() : base() { }
+        public NonprofitsController(SolveChicagoEntities entities = null)
+        {
+            if (entities == null)
+                db = new SolveChicagoEntities();
+            else
+                db = entities;
+        }
+
+        public new void Dispose()
+        {
+            base.Dispose();
+        }
 
         // GET: Nonprofits
-        public ActionResult Index()
+        public ActionResult Index(int? nonprofitId)
         {
-            using (NonprofitService service = new NonprofitService())
-            {
-                CaseManager[] caseManagers = service.GetCaseManagers(State.NonprofitId);
-                return View(caseManagers.ToList());
-            }
+            ImpersonateNonprofit(nonprofitId);
+            NonprofitService service = new NonprofitService(this.db);
+            CaseManager[] caseManagers = service.GetCaseManagers(State.NonprofitId);
+            return View(caseManagers.ToList());
         }
 
         // GET: Nonprofits/Details/5

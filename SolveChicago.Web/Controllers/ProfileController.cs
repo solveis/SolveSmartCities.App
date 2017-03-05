@@ -14,20 +14,29 @@ using SolveChicago.Web.Services;
 namespace SolveChicago.Web.Controllers
 {
     [Authorize]
-    public class ProfileController : BaseController
+    public class ProfileController : BaseController, IDisposable
     {
-        public ProfileController(SolveChicagoEntities db) : base(db) { }
-        public ProfileController() : base() { }
+        public ProfileController(SolveChicagoEntities entities = null)
+        {
+            if (entities == null)
+                db = new SolveChicagoEntities();
+            else
+                db = entities;
+        }
+
+        public new void Dispose()
+        {
+            base.Dispose();
+        }
 
         [AllowAnonymous]
         // GET: Profile/Member
         public ActionResult Member(int id, int nonprofitId)
         {
-            using (MemberService service = new MemberService(db))
-            {
-                MemberProfile model = service.Get(id, nonprofitId);
-                return View(model);
-            }
+            MemberService service = new MemberService(this.db);
+            MemberProfile model = service.Get(id, nonprofitId);
+            return View(model);
+            
         }
 
         // POST: Profile/Member
@@ -36,11 +45,11 @@ namespace SolveChicago.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                using (MemberService service = new MemberService(db))
-                {
+                MemberService service = new MemberService(this.db);
+                
                     service.Post(model);
                     return MemberRedirect(model.Id);
-                }
+                
             }
             return View(model);
         }
@@ -67,11 +76,11 @@ namespace SolveChicago.Web.Controllers
         // GET: Profile/Nonprofit
         public ActionResult Nonprofit()
         {
-            using (NonprofitService service = new NonprofitService())
-            {
+            NonprofitService service = new NonprofitService(this.db);
+            
                 NonprofitProfile model = service.Get(State.NonprofitId);
                 return View(model);
-            }
+            
         }
 
         // POST: Profile/CaseManager
@@ -80,10 +89,8 @@ namespace SolveChicago.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                using (NonprofitService service = new NonprofitService())
-                {
-                    service.Post(model);
-                }
+                NonprofitService service = new NonprofitService(this.db);
+                service.Post(model);
             }
             return RedirectToAction("Index", "Nonprofits");
         }

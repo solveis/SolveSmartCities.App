@@ -30,10 +30,8 @@ namespace SolveChicago.Web.Data
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
-        public virtual DbSet<CaseManager> CaseManagers { get; set; }
         public virtual DbSet<CaseNote> CaseNotes { get; set; }
         public virtual DbSet<Corporation> Corporations { get; set; }
-        public virtual DbSet<Family> Families { get; set; }
         public virtual DbSet<GovernmentProgram> GovernmentPrograms { get; set; }
         public virtual DbSet<MemberCorporation> MemberCorporations { get; set; }
         public virtual DbSet<MemberEmergencyContact> MemberEmergencyContacts { get; set; }
@@ -49,6 +47,14 @@ namespace SolveChicago.Web.Data
         public virtual DbSet<Survey> Surveys { get; set; }
         public virtual DbSet<Interest> Interests { get; set; }
         public virtual DbSet<Skill> Skills { get; set; }
+        public virtual DbSet<CaseManager> CaseManagers { get; set; }
         public virtual DbSet<Member> Members { get; set; }
+        public virtual DbSet<Address> Addresses { get; set; }
+        public virtual DbSet<MemberSpous> MemberSpouses { get; set; }
+        public virtual DbSet<MemberParent> MemberParents { get; set; }
+        public virtual DbSet<Family> Families { get; set; }
+        public virtual DbSet<PhoneNumber> PhoneNumbers { get; set; }
+        public virtual DbSet<School> Schools { get; set; }
+        public virtual DbSet<MemberSchool> MemberSchools { get; set; }
     }
 }

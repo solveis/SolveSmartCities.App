@@ -15,10 +15,20 @@ using SolveChicago.Web.Models.Admin;
 namespace SolveChicago.Web.Controllers
 {
     [Authorize(Roles = "Admin")]
-    public class AdminsController : BaseController
+    public class AdminsController : BaseController, IDisposable
     {
-        public AdminsController(SolveChicagoEntities db) : base(db) { }
-        public AdminsController() : base() { }
+        public AdminsController(SolveChicagoEntities entities = null)
+        {
+            if (entities == null)
+                db = new SolveChicagoEntities();
+            else
+                db = entities;
+        }
+        
+        public new void Dispose()
+        {
+            base.Dispose();
+        }
 
         // GET: Admins
         public ActionResult Index()

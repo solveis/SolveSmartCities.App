@@ -1,4 +1,5 @@
-﻿@model SolveChicago.Web.Models.Profile.MemberProfile
+﻿@using SolveChicago.Web.Data
+@model SolveChicago.Web.Models.Profile.MemberProfile
 
 @{
     ViewBag.Title = "Edit";
@@ -115,7 +116,32 @@
             </div>
         </div>
 
-        @* Family Members *@
+        @*@foreach (Member member in Model.FamilyMembers)
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => member.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => member.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => member.FirstName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => member.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => member.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => member.LastName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => member.Birthday, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => member.Birthday, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => member.Birthday, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        }*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.HighestEducation, htmlAttributes: new { @class = "control-label col-md-2" })
