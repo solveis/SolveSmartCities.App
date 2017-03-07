@@ -18,6 +18,8 @@ namespace SolveChicago.Web.Controllers
                 db = entities;
         }
 
+        public HomeController() : base() { }
+
         public new void Dispose()
         {
             base.Dispose();

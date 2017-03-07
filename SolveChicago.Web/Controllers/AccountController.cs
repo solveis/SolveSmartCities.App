@@ -21,7 +21,13 @@ namespace SolveChicago.Web.Controllers
     [ExcludeFromCodeCoverage]
     public class AccountController : BaseController
     {
-        public AccountController(SolveChicagoEntities db) : base(db) { }
+        public AccountController(SolveChicagoEntities entities = null)
+        {
+            if (entities == null)
+                db = new SolveChicagoEntities();
+            else
+                db = entities;
+        }
         public AccountController() : base() { }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)

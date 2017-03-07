@@ -19,6 +19,7 @@ namespace SolveChicago.Web.Controllers
             else
                 db = entities;
         }
+        public OutcomesController() : base() { }
 
         public new void Dispose()
         {

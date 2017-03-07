@@ -31,8 +31,8 @@ namespace SolveChicago.Web.Controllers
             {
                 db = entities;
             }
-            
         }
+        public BaseController() { db = new SolveChicagoEntities(); }
 
 
         protected override void Dispose(bool disposing)

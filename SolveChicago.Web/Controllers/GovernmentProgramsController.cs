@@ -19,7 +19,8 @@ namespace SolveChicago.Web.Controllers
             else
                 db = entities;
         }
-        
+        public GovernmentProgramsController() : base() { }
+
         public new void Dispose()
         {
             base.Dispose();

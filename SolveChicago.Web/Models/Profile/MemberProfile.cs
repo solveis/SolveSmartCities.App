@@ -110,6 +110,8 @@ namespace SolveChicago.Web.Models.Profile
         }
         public string Relation { get; set; }
         public bool IsHeadOfHousehold { get; set; }
+        public DateTime? Birthday { get; set; }
+        public string Gender { get; set; }
     }
 
     public class SchoolEntity

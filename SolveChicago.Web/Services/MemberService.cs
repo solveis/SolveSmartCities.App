@@ -20,7 +20,6 @@ namespace SolveChicago.Web.Services
             {
                 Nonprofit npo = member.MemberNonprofits.Single(x => x.NonprofitId == nonprofitId).Nonprofit;
                 MemberCorporation memberCorporation = member.MemberCorporations.Any() ? member.MemberCorporations.OrderByDescending(x => x.Start).First(): null;
-                SchoolEntity[] schools = GetSchools(member);
                 return new MemberProfile
                 {
                     Address1 = member.Addresses.Any() ? member.Addresses.Last().Address1 : string.Empty,
@@ -47,6 +46,7 @@ namespace SolveChicago.Web.Services
                     Phone = member.PhoneNumbers.Any() ? string.Join(",", member.PhoneNumbers.Select(x => x.Number).ToArray()) : string.Empty,
                     ProfilePicturePath = member.ProfilePicturePath,
                     Province = member.Addresses.Any() ? member.Addresses.Last().Province : string.Empty,
+                    Schools = GetSchools(member),
                 };
             }
         }
@@ -54,7 +54,10 @@ namespace SolveChicago.Web.Services
         public SchoolEntity[] GetSchools(Member member)
         {
             SchoolEntity[] schools = member.MemberSchools.Select(x => new SchoolEntity { Id = x.School.Id, Degree = x.Degree,  End = x.End, IsCurrent = x.IsCurrent, Name = x.School.SchoolName, Type = x.School.Type, DegreeList = GetDegreeList(), Start = x.Start, TypeList = GetTypeList(), }).ToArray();
-            return schools.OrderByDescending(x => x.Start).ToArray();
+            if (schools != null)
+                return schools.OrderByDescending(x => x.Start).ToArray();
+            else
+                return new SchoolEntity[3];
         }
 
         public string[] GetDegreeList()
@@ -82,24 +85,34 @@ namespace SolveChicago.Web.Services
         private FamilyEntity GetFamily(Member member)
         {
             Family memberFamily = member.Family;
-            FamilyEntity family = new FamilyEntity
+            if(memberFamily != null)
             {
-                Address1 = memberFamily.Addresses.Any() ? memberFamily.Addresses.Last().Address1 : string.Empty,
-                Address2 = memberFamily.Addresses.Any() ? memberFamily.Addresses.Last().Address2 : string.Empty,
-                City = memberFamily.Addresses.Any() ? memberFamily.Addresses.Last().City : string.Empty,
-                Province = memberFamily.Addresses.Any() ? memberFamily.Addresses.Last().Province : string.Empty,
-                Country = memberFamily.Addresses.Any() ? memberFamily.Addresses.Last().Country : string.Empty,
-                FamilyName = memberFamily.FamilyName,
-                Phone = memberFamily.PhoneNumbers.Any() ? memberFamily.PhoneNumbers.Last().Number : string.Empty,
-                ZipCode = memberFamily.Addresses.Any() ? memberFamily.Addresses.Last().ZipCode : string.Empty,
-                FamilyMembers = memberFamily.Members.Select(x => new FamilyMember { FirstName = x.FirstName, LastName = x.LastName, IsHeadOfHousehold = (x.IsHeadOfHousehold ?? false) }).ToArray()
-            };
-            if(member.MemberSpouses.Any(x => x.Member1 != null))
-                family.FamilyMembers.ToList().AddRange(member.MemberSpouses.Select(x => new FamilyMember { FirstName = x.Member1.FirstName, LastName = x.Member1.LastName, Relation = x.Member1.Gender.ToLowerInvariant() == "male" ? "Husband" : x.Member1.Gender.ToLowerInvariant() == "female" ? "Wife" : "Spouse" }));
-            else if (member.MemberSpouses1.Any(x => x.Member != null))
-                family.FamilyMembers.ToList().AddRange(member.MemberSpouses1.Select(x => new FamilyMember { FirstName = x.Member.FirstName, LastName = x.Member.LastName, Relation = x.Member.Gender.ToLowerInvariant() == "male" ? "Husband" : x.Member.Gender.ToLowerInvariant() == "female" ? "Wife" : "Spouse" }));
+                FamilyEntity family = new FamilyEntity
+                {
+                    Address1 = memberFamily.Addresses.Any() ? memberFamily.Addresses.Last().Address1 : string.Empty,
+                    Address2 = memberFamily.Addresses.Any() ? memberFamily.Addresses.Last().Address2 : string.Empty,
+                    City = memberFamily.Addresses.Any() ? memberFamily.Addresses.Last().City : string.Empty,
+                    Province = memberFamily.Addresses.Any() ? memberFamily.Addresses.Last().Province : string.Empty,
+                    Country = memberFamily.Addresses.Any() ? memberFamily.Addresses.Last().Country : string.Empty,
+                    FamilyName = memberFamily.FamilyName,
+                    Phone = memberFamily.PhoneNumbers.Any() ? memberFamily.PhoneNumbers.Last().Number : string.Empty,
+                    ZipCode = memberFamily.Addresses.Any() ? memberFamily.Addresses.Last().ZipCode : string.Empty,
+                    FamilyMembers = memberFamily.Members.Select(x => new FamilyMember { FirstName = x.FirstName, LastName = x.LastName, IsHeadOfHousehold = (x.IsHeadOfHousehold ?? false) }).ToArray()
+                };
+                if (member.MemberSpouses.Any(x => x.Member1 != null))
+                    family.FamilyMembers.ToList().AddRange(member.MemberSpouses.Select(x => new FamilyMember { FirstName = x.Member1.FirstName, LastName = x.Member1.LastName, Relation = x.Member1.Gender.ToLowerInvariant() == "male" ? "Husband" : x.Member1.Gender.ToLowerInvariant() == "female" ? "Wife" : "Spouse" }));
+                else if (member.MemberSpouses1.Any(x => x.Member != null))
+                    family.FamilyMembers.ToList().AddRange(member.MemberSpouses1.Select(x => new FamilyMember { FirstName = x.Member.FirstName, LastName = x.Member.LastName, Relation = x.Member.Gender.ToLowerInvariant() == "male" ? "Husband" : x.Member.Gender.ToLowerInvariant() == "female" ? "Wife" : "Spouse" }));
+                return family;
+            }
+            else
+            {
+                return new FamilyEntity() { FamilyMembers = new FamilyMember[10] };
+            }
+            
+            
 
-            return family;            
+                       
         }
 
         public bool Post(MemberProfile model)
