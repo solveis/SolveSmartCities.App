@@ -6,11 +6,11 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using SolveChicago.Web.Data;
-using DonorPath.Web.Common;
+using SolveChicago.Entities;
 using SolveChicago.Web.Common;
 using SolveChicago.Web.Models;
 using SolveChicago.Web.Models.Admin;
+using SolveChicago.Web.Services;
 
 namespace SolveChicago.Web.Controllers
 {
@@ -149,9 +149,10 @@ namespace SolveChicago.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Invite(AdminInviteModel model)
         {
-            string inviteCode = Crypto.EncryptStringAES(model.AdminId.ToString(), Settings.Crypto.SharedSecret);
-            EmailService service = new EmailService();
-            service.SendAsync(new Microsoft.AspNet.Identity.IdentityMessage { Destination = model.EmailToInvite, Body = string.Format("http://localhost:2486/register/admin?invitecode={0}", HttpUtility.UrlEncode(inviteCode)), Subject = "admin invite" });
+            AdminService adminService = new AdminService(this.db);
+            string inviteCode = adminService.GenerateAdminInviteCode(GetUserId(User.Identity.Name));
+            EmailService emailService = new EmailService();
+            emailService.SendAsync(new Microsoft.AspNet.Identity.IdentityMessage { Destination = model.EmailToInvite, Body = string.Format("http://localhost:2486/register/admin?invitecode={0}", HttpUtility.UrlEncode(inviteCode)), Subject = "admin invite" });
             
             return RedirectToAction("Index");
         }

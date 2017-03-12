@@ -1,400 +1,188 @@
-﻿//using System;
-//using Microsoft.VisualStudio.TestTools.UnitTesting;
-//using Moq;
-//using SolveChicago.Entities;
-//using System.Data.Entity;
-//using System.Collections.Generic;
+﻿using System;
+using Xunit;
+using Moq;
+using SolveChicago.Entities;
+using System.Data.Entity;
+using System.Collections.Generic;
+using System.Linq;
+using SolveChicago.Web.Services;
+using SolveChicago.Web.Models.Profile;
 
-//using SolveChicago.App.Common.Entities;
-//using System.Linq;
+namespace SolveChicago.Tests.Services
+{
+    public class MemberServiceTest
+    {
+        Mock<SolveChicagoEntities> context = new Mock<SolveChicagoEntities>();
+        public MemberServiceTest()
+        {
+            List<Member> data = new List<Member>
+            {
+                new Member
+                {
+                    Id = 1,
+                    Addresses = new List<Address>
+                    {
+                        new Address
+                        {
+                            Address1 = "123 Main Street",
+                            Address2 = "#1B",
+                            City = "Chicago",
+                            Country = "USA",
+                            Id = 1,
+                            Province = "Illinois",
+                            ZipCode = "60640"
+                        }
+                    },
+                    AspNetUsers = new List<AspNetUser>
+                    {
+                        new AspNetUser
+                        {
+                            Id = "HUIGYUFTYRD^$%&R^*T&(Y*)",
+                            UserName = "member@member.com"
+                        }
+                    },
+                    Birthday = new DateTime(1988, 1, 2),
+                    Children = new List<MemberParent>
+                    {
+                        new MemberParent
+                        {
+                            ChildId = 2,
+                            IsBiological = true,
+                            ParentId = 1,
+                            Children = new Member
+                            {
+                                Id = 2,
+                                FirstName = "Samantha",
+                                LastName = "Carter",
+                                Gender = "Female",
+                            }
+                        },
+                        new MemberParent
+                        {
+                            ChildId = 3,
+                            IsBiological = true,
+                            ParentId = 1,
+                            Children = new Member
+                            {
+                                Id = 3,
+                                FirstName = "Joe",
+                                LastName = "Carter",
+                                Gender = "Male",
+                            }
+                        },
+                        new MemberParent
+                        {
+                            ChildId = 4,
+                            IsBiological = true,
+                            ParentId = 1,
+                            Children = new Member
+                            {
+                                Id = 4,
+                                FirstName = "Lynn",
+                                LastName = "Carter",
+                                Gender = "Other",
+                            }
+                        }
+                    },
+                    CreatedDate = DateTime.UtcNow.AddMonths(-1),
+                    Email = "member@member.com",
+                    FamilyId = 1,
+                    Family = new Family
+                    {
+                        Addresses = new List<Address>
+                        {
+                            new Address
+                            {
+                                Address1 = "123 Main Street",
+                                Address2 = "#1B",
+                                City = "Chicago",
+                                Country = "USA",
+                                Id = 1,
+                                Province = "Illinois",
+                                ZipCode = "60640"
+                            }
+                        },
+                        CreatedDate = DateTime.UtcNow.AddMonths(-1),
+                        Id = 1,
+                        PhoneNumbers = new List<PhoneNumber>
+                        {
+                            new PhoneNumber { Id = 1, Number = "1234567890" }
+                        },
+                        FamilyName = "Carter"
+                    },
+                    FirstName = "Aaron",
+                    Gender = "Male",
+                    Interests = new List<Interest>
+                    {
+                        new Interest { Id = 1, Name = "Basketball" },
+                        new Interest { Id = 2, Name = "Science" },
+                        new Interest { Id = 3, Name = "Computers" },
+                        new Interest { Id = 4, Name = "Archery" },
+                    },
+                    IsHeadOfHousehold = true,
+                    LastName = "Carter",
+                    MemberNonprofits = new List<MemberNonprofit>
+                    {
+                        new MemberNonprofit
+                        {
+                            NonprofitId = 1,
+                            MemberId = 1,
+                            Nonprofit = new Nonprofit
+                            {
+                                Id = 1,
+                                Name = "Nonprofit 1",
+                            }
+                        }
+                    },
+                    MemberSkills = new List<MemberSkill>
+                    {
+                            new MemberSkill { MemberId = 1, NonprofitId = 1, Skill = new Skill{ Id = 1, Name = "Powerpoint" } },
+                            new MemberSkill { MemberId = 1, NonprofitId = 1, Skill = new Skill{ Id = 2, Name = "Excel" } },
+                            new MemberSkill { MemberId = 1, NonprofitId = 1, Skill = new Skill{ Id = 3, Name = "Word" } },
+                            new MemberSkill { MemberId = 1, NonprofitId = 1, Skill = new Skill{ Id = 4, Name = "Interviewing" } },
+                    },
+                    MemberSchools = new List<MemberSchool>
+                    {
+                        new MemberSchool
+                        {
+                            School = new School
+                            {
+                                Id = 1,
+                                SchoolName = "Lakeview High School",
+                                Type = "High School"
+                            },
+                            Degree = "Diploma",
+                            End = new DateTime(2014, 5, 1),
+                            Start = new DateTime(2011, 8, 24),
+                            IsCurrent = false,
+                            SchoolId = 1,
+                            MemberId = 1
+                        }
+                    },
+                    PhoneNumbers = new List<PhoneNumber>
+                    {
+                        new PhoneNumber { Id = 1, Number = "1234567890" }
+                    },
+                    ProfilePicturePath = "../path.jpg"
+                }
+            };
 
-//namespace SolveChicago.Tests.Services
-//{
-//    [TestClass]
-//    public class MemberServiceTest
-//    {
-//        [TestMethod]
-//        public void Can_Create_Member()
-//        {
-//            string email = string.Format("{0}@solvechicago.com", Guid.NewGuid().ToString());
-            
-//            List<AspNetUser> users = new List<AspNetUser>
-//            {
-//                new AspNetUser
-//                {
-//                    Id = 1,
-//                    IdentityUserId = Guid.NewGuid().ToString(),
-//                    CreatedDate = DateTime.UtcNow
-//                }
-//            };
-//            List<Member> members = new List<Member>();
-
-//            var userSet = new Mock<DbSet<AspNetUser>>().SetupData(users);
-//            var memberSet = new Mock<DbSet<Member>>().SetupData(members);
-
-//            var context = new Mock<SolveChicagoEntities>();
-//            context.Setup(c => c.AspNetUsers).Returns(userSet.Object);
-//            context.Setup(c => c.Members).Returns(memberSet.Object);
-
-
-//            MemberService service = new MemberService(context.Object);
-//            int memberId = service.Create(new MemberEntity { Email = email }, 1);
-
-//            Assert.IsNotNull(memberId);
-//        }
-
-//        [TestMethod]
-//        public void Can_Update_Member_Profile()
-//        {
-//            List<Member> data = new List<Member>
-//            {
-//                new Member { Id = 1 }
-//            };
-
-//            MemberEntity member = new MemberEntity
-//            {
-//                Address1 = "123 Main Street",
-//                Address2 = "Apt 2",
-//                City = "Chicago",
-//                Province = "IL",
-//                Country = "USA",
-//                Email = "member@solvechicago.com",
-//                CreatedDate = DateTime.UtcNow.AddDays(-10),
-//                Id = 1,
-//                Name = "Tom Elliot",
-//                Phone = "1234567890",
-//                ProfilePicturePath = "../image.jpg"
-//            };
-
-//            var memberSet = new Mock<DbSet<Member>>().SetupData(data);
-
-//            var context = new Mock<SolveChicagoEntities>();
-//            context.Setup(c => c.Members).Returns(memberSet.Object);
-
-//            using (MemberService service = new MemberService(context.Object))
-//            {
-//                var result = service.UpdateProfile(member);
-//                Assert.IsTrue(result);
-//            }
-//        }
-
-//        [TestMethod]
-//        public void Can_Get_Members_By_CaseManager()
-//        {
-//            List<CaseManager> data = new List<CaseManager>
-//            {
-//                new CaseManager
-//                {
-//                    Id = 2,
-//                    MemberNonprofits = new List<MemberNonprofit>
-//                    {
-//                        new MemberNonprofit
-//                        {
-//                            Member = new Member
-//                            {
-//                                Address1 = "123 Main Street",
-//                                Address2 = "Apt 2",
-//                                City = "Chicago",
-//                                Province = "IL",
-//                                Country = "USA",
-//                                Email = "member@solvechicago.com",
-//                                CreatedDate = DateTime.UtcNow.AddDays(-10),
-//                                Id = 1,
-//                                Name = "Tom Elliot",
-//                                Phone = "1234567890",
-//                                ProfilePicturePath = "../image.jpg",
-//                            }
-//                        },
-//                        new MemberNonprofit
-//                        {
-//                            Member = new Member
-//                            {
-//                                Address1 = "123 Main Street",
-//                                Address2 = "Apt 2",
-//                                City = "Chicago",
-//                                Province = "IL",
-//                                Country = "USA",
-//                                Email = "member@solvechicago.com",
-//                                CreatedDate = DateTime.UtcNow.AddDays(-10),
-//                                Id = 1,
-//                                Name = "Jody Jones",
-//                                Phone = "1234567890",
-//                                ProfilePicturePath = "../image.jpg",
-//                            }
-//                        },
-//                        new MemberNonprofit
-//                        {
-//                            Member = new Member
-//                            {
-//                                Address1 = "123 Main Street",
-//                                Address2 = "Apt 2",
-//                                City = "Chicago",
-//                                Province = "IL",
-//                                Country = "USA",
-//                                Email = "member@solvechicago.com",
-//                                CreatedDate = DateTime.UtcNow.AddDays(-10),
-//                                Id = 1,
-//                                Name = "Arlo Mitchell",
-//                                Phone = "1234567890",
-//                                ProfilePicturePath = "../image.jpg",
-//                            }
-//                        }
-//                    }
-//                }
-//            };
-            
-            
-//            var set = new Mock<DbSet<CaseManager>>().SetupData(data);
-
-//            var context = new Mock<SolveChicagoEntities>();
-//            context.Setup(c => c.CaseManagers).Returns(set.Object);
-
-//            using (MemberService service = new MemberService(context.Object))
-//            {
-//                var result = service.GetMembers(2);
-//                Assert.AreEqual(3, result.Count());
-//            }
-//        }
-
-//        [TestMethod]
-//        public void Can_Get_Members_By_Nonprofit()
-//        {
-//            List<Nonprofit> data = new List<Nonprofit>
-//            {
-//                new Nonprofit
-//                {
-//                    Id = 2,
-//                    MemberNonprofits = new List<MemberNonprofit>
-//                    {
-//                        new MemberNonprofit
-//                        {
-//                            Member = new Member
-//                            {
-//                                Address1 = "123 Main Street",
-//                                Address2 = "Apt 2",
-//                                City = "Chicago",
-//                                Province = "IL",
-//                                Country = "USA",
-//                                Email = "member@solvechicago.com",
-//                                CreatedDate = DateTime.UtcNow.AddDays(-10),
-//                                Id = 1,
-//                                Name = "Tom Elliot",
-//                                Phone = "1234567890",
-//                                ProfilePicturePath = "../image.jpg",
-//                                MemberNonprofits = new List<MemberNonprofit>
-//                                {
-//                                    new MemberNonprofit
-//                                    {
-//                                        NonprofitId = 2
-//                                    }
-//                                }
-//                            }
-//                        },
-//                        new MemberNonprofit
-//                        {
-//                            Member = new Member
-//                            {
-//                                Address1 = "123 Main Street",
-//                                Address2 = "Apt 2",
-//                                City = "Chicago",
-//                                Province = "IL",
-//                                Country = "USA",
-//                                Email = "member@solvechicago.com",
-//                                CreatedDate = DateTime.UtcNow.AddDays(-10),
-//                                Id = 1,
-//                                Name = "Jody Jones",
-//                                Phone = "1234567890",
-//                                ProfilePicturePath = "../image.jpg",
-//                                MemberNonprofits = new List<MemberNonprofit>
-//                                {
-//                                    new MemberNonprofit
-//                                    {
-//                                        NonprofitId = 2
-//                                    }
-//                                }
-//                            }
-//                        },
-//                        new MemberNonprofit
-//                        {
-//                            Member = new Member
-//                            {
-//                                Address1 = "123 Main Street",
-//                                Address2 = "Apt 2",
-//                                City = "Chicago",
-//                                Province = "IL",
-//                                Country = "USA",
-//                                Email = "member@solvechicago.com",
-//                                CreatedDate = DateTime.UtcNow.AddDays(-10),
-//                                Id = 1,
-//                                Name = "Arlo Mitchell",
-//                                Phone = "1234567890",
-//                                ProfilePicturePath = "../image.jpg",
-//                                MemberNonprofits = new List<MemberNonprofit>
-//                                {
-//                                    new MemberNonprofit
-//                                    {
-//                                        NonprofitId = 2
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            };
+            var set = new Mock<DbSet<Member>>().SetupData(data);
+            set.Setup(m => m.Find(It.IsAny<object[]>()))
+                .Returns<object[]>(ids => data.FirstOrDefault(d => d.Id == (int)ids[0]));
+            context.Setup(c => c.Members).Returns(set.Object);
+        }
 
 
-//            var set = new Mock<DbSet<Nonprofit>>().SetupData(data);
+        [Fact]
+        public void Can_Get_Member()
+        {
+            MemberService service = new MemberService(context.Object);
+            MemberProfile member = service.Get(1, 1);
 
-//            var context = new Mock<SolveChicagoEntities>();
-//            context.Setup(c => c.Nonprofits).Returns(set.Object);
-
-//            using (MemberService service = new MemberService(context.Object))
-//            {
-//                var result = service.GetMembers(null, 2);
-//                Assert.AreEqual(3, result.Count());
-//            }
-//        }
-
-//        [TestMethod]
-//        public void Can_Get_Members_By_Corporation()
-//        {
-//            List<Corporation> data = new List<Corporation>
-//            {
-//                new Corporation
-//                {
-//                    Id = 2,
-//                    MemberCorporations = new List<MemberCorporation>
-//                    {
-//                        new MemberCorporation
-//                        {
-//                            Member = new Member
-//                            {
-//                                Address1 = "123 Main Street",
-//                                Address2 = "Apt 2",
-//                                City = "Chicago",
-//                                Province = "IL",
-//                                Country = "USA",
-//                                Email = "member@solvechicago.com",
-//                                CreatedDate = DateTime.UtcNow.AddDays(-10),
-//                                Id = 1,
-//                                Name = "Tom Elliot",
-//                                Phone = "1234567890",
-//                                ProfilePicturePath = "../image.jpg",
-//                                MemberCorporations = new List<MemberCorporation>
-//                                {
-//                                    new MemberCorporation
-//                                    {
-//                                        CorporationId = 2
-//                                    }
-//                                }
-//                            }
-//                        },
-//                        new MemberCorporation
-//                        {
-//                            Member = new Member
-//                            {
-//                                Address1 = "123 Main Street",
-//                                Address2 = "Apt 2",
-//                                City = "Chicago",
-//                                Province = "IL",
-//                                Country = "USA",
-//                                Email = "member@solvechicago.com",
-//                                CreatedDate = DateTime.UtcNow.AddDays(-10),
-//                                Id = 1,
-//                                Name = "Jody Jones",
-//                                Phone = "1234567890",
-//                                ProfilePicturePath = "../image.jpg",
-//                                MemberCorporations = new List<MemberCorporation>
-//                                {
-//                                    new MemberCorporation
-//                                    {
-//                                        CorporationId = 2
-//                                    }
-//                                }
-//                            }
-//                        },
-//                        new MemberCorporation
-//                        {
-//                            Member = new Member
-//                            {
-//                                Address1 = "123 Main Street",
-//                                Address2 = "Apt 2",
-//                                City = "Chicago",
-//                                Province = "IL",
-//                                Country = "USA",
-//                                Email = "member@solvechicago.com",
-//                                CreatedDate = DateTime.UtcNow.AddDays(-10),
-//                                Id = 1,
-//                                Name = "Arlo Mitchell",
-//                                Phone = "1234567890",
-//                                ProfilePicturePath = "../image.jpg",
-//                                MemberCorporations = new List<MemberCorporation>
-//                                {
-//                                    new MemberCorporation
-//                                    {
-//                                        CorporationId = 2
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            };
-
-
-//            var set = new Mock<DbSet<Corporation>>().SetupData(data);
-
-//            var context = new Mock<SolveChicagoEntities>();
-//            context.Setup(c => c.Corporations).Returns(set.Object);
-
-//            using (MemberService service = new MemberService(context.Object))
-//            {
-//                var result = service.GetMembers(null, null, 2);
-//                Assert.AreEqual(3, result.Count());
-//            }
-//        }
-
-//        [TestMethod]
-//        public void Can_Get_Member()
-//        {
-//            List<Member> members = new List<Member>
-//            {
-//                new Member
-//                {
-//                    Address1 = "123 Main Street",
-//                    Address2 = "Apt 2",
-//                    City = "Chicago",
-//                    Province = "IL",
-//                    Country = "USA",
-//                    Email = "member@solvechicago.com",
-//                    CreatedDate = DateTime.UtcNow.AddDays(-10),
-//                    Id = 1024,
-//                    Name = "Arlo Mitchell",
-//                    Phone = "1234567890",
-//                    ProfilePicturePath = "../image.jpg",
-//                    CaseNotes = new List<CaseNote>
-//                    {
-//                        new CaseNote
-//                        {
-//                            Id = 1,
-//                            Note = "great"
-//                        }
-//                    }
-//                }
-//            };
-
-//            var set = new Mock<DbSet<Member>>().SetupData(members);
-
-//            var context = new Mock<SolveChicagoEntities>();
-//            context.Setup(c => c.Members).Returns(set.Object);
-
-//            using (MemberService service = new MemberService(context.Object))
-//            {
-//                var result = service.GetMember(1024);
-//                Assert.AreEqual("Chicago", result.City);
-//            }
-//        }
-//    }
-//}
+            Assert.Equal("Aaron", member.FirstName);
+        }
+    }
+}
 
 

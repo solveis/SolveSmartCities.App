@@ -13,14 +13,14 @@ using SolveChicago.Web.Common;
 using SolveChicago.Web.Controllers;
 using System.Diagnostics.CodeAnalysis;
 using SolveChicago.Web;
-using SolveChicago.Web.Data;
+using SolveChicago.Entities;
 
 namespace SolveChicago.Web.Controllers
 {
     [Authorize]
-    [ExcludeFromCodeCoverage]
     public class AccountController : BaseController
     {
+        [ExcludeFromCodeCoverage]
         public AccountController(SolveChicagoEntities entities = null)
         {
             if (entities == null)
@@ -28,6 +28,7 @@ namespace SolveChicago.Web.Controllers
             else
                 db = entities;
         }
+        [ExcludeFromCodeCoverage]
         public AccountController() : base() { }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
@@ -38,6 +39,7 @@ namespace SolveChicago.Web.Controllers
 
         //
         // GET: /Account/Login
+        [ExcludeFromCodeCoverage]
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
@@ -50,6 +52,7 @@ namespace SolveChicago.Web.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
             if (!ModelState.IsValid)
@@ -79,6 +82,7 @@ namespace SolveChicago.Web.Controllers
         //
         // GET: /Account/VerifyCode
         [AllowAnonymous]
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
         {
             // Require that the user has already logged in via username/password or external login
@@ -94,6 +98,7 @@ namespace SolveChicago.Web.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult> VerifyCode(VerifyCodeViewModel model)
         {
             if (!ModelState.IsValid)
@@ -124,6 +129,7 @@ namespace SolveChicago.Web.Controllers
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
         {
             if (userId == null || code == null)
@@ -137,6 +143,7 @@ namespace SolveChicago.Web.Controllers
         //
         // GET: /Account/ForgotPassword
         [AllowAnonymous]
+        [ExcludeFromCodeCoverage]
         public ActionResult ForgotPassword()
         {
             return View();
@@ -147,6 +154,7 @@ namespace SolveChicago.Web.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
             if (ModelState.IsValid)
@@ -173,6 +181,7 @@ namespace SolveChicago.Web.Controllers
         //
         // GET: /Account/ForgotPasswordConfirmation
         [AllowAnonymous]
+        [ExcludeFromCodeCoverage]
         public ActionResult ForgotPasswordConfirmation()
         {
             return View();
@@ -181,6 +190,7 @@ namespace SolveChicago.Web.Controllers
         //
         // GET: /Account/ResetPassword
         [AllowAnonymous]
+        [ExcludeFromCodeCoverage]
         public ActionResult ResetPassword(string code)
         {
             return code == null ? View("Error") : View();
@@ -191,6 +201,7 @@ namespace SolveChicago.Web.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
         {
             if (!ModelState.IsValid)
@@ -215,6 +226,7 @@ namespace SolveChicago.Web.Controllers
         //
         // GET: /Account/ResetPasswordConfirmation
         [AllowAnonymous]
+        [ExcludeFromCodeCoverage]
         public ActionResult ResetPasswordConfirmation()
         {
             return View();
@@ -225,6 +237,7 @@ namespace SolveChicago.Web.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
+        [ExcludeFromCodeCoverage]
         public ActionResult ExternalLogin(string provider, string returnUrl)
         {
             // Request a redirect to the external login provider
@@ -234,6 +247,7 @@ namespace SolveChicago.Web.Controllers
         //
         // GET: /Account/SendCode
         [AllowAnonymous]
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult> SendCode(string returnUrl, bool rememberMe)
         {
             var userId = await SignInManager.GetVerifiedUserIdAsync();
@@ -251,6 +265,7 @@ namespace SolveChicago.Web.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult> SendCode(SendCodeViewModel model)
         {
             if (!ModelState.IsValid)
@@ -269,6 +284,7 @@ namespace SolveChicago.Web.Controllers
         //
         // GET: /Account/ExternalLoginCallback
         [AllowAnonymous]
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
         {
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
@@ -301,6 +317,7 @@ namespace SolveChicago.Web.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
         {
             if (User.Identity.IsAuthenticated)
@@ -338,6 +355,7 @@ namespace SolveChicago.Web.Controllers
         // POST: /Account/LogOff
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ExcludeFromCodeCoverage]
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
@@ -347,6 +365,7 @@ namespace SolveChicago.Web.Controllers
         //
         // GET: /Account/ExternalLoginFailure
         [AllowAnonymous]
+        [ExcludeFromCodeCoverage]
         public ActionResult ExternalLoginFailure()
         {
             return View();
@@ -376,6 +395,7 @@ namespace SolveChicago.Web.Controllers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
+        [ExcludeFromCodeCoverage]
         private IAuthenticationManager AuthenticationManager
         {
             get
@@ -384,6 +404,7 @@ namespace SolveChicago.Web.Controllers
             }
         }
 
+        [ExcludeFromCodeCoverage]
         internal class ChallengeResult : HttpUnauthorizedResult
         {
             public ChallengeResult(string provider, string redirectUri)
@@ -398,10 +419,14 @@ namespace SolveChicago.Web.Controllers
                 UserId = userId;
             }
 
+            [ExcludeFromCodeCoverage]
             public string LoginProvider { get; set; }
+            [ExcludeFromCodeCoverage]
             public string RedirectUri { get; set; }
+            [ExcludeFromCodeCoverage]
             public string UserId { get; set; }
 
+            [ExcludeFromCodeCoverage]
             public override void ExecuteResult(ControllerContext context)
             {
                 var properties = new AuthenticationProperties { RedirectUri = RedirectUri };

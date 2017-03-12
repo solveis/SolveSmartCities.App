@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Web;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
-using SolveChicago.Web.Data;
+using SolveChicago.Entities;
 using SolveChicago.Web.Common;
 
 namespace SolveChicago.Web.Services

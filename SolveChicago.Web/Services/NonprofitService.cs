@@ -1,5 +1,5 @@
 ﻿using SolveChicago.Web.Common;
-using SolveChicago.Web.Data;
+using SolveChicago.Entities;
 using SolveChicago.Web.Models.Profile;
 using System;
 using System.Collections.Generic;
@@ -34,11 +34,11 @@ namespace SolveChicago.Web.Services
             }
         }
 
-        public bool Post(NonprofitProfile model)
+        public void Post(NonprofitProfile model)
         {
             Nonprofit nonprofit = db.Nonprofits.Find(model.Id);
             if (nonprofit == null)
-                return false;
+                throw new Exception($"Nonprofit with Id of {model.Id} not found.");
             else
             {
                 if (model.ProfilePicture != null)
@@ -53,14 +53,16 @@ namespace SolveChicago.Web.Services
                 nonprofit.Name = model.Name;
 
                 db.SaveChanges();
-                return true;
             }
         }
 
         public CaseManager[] GetCaseManagers(int id)
         {
-            return new CaseManager[0];
-            //return db.CaseManagers.Where(x => x.Nonprofits.Select(y => y.Id).Contains(id)).ToArray();
+            Nonprofit npo = db.Nonprofits.Find(id);
+            if (npo == null)
+                return new CaseManager[0];
+            else
+                return npo.CaseManagers.ToArray();
         }
     }
 }

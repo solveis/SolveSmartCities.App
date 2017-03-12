@@ -6,9 +6,11 @@ using System.Web.Mvc;
 using Xunit;
 using SolveChicago.Web;
 using SolveChicago.Web.Controllers;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SolveChicago.Tests.Controllers
 {
+    [ExcludeFromCodeCoverage]
     public class HomeControllerTest
     {
         [Fact]

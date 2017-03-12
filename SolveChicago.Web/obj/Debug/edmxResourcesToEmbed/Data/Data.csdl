@@ -1,19 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="SolveChicagoDevModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-  <EntityType Name="Admin">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Email" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="ProfilePicturePath" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-    <Property Name="Phone" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-    <Property Name="CreatedDate" Type="DateTime" Precision="7" />
-    <Property Name="InvitedBy" Type="Int32" />
-    <NavigationProperty Name="AspNetUsers" Relationship="Self.UserProfileAdmins" FromRole="Admins" ToRole="AspNetUsers" />
-    <Property Name="FirstName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-    <Property Name="LastName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-  </EntityType>
   <EntityType Name="AspNetRole">
     <Key>
       <PropertyRef Name="Id" />
@@ -68,11 +54,12 @@
     <NavigationProperty Name="SurveyAnswers" Relationship="Self.FK_SurveyAnswers_AspNetUser" FromRole="AspNetUsers" ToRole="SurveyAnswers" />
     <NavigationProperty Name="Surveys" Relationship="Self.FK_Surveys_AspNetUser" FromRole="AspNetUsers" ToRole="Surveys" />
     <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
-    <NavigationProperty Name="Admins" Relationship="Self.UserProfileAdmins" FromRole="AspNetUsers" ToRole="Admins" />
     <NavigationProperty Name="Corporations" Relationship="Self.UserProfileCorporations" FromRole="AspNetUsers" ToRole="Corporations" />
     <NavigationProperty Name="Nonprofits" Relationship="Self.UserProfileNonprofits" FromRole="AspNetUsers" ToRole="Nonprofits" />
     <NavigationProperty Name="CaseManagers" Relationship="SolveChicagoDevModel.UserProfileCasemanagers" FromRole="AspNetUser" ToRole="CaseManager" />
     <NavigationProperty Name="Members" Relationship="SolveChicagoDevModel.UserProfileMembers" FromRole="AspNetUser" ToRole="Member" />
+    <NavigationProperty Name="AdminInviteCodes" Relationship="SolveChicagoDevModel.FK_AdminInviteCodes_Admin" FromRole="AspNetUser" ToRole="AdminInviteCode" />
+    <NavigationProperty Name="Admins" Relationship="SolveChicagoDevModel.UserProfileAdmins" FromRole="AspNetUser" ToRole="Admin" />
   </EntityType>
   <EntityType Name="CaseNote">
     <Key>
@@ -464,10 +451,6 @@
     <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
     <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
   </Association>
-  <Association Name="UserProfileAdmins">
-    <End Role="Admins" Type="Self.Admin" Multiplicity="*" />
-    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
-  </Association>
   <Association Name="UserProfileCorporations">
     <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
     <End Role="Corporations" Type="Self.Corporation" Multiplicity="*" />
@@ -477,7 +460,6 @@
     <End Role="Nonprofits" Type="Self.Nonprofit" Multiplicity="*" />
   </Association>
   <EntityContainer Name="SolveChicagoEntities" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="Admins" EntityType="Self.Admin" />
     <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
     <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
     <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
@@ -559,10 +541,6 @@
     </AssociationSet>
     <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
       <End Role="AspNetRoles" EntitySet="AspNetRoles" />
-      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-    </AssociationSet>
-    <AssociationSet Name="UserProfileAdmins" Association="Self.UserProfileAdmins">
-      <End Role="Admins" EntitySet="Admins" />
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
     </AssociationSet>
     <AssociationSet Name="UserProfileCorporations" Association="Self.UserProfileCorporations">
@@ -687,6 +665,16 @@
     <AssociationSet Name="FK_MemberSchools_School" Association="SolveChicagoDevModel.FK_MemberSchools_School">
       <End Role="School" EntitySet="Schools" />
       <End Role="MemberSchool" EntitySet="MemberSchools" />
+    </AssociationSet>
+    <EntitySet Name="AdminInviteCodes" EntityType="SolveChicagoDevModel.AdminInviteCode" />
+    <AssociationSet Name="FK_AdminInviteCodes_Admin" Association="SolveChicagoDevModel.FK_AdminInviteCodes_Admin">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="AdminInviteCode" EntitySet="AdminInviteCodes" />
+    </AssociationSet>
+    <EntitySet Name="Admins" EntityType="SolveChicagoDevModel.Admin" />
+    <AssociationSet Name="UserProfileAdmins" Association="SolveChicagoDevModel.UserProfileAdmins">
+      <End Role="Admin" EntitySet="Admins" />
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Interest">
@@ -1111,5 +1099,47 @@
         <PropertyRef Name="SchoolId" />
       </Dependent>
     </ReferentialConstraint>
+  </Association>
+  <EntityType Name="AdminInviteCode">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="InviteCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="InvitingAdminUserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="RecevingAdminUserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUser" Relationship="SolveChicagoDevModel.FK_AdminInviteCodes_Admin" FromRole="AdminInviteCode" ToRole="AspNetUser" />
+  </EntityType>
+  <Association Name="FK_AdminInviteCodes_Admin">
+    <End Type="SolveChicagoDevModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="SolveChicagoDevModel.AdminInviteCode" Role="AdminInviteCode" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AdminInviteCode">
+        <PropertyRef Name="InvitingAdminUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Admin">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="FirstName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="ProfilePicturePath" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="7" />
+    <Property Name="InvitedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUsers" Relationship="SolveChicagoDevModel.UserProfileAdmins" FromRole="Admin" ToRole="AspNetUser" />
+  </EntityType>
+  <Association Name="UserProfileAdmins">
+    <End Type="SolveChicagoDevModel.Admin" Role="Admin" Multiplicity="*" />
+    <End Type="SolveChicagoDevModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
   </Association>
 </Schema>

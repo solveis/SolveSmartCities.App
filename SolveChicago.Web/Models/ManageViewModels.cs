@@ -2,9 +2,11 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SolveChicago.Web.Models
 {
+    [ExcludeFromCodeCoverage]
     public class IndexViewModel
     {
         public bool HasPassword { get; set; }
@@ -14,17 +16,20 @@ namespace SolveChicago.Web.Models
         public bool BrowserRemembered { get; set; }
     }
 
+    [ExcludeFromCodeCoverage]
     public class ManageLoginsViewModel
     {
         public IList<UserLoginInfo> CurrentLogins { get; set; }
         public IList<AuthenticationDescription> OtherLogins { get; set; }
     }
 
+    [ExcludeFromCodeCoverage]
     public class FactorViewModel
     {
         public string Purpose { get; set; }
     }
 
+    [ExcludeFromCodeCoverage]
     public class SetPasswordViewModel
     {
         [Required]
@@ -39,6 +44,7 @@ namespace SolveChicago.Web.Models
         public string ConfirmPassword { get; set; }
     }
 
+    [ExcludeFromCodeCoverage]
     public class ChangePasswordViewModel
     {
         [Required]
@@ -58,6 +64,7 @@ namespace SolveChicago.Web.Models
         public string ConfirmPassword { get; set; }
     }
 
+    [ExcludeFromCodeCoverage]
     public class AddPhoneNumberViewModel
     {
         [Required]
@@ -66,6 +73,7 @@ namespace SolveChicago.Web.Models
         public string Number { get; set; }
     }
 
+    [ExcludeFromCodeCoverage]
     public class VerifyPhoneNumberViewModel
     {
         [Required]
@@ -78,6 +86,7 @@ namespace SolveChicago.Web.Models
         public string PhoneNumber { get; set; }
     }
 
+    [ExcludeFromCodeCoverage]
     public class ConfigureTwoFactorViewModel
     {
         public string SelectedProvider { get; set; }

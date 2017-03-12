@@ -1,20 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="SolveChicagoDevModelStoreContainer" CdmEntityContainer="SolveChicagoEntities">
-    <EntitySetMapping Name="Admins">
-      <EntityTypeMapping TypeName="SolveChicagoDevModel.Admin">
-        <MappingFragment StoreEntitySet="Admins">
-          <ScalarProperty Name="LastName" ColumnName="LastName" />
-          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="ProfilePicturePath" ColumnName="ProfilePicturePath" />
-          <ScalarProperty Name="Phone" ColumnName="Phone" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="InvitedBy" ColumnName="InvitedBy" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="AspNetRoles">
       <EntityTypeMapping TypeName="SolveChicagoDevModel.AspNetRole">
         <MappingFragment StoreEntitySet="AspNetRoles">
@@ -232,14 +218,6 @@
         <ScalarProperty Name="Id" ColumnName="UserId" />
       </EndProperty>
     </AssociationSetMapping>
-    <AssociationSetMapping Name="UserProfileAdmins" TypeName="SolveChicagoDevModel.UserProfileAdmins" StoreEntitySet="UserProfileAdmins">
-      <EndProperty Name="Admins">
-        <ScalarProperty Name="Id" ColumnName="AdminId" />
-      </EndProperty>
-      <EndProperty Name="AspNetUsers">
-        <ScalarProperty Name="Id" ColumnName="UserId" />
-      </EndProperty>
-    </AssociationSetMapping>
     <AssociationSetMapping Name="UserProfileCorporations" TypeName="SolveChicagoDevModel.UserProfileCorporations" StoreEntitySet="UserProfileCorporations">
       <EndProperty Name="AspNetUsers">
         <ScalarProperty Name="Id" ColumnName="UserId" />
@@ -427,5 +405,37 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="AdminInviteCodes">
+      <EntityTypeMapping TypeName="SolveChicagoDevModel.AdminInviteCode">
+        <MappingFragment StoreEntitySet="AdminInviteCodes">
+          <ScalarProperty Name="RecevingAdminUserId" ColumnName="RecevingAdminUserId" />
+          <ScalarProperty Name="InvitingAdminUserId" ColumnName="InvitingAdminUserId" />
+          <ScalarProperty Name="InviteCode" ColumnName="InviteCode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Admins">
+      <EntityTypeMapping TypeName="SolveChicagoDevModel.Admin">
+        <MappingFragment StoreEntitySet="Admins">
+          <ScalarProperty Name="InvitedBy" ColumnName="InvitedBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="ProfilePicturePath" ColumnName="ProfilePicturePath" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="UserProfileAdmins" TypeName="SolveChicagoDevModel.UserProfileAdmins" StoreEntitySet="UserProfileAdmins">
+      <EndProperty Name="AspNetUser">
+        <ScalarProperty Name="Id" ColumnName="UserId" />
+      </EndProperty>
+      <EndProperty Name="Admin">
+        <ScalarProperty Name="Id" ColumnName="AdminId" />
+      </EndProperty>
+    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping>

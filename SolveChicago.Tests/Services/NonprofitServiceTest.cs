@@ -1,80 +1,110 @@
-﻿//using System;
-//using Microsoft.VisualStudio.TestTools.UnitTesting;
-//using Moq;
-//using SolveChicago.Entities;
-//using System.Data.Entity;
-//using System.Collections.Generic;
+﻿using System;
+using Xunit;
+using Moq;
+using SolveChicago.Entities;
+using System.Data.Entity;
+using System.Collections.Generic;
+using System.Linq;
+using SolveChicago.Web.Services;
+using SolveChicago.Web.Models.Profile;
 
-//using SolveChicago.App.Common.Entities;
+namespace SolveChicago.Tests.Services
+{
+    public class NonprofitServiceTest
+    {
+        Mock<SolveChicagoEntities> context = new Mock<SolveChicagoEntities>();
+        public NonprofitServiceTest()
+        {
+            List<Nonprofit> data = new List<Nonprofit>
+            {
+                new Nonprofit
+                {
+                    Id = 1,
+                    Address1 = "123 Main Stree",
+                    Address2 = null,
+                    City = "Chicago",
+                    Country = "USA",
+                    Phone = "1234567890",
+                    ProfilePicturePath = "../path.jpg",
+                    Province = "Illinois",
+                    Name = "Test Nonprofit",
+                    CaseManagers = new List<CaseManager>
+                    {
+                        new CaseManager { Id = 1, FirstName = "Tim", LastName = "Keller" },
+                        new CaseManager { Id = 2, FirstName = "Esme", LastName = "Pirouet" },
+                    }
+                }
+            };
 
-//namespace SolveChicago.Tests.Services
-//{
-//    [TestClass]
-//    public class NonprofitServiceTest
-//    {
-//        [TestMethod]
-//        public void Can_Create_Nonprofit()
-//        {
-//            string email = string.Format("{0}@solvechicago.com", Guid.NewGuid().ToString());
+            var set = new Mock<DbSet<Nonprofit>>().SetupData(data);
+            set.Setup(m => m.Find(It.IsAny<object[]>()))
+                .Returns<object[]>(ids => data.FirstOrDefault(d => d.Id == (int)ids[0]));
+            context.Setup(c => c.Nonprofits).Returns(set.Object);
+        }
 
-//            List<AspNetUser> users = new List<AspNetUser>
-//            {
-//                new AspNetUser
-//                {
-//                    Id = 1,
-//                    IdentityUserId = Guid.NewGuid().ToString(),
-//                    CreatedDate = DateTime.UtcNow
-//                }
-//            };
-//            List<Nonprofit> nonprofits = new List<Nonprofit>();
+        [Fact]
+        public void Can_Get_Nonprofit()
+        {
+            NonprofitService service = new NonprofitService(context.Object);
+            NonprofitProfile npo = service.Get(1);
 
-//            var userSet = new Mock<DbSet<AspNetUser>>().SetupData(users);
-//            var nonprofitSet = new Mock<DbSet<Nonprofit>>().SetupData(nonprofits);
+            Assert.Equal("Test Nonprofit", npo.Name);
+        }
 
-//            var context = new Mock<SolveChicagoEntities>();
-//            context.Setup(c => c.AspNetUsers).Returns(userSet.Object);
-//            context.Setup(c => c.Nonprofits).Returns(nonprofitSet.Object);
+        [Fact]
+        public void Get_Nonprofit_Returns_Null()
+        {
+            NonprofitService service = new NonprofitService(context.Object);
+            NonprofitProfile npo = service.Get(2);
+
+            Assert.Equal(null, npo);
+        }
+
+        [Fact]
+        public void Can_Post_Nonprofit()
+        {
+            NonprofitProfile model = new NonprofitProfile
+            {
+                Id = 1,
+                Name = "Test 2 Nonprofit"
+            };
 
 
-//            NonprofitService service = new NonprofitService(context.Object);
-//            int nonprofitId = service.Create(new NonprofitEntity { Email = email }, 1);
+            NonprofitService service = new NonprofitService(context.Object);
+            service.Post(model);
+            Assert.Equal("Test 2 Nonprofit", context.Object.Nonprofits.First().Name);
+        }
 
-//            Assert.IsNotNull(nonprofitId);
-//        }
+        [Fact]
+        public void Post_Nonprofit_Returns_Exception()
+        {
+            NonprofitProfile model = new NonprofitProfile
+            {
+                Id = 5,
+                Name = "Test 2 Nonprofit"
+            };
 
-//        [TestMethod]
-//        public void Can_Update_Nonprofit_Profile()
-//        {
-//            List<Nonprofit> data = new List<Nonprofit>
-//            {
-//                new Nonprofit { Id = 1 }
-//            };
 
-//            NonprofitEntity nonprofit = new NonprofitEntity
-//            {
-//                Address1 = "123 Main Street",
-//                Address2 = "Apt 2",
-//                City = "Chicago",
-//                Province = "IL",
-//                Country = "USA",
-//                Email = "nonprofit@solvechicago.com",
-//                CreatedDate = DateTime.UtcNow.AddDays(-10),
-//                Id = 1,
-//                Name = "Tom Elliot",
-//                Phone = "1234567890",
-//            };
+            NonprofitService service = new NonprofitService(context.Object);
+            Assert.Throws<Exception>(() => service.Post(model));
+        }
 
-//            var nonprofitSet = new Mock<DbSet<Nonprofit>>().SetupData(data);
+        [Fact]
+        public void Can_Get_CaseManagers_For_Nonprofit()
+        {
+            NonprofitService service = new NonprofitService(context.Object);
+            CaseManager[] cm = service.GetCaseManagers(1);
 
-//            var context = new Mock<SolveChicagoEntities>();
-//            context.Setup(c => c.Nonprofits).Returns(nonprofitSet.Object);
+            Assert.Equal(2, cm.Count());
+        }
 
-//            using (NonprofitService service = new NonprofitService(context.Object))
-//            {
-//                var result = service.UpdateProfile(nonprofit);
-//                Assert.IsTrue(result);
-//            }
+        [Fact]
+        public void Get_CaseManagers_For_Nonexistent_Nonprofit_Returns_EmptyArray()
+        {
+            NonprofitService service = new NonprofitService(context.Object);
+            CaseManager[] cm = service.GetCaseManagers(10);
 
-//        }
-//    }
-//}
+            Assert.Equal(0, cm.Count());
+        }
+    }
+}

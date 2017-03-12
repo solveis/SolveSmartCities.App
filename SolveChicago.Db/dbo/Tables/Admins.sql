@@ -7,7 +7,7 @@
     [ProfilePicturePath] NCHAR(10) NULL, 
 	[Phone] NVARCHAR(128) NULL, 
     [CreatedDate] DATETIME2 NULL, 
-	[InvitedBy] INT NULL, 
+	[InvitedBy] NVARCHAR(50) NULL, 
 
     CONSTRAINT [PK_Admins] PRIMARY KEY CLUSTERED ([Id] ASC), 
 )

@@ -8,10 +8,12 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using SolveChicago.Web.Models;
 using SolveChicago.Web.Controllers;
-using SolveChicago.Web.Data;
+using SolveChicago.Entities;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SolveChicago.Web.Controllers
 {
+    [ExcludeFromCodeCoverage]
     [Authorize]
     public class ManageController : BaseController, IDisposable
     {

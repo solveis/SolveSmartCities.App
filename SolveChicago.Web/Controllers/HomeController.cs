@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using SolveChicago.Web.Controllers;
-using SolveChicago.Web.Data;
+using SolveChicago.Entities;
 
 namespace SolveChicago.Web.Controllers
 {

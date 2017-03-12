@@ -227,114 +227,7 @@
     <Compile Include="Controllers\OutcomesController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
-    <Compile Include="Data\Address.cs">
-      <DependentUpon>data.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\Admin.cs">
-      <DependentUpon>data.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\AspNetRole.cs">
-      <DependentUpon>data.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\AspNetUser.cs">
-      <DependentUpon>data.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\AspNetUserClaim.cs">
-      <DependentUpon>data.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\AspNetUserLogin.cs">
-      <DependentUpon>data.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\CaseManager.cs">
-      <DependentUpon>data.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\CaseNote.cs">
-      <DependentUpon>data.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\Corporation.cs">
-      <DependentUpon>data.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\data.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>data.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\data.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>data.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\data.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>data.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Data\Family.cs">
-      <DependentUpon>data.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\GovernmentProgram.cs">
-      <DependentUpon>data.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\Interest.cs">
-      <DependentUpon>data.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\Member.cs">
-      <DependentUpon>data.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\MemberCorporation.cs">
-      <DependentUpon>data.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\MemberEmergencyContact.cs">
-      <DependentUpon>data.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\MemberGovernmentProgram.cs">
-      <DependentUpon>data.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\MemberNonprofit.cs">
-      <DependentUpon>data.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\MemberParent.cs">
-      <DependentUpon>data.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\MemberSchool.cs">
-      <DependentUpon>data.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\MemberSkill.cs">
-      <DependentUpon>data.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\MemberSpous.cs">
-      <DependentUpon>data.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\MemberSurvey.cs">
-      <DependentUpon>data.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\Nonprofit.cs">
-      <DependentUpon>data.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\Outcome.cs">
-      <DependentUpon>data.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\PhoneNumber.cs">
-      <DependentUpon>data.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\School.cs">
-      <DependentUpon>data.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\Skill.cs">
-      <DependentUpon>data.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\Survey.cs">
-      <DependentUpon>data.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\SurveyAnswer.cs">
-      <DependentUpon>data.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\SurveyQuestion.cs">
-      <DependentUpon>data.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\SurveyQuestionOption.cs">
-      <DependentUpon>data.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Controllers\ThanksController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -346,6 +239,7 @@
     <Compile Include="Models\Profile\NonprofitProfile.cs" />
     <Compile Include="Profile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AdminService.cs" />
     <Compile Include="Services\BaseService.cs" />
     <Compile Include="Services\CaseManagerService.cs" />
     <Compile Include="Services\EmailService.cs" />
@@ -358,16 +252,6 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Data\data.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>data.edmx</DependentUpon>
-      <LastGenOutput>data.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Data\data.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>data.edmx</DependentUpon>
-      <LastGenOutput>data.cs</LastGenOutput>
-    </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -382,13 +266,6 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Data\data.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>data.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Data\data.edmx.diagram">
-      <DependentUpon>data.edmx</DependentUpon>
-    </Content>
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
@@ -514,6 +391,7 @@
     <Content Include="Views\Corporations\Details.cshtml" />
     <Content Include="Views\Corporations\Edit.cshtml" />
     <Content Include="Views\Corporations\Index.cshtml" />
+    <Content Include="Views\Thanks\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -526,6 +404,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SolveChicago.Entities\SolveChicago.Entities.csproj">
+      <Project>{9faba25f-26c0-4867-b7e6-62f29d8223d4}</Project>
+      <Name>SolveChicago.Entities</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

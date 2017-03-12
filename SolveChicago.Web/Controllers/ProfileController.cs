@@ -7,7 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
-using SolveChicago.Web.Data;
+using SolveChicago.Entities;
 using SolveChicago.Web.Models.Profile;
 using SolveChicago.Web.Services;
 
@@ -48,7 +48,7 @@ namespace SolveChicago.Web.Controllers
             {
                 MemberService service = new MemberService(this.db);
                 
-                    service.Post(model);
+                    service.UpdateProfile(model);
                     return MemberRedirect(model.Id);
                 
             }

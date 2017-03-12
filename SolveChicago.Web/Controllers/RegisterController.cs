@@ -12,7 +12,7 @@ using SolveChicago.Web.Models;
 using SolveChicago.Web.Common;
 using SolveChicago.Web.Controllers;
 using System.Diagnostics.CodeAnalysis;
-using SolveChicago.Web.Data;
+using SolveChicago.Entities;
 
 namespace SolveChicago.Web.Controllers
 {
@@ -25,7 +25,7 @@ namespace SolveChicago.Web.Controllers
         [AllowAnonymous]
         public ActionResult Admin(string inviteCode)
         {
-            int userId = 0;
+            string userId = "";
             if (!ValidateAdminInvite(HttpUtility.UrlDecode(inviteCode), ref userId)) // refactor to be encryption check
             {
                 return HttpNotFound();

@@ -1,9 +1,10 @@
 ﻿using Moq;
 using SolveChicago.Web.Controllers;
-using SolveChicago.Web.Data;
+using SolveChicago.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -11,14 +12,16 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using Xunit;
 
-namespace SolveChicago.App.Tests.Controllers
+namespace SolveChicago.Tests.Controllers
 {
+    [ExcludeFromCodeCoverage]
     public class AdminsControllerTest
     {
         Mock<SolveChicagoEntities> context = new Mock<SolveChicagoEntities>();
 
         public AdminsControllerTest()
         {
+            List<AspNetUser> users = new List<AspNetUser>();
             List<Admin> data = new List<Admin>
             {
                 new Admin
@@ -63,11 +66,14 @@ namespace SolveChicago.App.Tests.Controllers
             };
 
             var set = new Mock<DbSet<Admin>>().SetupData(data);
+            var userSet = new Mock<DbSet<AspNetUser>>().SetupData(users);
             set.Setup(m => m.Find(It.IsAny<object[]>()))
                 .Returns<object[]>(ids => data.FirstOrDefault(d => d.Id == (int)ids[0]));
             context.Setup(c => c.Admins).Returns(set.Object);
-            
+            context.Setup(c => c.AspNetUsers).Returns(userSet.Object);
+
         }
+        
 
         [Fact]
         public void Admin_Index()
@@ -91,6 +97,15 @@ namespace SolveChicago.App.Tests.Controllers
         }
 
         [Fact]
+        public void Admin_Details_NotFound()
+        {
+            AdminsController controller = new AdminsController(context.Object);
+            var result = (HttpStatusCodeResult)controller.Details(0);
+
+            Assert.Equal(new HttpStatusCodeResult(HttpStatusCode.NotFound).StatusCode, result.StatusCode);
+        }
+
+        [Fact]
         public void Admin_Details_Succeed()
         {
             AdminsController controller = new AdminsController(context.Object);
@@ -100,6 +115,35 @@ namespace SolveChicago.App.Tests.Controllers
             var model = Assert.IsAssignableFrom<Admin>(
                 viewResult.ViewData.Model);
             Assert.Equal("Jerry Ellis", string.Format("{0} {1}", model.FirstName, model.LastName));
+        }
+
+        [Fact]
+        public void Admin_Create_Get()
+        {
+            AdminsController controller = new AdminsController(context.Object);
+            var result = (ViewResult)controller.Create();
+            var viewResult = Assert.IsType<ViewResult>(result);
+        }
+
+        [Fact]
+        public void Admin_Create_Post_Succeed()
+        {
+            Admin admin = new Admin
+            {
+                CreatedDate = DateTime.UtcNow,
+                Email = "email@email.com",
+                FirstName = "Joe",
+                LastName = "Smith",
+                InvitedBy = "BHVGYCRD%$^&*()O",
+                Phone = "1234567890",
+                ProfilePicturePath = "../path.jpg"
+            };
+            AdminsController controller = new AdminsController(context.Object);
+            var result = (RedirectToRouteResult)controller.Create(admin);
+
+            Assert.Equal("Index", result.RouteValues["action"]);
+            Assert.Null(result.RouteValues["controller"]);
+
         }
     }
 }

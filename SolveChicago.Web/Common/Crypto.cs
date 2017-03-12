@@ -7,7 +7,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DonorPath.Web.Common
+namespace SolveChicago.Web.Common
 {
     public class Crypto
     {

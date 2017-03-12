@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SolveChicago.Web.Models
 {
+    [ExcludeFromCodeCoverage]
     public class ExternalLoginConfirmationViewModel
     {
         [Required]
@@ -10,11 +12,13 @@ namespace SolveChicago.Web.Models
         public string Email { get; set; }
     }
 
+    [ExcludeFromCodeCoverage]
     public class ExternalLoginListViewModel
     {
         public string ReturnUrl { get; set; }
     }
 
+    [ExcludeFromCodeCoverage]
     public class SendCodeViewModel
     {
         public string SelectedProvider { get; set; }
@@ -23,6 +27,7 @@ namespace SolveChicago.Web.Models
         public bool RememberMe { get; set; }
     }
 
+    [ExcludeFromCodeCoverage]
     public class VerifyCodeViewModel
     {
         [Required]
@@ -39,6 +44,7 @@ namespace SolveChicago.Web.Models
         public bool RememberMe { get; set; }
     }
 
+    [ExcludeFromCodeCoverage]
     public class ForgotViewModel
     {
         [Required]
@@ -46,6 +52,7 @@ namespace SolveChicago.Web.Models
         public string Email { get; set; }
     }
 
+    [ExcludeFromCodeCoverage]
     public class LoginViewModel
     {
         [Required]
@@ -80,9 +87,10 @@ namespace SolveChicago.Web.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
-        public int InvitedByUserId { get; set; }
+        public string InvitedByUserId { get; set; }
     }
 
+    [ExcludeFromCodeCoverage]
     public class ResetPasswordViewModel
     {
         [Required]
@@ -104,6 +112,7 @@ namespace SolveChicago.Web.Models
         public string Code { get; set; }
     }
 
+    [ExcludeFromCodeCoverage]
     public class ForgotPasswordViewModel
     {
         [Required]

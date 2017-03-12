@@ -1,4 +1,4 @@
-﻿using SolveChicago.Web.Data;
+﻿using SolveChicago.Entities;
 using SolveChicago.Web.Services;
 using System;
 using System.Collections.Generic;
@@ -21,6 +21,7 @@ namespace SolveChicago.Web.Models.Profile
         public string Phone { get; set; }
         [Required]
         public string Gender { get; set; }
+        public string[] GenderList { get; set; }
         [Required]
         public DateTime? Birthday { get; set; }
         public FamilyEntity Family { get; set; }
@@ -43,14 +44,14 @@ namespace SolveChicago.Web.Models.Profile
         {
             get
             {
-                return this.Schools.Any(x => x.End.HasValue) ? this.Schools.Where(x => x.End.HasValue).OrderByDescending(x => x.Start).First().Type : string.Empty;
+                return this.Schools != null && this.Schools.Any(x => x.End.HasValue) ? this.Schools.Where(x => x.End.HasValue).OrderByDescending(x => x.Start).First().Type : string.Empty;
             }
         }
         [Required]
         public string Degree {
             get
             {
-                return this.Schools.Any(x => !string.IsNullOrEmpty(x.Degree)) ? this.Schools.Where(x => !string.IsNullOrEmpty(x.Degree)).OrderByDescending(x => x.Start).First().Degree : string.Empty;
+                return this.Schools != null && this.Schools.Any(x => !string.IsNullOrEmpty(x.Degree)) ? this.Schools.Where(x => !string.IsNullOrEmpty(x.Degree)).OrderByDescending(x => x.Start).First().Degree : string.Empty;
             }
         }
         [Required]
@@ -58,13 +59,12 @@ namespace SolveChicago.Web.Models.Profile
         {
             get
             {
-                return this.Schools.Any() ? this.Schools.OrderByDescending(x => x.Start).First().Name : string.Empty;
+                return this.Schools != null && this.Schools.Any() ? this.Schools.OrderByDescending(x => x.Start).First().Name : string.Empty;
             }
         }
         public SchoolEntity[] Schools { get; set; }
         [Required]
         public string Interests { get; set; }
-        public Nonprofit Nonprofit { get; set; }
         [Required]
         public string NonprofitName { get; set; }
         [Required]
@@ -73,15 +73,22 @@ namespace SolveChicago.Web.Models.Profile
         public string NonprofitEnjoyed { get; set; }
         [Required]
         public string NonprofitStruggled { get; set; }
-        public Corporation Employer { get; set; }
+        public JobEntity[] Jobs { get; set; }
+        public string[] SchoolTypeList { get; set; }
+        public string[] RelationshipList { get; set; }
+    }
+
+    public class JobEntity
+    {
+        public int CorporationId { get; set; }
         [Required]
-        public string EmployerName { get; set; }
+        public string Name { get; set; }
         [Required]
-        public DateTime? EmployerStart { get; set; }
-        public DateTime? EmployerEnd { get; set; }
-        public string EmployerReasonForLeaving { get; set; }
+        public DateTime? EmployeeStart { get; set; }
+        public DateTime? EmployeeEnd { get; set; }
         [Required]
-        public decimal? EmployerPay { get; set; }
+        public decimal? EmployeePay { get; set; }
+        public string EmployeeReasonForLeaving { get; set; }
     }
 
     public class FamilyEntity
@@ -119,7 +126,6 @@ namespace SolveChicago.Web.Models.Profile
         public int Id { get; set;}
         public string Name { get; set; }
         public string Type { get; set; }
-        public string[] TypeList { get; set; }
         public DateTime Start { get; set; }
         public DateTime? End { get; set; }
         public bool IsCurrent { get; set; }

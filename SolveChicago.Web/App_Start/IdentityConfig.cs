@@ -14,6 +14,7 @@ using SolveChicago.Web.Models;
 using System.Net.Mail;
 using System.IO;
 using SolveChicago.Web.Common;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SolveChicago.Web
 {
@@ -65,6 +66,7 @@ namespace SolveChicago.Web
 
     public class SmsService : IIdentityMessageService
     {
+        [ExcludeFromCodeCoverage]
         public Task SendAsync(IdentityMessage message)
         {
             // Plug in your SMS service here to send a text message.
@@ -75,11 +77,13 @@ namespace SolveChicago.Web
     // Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
     public class ApplicationUserManager : UserManager<ApplicationUser>
     {
+        [ExcludeFromCodeCoverage]
         public ApplicationUserManager(IUserStore<ApplicationUser> store)
             : base(store)
         {
         }
 
+        [ExcludeFromCodeCoverage]
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context) 
         {
             var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));
@@ -128,19 +132,23 @@ namespace SolveChicago.Web
         }
     }
 
+    [ExcludeFromCodeCoverage]
     // Configure the application sign-in manager which is used in this application.
     public class ApplicationSignInManager : SignInManager<ApplicationUser, string>
     {
+        [ExcludeFromCodeCoverage]
         public ApplicationSignInManager(ApplicationUserManager userManager, IAuthenticationManager authenticationManager)
             : base(userManager, authenticationManager)
         {
         }
 
+        [ExcludeFromCodeCoverage]
         public override Task<ClaimsIdentity> CreateUserIdentityAsync(ApplicationUser user)
         {
             return user.GenerateUserIdentityAsync((ApplicationUserManager)UserManager);
         }
 
+        [ExcludeFromCodeCoverage]
         public static ApplicationSignInManager Create(IdentityFactoryOptions<ApplicationSignInManager> options, IOwinContext context)
         {
             return new ApplicationSignInManager(context.GetUserManager<ApplicationUserManager>(), context.Authentication);

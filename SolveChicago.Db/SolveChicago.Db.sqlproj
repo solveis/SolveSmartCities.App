@@ -106,6 +106,7 @@
     <Build Include="dbo\Tables\FamilyPhoneNumbers.sql" />
     <Build Include="dbo\Tables\Schools.sql" />
     <Build Include="dbo\Tables\MemberSchools.sql" />
+    <Build Include="dbo\Tables\AdminInviteCodes.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SolveChicago.Db.dbmdl" />

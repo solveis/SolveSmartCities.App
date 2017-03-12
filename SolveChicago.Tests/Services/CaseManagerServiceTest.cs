@@ -1,81 +1,64 @@
-﻿//using System;
-//using Microsoft.VisualStudio.TestTools.UnitTesting;
-//using Moq;
-//using SolveChicago.Entities;
-//using System.Data.Entity;
-//using System.Collections.Generic;
+﻿using System;
+using Xunit;
+using Moq;
+using SolveChicago.Entities;
+using System.Data.Entity;
+using System.Collections.Generic;
+using System.Linq;
+using SolveChicago.Web.Services;
 
-//using SolveChicago.App.Common.Entities;
+namespace SolveChicago.Tests.Services
+{
+    
+    public class CaseManagerServiceTest
+    {
+        Mock<SolveChicagoEntities> context = new Mock<SolveChicagoEntities>();
+        public CaseManagerServiceTest()
+        {
+            List<CaseManager> caseManagers = new List<CaseManager>
+            {
+                new CaseManager
+                {
+                    Id = 1,
+                    FirstName = "John",
+                    LastName = "Doe",
+                    Nonprofit = new Nonprofit
+                    {
+                        Id = 1,
+                        Name = "Nonprofit 1"
+                    },
+                    MemberNonprofits = new List<MemberNonprofit>
+                    {
+                        new MemberNonprofit
+                        {
+                            CaseManagerId = 1,
+                            NonprofitId = 1,
+                            Member = new Member
+                            {
+                                Id = 123,
+                                FirstName = "Terry",
+                                LastName = "Jones"
+                            }
+                        }
+                    }
+                }
+            };
 
-//namespace SolveChicago.Tests.Services
-//{
-//    [TestClass]
-//    public class CaseManagerServiceTest
-//    {
-//        [TestMethod]
-//        public void Can_Create_CaseManager()
-//        {
-//            string email = string.Format("{0}@solvechicago.com", Guid.NewGuid().ToString());
 
-//            List<AspNetUser> users = new List<AspNetUser>
-//            {
-//                new AspNetUser
-//                {
-//                    Id = 1,
-//                    IdentityUserId = Guid.NewGuid().ToString(),
-//                    CreatedDate = DateTime.UtcNow
-//                }
-//            };
-//            List<CaseManager> caseManagers = new List<CaseManager>();
+            var caseManagerSet = new Mock<DbSet<CaseManager>>().SetupData(caseManagers);
+            caseManagerSet.Setup(m => m.Find(It.IsAny<object[]>()))
+                .Returns<object[]>(ids => caseManagers.FirstOrDefault(d => d.Id == (int)ids[0]));
+            context.Setup(c => c.CaseManagers).Returns(caseManagerSet.Object);
+        }
 
-//            var userSet = new Mock<DbSet<AspNetUser>>().SetupData(users);
-//            var caseManagerSet = new Mock<DbSet<CaseManager>>().SetupData(caseManagers);
+        [Fact]
+        public void Can_GetMembersForCaseManager()
+        {
+            CaseManagerService service = new CaseManagerService(context.Object);
+            Member[] members = service.GetMembersForCaseManager(1);
 
-//            var context = new Mock<SolveChicagoEntities>();
-//            context.Setup(c => c.AspNetUsers).Returns(userSet.Object);
-//            context.Setup(c => c.CaseManagers).Returns(caseManagerSet.Object);
-
-
-//            CaseManagerService service = new CaseManagerService(context.Object);
-//            int caseManagerId = service.Create(new CaseManagerEntity { Email = email }, 1);
-
-//            Assert.IsNotNull(caseManagerId);
-//        }
-
-//        [TestMethod]
-//        public void Can_Update_CaseManager_Profile()
-//        {
-//            List<CaseManager> data = new List<CaseManager>
-//            {
-//                new CaseManager { Id = 1 }
-//            };
-
-//            CaseManagerEntity caseManager = new CaseManagerEntity
-//            {
-//                Address1 = "123 Main Street",
-//                Address2 = "Apt 2",
-//                City = "Chicago",
-//                Province = "IL",
-//                Country = "USA",
-//                Email = "caseManager@solvechicago.com",
-//                CreatedDate = DateTime.UtcNow.AddDays(-10),
-//                Id = 1,
-//                Name = "Tom Elliot",
-//                Phone = "1234567890",
-//                ProfilePicturePath = "../image.jpg"
-//            };
-
-//            var caseManagerSet = new Mock<DbSet<CaseManager>>().SetupData(data);
-
-//            var context = new Mock<SolveChicagoEntities>();
-//            context.Setup(c => c.CaseManagers).Returns(caseManagerSet.Object);
-
-//            using (CaseManagerService service = new CaseManagerService(context.Object))
-//            {
-//                var result = service.UpdateProfile(caseManager);
-//                Assert.IsTrue(result);
-//            }
-
-//        }
-//    }
-//}
+            Assert.Equal(1, members.Count());
+            Assert.Equal("Terry", members.First().FirstName);
+        }
+    }
+}

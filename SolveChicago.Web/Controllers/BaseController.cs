@@ -14,8 +14,7 @@ using SolveChicago.Web.Controllers;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.IO;
 using System.Collections.Generic;
-using DonorPath.Web.Common;
-using SolveChicago.Web.Data;
+using SolveChicago.Entities;
 
 namespace SolveChicago.Web.Controllers
 {
@@ -338,7 +337,7 @@ namespace SolveChicago.Web.Controllers
         }
 
 
-        protected async Task<ActionResult> CreateAccount(string userName, string password, Enumerations.Role role, int? invitedByUserId = null)
+        protected async Task<ActionResult> CreateAccount(string userName, string password, Enumerations.Role role, string invitedByUserId = "")
         {
             var user = new ApplicationUser { UserName = userName, Email = userName };
             AspNetUser aspnetUser = new AspNetUser();
@@ -450,16 +449,13 @@ namespace SolveChicago.Web.Controllers
             return db.AspNetUsers.Single(x => x.Id == userId);
         }
 
-        public bool ValidateAdminInvite(string inviteCode, ref int userId)
+        public bool ValidateAdminInvite(string inviteCode, ref string userId)
         {
             try
             {
-                string decodedCryptoId = inviteCode.Replace('_', '/').Replace('$', '+');
-                string decryptedUserId = Crypto.DecryptStringAES(decodedCryptoId, Settings.Crypto.SharedSecret);
-                int adminId = Convert.ToInt32(decryptedUserId);
-                if (db.Admins.Any(x => x.Id == adminId))
+                if (db.AdminInviteCodes.Any(x => x.InviteCode == inviteCode))
                 {
-                    userId = adminId;
+                    userId = db.AdminInviteCodes.Single(x => x.InviteCode == inviteCode).InvitingAdminUserId;
                     return true;
                 }
                 else

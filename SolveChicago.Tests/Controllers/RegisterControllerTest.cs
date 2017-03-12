@@ -4,9 +4,11 @@ using Moq;
 using System.Data.Entity;
 using System.Collections.Generic;
 using SolveChicago.Web.Controllers;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SolveChicago.Tests.Controllers
-{     
+{
+    [ExcludeFromCodeCoverage]
     public class RegisterControllerTest
     {
         //[Fact]

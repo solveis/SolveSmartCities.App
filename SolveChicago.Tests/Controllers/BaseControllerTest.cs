@@ -12,10 +12,12 @@ using System.Data.Entity;
 using Moq;
 using System.Security.Principal;
 using static SolveChicago.Web.Controllers.BaseController;
-using SolveChicago.Web.Data;
+using SolveChicago.Entities;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SolveChicago.Tests.Controllers
 {
+    [ExcludeFromCodeCoverage]
     public class BaseControllerTest
     {
         [Fact]
