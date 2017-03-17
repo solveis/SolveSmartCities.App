@@ -32,7 +32,6 @@ namespace SolveChicago.Web.Services
                     Family = GetFamily(member),
                     FirstName = member.FirstName,
                     Gender = member.Gender,
-                    GenderList = GetGenderList(),
                     Id = member.Id,
                     Interests = member.Interests.Any() ? string.Join(",", member.Interests.Select(x => x.Name).ToArray()) : string.Empty,
                     LastName = member.LastName,
@@ -41,9 +40,7 @@ namespace SolveChicago.Web.Services
                     Phone = member.PhoneNumbers.Any() ? string.Join(",", member.PhoneNumbers.Select(x => x.Number).ToArray()) : string.Empty,
                     ProfilePicturePath = member.ProfilePicturePath,
                     Province = member.Addresses.Any() ? member.Addresses.Last().Province : string.Empty,
-                    RelationshipList = GetRelationshipList(),
                     Schools = GetSchools(member),
-                    SchoolTypeList = GetTypeList()
                 };
             }
         }
@@ -54,58 +51,16 @@ namespace SolveChicago.Web.Services
             if (memberCorporations.Count() > 0)
                 return memberCorporations.Select(x => new JobEntity { CorporationId = x.CorporationId, EmployeeEnd = x.End, EmployeePay = x.Pay, EmployeeStart = x.Start, Name = x.Corporation.Name }).ToArray();
             else
-                return new JobEntity[1];
-        }
-
-        private string[] GetGenderList()
-        {
-            return new string[]
-            {
-                "Male",
-                "Female",
-                "Other"
-            };
+                return null;
         }
 
         private SchoolEntity[] GetSchools(Member member)
         {
-            SchoolEntity[] schools = member.MemberSchools.Select(x => new SchoolEntity { Id = x.School.Id, Degree = x.Degree, End = x.End, IsCurrent = x.IsCurrent, Name = x.School.SchoolName, Type = x.School.Type, DegreeList = GetDegreeList(), Start = x.Start, }).ToArray();
+            SchoolEntity[] schools = member.MemberSchools.Select(x => new SchoolEntity { Id = x.School.Id, Degree = x.Degree, End = x.End, IsCurrent = x.IsCurrent, Name = x.School.SchoolName, Type = x.School.Type, Start = x.Start, }).ToArray();
             if (schools.Count() > 0)
                 return schools.OrderByDescending(x => x.Start).ToArray();
             else
                 return new SchoolEntity[1];
-        }
-
-        private string[] GetDegreeList()
-        {
-            return new string[]
-            {
-                "HS Diploma",
-                "GED",
-                "Bachelor's Degree",
-                "Master's Degree",
-                "Post Graduate Degree"
-            };
-        }
-
-        private string[] GetTypeList()
-        {
-            return new string[] {
-                "High School",
-                "Undergraduate College",
-                "Graduate College",
-                "Post Graduate College",
-            };
-        }
-
-        private string[] GetRelationshipList()
-        {
-            return new string[]
-            {
-                "Parent",
-                "Child",
-                "Spouse"
-            };
         }
 
         private FamilyEntity GetFamily(Member member)
@@ -130,7 +85,7 @@ namespace SolveChicago.Web.Services
             }
             else
             {
-                return new FamilyEntity() { FamilyMembers = new FamilyMember[1] };
+                return null;
             }
         }
 
@@ -149,9 +104,9 @@ namespace SolveChicago.Web.Services
         private static void GetSpouseTree(List<FamilyMember> familyMembers, Member member)
         {
             if (member.MemberSpouses.Any(x => x.Member1 != null))
-                familyMembers.AddRange(member.MemberSpouses.Select(x => new FamilyMember { FirstName = x.Member1.FirstName, LastName = x.Member1.LastName, Relation = x.Member1.Gender.ToLowerInvariant() == "male" ? "Husband" : x.Member1.Gender.ToLowerInvariant() == "female" ? "Wife" : "Spouse" }));
+                familyMembers.AddRange(member.MemberSpouses.Select(x => new FamilyMember { FirstName = x.Member1.FirstName, LastName = x.Member1.LastName, Relation = x.Member1.Gender.ToLowerInvariant() == "male" ? "Husband" : x.Member1.Gender.ToLowerInvariant() == "female" ? "Wife" : "Spouse", Id = x.Member1.Id }));
             else if (member.MemberSpouses1.Any(x => x.Member != null))
-                familyMembers.AddRange(member.MemberSpouses1.Select(x => new FamilyMember { FirstName = x.Member.FirstName, LastName = x.Member.LastName, Relation = x.Member.Gender.ToLowerInvariant() == "male" ? "Husband" : x.Member.Gender.ToLowerInvariant() == "female" ? "Wife" : "Spouse" }));
+                familyMembers.AddRange(member.MemberSpouses1.Select(x => new FamilyMember { FirstName = x.Member.FirstName, LastName = x.Member.LastName, Relation = x.Member.Gender.ToLowerInvariant() == "male" ? "Husband" : x.Member.Gender.ToLowerInvariant() == "female" ? "Wife" : "Spouse", Id = x.Member.Id }));
         }
 
         private static void GetChildTree(List<FamilyMember> familyMembers, Member member)
@@ -174,7 +129,7 @@ namespace SolveChicago.Web.Services
 
                     string currentChildTitle = currentChildPrefix + (child.Gender.ToLowerInvariant() == "male" ? (string.IsNullOrEmpty(currentChildPrefix) ? "Son" : "son") : child.Gender.ToLowerInvariant() == "female" ? (string.IsNullOrEmpty(currentChildPrefix) ? "Daughter" : "daughter") : (string.IsNullOrEmpty(currentChildPrefix) ? "Child" : "child"));
 
-                    familyMembers.Add(new FamilyMember { FirstName = child.FirstName, LastName = child.LastName, IsHeadOfHousehold = (child.IsHeadOfHousehold ?? false), Relation = currentChildTitle, Gender = child.Gender, Birthday = child.Birthday });
+                    familyMembers.Add(new FamilyMember { FirstName = child.FirstName, LastName = child.LastName, IsHeadOfHousehold = (child.IsHeadOfHousehold ?? false), Relation = currentChildTitle, Gender = child.Gender, Birthday = child.Birthday, Id = child.Id });
 
                     GetChildTree(familyMembers, child);
                 }
@@ -201,7 +156,7 @@ namespace SolveChicago.Web.Services
 
                     string currentParentTitle = currentParentPrefix + (parent.Gender.ToLowerInvariant() == "male" ? (string.IsNullOrEmpty(currentParentPrefix) ? "Father" : "father") : parent.Gender.ToLowerInvariant() == "female" ? (string.IsNullOrEmpty(currentParentPrefix) ? "Mother" : "mother") : (string.IsNullOrEmpty(currentParentPrefix) ? "Parent" : "parent"));
 
-                    familyMembers.Add(new FamilyMember { FirstName = parent.FirstName, LastName = parent.LastName, IsHeadOfHousehold = (parent.IsHeadOfHousehold ?? false), Relation = currentParentTitle, Gender = parent.Gender, Birthday = parent.Birthday });
+                    familyMembers.Add(new FamilyMember { FirstName = parent.FirstName, LastName = parent.LastName, IsHeadOfHousehold = (parent.IsHeadOfHousehold ?? false), Relation = currentParentTitle, Gender = parent.Gender, Birthday = parent.Birthday, Id = parent.Id });
 
                     GetParentTree(familyMembers, parent);
                 }
@@ -218,6 +173,7 @@ namespace SolveChicago.Web.Services
                 try
                 {
                     UpdateMemberPersonalInformation(model, member);
+                    UpdateMemberFamily(model, member);
                     UpdateMemberAddress(model, member);
                     UpdateMemberSchools(model, member);
                     UpdateMemberPhone(model, member);
@@ -245,6 +201,40 @@ namespace SolveChicago.Web.Services
             member.ProfilePicturePath = UploadPhoto(Constants.Upload.MemberPhotos, model.ProfilePicture, member.Id);
         }
 
+        private void UpdateMemberFamily(MemberProfile model, Member member)
+        {
+            List<FamilyMember> familyMembers = GetFamilyMembers(member).ToList();
+            foreach(FamilyMember familyMember in model.Family?.FamilyMembers)
+            {
+                Member existingFamilyMember = db.Members.Find(familyMember.Id);
+                if (existingFamilyMember == null)
+                    existingFamilyMember = db.Members.Add(new Member { FirstName = familyMember.FirstName, LastName = familyMember.LastName, IsHeadOfHousehold = familyMember.IsHeadOfHousehold, Birthday = familyMember.Birthday, Gender = familyMember.Gender });
+                else if (string.IsNullOrEmpty(familyMember.FirstName) && string.IsNullOrEmpty(familyMember.LastName))
+                    db.Members.Remove(existingFamilyMember);
+                if (!familyMembers.Select(x => x.Id).Contains(existingFamilyMember.Id))
+                    AddFamilyMemberRelationship(existingFamilyMember, member, familyMember.Relation);
+            }
+        }
+
+        private void AddFamilyMemberRelationship(Member existingFamilyMember, Member member, string relation, bool isCurrent = true, bool isBiological = true)
+        {
+            switch(relation)
+            {
+                case Constants.Family.Relationships.Parent:
+                    if(!member.Parents.Any(x => x.ParentId == existingFamilyMember.Id && x.ChildId == member.Id))
+                        member.Parents.Add(new MemberParent { ParentId = existingFamilyMember.Id, ChildId = member.Id, IsBiological = isBiological, Children = member, Parents = existingFamilyMember });
+                    break;
+                case Constants.Family.Relationships.Child:
+                    if (!member.Parents.Any(x => x.ParentId == member.Id && x.ChildId == existingFamilyMember.Id))
+                        member.Children.Add(new MemberParent { ParentId = member.Id, ChildId = existingFamilyMember.Id, IsBiological = isBiological, Children = existingFamilyMember, Parents = member });
+                    break;
+                case Constants.Family.Relationships.Spouse:
+                    if(!member.MemberSpouses.Any(x => x.Spouse_1_Id == existingFamilyMember.Id && x.Spouse_2_Id == member.Id) && !member.MemberSpouses.Any(x => x.Spouse_1_Id == member.Id && x.Spouse_2_Id == existingFamilyMember.Id))
+                        member.MemberSpouses.Add(new MemberSpous { Spouse_1_Id = member.Id, Spouse_2_Id = existingFamilyMember.Id, IsCurrent = isCurrent, Member = member, Member1 = existingFamilyMember });
+                    break;
+            }
+        }
+
         private void UpdateMemberInterests(MemberProfile model, Member member)
         {
             List<Interest> interests = db.Interests.ToList();
@@ -252,7 +242,11 @@ namespace SolveChicago.Web.Services
             foreach (string interest in newInterests)
             {
                 if (interests.Select(x => x.Name).Contains(interest))
-                    member.Interests.Add(interests.Single(x => x.Name == interest));
+                {
+                    Interest existingInterest = interests.Single(x => x.Name == interest);
+                    if (!member.Interests.Contains(existingInterest))
+                        member.Interests.Add(existingInterest);
+                }   
                 else
                     member.Interests.Add(new Interest { Name = interest });
             }
@@ -265,7 +259,11 @@ namespace SolveChicago.Web.Services
             foreach (string skill in newSkills)
             {
                 if (skills.Select(x => x.Name).Contains(skill))
-                    member.MemberSkills.Add(new MemberSkill { MemberId = member.Id, SkillId = skills.Single(x => x.Name == skill).Id });
+                {
+                    Skill existingSkill = skills.Single(x => x.Name == skill);
+                    if(!member.MemberSkills.Select(x => x.SkillId).Contains(existingSkill.Id))
+                        member.MemberSkills.Add(new MemberSkill { MemberId = member.Id, SkillId = existingSkill.Id });
+                }
                 else
                     db.Skills.Add(new Skill { Name = skill, MemberSkills = new List<MemberSkill> { new MemberSkill { MemberId = member.Id } } });
             }
@@ -275,7 +273,7 @@ namespace SolveChicago.Web.Services
         {
             foreach (var job in model.Jobs)
             {
-                Corporation corporation = db.Corporations.Where(x => x.Id == job.CorporationId).FirstOrDefault();
+                Corporation corporation = db.Corporations.Where(x => (x.Id == job.CorporationId || x.Name == job.Name)).FirstOrDefault();
                 if (corporation == null)
                 {
                     corporation = new Corporation
@@ -314,7 +312,7 @@ namespace SolveChicago.Web.Services
         {
             foreach (var s in model.Schools)
             {
-                School school = db.Schools.Where(x => x.Id == s.Id).FirstOrDefault();
+                School school = db.Schools.Where(x => (x.Id == s.Id || x.SchoolName == s.Name)).FirstOrDefault();
                 if (school == null)
                 {
                     school = new School

@@ -8,6 +8,15 @@ using System.Web;
 
 namespace SolveChicago.Web.Models.Profile
 {
+    public class MemberProfileViewModel
+    {
+        public MemberProfile Member { get; set; }
+        public string[] SchoolTypeList { get; set; }
+        public string[] RelationshipList { get; set; }
+        public string[] DegreeList { get; set; }
+        public string[] GenderList { get; set; }
+    }
+
     public class MemberProfile
     {
         public int Id { get; set; }
@@ -21,11 +30,9 @@ namespace SolveChicago.Web.Models.Profile
         public string Phone { get; set; }
         [Required]
         public string Gender { get; set; }
-        public string[] GenderList { get; set; }
         [Required]
         public DateTime? Birthday { get; set; }
         public FamilyEntity Family { get; set; }
-        public Member[] FamilyMembers { get; set; }
         [Required]
         public string Address1 { get; set; }
         public string Address2 { get; set; }
@@ -74,8 +81,6 @@ namespace SolveChicago.Web.Models.Profile
         [Required]
         public string NonprofitStruggled { get; set; }
         public JobEntity[] Jobs { get; set; }
-        public string[] SchoolTypeList { get; set; }
-        public string[] RelationshipList { get; set; }
     }
 
     public class JobEntity
@@ -116,9 +121,12 @@ namespace SolveChicago.Web.Models.Profile
             }
         }
         public string Relation { get; set; }
+        public bool? RelationBiological { get; set; }
+        public bool? IsMarriageCurrent { get; set; }
         public bool IsHeadOfHousehold { get; set; }
         public DateTime? Birthday { get; set; }
         public string Gender { get; set; }
+        public int Id { get; set; }
     }
 
     public class SchoolEntity
@@ -130,7 +138,6 @@ namespace SolveChicago.Web.Models.Profile
         public DateTime? End { get; set; }
         public bool IsCurrent { get; set; }
         public string Degree { get; set; }
-        public string[] DegreeList { get; set; }
 
     }
 }

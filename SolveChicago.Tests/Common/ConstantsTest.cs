@@ -12,7 +12,7 @@ namespace SolveChicago.Tests.Common
     public class ConstantsTest
     {
         [Fact]
-        public void Can_Instantiate_Roles()
+        public void Constants_Roles()
         {
             string admin = Constants.Roles.Admin;
             string member = Constants.Roles.Member;
@@ -28,7 +28,7 @@ namespace SolveChicago.Tests.Common
         }
 
         [Fact]
-        public void Can_Instantiate_Uploads()
+        public void Constants_Uploads()
         {
             string AdminPhotos = Constants.Upload.AdminPhotos;
             string MemberPhotos = Constants.Upload.MemberPhotos;

@@ -14,7 +14,7 @@ namespace SolveChicago.Tests.Controllers
     public class HomeControllerTest
     {
         [Fact]
-        public void Index()
+        public void HomeController_Index_ReturnsViewResult()
         {
             // Arrange
             HomeController controller = new HomeController();
@@ -27,7 +27,7 @@ namespace SolveChicago.Tests.Controllers
         }
 
         [Fact]
-        public void About()
+        public void HomeController_About_ReturnsViewResult()
         {
             // Arrange
             HomeController controller = new HomeController();
@@ -36,11 +36,11 @@ namespace SolveChicago.Tests.Controllers
             ViewResult result = controller.About() as ViewResult;
 
             // Assert
-            Assert.Equal("Your application description page.", result.ViewBag.Message);
+            Assert.NotNull(result);
         }
 
         [Fact]
-        public void Contact()
+        public void HomeController_Contact_ReturnsViewResult()
         {
             // Arrange
             HomeController controller = new HomeController();

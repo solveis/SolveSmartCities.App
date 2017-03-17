@@ -69,14 +69,6 @@ namespace SolveChicago.Web.Controllers
             }
         }
 
-        public new Profile Profile
-        {
-            get
-            {
-                return base.Profile as Profile;
-            }
-        }
-
         public class StateModel
         {
             public string DisplayName { get; set; }
@@ -325,8 +317,6 @@ namespace SolveChicago.Web.Controllers
             {
                 if (userRoles.Contains(role.ToString()))
                     result.Add(role);
-                //if (result == Enumerations.Role.Admin)
-                //    break;
             }
             return result.ToArray();
         }
@@ -357,6 +347,11 @@ namespace SolveChicago.Web.Controllers
                 }
                 AddErrors(result);
             }
+            return await CreateUserAndAssignRoles(userName, role, invitedByUserId, user, aspnetUser);
+        }
+
+        private async Task<ActionResult> CreateUserAndAssignRoles(string userName, Enumerations.Role role, string invitedByUserId, ApplicationUser user, AspNetUser aspnetUser)
+        {
             switch (role)
             {
                 case Enumerations.Role.Member:

@@ -43,7 +43,7 @@ namespace SolveChicago.Tests.Services
         }
 
         [Fact]
-        public void Can_Get_Nonprofit()
+        public void NonprofitService_Get_ReturnsNonprofitProfile()
         {
             NonprofitService service = new NonprofitService(context.Object);
             NonprofitProfile npo = service.Get(1);
@@ -52,7 +52,7 @@ namespace SolveChicago.Tests.Services
         }
 
         [Fact]
-        public void Get_Nonprofit_Returns_Null()
+        public void NonprofitService_Get_ReturnsNull()
         {
             NonprofitService service = new NonprofitService(context.Object);
             NonprofitProfile npo = service.Get(2);
@@ -61,7 +61,7 @@ namespace SolveChicago.Tests.Services
         }
 
         [Fact]
-        public void Can_Post_Nonprofit()
+        public void NonprofitService_Post_Success()
         {
             NonprofitProfile model = new NonprofitProfile
             {
@@ -76,7 +76,7 @@ namespace SolveChicago.Tests.Services
         }
 
         [Fact]
-        public void Post_Nonprofit_Returns_Exception()
+        public void NonprofitService_Post_ThrowsException()
         {
             NonprofitProfile model = new NonprofitProfile
             {
@@ -90,7 +90,7 @@ namespace SolveChicago.Tests.Services
         }
 
         [Fact]
-        public void Can_Get_CaseManagers_For_Nonprofit()
+        public void NonprofitService_GetCaseManagers_ReturnsCaseManagerArray()
         {
             NonprofitService service = new NonprofitService(context.Object);
             CaseManager[] cm = service.GetCaseManagers(1);
@@ -99,7 +99,7 @@ namespace SolveChicago.Tests.Services
         }
 
         [Fact]
-        public void Get_CaseManagers_For_Nonexistent_Nonprofit_Returns_EmptyArray()
+        public void NonprofitService_GetCaseManagers_InvalidId_ReturnsEmptyArray()
         {
             NonprofitService service = new NonprofitService(context.Object);
             CaseManager[] cm = service.GetCaseManagers(10);

@@ -21,7 +21,7 @@ namespace SolveChicago.Tests.Controllers
     public class BaseControllerTest
     {
         [Fact]
-        public void MemberRedirect_WithEntity_Returns_Member_Index()
+        public void BaseController_MemberRedirect_ReturnsRedirectToRouteResult_MembersIndex()
         {
             List<Member> data = new List<Member>
             {
@@ -49,7 +49,7 @@ namespace SolveChicago.Tests.Controllers
         }
 
         [Fact]
-        public void MemberRedirect_WithEntity_Returns_Profile_Member()
+        public void BaseController_MemberRedirect_ReturnsRedirectToRouteResult_ProfileMember()
         {
             List<Member> data = new List<Member>
             {
@@ -69,86 +69,7 @@ namespace SolveChicago.Tests.Controllers
         }
 
         [Fact]
-        public void MemberRedirect_NoEntity_Returns_Member_Index()
-        {
-            List<Member> data = new List<Member>
-            {
-                new Member()
-                {
-                    Email = "member@solvechicago.com",
-                    CreatedDate = DateTime.UtcNow.AddDays(-10),
-                    Id = 1,
-                    FirstName = "Tom",
-                    LastName = "Elliot",
-                    ProfilePicturePath = "../image.jpg",
-                }
-            };
-
-            var set = new Mock<DbSet<Member>>().SetupData(data);
-
-            var context = new Mock<SolveChicagoEntities>();
-            context.Setup(c => c.Members).Returns(set.Object);
-
-            BaseController controller = new BaseController(context.Object);
-            var result = (RedirectToRouteResult)controller.MemberRedirect(1);
-
-            Assert.Equal("Index", result.RouteValues["action"]);
-            Assert.Equal("Members", result.RouteValues["controller"]);
-        }
-
-        [Fact]
-        public void MemberRedirect_NoEntity_Returns_Profile_Member()
-        {
-            List<Member> data = new List<Member>
-            {
-                new Member() { Id = 1 }
-            };
-
-            var set = new Mock<DbSet<Member>>().SetupData(data);
-
-            var context = new Mock<SolveChicagoEntities>();
-            context.Setup(c => c.Members).Returns(set.Object);
-
-            BaseController controller = new BaseController(context.Object);
-            var result = (RedirectToRouteResult)controller.MemberRedirect(1);
-
-            Assert.Equal("Member", result.RouteValues["action"]);
-            Assert.Equal("Profile", result.RouteValues["controller"]);
-        }
-
-        [Fact]
-        public void CaseManagerRedirect_WithEntity_Returns_CaseManager_Index()
-        {
-            CaseManager entity = new CaseManager
-            {
-                Email = "casemanager@solvechicago.com",
-                CreatedDate = DateTime.UtcNow.AddDays(-10),
-                Id = 1,
-                FirstName = "Tom",
-                LastName = "Elliot",
-                Phone = "1234567890",
-                ProfilePicturePath = "../image.jpg",
-            };
-            BaseController controller = new BaseController();
-            var result = (RedirectToRouteResult)controller.CaseManagerRedirect(entity);
-
-            Assert.Equal("Index", result.RouteValues["action"]);
-            Assert.Equal("CaseManagers", result.RouteValues["controller"]);
-        }
-
-        [Fact]
-        public void CaseManagerRedirect_WithEntity_Returns_Profile_CaseManager()
-        {
-            CaseManager entity = new CaseManager();
-            BaseController controller = new BaseController();
-            var result = (RedirectToRouteResult)controller.CaseManagerRedirect(entity);
-
-            Assert.Equal("CaseManager", result.RouteValues["action"]);
-            Assert.Equal("Profile", result.RouteValues["controller"]);
-        }
-
-        [Fact]
-        public void CaseManagerRedirect_NoEntity_Returns_CaseManager_Index()
+        public void BaseController_CaseManagerRedirect_ReturnsRedirectToRouteResult_CaseManagerIndex()
         {
             List<CaseManager> data = new List<CaseManager>
             {
@@ -177,7 +98,7 @@ namespace SolveChicago.Tests.Controllers
         }
 
         [Fact]
-        public void CaseManagerRedirect_NoEntity_Returns_Profile_CaseManager()
+        public void BaseController_CaseManagerRedirect_ReturnsRedirectToRouteResult_ProfileCaseManager()
         {
             List<CaseManager> data = new List<CaseManager>
             {
@@ -197,35 +118,7 @@ namespace SolveChicago.Tests.Controllers
         }
 
         [Fact]
-        public void CorporationRedirect_WithEntity_Returns_Corporation_Index()
-        {
-            Corporation entity = new Corporation
-            {
-                Email = "corporation@solvechicago.com",
-                CreatedDate = DateTime.UtcNow.AddDays(-10),
-                Id = 1,
-                Name = "Tom Elliot",
-            };
-            BaseController controller = new BaseController();
-            var result = (RedirectToRouteResult)controller.CorporationRedirect(entity);
-
-            Assert.Equal("Index", result.RouteValues["action"]);
-            Assert.Equal("Corporations", result.RouteValues["controller"]);
-        }
-
-        [Fact]
-        public void CorporationRedirect_WithEntity_Returns_Profile_Corporation()
-        {
-            Corporation entity = new Corporation();
-            BaseController controller = new BaseController();
-            var result = (RedirectToRouteResult)controller.CorporationRedirect(entity);
-
-            Assert.Equal("Corporation", result.RouteValues["action"]);
-            Assert.Equal("Profile", result.RouteValues["controller"]);
-        }
-
-        [Fact]
-        public void CorporationRedirect_NoEntity_Returns_Corporation_Index()
+        public void BaseController_CorporationRedirect_ReturnsRedirectToRouteResult_CorporationIndex()
         {
             List<Corporation> data = new List<Corporation>
             {
@@ -251,7 +144,7 @@ namespace SolveChicago.Tests.Controllers
         }
 
         [Fact]
-        public void CorporationRedirect_NoEntity_Returns_Profile_Corporation()
+        public void BaseController_CorporationRedirect_ReturnsRedirectToRouteResult_ProfileCorporation()
         {
             List<Corporation> data = new List<Corporation>
             {
@@ -271,41 +164,7 @@ namespace SolveChicago.Tests.Controllers
         }
 
         [Fact]
-        public void NonprofitRedirect_WithEntity_Returns_Nonprofit_Index()
-        {
-            Nonprofit entity = new Nonprofit
-            {
-                Address1 = "123 Main Street",
-                Address2 = "Apt 2",
-                City = "Chicago",
-                Province = "IL",
-                Country = "USA",
-                Email = "nonprofit@solvechicago.com",
-                CreatedDate = DateTime.UtcNow.AddDays(-10),
-                Id = 1,
-                Name = "Tom Elliot",
-                Phone = "1234567890",
-            };
-            BaseController controller = new BaseController();
-            var result = (RedirectToRouteResult)controller.NonprofitRedirect(entity);
-
-            Assert.Equal("Index", result.RouteValues["action"]);
-            Assert.Equal("Nonprofits", result.RouteValues["controller"]);
-        }
-
-        [Fact]
-        public void NonprofitRedirect_WithEntity_Returns_Profile_Nonprofit()
-        {
-            Nonprofit entity = new Nonprofit();
-            BaseController controller = new BaseController();
-            var result = (RedirectToRouteResult)controller.NonprofitRedirect(entity);
-
-            Assert.Equal("Nonprofit", result.RouteValues["action"]);
-            Assert.Equal("Profile", result.RouteValues["controller"]);
-        }
-
-        [Fact]
-        public void NonprofitRedirect_NoEntity_Returns_Nonprofit_Index()
+        public void BaseController_NonprofitRedirect_ReturnsRedirectToRouteResult_NonprofitIndex()
         {
             List<Nonprofit> data = new List<Nonprofit>
             {
@@ -337,7 +196,7 @@ namespace SolveChicago.Tests.Controllers
         }
 
         [Fact]
-        public void NonprofitRedirect_NoEntity_Returns_Profile_Nonprofit()
+        public void BaseController_NonprofitRedirect_ReturnsRedirectToRouteResult_ProfileNonprofit()
         {
             List<Nonprofit> data = new List<Nonprofit>
             {
@@ -357,38 +216,7 @@ namespace SolveChicago.Tests.Controllers
         }
 
         [Fact]
-        public void AdminRedirect_WithEntity_Returns_Admin_Index()
-        {
-            Admin entity = new Admin
-            {
-                Email = "admin@solvechicago.com",
-                CreatedDate = DateTime.UtcNow.AddDays(-10),
-                Id = 1,
-                FirstName = "Tom",
-                LastName = "Elliot",
-                Phone = "1234567890",
-                ProfilePicturePath = "../image.jpg",
-            };
-            BaseController controller = new BaseController();
-            var result = (RedirectToRouteResult)controller.AdminRedirect(entity);
-
-            Assert.Equal("Index", result.RouteValues["action"]);
-            Assert.Equal("Admins", result.RouteValues["controller"]);
-        }
-
-        [Fact]
-        public void AdminRedirect_WithEntity_Returns_Profile_Admin()
-        {
-            Admin entity = new Admin();
-            BaseController controller = new BaseController();
-            var result = (RedirectToRouteResult)controller.AdminRedirect(entity);
-
-            Assert.Equal("Admin", result.RouteValues["action"]);
-            Assert.Equal("Profile", result.RouteValues["controller"]);
-        }
-
-        [Fact]
-        public void AdminRedirect_NoEntity_Returns_Admin_Index()
+        public void BaseController_AdminRedirect_ReturnsRedirectToRouteResult_AdminIndex()
         {
             List<Admin> data = new List<Admin>
             {
@@ -417,7 +245,7 @@ namespace SolveChicago.Tests.Controllers
         }
 
         [Fact]
-        public void AdminRedirect_NoEntity_Returns_Profile_Admin()
+        public void BaseController_AdminRedirect_ReturnsRedirectToRouteResult_ProfileAdmin()
         {
             List<Admin> data = new List<Admin>
             {
@@ -437,7 +265,7 @@ namespace SolveChicago.Tests.Controllers
         }
 
         [Fact]
-        public void RefreshState_WithCaseManager_Member()
+        public void BaseController_RefreshState_UpdatesCaseManager_UpdatesMember()
         {
             List<AspNetUser> users = new List<AspNetUser>
             {
@@ -513,7 +341,7 @@ namespace SolveChicago.Tests.Controllers
         }
 
         [Fact]
-        public void RefreshState_CaseManager()
+        public void BaseController_RefreshState_UpdatesCaseManager()
         {
             List<AspNetUser> data = new List<AspNetUser>
             {
@@ -564,7 +392,7 @@ namespace SolveChicago.Tests.Controllers
         }
 
         [Fact]
-        public void RefreshState_Corporation()
+        public void BaseController_RefreshState_UpdatesCorporation()
         {
             List<AspNetUser> users = new List<AspNetUser>
             {
@@ -612,7 +440,7 @@ namespace SolveChicago.Tests.Controllers
         }
 
         [Fact]
-        public void RefreshState_Nonprofit()
+        public void BaseController_RefreshState_UpdatesNonprofit()
         {
             List<AspNetUser> users = new List<AspNetUser>
             {
@@ -666,7 +494,7 @@ namespace SolveChicago.Tests.Controllers
         }
 
         [Fact]
-        public void RefreshState_Admin()
+        public void BaseController_RefreshState_UpdatesAdmin()
         {
             
             List<AspNetUser> data = new List<AspNetUser>

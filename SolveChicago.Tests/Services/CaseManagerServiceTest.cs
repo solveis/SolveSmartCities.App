@@ -52,7 +52,7 @@ namespace SolveChicago.Tests.Services
         }
 
         [Fact]
-        public void Can_GetMembersForCaseManager()
+        public void CaseManagerService_GetMembersForCaseManager_ReturnsMemberArray()
         {
             CaseManagerService service = new CaseManagerService(context.Object);
             Member[] members = service.GetMembersForCaseManager(1);

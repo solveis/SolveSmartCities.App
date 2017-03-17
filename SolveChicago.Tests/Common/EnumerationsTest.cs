@@ -12,7 +12,7 @@ namespace SolveChicago.Tests.Common
     public class EnumerationsTest
     {
         [Fact]
-        public void Can_Instantiate_Roles()
+        public void Enumerations_Roles()
         {
             int role = (int)Enumerations.Role.Admin;
             Assert.Equal(4, role);

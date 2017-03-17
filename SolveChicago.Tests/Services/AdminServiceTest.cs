@@ -13,7 +13,7 @@ namespace SolveChicago.Tests.Services
     public class AdminServiceTest
     {
         [Fact]
-        public void Can_Get_AdminInviteCode_Success()
+        public void AdminService_GenerateAdminInviteCode_ReturnsString()
         {
             string UserId = Guid.NewGuid().ToString();
             List<AspNetUser> users = new List<AspNetUser>
@@ -45,7 +45,7 @@ namespace SolveChicago.Tests.Services
         }
 
         [Fact]
-        public void Can_Get_AdminInviteCode_Fail()
+        public void AdminService_GenerateAdminInviteCode_ThrowsApplicationException()
         {
             string UserId = Guid.NewGuid().ToString();
             List<AspNetUser> users = new List<AspNetUser>

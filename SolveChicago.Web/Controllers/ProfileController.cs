@@ -32,27 +32,98 @@ namespace SolveChicago.Web.Controllers
 
         [AllowAnonymous]
         // GET: Profile/Member
-        public ActionResult Member(int id, int nonprofitId)
+        public ActionResult Member(int? id)
         {
             MemberService service = new MemberService(this.db);
-            MemberProfile model = service.Get(id, nonprofitId);
+            MemberProfile member = service.Get(10, 3);
+            MemberProfileViewModel model = FormatMemberProfileViewModel(member);
             return View(model);
             
         }
 
         // POST: Profile/Member
         [HttpPost]
-        public ActionResult Member(MemberProfile model)
+        public ActionResult Member(MemberProfileViewModel model)
         {
             if (ModelState.IsValid)
             {
                 MemberService service = new MemberService(this.db);
                 
-                    service.UpdateProfile(model);
-                    return MemberRedirect(model.Id);
+                    service.UpdateProfile(model.Member);
+                    return MemberRedirect(model.Member.Id);
                 
             }
             return View(model);
+        }
+
+        private MemberProfileViewModel FormatMemberProfileViewModel(MemberProfile member)
+        {
+            MemberProfileViewModel model = new MemberProfileViewModel
+            {
+                Member = PopulateEmptyFields(member),
+                DegreeList = GetDegreeList(),
+                GenderList = GetGenderList(),
+                RelationshipList = GetRelationshipList(),
+                SchoolTypeList = GetSchoolTypeList()
+            };
+            return model;
+        }
+
+        private MemberProfile PopulateEmptyFields(MemberProfile model)
+        {
+            if (model.Family == null)
+                model.Family = new FamilyEntity();
+            if (model.Family != null && (model.Family.FamilyMembers == null || model.Family.FamilyMembers.Count() == 0))
+                model.Family.FamilyMembers = new FamilyMember[1];
+            if (model.Jobs == null || (model.Jobs != null && model.Jobs.Count() == 0))
+                model.Jobs = new JobEntity[1];
+            if (model.Schools == null)
+                model.Schools = new SchoolEntity[1];
+
+            return model;
+
+        }
+        
+        private string[] GetGenderList()
+        {
+            return new string[]
+            {
+                Constants.Gender.Male,
+                Constants.Gender.Female,
+                Constants.Gender.Other,
+            };
+        }
+        private string[] GetDegreeList()
+        {
+            return new string[]
+            {
+                Constants.School.Degrees.HSDiploma,
+                Constants.School.Degrees.GED,
+                Constants.School.Degrees.BachelorsDegree,
+                Constants.School.Degrees.MastersDegree,
+                Constants.School.Degrees.PostGraduateDegree,
+            };
+        }
+
+        private string[] GetSchoolTypeList()
+        {
+            return new string[] 
+            {
+                Constants.School.Types.HighSchool,
+                Constants.School.Types.UndergraduateCollege,
+                Constants.School.Types.GraduateCollege,
+                Constants.School.Types.PostGraduateCollege,
+            };
+        }
+
+        private string[] GetRelationshipList()
+        {
+            return new string[]
+            {
+                Constants.Family.Relationships.Parent,
+                Constants.Family.Relationships.Child,
+                Constants.Family.Relationships.Spouse,
+            };
         }
 
         // GET: Profile/CaseManager

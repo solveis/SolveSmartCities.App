@@ -145,6 +145,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\ConstantsTest.cs" />
+    <Compile Include="Common\CryptoTest.cs" />
     <Compile Include="Common\EnumerationsTest.cs" />
     <Compile Include="Common\HelpersTest.cs" />
     <Compile Include="Common\SettingsTest.cs" />

@@ -88,7 +88,7 @@ namespace SolveChicago.Tests.Controllers
         }
 
         [Fact]
-        public void Admin_Details_Fails()
+        public void AdminsController_Details_ReturnsBadRequest()
         {
             AdminsController controller = new AdminsController(context.Object);
             var result = (HttpStatusCodeResult)controller.Details(null);
@@ -97,7 +97,7 @@ namespace SolveChicago.Tests.Controllers
         }
 
         [Fact]
-        public void Admin_Details_NotFound()
+        public void AdminsController_Details_ReturnsNotFound()
         {
             AdminsController controller = new AdminsController(context.Object);
             var result = (HttpStatusCodeResult)controller.Details(0);
@@ -106,7 +106,7 @@ namespace SolveChicago.Tests.Controllers
         }
 
         [Fact]
-        public void Admin_Details_Succeed()
+        public void AdminsController_Details_ReturnsAdmin()
         {
             AdminsController controller = new AdminsController(context.Object);
             var result = (ViewResult)controller.Details(3);
@@ -118,7 +118,7 @@ namespace SolveChicago.Tests.Controllers
         }
 
         [Fact]
-        public void Admin_Create_Get()
+        public void AdminsController_Create_GET_ReturnsViewResult()
         {
             AdminsController controller = new AdminsController(context.Object);
             var result = (ViewResult)controller.Create();
@@ -126,7 +126,7 @@ namespace SolveChicago.Tests.Controllers
         }
 
         [Fact]
-        public void Admin_Create_Post_Succeed()
+        public void AdminsController_Create_POST_ReturnsAdmin()
         {
             Admin admin = new Admin
             {
