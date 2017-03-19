@@ -88,6 +88,7 @@ namespace SolveChicago.Web.Models
         public string ConfirmPassword { get; set; }
 
         public string InvitedByUserId { get; set; }
+        public string InviteCode { get; set; }
     }
 
     [ExcludeFromCodeCoverage]

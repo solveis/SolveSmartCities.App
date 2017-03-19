@@ -5,6 +5,7 @@
     [InvitingAdminUserId] NVARCHAR(128) NOT NULL, 
     [RecevingAdminUserId] NVARCHAR(128) NULL, 
 	
-	CONSTRAINT [PK_AdminInviteCodes] PRIMARY KEY CLUSTERED ([Id] ASC),
+	[IsStale] BIT NOT NULL DEFAULT 0, 
+    CONSTRAINT [PK_AdminInviteCodes] PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_AdminInviteCodes_Admin] FOREIGN KEY (InvitingAdminUserId) REFERENCES AspNetUsers(Id) ON DELETE CASCADE, 
 )

@@ -241,9 +241,10 @@ namespace SolveChicago.Web.Services
             string[] newInterests = model.Interests.Split(',');
             foreach (string interest in newInterests)
             {
-                if (interests.Select(x => x.Name).Contains(interest))
+                string trimInterest = interest.Trim();
+                if (interests.Select(x => x.Name).Contains(trimInterest))
                 {
-                    Interest existingInterest = interests.Single(x => x.Name == interest);
+                    Interest existingInterest = interests.Single(x => x.Name == trimInterest);
                     if (!member.Interests.Contains(existingInterest))
                         member.Interests.Add(existingInterest);
                 }   
@@ -258,9 +259,10 @@ namespace SolveChicago.Web.Services
             string[] newSkills = model.NonprofitSkillsAcquired.Split(',');
             foreach (string skill in newSkills)
             {
+                string trimSkill = skill.Trim();
                 if (skills.Select(x => x.Name).Contains(skill))
                 {
-                    Skill existingSkill = skills.Single(x => x.Name == skill);
+                    Skill existingSkill = skills.Single(x => x.Name == trimSkill);
                     if(!member.MemberSkills.Select(x => x.SkillId).Contains(existingSkill.Id))
                         member.MemberSkills.Add(new MemberSkill { MemberId = member.Id, SkillId = existingSkill.Id });
                 }

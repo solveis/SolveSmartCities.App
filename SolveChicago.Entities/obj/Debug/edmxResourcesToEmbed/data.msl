@@ -17,6 +17,7 @@
     <EntitySetMapping Name="AdminInviteCodes">
       <EntityTypeMapping TypeName="SolveChicagoDevModel.AdminInviteCode">
         <MappingFragment StoreEntitySet="AdminInviteCodes">
+          <ScalarProperty Name="IsStale" ColumnName="IsStale" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="InviteCode" ColumnName="InviteCode" />
           <ScalarProperty Name="InvitingAdminUserId" ColumnName="InvitingAdminUserId" />

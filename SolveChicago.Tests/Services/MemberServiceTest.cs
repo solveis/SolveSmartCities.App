@@ -630,6 +630,17 @@ namespace SolveChicago.Tests.Services
                     Birthday = new DateTime(1988, 1, 2),
                     Children = new List<MemberParent>
                     {
+                        new MemberParent
+                        {
+                            ChildId = 6,
+                            Children = new Member
+                            {
+                                Id = 6,
+                                FirstName = "Isaac",
+                                LastName = "Jones",
+                                Gender = Constants.Gender.Male,
+                            }
+                        }
                     },
                     CreatedDate = new DateTime(2017, 2, 17),
                     Email = "member@member.com",
@@ -671,12 +682,12 @@ namespace SolveChicago.Tests.Services
                         new PhoneNumber { Id = 1, Number = "1234567890" }
                     },
                     ProfilePicturePath = ""
-                }
+                },
             };
             List<School> schools = new List<School>();
             List<Corporation> corps = new List<Corporation>();
-            List<Skill> skills = new List<Skill>();
-            List<Interest> interests = new List<Interest>();
+            List<Skill> skills = new List<Skill> { new Skill { Id = 1, Name = "math" } };
+            List<Interest> interests = new List<Interest> { new Interest { Id = 1, Name = "Jogging" } };
             List<PhoneNumber> phones = new List<PhoneNumber>();
 
             var set = new Mock<DbSet<Member>>().SetupData(data);
@@ -747,6 +758,10 @@ namespace SolveChicago.Tests.Services
                             IsHeadOfHousehold = true,
                             IsMarriageCurrent = true,
                             Id = 3
+                        },
+                        new FamilyMember
+                        {
+                            Id = 6,
                         }
                     }.ToArray(),
                 },

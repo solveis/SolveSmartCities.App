@@ -15,6 +15,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System.IO;
 using System.Collections.Generic;
 using SolveChicago.Entities;
+using SolveChicago.Web.Services;
 
 namespace SolveChicago.Web.Controllers
 {
@@ -327,7 +328,7 @@ namespace SolveChicago.Web.Controllers
         }
 
 
-        protected async Task<ActionResult> CreateAccount(string userName, string password, Enumerations.Role role, string invitedByUserId = "")
+        protected async Task<ActionResult> CreateAccount(string userName, string password, Enumerations.Role role, string invitedByUserId = "", string inviteCode = "")
         {
             var user = new ApplicationUser { UserName = userName, Email = userName };
             AspNetUser aspnetUser = new AspNetUser();
@@ -347,10 +348,10 @@ namespace SolveChicago.Web.Controllers
                 }
                 AddErrors(result);
             }
-            return await CreateUserAndAssignRoles(userName, role, invitedByUserId, user, aspnetUser);
+            return await CreateUserAndAssignRoles(userName, role, invitedByUserId, user, aspnetUser, inviteCode);
         }
 
-        private async Task<ActionResult> CreateUserAndAssignRoles(string userName, Enumerations.Role role, string invitedByUserId, ApplicationUser user, AspNetUser aspnetUser)
+        private async Task<ActionResult> CreateUserAndAssignRoles(string userName, Enumerations.Role role, string invitedByUserId, ApplicationUser user, AspNetUser aspnetUser, string inviteCode)
         {
             switch (role)
             {
@@ -417,6 +418,8 @@ namespace SolveChicago.Web.Controllers
                         if (!UserProfileHasValidMappings(user.Id))
                         {
                             Admin model = new Admin { Email = userName, InvitedBy = invitedByUserId };
+                            AdminService service = new AdminService(this.db);
+                            service.MarkAdminInviteCodeAsUsed(invitedByUserId, inviteCode, user.Id);
                             model.AspNetUsers.Add(aspnetUser);
                             db.Admins.Add(model);
                             db.SaveChanges();
@@ -442,24 +445,6 @@ namespace SolveChicago.Web.Controllers
         public AspNetUser GetUserById(string userId)
         {
             return db.AspNetUsers.Single(x => x.Id == userId);
-        }
-
-        public bool ValidateAdminInvite(string inviteCode, ref string userId)
-        {
-            try
-            {
-                if (db.AdminInviteCodes.Any(x => x.InviteCode == inviteCode))
-                {
-                    userId = db.AdminInviteCodes.Single(x => x.InviteCode == inviteCode).InvitingAdminUserId;
-                    return true;
-                }
-                else
-                    return false;
-            }
-            catch
-            {
-                return false;
-            }
         }
 
         public void ImpersonateCaseManager(int? caseManagerId)

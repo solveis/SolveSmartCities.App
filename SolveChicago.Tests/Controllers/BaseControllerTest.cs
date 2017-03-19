@@ -14,6 +14,7 @@ using System.Security.Principal;
 using static SolveChicago.Web.Controllers.BaseController;
 using SolveChicago.Entities;
 using System.Diagnostics.CodeAnalysis;
+using SolveChicago.Web.Models;
 
 namespace SolveChicago.Tests.Controllers
 {

@@ -13,6 +13,7 @@ using SolveChicago.Web.Common;
 using SolveChicago.Web.Controllers;
 using System.Diagnostics.CodeAnalysis;
 using SolveChicago.Entities;
+using SolveChicago.Web.Services;
 
 namespace SolveChicago.Web.Controllers
 {
@@ -26,11 +27,13 @@ namespace SolveChicago.Web.Controllers
         public ActionResult Admin(string inviteCode)
         {
             string userId = "";
-            if (!ValidateAdminInvite(HttpUtility.UrlDecode(inviteCode), ref userId)) // refactor to be encryption check
+            AdminService service = new AdminService(this.db);
+            if (!service.ValidateAdminInvite(HttpUtility.UrlDecode(inviteCode), ref userId)) // refactor to be encryption check
             {
                 return HttpNotFound();
             }
             ViewBag.InviteUserId = userId;
+            ViewBag.InviteCode = inviteCode;
             return View();
         }
 
@@ -41,7 +44,7 @@ namespace SolveChicago.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Admin(RegisterViewModel model)
         {
-            var result = await CreateAccount(model.Email, model.Password, Enumerations.Role.Admin, model.InvitedByUserId);
+            var result = await CreateAccount(model.Email, model.Password, Enumerations.Role.Admin, model.InvitedByUserId, model.InviteCode);
             if (result != null)
                 return result;
             // If we got this far, something failed, redisplay form

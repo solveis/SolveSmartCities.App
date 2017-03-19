@@ -18,6 +18,7 @@ namespace SolveChicago.Entities
         public string InviteCode { get; set; }
         public string InvitingAdminUserId { get; set; }
         public string RecevingAdminUserId { get; set; }
+        public bool IsStale { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
     }

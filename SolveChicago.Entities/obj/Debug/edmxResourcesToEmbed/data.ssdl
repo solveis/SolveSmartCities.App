@@ -20,6 +20,7 @@
     <Property Name="InviteCode" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="InvitingAdminUserId" Type="nvarchar" MaxLength="128" Nullable="false" />
     <Property Name="RecevingAdminUserId" Type="nvarchar" MaxLength="128" />
+    <Property Name="IsStale" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Admins">
     <Key>

@@ -23,6 +23,7 @@
     <Property Name="InvitingAdminUserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="RecevingAdminUserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="AspNetUser" Relationship="Self.FK_AdminInviteCodes_Admin" FromRole="AdminInviteCodes" ToRole="AspNetUsers" />
+    <Property Name="IsStale" Type="Boolean" Nullable="false" />
   </EntityType>
   <EntityType Name="Admin">
     <Key>

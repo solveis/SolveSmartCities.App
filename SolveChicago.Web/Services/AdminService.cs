@@ -22,5 +22,32 @@ namespace SolveChicago.Web.Services
             }
             throw new ApplicationException("You are not allowed to do this");
         }
+
+        public void MarkAdminInviteCodeAsUsed(string invitingUserId, string inviteCode, string receivingUserId)
+        {
+            AdminInviteCode invite = db.AdminInviteCodes.Single(x => x.InviteCode == inviteCode);
+            invite.RecevingAdminUserId = receivingUserId;
+            invite.IsStale = true;
+
+            db.SaveChanges();
+        }
+
+        public bool ValidateAdminInvite(string inviteCode, ref string userId)
+        {
+            try
+            {
+                if (db.AdminInviteCodes.Any(x => x.InviteCode == inviteCode))
+                {
+                    userId = db.AdminInviteCodes.Single(x => x.InviteCode == inviteCode && !x.IsStale).InvitingAdminUserId;
+                    return true;
+                }
+                else
+                    return false;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }
