@@ -1,0 +1,50 @@
+﻿@model SolveChicago.Entities.MemberGovernmentProgram
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>MemberGovernmentProgram</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Start)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Start)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.End)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.End)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GovernmentProgram.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GovernmentProgram.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Member.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Member.Email)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

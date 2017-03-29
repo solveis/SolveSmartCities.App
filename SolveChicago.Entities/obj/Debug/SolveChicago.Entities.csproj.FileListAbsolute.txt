@@ -1,0 +1,10 @@
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Entities\bin\Debug\SolveChicago.Entities.dll.config
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Entities\bin\Debug\SolveChicago.Entities.dll
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Entities\bin\Debug\SolveChicago.Entities.pdb
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Entities\bin\Debug\EntityFramework.dll
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Entities\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Entities\bin\Debug\EntityFramework.xml
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Entities\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Entities\obj\Debug\SolveChicago.Entities.dll
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Entities\obj\Debug\SolveChicago.Entities.pdb
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Entities\obj\Debug\SolveChicago.Entities.csprojResolveAssemblyReference.cache

@@ -1,0 +1,10 @@
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicagoDb\bin\Debug\SolveChicago.Db.dacpac
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicagoDb\bin\Debug\SolveChicagoDb.dll
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicagoDb\bin\Debug\SolveChicagoDb.pdb
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicagoDb\obj\Debug\SolveChicagoDb.dll
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicagoDb\obj\Debug\SolveChicagoDb.pdb
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Db\bin\Debug\SolveChicago.Db.dacpac
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Db\bin\Debug\SolveChicagoDb.dll
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Db\bin\Debug\SolveChicagoDb.pdb
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Db\obj\Debug\SolveChicagoDb.dll
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Db\obj\Debug\SolveChicagoDb.pdb

@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[Schools]
+(
+	[Id] INT IDENTITY(1, 1) NOT NULL PRIMARY KEY, 
+    [SchoolName] NVARCHAR(255) NOT NULL, 
+    [Type] NVARCHAR(255) NOT NULL
+)

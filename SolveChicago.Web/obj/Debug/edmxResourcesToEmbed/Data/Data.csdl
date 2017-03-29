@@ -1,0 +1,1145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SolveChicagoDevModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="AspNetRole">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUserClaim">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUser_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUserLogin">
+    <Key>
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUser_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+    <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ReceiveEmail" Type="Boolean" />
+    <Property Name="LastActivityDate" Type="DateTime" Nullable="false" Precision="7" />
+    <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="7" />
+    <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUser_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+    <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUser_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+    <NavigationProperty Name="SurveyAnswers" Relationship="Self.FK_SurveyAnswers_AspNetUser" FromRole="AspNetUsers" ToRole="SurveyAnswers" />
+    <NavigationProperty Name="Surveys" Relationship="Self.FK_Surveys_AspNetUser" FromRole="AspNetUsers" ToRole="Surveys" />
+    <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+    <NavigationProperty Name="Corporations" Relationship="Self.UserProfileCorporations" FromRole="AspNetUsers" ToRole="Corporations" />
+    <NavigationProperty Name="Nonprofits" Relationship="Self.UserProfileNonprofits" FromRole="AspNetUsers" ToRole="Nonprofits" />
+    <NavigationProperty Name="CaseManagers" Relationship="SolveChicagoDevModel.UserProfileCasemanagers" FromRole="AspNetUser" ToRole="CaseManager" />
+    <NavigationProperty Name="Members" Relationship="SolveChicagoDevModel.UserProfileMembers" FromRole="AspNetUser" ToRole="Member" />
+    <NavigationProperty Name="AdminInviteCodes" Relationship="SolveChicagoDevModel.FK_AdminInviteCodes_Admin" FromRole="AspNetUser" ToRole="AdminInviteCode" />
+    <NavigationProperty Name="Admins" Relationship="SolveChicagoDevModel.UserProfileAdmins" FromRole="AspNetUser" ToRole="Admin" />
+  </EntityType>
+  <EntityType Name="CaseNote">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MemberId" Type="Int32" Nullable="false" />
+    <Property Name="CaseManagerId" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="7" />
+    <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="OutcomeId" Type="Int32" />
+    <Property Name="OutcomeWeight" Type="Decimal" Precision="18" Scale="4" />
+    <NavigationProperty Name="Outcome" Relationship="Self.FK_CaseNotes_Outcomes" FromRole="CaseNotes" ToRole="Outcomes" />
+    <NavigationProperty Name="CaseManager" Relationship="SolveChicagoDevModel.FK_CaseNotes_CaseManagers" FromRole="CaseNote" ToRole="CaseManager" />
+    <NavigationProperty Name="Member" Relationship="SolveChicagoDevModel.FK_CaseNotes_Members" FromRole="CaseNote" ToRole="Member" />
+  </EntityType>
+  <EntityType Name="Corporation">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Email" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="7" />
+    <NavigationProperty Name="MemberCorporations" Relationship="Self.FK_MemberCorporations_Corporations" FromRole="Corporations" ToRole="MemberCorporations" />
+    <NavigationProperty Name="AspNetUsers" Relationship="Self.UserProfileCorporations" FromRole="Corporations" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="GovernmentProgram">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="MemberGovernmentPrograms" Relationship="Self.FK_MemberGovernmentPrograms_GovernmentPrograms" FromRole="GovernmentPrograms" ToRole="MemberGovernmentPrograms" />
+  </EntityType>
+  <EntityType Name="MemberCorporation">
+    <Key>
+      <PropertyRef Name="MemberId" />
+      <PropertyRef Name="CorporationId" />
+    </Key>
+    <Property Name="MemberId" Type="Int32" Nullable="false" />
+    <Property Name="CorporationId" Type="Int32" Nullable="false" />
+    <Property Name="Start" Type="DateTime" Nullable="false" Precision="7" />
+    <Property Name="End" Type="DateTime" Precision="7" />
+    <Property Name="ReasonForLeaving" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Pay" Type="Decimal" Precision="18" Scale="2" />
+    <NavigationProperty Name="Corporation" Relationship="Self.FK_MemberCorporations_Corporations" FromRole="MemberCorporations" ToRole="Corporations" />
+    <NavigationProperty Name="Member" Relationship="SolveChicagoDevModel.FK_MemberCorporations_Members" FromRole="MemberCorporation" ToRole="Member" />
+  </EntityType>
+  <EntityType Name="MemberEmergencyContact">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MemberId" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Phone" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Member" Relationship="SolveChicagoDevModel.FK_MemberEmergencyContacts_Members" FromRole="MemberEmergencyContact" ToRole="Member" />
+  </EntityType>
+  <EntityType Name="MemberGovernmentProgram">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MemberId" Type="Int32" Nullable="false" />
+    <Property Name="GovernmentProgramId" Type="Int32" Nullable="false" />
+    <Property Name="Start" Type="DateTime" Nullable="false" Precision="7" />
+    <Property Name="End" Type="DateTime" Precision="7" />
+    <NavigationProperty Name="GovernmentProgram" Relationship="Self.FK_MemberGovernmentPrograms_GovernmentPrograms" FromRole="MemberGovernmentPrograms" ToRole="GovernmentPrograms" />
+    <NavigationProperty Name="Member" Relationship="SolveChicagoDevModel.FK_MemberGovernmentPrograms_Members" FromRole="MemberGovernmentProgram" ToRole="Member" />
+  </EntityType>
+  <EntityType Name="MemberNonprofit">
+    <Key>
+      <PropertyRef Name="MemberId" />
+      <PropertyRef Name="NonprofitId" />
+    </Key>
+    <Property Name="MemberId" Type="Int32" Nullable="false" />
+    <Property Name="NonprofitId" Type="Int32" Nullable="false" />
+    <Property Name="CaseManagerId" Type="Int32" />
+    <NavigationProperty Name="Nonprofit" Relationship="Self.FK_MemberNonprofits_Nonprofits" FromRole="MemberNonprofits" ToRole="Nonprofits" />
+    <NavigationProperty Name="CaseManager" Relationship="SolveChicagoDevModel.FK_MemberNonprofits_CaseManagers" FromRole="MemberNonprofit" ToRole="CaseManager" />
+    <NavigationProperty Name="Member" Relationship="SolveChicagoDevModel.FK_MemberNonprofits_Members" FromRole="MemberNonprofit" ToRole="Member" />
+  </EntityType>
+  <EntityType Name="MemberSkill">
+    <Key>
+      <PropertyRef Name="MemberId" />
+      <PropertyRef Name="SkillId" />
+    </Key>
+    <Property Name="MemberId" Type="Int32" Nullable="false" />
+    <Property Name="SkillId" Type="Int32" Nullable="false" />
+    <Property Name="NonprofitId" Type="Int32" />
+    <NavigationProperty Name="Nonprofit" Relationship="Self.FK_MemberSkills_Nonprofits" FromRole="MemberSkills" ToRole="Nonprofits" />
+    <NavigationProperty Name="Skill" Relationship="SolveChicagoDevModel.FK_MemberSkills_Skills" FromRole="MemberSkill" ToRole="Skill" />
+    <NavigationProperty Name="Member" Relationship="SolveChicagoDevModel.FK_MemberSkills_Members" FromRole="MemberSkill" ToRole="Member" />
+  </EntityType>
+  <EntityType Name="MemberSurvey">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SurveyId" Type="Int32" Nullable="false" />
+    <Property Name="MemberId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Survey" Relationship="Self.FK_MemberSurveys_Surveys" FromRole="MemberSurveys" ToRole="Surveys" />
+    <NavigationProperty Name="SurveyAnswers" Relationship="Self.FK_SurveyAnswers_MemberSurveys" FromRole="MemberSurveys" ToRole="SurveyAnswers" />
+    <NavigationProperty Name="Member" Relationship="SolveChicagoDevModel.FK_MemberSurveys_Members" FromRole="MemberSurvey" ToRole="Member" />
+  </EntityType>
+  <EntityType Name="Nonprofit">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Email" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Address1" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Address2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Province" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="7" />
+    <NavigationProperty Name="MemberNonprofits" Relationship="Self.FK_MemberNonprofits_Nonprofits" FromRole="Nonprofits" ToRole="MemberNonprofits" />
+    <NavigationProperty Name="MemberSkills" Relationship="Self.FK_MemberSkills_Nonprofits" FromRole="Nonprofits" ToRole="MemberSkills" />
+    <NavigationProperty Name="AspNetUsers" Relationship="Self.UserProfileNonprofits" FromRole="Nonprofits" ToRole="AspNetUsers" />
+    <Property Name="ProfilePicturePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ZipCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="CaseManagers" Relationship="SolveChicagoDevModel.FK_CaseManagers_Nonprofit" FromRole="Nonprofit" ToRole="CaseManager" />
+  </EntityType>
+  <EntityType Name="Outcome">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MemberId" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="CaseNotes" Relationship="Self.FK_CaseNotes_Outcomes" FromRole="Outcomes" ToRole="CaseNotes" />
+    <NavigationProperty Name="Member" Relationship="SolveChicagoDevModel.FK_Outcomes_Members" FromRole="Outcome" ToRole="Member" />
+  </EntityType>
+  <EntityType Name="SurveyAnswer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SurveyId" Type="Int32" Nullable="false" />
+    <Property Name="QuestionId" Type="Int32" Nullable="false" />
+    <Property Name="Answer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="MemberSurveyId" Type="Int32" Nullable="false" />
+    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="AspNetUser" Relationship="Self.FK_SurveyAnswers_AspNetUser" FromRole="SurveyAnswers" ToRole="AspNetUsers" />
+    <NavigationProperty Name="MemberSurvey" Relationship="Self.FK_SurveyAnswers_MemberSurveys" FromRole="SurveyAnswers" ToRole="MemberSurveys" />
+    <NavigationProperty Name="SurveyQuestion" Relationship="Self.FK_SurveyAnswers_SurveyQuestions" FromRole="SurveyAnswers" ToRole="SurveyQuestions" />
+    <NavigationProperty Name="Survey" Relationship="Self.FK_SurveyAnswers_Surveys" FromRole="SurveyAnswers" ToRole="Surveys" />
+  </EntityType>
+  <EntityType Name="SurveyQuestionOption">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="QuestionId" Type="Int32" Nullable="false" />
+    <Property Name="Option" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="SurveyQuestion" Relationship="Self.FK_SurveyQuestionOptions_SurveyQuestions" FromRole="SurveyQuestionOptions" ToRole="SurveyQuestions" />
+  </EntityType>
+  <EntityType Name="SurveyQuestion">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SurveyId" Type="Int32" Nullable="false" />
+    <Property Name="Question" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DataType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="SurveyAnswers" Relationship="Self.FK_SurveyAnswers_SurveyQuestions" FromRole="SurveyQuestions" ToRole="SurveyAnswers" />
+    <NavigationProperty Name="SurveyQuestionOptions" Relationship="Self.FK_SurveyQuestionOptions_SurveyQuestions" FromRole="SurveyQuestions" ToRole="SurveyQuestionOptions" />
+    <NavigationProperty Name="Survey" Relationship="Self.FK_SurveyQuestions_Surveys" FromRole="SurveyQuestions" ToRole="Surveys" />
+  </EntityType>
+  <EntityType Name="Survey">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Audience" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="AspNetUser" Relationship="Self.FK_Surveys_AspNetUser" FromRole="Surveys" ToRole="AspNetUsers" />
+    <NavigationProperty Name="MemberSurveys" Relationship="Self.FK_MemberSurveys_Surveys" FromRole="Surveys" ToRole="MemberSurveys" />
+    <NavigationProperty Name="SurveyAnswers" Relationship="Self.FK_SurveyAnswers_Surveys" FromRole="Surveys" ToRole="SurveyAnswers" />
+    <NavigationProperty Name="SurveyQuestions" Relationship="Self.FK_SurveyQuestions_Surveys" FromRole="Surveys" ToRole="SurveyQuestions" />
+  </EntityType>
+  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUser_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserClaims" Type="Self.AspNetUserClaim" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserClaims">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUser_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserLogins" Type="Self.AspNetUserLogin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserLogins">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SurveyAnswers_AspNetUser">
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
+    <End Role="SurveyAnswers" Type="Self.SurveyAnswer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SurveyAnswers">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Surveys_AspNetUser">
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Surveys" Type="Self.Survey" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Surveys">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CaseNotes_Outcomes">
+    <End Role="Outcomes" Type="Self.Outcome" Multiplicity="0..1" />
+    <End Role="CaseNotes" Type="Self.CaseNote" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Outcomes">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CaseNotes">
+        <PropertyRef Name="OutcomeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MemberCorporations_Corporations">
+    <End Role="Corporations" Type="Self.Corporation" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="MemberCorporations" Type="Self.MemberCorporation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Corporations">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MemberCorporations">
+        <PropertyRef Name="CorporationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MemberGovernmentPrograms_GovernmentPrograms">
+    <End Role="GovernmentPrograms" Type="Self.GovernmentProgram" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="MemberGovernmentPrograms" Type="Self.MemberGovernmentProgram" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GovernmentPrograms">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MemberGovernmentPrograms">
+        <PropertyRef Name="GovernmentProgramId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MemberNonprofits_Nonprofits">
+    <End Role="Nonprofits" Type="Self.Nonprofit" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="MemberNonprofits" Type="Self.MemberNonprofit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Nonprofits">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MemberNonprofits">
+        <PropertyRef Name="NonprofitId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MemberSkills_Nonprofits">
+    <End Role="Nonprofits" Type="Self.Nonprofit" Multiplicity="0..1" />
+    <End Role="MemberSkills" Type="Self.MemberSkill" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Nonprofits">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MemberSkills">
+        <PropertyRef Name="NonprofitId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MemberSurveys_Surveys">
+    <End Role="Surveys" Type="Self.Survey" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="MemberSurveys" Type="Self.MemberSurvey" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Surveys">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MemberSurveys">
+        <PropertyRef Name="SurveyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SurveyAnswers_MemberSurveys">
+    <End Role="MemberSurveys" Type="Self.MemberSurvey" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="SurveyAnswers" Type="Self.SurveyAnswer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MemberSurveys">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SurveyAnswers">
+        <PropertyRef Name="MemberSurveyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SurveyAnswers_SurveyQuestions">
+    <End Role="SurveyQuestions" Type="Self.SurveyQuestion" Multiplicity="1" />
+    <End Role="SurveyAnswers" Type="Self.SurveyAnswer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SurveyQuestions">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SurveyAnswers">
+        <PropertyRef Name="QuestionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SurveyAnswers_Surveys">
+    <End Role="Surveys" Type="Self.Survey" Multiplicity="1" />
+    <End Role="SurveyAnswers" Type="Self.SurveyAnswer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Surveys">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SurveyAnswers">
+        <PropertyRef Name="SurveyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SurveyQuestionOptions_SurveyQuestions">
+    <End Role="SurveyQuestions" Type="Self.SurveyQuestion" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="SurveyQuestionOptions" Type="Self.SurveyQuestionOption" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SurveyQuestions">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SurveyQuestionOptions">
+        <PropertyRef Name="QuestionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SurveyQuestions_Surveys">
+    <End Role="Surveys" Type="Self.Survey" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="SurveyQuestions" Type="Self.SurveyQuestion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Surveys">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SurveyQuestions">
+        <PropertyRef Name="SurveyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AspNetUserRoles">
+    <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
+  </Association>
+  <Association Name="UserProfileCorporations">
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
+    <End Role="Corporations" Type="Self.Corporation" Multiplicity="*" />
+  </Association>
+  <Association Name="UserProfileNonprofits">
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
+    <End Role="Nonprofits" Type="Self.Nonprofit" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="SolveChicagoEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
+    <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
+    <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
+    <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
+    <EntitySet Name="CaseNotes" EntityType="Self.CaseNote" />
+    <EntitySet Name="Corporations" EntityType="Self.Corporation" />
+    <EntitySet Name="GovernmentPrograms" EntityType="Self.GovernmentProgram" />
+    <EntitySet Name="MemberCorporations" EntityType="Self.MemberCorporation" />
+    <EntitySet Name="MemberEmergencyContacts" EntityType="Self.MemberEmergencyContact" />
+    <EntitySet Name="MemberGovernmentPrograms" EntityType="Self.MemberGovernmentProgram" />
+    <EntitySet Name="MemberNonprofits" EntityType="Self.MemberNonprofit" />
+    <EntitySet Name="MemberSkills" EntityType="Self.MemberSkill" />
+    <EntitySet Name="MemberSurveys" EntityType="Self.MemberSurvey" />
+    <EntitySet Name="Nonprofits" EntityType="Self.Nonprofit" />
+    <EntitySet Name="Outcomes" EntityType="Self.Outcome" />
+    <EntitySet Name="SurveyAnswers" EntityType="Self.SurveyAnswer" />
+    <EntitySet Name="SurveyQuestionOptions" EntityType="Self.SurveyQuestionOption" />
+    <EntitySet Name="SurveyQuestions" EntityType="Self.SurveyQuestion" />
+    <EntitySet Name="Surveys" EntityType="Self.Survey" />
+    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUser_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUser_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUser_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUser_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SurveyAnswers_AspNetUser" Association="Self.FK_SurveyAnswers_AspNetUser">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="SurveyAnswers" EntitySet="SurveyAnswers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Surveys_AspNetUser" Association="Self.FK_Surveys_AspNetUser">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="Surveys" EntitySet="Surveys" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CaseNotes_Outcomes" Association="Self.FK_CaseNotes_Outcomes">
+      <End Role="Outcomes" EntitySet="Outcomes" />
+      <End Role="CaseNotes" EntitySet="CaseNotes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MemberCorporations_Corporations" Association="Self.FK_MemberCorporations_Corporations">
+      <End Role="Corporations" EntitySet="Corporations" />
+      <End Role="MemberCorporations" EntitySet="MemberCorporations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MemberGovernmentPrograms_GovernmentPrograms" Association="Self.FK_MemberGovernmentPrograms_GovernmentPrograms">
+      <End Role="GovernmentPrograms" EntitySet="GovernmentPrograms" />
+      <End Role="MemberGovernmentPrograms" EntitySet="MemberGovernmentPrograms" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MemberNonprofits_Nonprofits" Association="Self.FK_MemberNonprofits_Nonprofits">
+      <End Role="Nonprofits" EntitySet="Nonprofits" />
+      <End Role="MemberNonprofits" EntitySet="MemberNonprofits" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MemberSkills_Nonprofits" Association="Self.FK_MemberSkills_Nonprofits">
+      <End Role="Nonprofits" EntitySet="Nonprofits" />
+      <End Role="MemberSkills" EntitySet="MemberSkills" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MemberSurveys_Surveys" Association="Self.FK_MemberSurveys_Surveys">
+      <End Role="Surveys" EntitySet="Surveys" />
+      <End Role="MemberSurveys" EntitySet="MemberSurveys" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SurveyAnswers_MemberSurveys" Association="Self.FK_SurveyAnswers_MemberSurveys">
+      <End Role="MemberSurveys" EntitySet="MemberSurveys" />
+      <End Role="SurveyAnswers" EntitySet="SurveyAnswers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SurveyAnswers_SurveyQuestions" Association="Self.FK_SurveyAnswers_SurveyQuestions">
+      <End Role="SurveyQuestions" EntitySet="SurveyQuestions" />
+      <End Role="SurveyAnswers" EntitySet="SurveyAnswers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SurveyAnswers_Surveys" Association="Self.FK_SurveyAnswers_Surveys">
+      <End Role="Surveys" EntitySet="Surveys" />
+      <End Role="SurveyAnswers" EntitySet="SurveyAnswers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SurveyQuestionOptions_SurveyQuestions" Association="Self.FK_SurveyQuestionOptions_SurveyQuestions">
+      <End Role="SurveyQuestions" EntitySet="SurveyQuestions" />
+      <End Role="SurveyQuestionOptions" EntitySet="SurveyQuestionOptions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SurveyQuestions_Surveys" Association="Self.FK_SurveyQuestions_Surveys">
+      <End Role="Surveys" EntitySet="Surveys" />
+      <End Role="SurveyQuestions" EntitySet="SurveyQuestions" />
+    </AssociationSet>
+    <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
+      <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+    </AssociationSet>
+    <AssociationSet Name="UserProfileCorporations" Association="Self.UserProfileCorporations">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="Corporations" EntitySet="Corporations" />
+    </AssociationSet>
+    <AssociationSet Name="UserProfileNonprofits" Association="Self.UserProfileNonprofits">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="Nonprofits" EntitySet="Nonprofits" />
+    </AssociationSet>
+    <EntitySet Name="Interests" EntityType="SolveChicagoDevModel.Interest" />
+    <EntitySet Name="Skills" EntityType="SolveChicagoDevModel.Skill" />
+    <AssociationSet Name="FK_MemberSkills_Skills" Association="SolveChicagoDevModel.FK_MemberSkills_Skills">
+      <End Role="Skill" EntitySet="Skills" />
+      <End Role="MemberSkill" EntitySet="MemberSkills" />
+    </AssociationSet>
+    <EntitySet Name="CaseManagers" EntityType="SolveChicagoDevModel.CaseManager" />
+    <AssociationSet Name="FK_CaseManagers_Nonprofit" Association="SolveChicagoDevModel.FK_CaseManagers_Nonprofit">
+      <End Role="Nonprofit" EntitySet="Nonprofits" />
+      <End Role="CaseManager" EntitySet="CaseManagers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CaseNotes_CaseManagers" Association="SolveChicagoDevModel.FK_CaseNotes_CaseManagers">
+      <End Role="CaseManager" EntitySet="CaseManagers" />
+      <End Role="CaseNote" EntitySet="CaseNotes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MemberNonprofits_CaseManagers" Association="SolveChicagoDevModel.FK_MemberNonprofits_CaseManagers">
+      <End Role="CaseManager" EntitySet="CaseManagers" />
+      <End Role="MemberNonprofit" EntitySet="MemberNonprofits" />
+    </AssociationSet>
+    <AssociationSet Name="UserProfileCasemanagers" Association="SolveChicagoDevModel.UserProfileCasemanagers">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="CaseManager" EntitySet="CaseManagers" />
+    </AssociationSet>
+    <EntitySet Name="Members" EntityType="SolveChicagoDevModel.Member" />
+    <AssociationSet Name="FK_CaseNotes_Members" Association="SolveChicagoDevModel.FK_CaseNotes_Members">
+      <End Role="Member" EntitySet="Members" />
+      <End Role="CaseNote" EntitySet="CaseNotes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MemberCorporations_Members" Association="SolveChicagoDevModel.FK_MemberCorporations_Members">
+      <End Role="Member" EntitySet="Members" />
+      <End Role="MemberCorporation" EntitySet="MemberCorporations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MemberEmergencyContacts_Members" Association="SolveChicagoDevModel.FK_MemberEmergencyContacts_Members">
+      <End Role="Member" EntitySet="Members" />
+      <End Role="MemberEmergencyContact" EntitySet="MemberEmergencyContacts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MemberGovernmentPrograms_Members" Association="SolveChicagoDevModel.FK_MemberGovernmentPrograms_Members">
+      <End Role="Member" EntitySet="Members" />
+      <End Role="MemberGovernmentProgram" EntitySet="MemberGovernmentPrograms" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MemberNonprofits_Members" Association="SolveChicagoDevModel.FK_MemberNonprofits_Members">
+      <End Role="Member" EntitySet="Members" />
+      <End Role="MemberNonprofit" EntitySet="MemberNonprofits" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MemberSkills_Members" Association="SolveChicagoDevModel.FK_MemberSkills_Members">
+      <End Role="Member" EntitySet="Members" />
+      <End Role="MemberSkill" EntitySet="MemberSkills" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MemberSurveys_Members" Association="SolveChicagoDevModel.FK_MemberSurveys_Members">
+      <End Role="Member" EntitySet="Members" />
+      <End Role="MemberSurvey" EntitySet="MemberSurveys" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Outcomes_Members" Association="SolveChicagoDevModel.FK_Outcomes_Members">
+      <End Role="Member" EntitySet="Members" />
+      <End Role="Outcome" EntitySet="Outcomes" />
+    </AssociationSet>
+    <AssociationSet Name="MemberInterests" Association="SolveChicagoDevModel.MemberInterests">
+      <End Role="Interest" EntitySet="Interests" />
+      <End Role="Member" EntitySet="Members" />
+    </AssociationSet>
+    <AssociationSet Name="UserProfileMembers" Association="SolveChicagoDevModel.UserProfileMembers">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="Member" EntitySet="Members" />
+    </AssociationSet>
+    <EntitySet Name="Addresses" EntityType="SolveChicagoDevModel.Address" />
+    <EntitySet Name="MemberSpouses" EntityType="SolveChicagoDevModel.MemberSpous" />
+    <AssociationSet Name="FK_MemberSpouses_Spouse1" Association="SolveChicagoDevModel.FK_MemberSpouses_Spouse1">
+      <End Role="Member" EntitySet="Members" />
+      <End Role="MemberSpous" EntitySet="MemberSpouses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MemberSpouses_Spouse2" Association="SolveChicagoDevModel.FK_MemberSpouses_Spouse2">
+      <End Role="Member" EntitySet="Members" />
+      <End Role="MemberSpous" EntitySet="MemberSpouses" />
+    </AssociationSet>
+    <AssociationSet Name="MemberAddresses" Association="SolveChicagoDevModel.MemberAddresses">
+      <End Role="Address" EntitySet="Addresses" />
+      <End Role="Member" EntitySet="Members" />
+    </AssociationSet>
+    <EntitySet Name="MemberParents" EntityType="SolveChicagoDevModel.MemberParent" />
+    <AssociationSet Name="FK_MemberParents_Child" Association="SolveChicagoDevModel.FK_MemberParents_Child">
+      <End Role="Member" EntitySet="Members" />
+      <End Role="MemberParent" EntitySet="MemberParents" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MemberParents_Parent" Association="SolveChicagoDevModel.FK_MemberParents_Parent">
+      <End Role="Member" EntitySet="Members" />
+      <End Role="MemberParent" EntitySet="MemberParents" />
+    </AssociationSet>
+    <EntitySet Name="Families" EntityType="SolveChicagoDevModel.Family" />
+    <AssociationSet Name="FK_Member_Family" Association="SolveChicagoDevModel.FK_Member_Family">
+      <End Role="Family" EntitySet="Families" />
+      <End Role="Member" EntitySet="Members" />
+    </AssociationSet>
+    <AssociationSet Name="FamilyAddresses" Association="SolveChicagoDevModel.FamilyAddresses">
+      <End Role="Address" EntitySet="Addresses" />
+      <End Role="Family" EntitySet="Families" />
+    </AssociationSet>
+    <EntitySet Name="PhoneNumbers" EntityType="SolveChicagoDevModel.PhoneNumber" />
+    <EntitySet Name="Schools" EntityType="SolveChicagoDevModel.School" />
+    <AssociationSet Name="FamilyPhoneNumbers" Association="SolveChicagoDevModel.FamilyPhoneNumbers">
+      <End Role="Family" EntitySet="Families" />
+      <End Role="PhoneNumber" EntitySet="PhoneNumbers" />
+    </AssociationSet>
+    <AssociationSet Name="MemberPhoneNumbers" Association="SolveChicagoDevModel.MemberPhoneNumbers">
+      <End Role="Member" EntitySet="Members" />
+      <End Role="PhoneNumber" EntitySet="PhoneNumbers" />
+    </AssociationSet>
+    <EntitySet Name="MemberSchools" EntityType="SolveChicagoDevModel.MemberSchool" />
+    <AssociationSet Name="FK_MemberSchools_Member" Association="SolveChicagoDevModel.FK_MemberSchools_Member">
+      <End Role="Member" EntitySet="Members" />
+      <End Role="MemberSchool" EntitySet="MemberSchools" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MemberSchools_School" Association="SolveChicagoDevModel.FK_MemberSchools_School">
+      <End Role="School" EntitySet="Schools" />
+      <End Role="MemberSchool" EntitySet="MemberSchools" />
+    </AssociationSet>
+    <EntitySet Name="AdminInviteCodes" EntityType="SolveChicagoDevModel.AdminInviteCode" />
+    <AssociationSet Name="FK_AdminInviteCodes_Admin" Association="SolveChicagoDevModel.FK_AdminInviteCodes_Admin">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="AdminInviteCode" EntitySet="AdminInviteCodes" />
+    </AssociationSet>
+    <EntitySet Name="Admins" EntityType="SolveChicagoDevModel.Admin" />
+    <AssociationSet Name="UserProfileAdmins" Association="SolveChicagoDevModel.UserProfileAdmins">
+      <End Role="Admin" EntitySet="Admins" />
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Interest">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Members" Relationship="SolveChicagoDevModel.MemberInterests" FromRole="Interest" ToRole="Member" />
+  </EntityType>
+  <EntityType Name="Skill">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="MemberSkills" Relationship="SolveChicagoDevModel.FK_MemberSkills_Skills" FromRole="Skill" ToRole="MemberSkill" />
+  </EntityType>
+  <Association Name="FK_MemberSkills_Skills">
+    <End Type="SolveChicagoDevModel.Skill" Role="Skill" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="SolveChicagoDevModel.MemberSkill" Role="MemberSkill" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Skill">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MemberSkill">
+        <PropertyRef Name="SkillId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="CaseManager">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="FirstName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="ProfilePicturePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="7" />
+    <Property Name="NonprofitId" Type="Int32" />
+    <NavigationProperty Name="Nonprofit" Relationship="SolveChicagoDevModel.FK_CaseManagers_Nonprofit" FromRole="CaseManager" ToRole="Nonprofit" />
+    <NavigationProperty Name="CaseNotes" Relationship="SolveChicagoDevModel.FK_CaseNotes_CaseManagers" FromRole="CaseManager" ToRole="CaseNote" />
+    <NavigationProperty Name="MemberNonprofits" Relationship="SolveChicagoDevModel.FK_MemberNonprofits_CaseManagers" FromRole="CaseManager" ToRole="MemberNonprofit" />
+    <NavigationProperty Name="AspNetUsers" Relationship="SolveChicagoDevModel.UserProfileCasemanagers" FromRole="CaseManager" ToRole="AspNetUser" />
+  </EntityType>
+  <Association Name="FK_CaseManagers_Nonprofit">
+    <End Type="SolveChicagoDevModel.Nonprofit" Role="Nonprofit" Multiplicity="0..1" />
+    <End Type="SolveChicagoDevModel.CaseManager" Role="CaseManager" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Nonprofit">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CaseManager">
+        <PropertyRef Name="NonprofitId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CaseNotes_CaseManagers">
+    <End Type="SolveChicagoDevModel.CaseManager" Role="CaseManager" Multiplicity="0..1" />
+    <End Type="SolveChicagoDevModel.CaseNote" Role="CaseNote" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CaseManager">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CaseNote">
+        <PropertyRef Name="CaseManagerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MemberNonprofits_CaseManagers">
+    <End Type="SolveChicagoDevModel.CaseManager" Role="CaseManager" Multiplicity="0..1" />
+    <End Type="SolveChicagoDevModel.MemberNonprofit" Role="MemberNonprofit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CaseManager">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MemberNonprofit">
+        <PropertyRef Name="CaseManagerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserProfileCasemanagers">
+    <End Type="SolveChicagoDevModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+    <End Type="SolveChicagoDevModel.CaseManager" Role="CaseManager" Multiplicity="*" />
+  </Association>
+  <EntityType Name="Member">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="FirstName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="ProfilePicturePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="7" />
+    <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Birthday" Type="DateTime" Precision="7" />
+    <Property Name="FamilyId" Type="Int32" />
+    <NavigationProperty Name="CaseNotes" Relationship="SolveChicagoDevModel.FK_CaseNotes_Members" FromRole="Member" ToRole="CaseNote" />
+    <NavigationProperty Name="MemberCorporations" Relationship="SolveChicagoDevModel.FK_MemberCorporations_Members" FromRole="Member" ToRole="MemberCorporation" />
+    <NavigationProperty Name="MemberEmergencyContacts" Relationship="SolveChicagoDevModel.FK_MemberEmergencyContacts_Members" FromRole="Member" ToRole="MemberEmergencyContact" />
+    <NavigationProperty Name="MemberGovernmentPrograms" Relationship="SolveChicagoDevModel.FK_MemberGovernmentPrograms_Members" FromRole="Member" ToRole="MemberGovernmentProgram" />
+    <NavigationProperty Name="MemberNonprofits" Relationship="SolveChicagoDevModel.FK_MemberNonprofits_Members" FromRole="Member" ToRole="MemberNonprofit" />
+    <NavigationProperty Name="MemberSkills" Relationship="SolveChicagoDevModel.FK_MemberSkills_Members" FromRole="Member" ToRole="MemberSkill" />
+    <NavigationProperty Name="MemberSurveys" Relationship="SolveChicagoDevModel.FK_MemberSurveys_Members" FromRole="Member" ToRole="MemberSurvey" />
+    <NavigationProperty Name="Outcomes" Relationship="SolveChicagoDevModel.FK_Outcomes_Members" FromRole="Member" ToRole="Outcome" />
+    <NavigationProperty Name="Interests" Relationship="SolveChicagoDevModel.MemberInterests" FromRole="Member" ToRole="Interest" />
+    <NavigationProperty Name="AspNetUsers" Relationship="SolveChicagoDevModel.UserProfileMembers" FromRole="Member" ToRole="AspNetUser" />
+    <NavigationProperty Name="MemberSpouses" Relationship="SolveChicagoDevModel.FK_MemberSpouses_Spouse1" FromRole="Member" ToRole="MemberSpous" />
+    <NavigationProperty Name="MemberSpouses1" Relationship="SolveChicagoDevModel.FK_MemberSpouses_Spouse2" FromRole="Member" ToRole="MemberSpous" />
+    <NavigationProperty Name="Addresses" Relationship="SolveChicagoDevModel.MemberAddresses" FromRole="Member" ToRole="Address" />
+    <NavigationProperty Name="Children" Relationship="SolveChicagoDevModel.FK_MemberParents_Child" FromRole="Member" ToRole="MemberParent" />
+    <NavigationProperty Name="Parents" Relationship="SolveChicagoDevModel.FK_MemberParents_Parent" FromRole="Member" ToRole="MemberParent" />
+    <NavigationProperty Name="Family" Relationship="SolveChicagoDevModel.FK_Member_Family" FromRole="Member" ToRole="Family" />
+    <Property Name="IsHeadOfHousehold" Type="Boolean" />
+    <NavigationProperty Name="PhoneNumbers" Relationship="SolveChicagoDevModel.MemberPhoneNumbers" FromRole="Member" ToRole="PhoneNumber" />
+    <NavigationProperty Name="MemberSchools" Relationship="SolveChicagoDevModel.FK_MemberSchools_Member" FromRole="Member" ToRole="MemberSchool" />
+  </EntityType>
+  <Association Name="FK_CaseNotes_Members">
+    <End Type="SolveChicagoDevModel.Member" Role="Member" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="SolveChicagoDevModel.CaseNote" Role="CaseNote" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Member">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CaseNote">
+        <PropertyRef Name="MemberId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MemberCorporations_Members">
+    <End Type="SolveChicagoDevModel.Member" Role="Member" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="SolveChicagoDevModel.MemberCorporation" Role="MemberCorporation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Member">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MemberCorporation">
+        <PropertyRef Name="MemberId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MemberEmergencyContacts_Members">
+    <End Type="SolveChicagoDevModel.Member" Role="Member" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="SolveChicagoDevModel.MemberEmergencyContact" Role="MemberEmergencyContact" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Member">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MemberEmergencyContact">
+        <PropertyRef Name="MemberId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MemberGovernmentPrograms_Members">
+    <End Type="SolveChicagoDevModel.Member" Role="Member" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="SolveChicagoDevModel.MemberGovernmentProgram" Role="MemberGovernmentProgram" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Member">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MemberGovernmentProgram">
+        <PropertyRef Name="MemberId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MemberNonprofits_Members">
+    <End Type="SolveChicagoDevModel.Member" Role="Member" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="SolveChicagoDevModel.MemberNonprofit" Role="MemberNonprofit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Member">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MemberNonprofit">
+        <PropertyRef Name="MemberId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MemberSkills_Members">
+    <End Type="SolveChicagoDevModel.Member" Role="Member" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="SolveChicagoDevModel.MemberSkill" Role="MemberSkill" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Member">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MemberSkill">
+        <PropertyRef Name="MemberId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MemberSurveys_Members">
+    <End Type="SolveChicagoDevModel.Member" Role="Member" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="SolveChicagoDevModel.MemberSurvey" Role="MemberSurvey" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Member">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MemberSurvey">
+        <PropertyRef Name="MemberId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Outcomes_Members">
+    <End Type="SolveChicagoDevModel.Member" Role="Member" Multiplicity="1" />
+    <End Type="SolveChicagoDevModel.Outcome" Role="Outcome" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Member">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Outcome">
+        <PropertyRef Name="MemberId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MemberInterests">
+    <End Type="SolveChicagoDevModel.Interest" Role="Interest" Multiplicity="*" />
+    <End Type="SolveChicagoDevModel.Member" Role="Member" Multiplicity="*" />
+  </Association>
+  <Association Name="UserProfileMembers">
+    <End Type="SolveChicagoDevModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+    <End Type="SolveChicagoDevModel.Member" Role="Member" Multiplicity="*" />
+  </Association>
+  <EntityType Name="Address">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Address1" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Address2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Province" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ZipCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Members" Relationship="SolveChicagoDevModel.MemberAddresses" FromRole="Address" ToRole="Member" />
+    <NavigationProperty Name="Families" Relationship="SolveChicagoDevModel.FamilyAddresses" FromRole="Address" ToRole="Family" />
+  </EntityType>
+  <EntityType Name="MemberSpous">
+    <Key>
+      <PropertyRef Name="Spouse_1_Id" />
+      <PropertyRef Name="Spouse_2_Id" />
+    </Key>
+    <Property Name="Spouse_1_Id" Type="Int32" Nullable="false" />
+    <Property Name="Spouse_2_Id" Type="Int32" Nullable="false" />
+    <Property Name="IsCurrent" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Member" Relationship="SolveChicagoDevModel.FK_MemberSpouses_Spouse1" FromRole="MemberSpous" ToRole="Member" />
+    <NavigationProperty Name="Member1" Relationship="SolveChicagoDevModel.FK_MemberSpouses_Spouse2" FromRole="MemberSpous" ToRole="Member" />
+  </EntityType>
+  <Association Name="FK_MemberSpouses_Spouse1">
+    <End Type="SolveChicagoDevModel.Member" Role="Member" Multiplicity="1" />
+    <End Type="SolveChicagoDevModel.MemberSpous" Role="MemberSpous" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Member">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MemberSpous">
+        <PropertyRef Name="Spouse_1_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MemberSpouses_Spouse2">
+    <End Type="SolveChicagoDevModel.Member" Role="Member" Multiplicity="1" />
+    <End Type="SolveChicagoDevModel.MemberSpous" Role="MemberSpous" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Member">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MemberSpous">
+        <PropertyRef Name="Spouse_2_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MemberAddresses">
+    <End Type="SolveChicagoDevModel.Address" Role="Address" Multiplicity="*" />
+    <End Type="SolveChicagoDevModel.Member" Role="Member" Multiplicity="*" />
+  </Association>
+  <EntityType Name="MemberParent">
+    <Key>
+      <PropertyRef Name="ParentId" />
+      <PropertyRef Name="ChildId" />
+    </Key>
+    <Property Name="ParentId" Type="Int32" Nullable="false" />
+    <Property Name="ChildId" Type="Int32" Nullable="false" />
+    <Property Name="IsBiological" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Children" Relationship="SolveChicagoDevModel.FK_MemberParents_Child" FromRole="MemberParent" ToRole="Member" />
+    <NavigationProperty Name="Parents" Relationship="SolveChicagoDevModel.FK_MemberParents_Parent" FromRole="MemberParent" ToRole="Member" />
+  </EntityType>
+  <Association Name="FK_MemberParents_Child">
+    <End Type="SolveChicagoDevModel.Member" Role="Member" Multiplicity="1" />
+    <End Type="SolveChicagoDevModel.MemberParent" Role="MemberParent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Member">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MemberParent">
+        <PropertyRef Name="ChildId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MemberParents_Parent">
+    <End Type="SolveChicagoDevModel.Member" Role="Member" Multiplicity="1" />
+    <End Type="SolveChicagoDevModel.MemberParent" Role="MemberParent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Member">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MemberParent">
+        <PropertyRef Name="ParentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Family">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FamilyName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="7" />
+    <NavigationProperty Name="Members" Relationship="SolveChicagoDevModel.FK_Member_Family" FromRole="Family" ToRole="Member" />
+    <NavigationProperty Name="Addresses" Relationship="SolveChicagoDevModel.FamilyAddresses" FromRole="Family" ToRole="Address" />
+    <NavigationProperty Name="PhoneNumbers" Relationship="SolveChicagoDevModel.FamilyPhoneNumbers" FromRole="Family" ToRole="PhoneNumber" />
+  </EntityType>
+  <Association Name="FK_Member_Family">
+    <End Type="SolveChicagoDevModel.Family" Role="Family" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="SolveChicagoDevModel.Member" Role="Member" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Family">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Member">
+        <PropertyRef Name="FamilyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FamilyAddresses">
+    <End Type="SolveChicagoDevModel.Address" Role="Address" Multiplicity="*" />
+    <End Type="SolveChicagoDevModel.Family" Role="Family" Multiplicity="*" />
+  </Association>
+  <EntityType Name="PhoneNumber">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Families" Relationship="SolveChicagoDevModel.FamilyPhoneNumbers" FromRole="PhoneNumber" ToRole="Family" />
+    <NavigationProperty Name="Members" Relationship="SolveChicagoDevModel.MemberPhoneNumbers" FromRole="PhoneNumber" ToRole="Member" />
+    <Property Name="Number" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="School">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SchoolName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Type" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="MemberSchools" Relationship="SolveChicagoDevModel.FK_MemberSchools_School" FromRole="School" ToRole="MemberSchool" />
+  </EntityType>
+  <Association Name="FamilyPhoneNumbers">
+    <End Type="SolveChicagoDevModel.Family" Role="Family" Multiplicity="*" />
+    <End Type="SolveChicagoDevModel.PhoneNumber" Role="PhoneNumber" Multiplicity="*" />
+  </Association>
+  <Association Name="MemberPhoneNumbers">
+    <End Type="SolveChicagoDevModel.Member" Role="Member" Multiplicity="*" />
+    <End Type="SolveChicagoDevModel.PhoneNumber" Role="PhoneNumber" Multiplicity="*" />
+  </Association>
+  <EntityType Name="MemberSchool">
+    <Key>
+      <PropertyRef Name="MemberId" />
+      <PropertyRef Name="SchoolId" />
+    </Key>
+    <Property Name="MemberId" Type="Int32" Nullable="false" />
+    <Property Name="SchoolId" Type="Int32" Nullable="false" />
+    <Property Name="Start" Type="DateTime" Precision="7" Nullable="false" />
+    <Property Name="End" Type="DateTime" Precision="7" />
+    <Property Name="IsCurrent" Type="Boolean" Nullable="false" />
+    <Property Name="Degree" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Member" Relationship="SolveChicagoDevModel.FK_MemberSchools_Member" FromRole="MemberSchool" ToRole="Member" />
+    <NavigationProperty Name="School" Relationship="SolveChicagoDevModel.FK_MemberSchools_School" FromRole="MemberSchool" ToRole="School" />
+  </EntityType>
+  <Association Name="FK_MemberSchools_Member">
+    <End Type="SolveChicagoDevModel.Member" Role="Member" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="SolveChicagoDevModel.MemberSchool" Role="MemberSchool" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Member">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MemberSchool">
+        <PropertyRef Name="MemberId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MemberSchools_School">
+    <End Type="SolveChicagoDevModel.School" Role="School" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="SolveChicagoDevModel.MemberSchool" Role="MemberSchool" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="School">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MemberSchool">
+        <PropertyRef Name="SchoolId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="AdminInviteCode">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="InviteCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="InvitingAdminUserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="RecevingAdminUserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUser" Relationship="SolveChicagoDevModel.FK_AdminInviteCodes_Admin" FromRole="AdminInviteCode" ToRole="AspNetUser" />
+  </EntityType>
+  <Association Name="FK_AdminInviteCodes_Admin">
+    <End Type="SolveChicagoDevModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="SolveChicagoDevModel.AdminInviteCode" Role="AdminInviteCode" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AdminInviteCode">
+        <PropertyRef Name="InvitingAdminUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Admin">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="FirstName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="ProfilePicturePath" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="7" />
+    <Property Name="InvitedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUsers" Relationship="SolveChicagoDevModel.UserProfileAdmins" FromRole="Admin" ToRole="AspNetUser" />
+  </EntityType>
+  <Association Name="UserProfileAdmins">
+    <End Type="SolveChicagoDevModel.Admin" Role="Admin" Multiplicity="*" />
+    <End Type="SolveChicagoDevModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+  </Association>
+</Schema>
