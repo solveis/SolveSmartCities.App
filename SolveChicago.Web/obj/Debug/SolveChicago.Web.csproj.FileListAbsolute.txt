@@ -284,3 +284,4 @@ C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\Se
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\SolveChicago.Common.pdb
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\SolveChicago.Service.pdb
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\SolveChicago.Service.dll.config
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\SolveChicago.Common.dll.config

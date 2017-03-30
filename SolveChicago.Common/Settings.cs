@@ -32,7 +32,7 @@ namespace SolveChicago.Common
             {
                 get
                 {
-                    return GetSetting<string>("Crypto.Salt", "salt");
+                    return GetSetting<string>("Crypto.Salt", "saltsalt");
                 }
             }
         }

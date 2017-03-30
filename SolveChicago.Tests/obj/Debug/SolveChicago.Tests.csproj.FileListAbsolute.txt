@@ -151,3 +151,4 @@ C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Tests\bin\
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Tests\bin\Debug\SolveChicago.Common.pdb
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Tests\bin\Debug\SolveChicago.Service.pdb
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Tests\bin\Debug\SolveChicago.Service.dll.config
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Tests\bin\Debug\SolveChicago.Common.dll.config
