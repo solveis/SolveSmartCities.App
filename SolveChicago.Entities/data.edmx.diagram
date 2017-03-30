@@ -83,6 +83,8 @@
         <AssociationConnector Association="SolveChicagoDevModel.UserProfileCorporations" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.UserProfileMembers" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.UserProfileNonprofits" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="SolveChicagoDevModel.Communication" Width="1.5" PointX="5.25" PointY="36.25" />
+        <AssociationConnector Association="SolveChicagoDevModel.FK_Communications_AspNetUsers" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

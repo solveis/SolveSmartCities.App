@@ -4,7 +4,7 @@ using Xunit;
 using SolveChicago.Entities;
 using System.Data.Entity;
 using System.Collections.Generic;
-using SolveChicago.Web.Services;
+using SolveChicago.Service;
 using System.Diagnostics.CodeAnalysis;
 
 namespace SolveChicago.Tests.Services

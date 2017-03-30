@@ -13,7 +13,7 @@ using Microsoft.Owin.Security;
 using SolveChicago.Web.Models;
 using System.Net.Mail;
 using System.IO;
-using SolveChicago.Web.Common;
+using SolveChicago.Common;
 using System.Diagnostics.CodeAnalysis;
 
 namespace SolveChicago.Web

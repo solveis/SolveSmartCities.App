@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Solve Chicago</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Bitter:400,700" rel="stylesheet">
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <nav id="main-nav" class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#Home">
+                    <img id="logo" src="img/logo@2x.png" height="80" alt="">
+                </a>
+                <a type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse" href="javascript:void(0)">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right text-center">
+                    <li><a class="internalLink" href="#Home">Home</a></li>
+                    <li><a class="internalLink" href="#How">How</a></li>
+                    <li><a class="internalLink" href="#Partners">Partners</a></li>
+                    <li><a class="internalLink cta" href="#LetsTalk">Let's Talk</a></li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container -->
+    </nav>
+    @RenderBody()
+    <footer class="container-fluid">
+        <div class="container text-center">
+            <div class="col-sm-2 col-sm-push-10 text-center">
+                <a href="#Home" class="regress text-center internalLink">
+                    <img width="30" src="img/Go_top@2x.png">
+                    <br>Back To Top
+                </a>
+            </div>
+            <div class="col-sm-8 text-center">
+                <p>Created with the community for our communities. <br> &copy; @DateTime.UtcNow.Year Solve Chicago. All Rights Reserved.</p>
+            </div>
+            <div class="col-sm-2 col-sm-pull-10">
+                <img src="img/logo_white@2x.png" height="45" alt="">
+            </div>
+        </div>
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/functions")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

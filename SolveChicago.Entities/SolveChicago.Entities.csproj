@@ -76,6 +76,9 @@
     <Compile Include="CaseNote.cs">
       <DependentUpon>data.tt</DependentUpon>
     </Compile>
+    <Compile Include="Communication.cs">
+      <DependentUpon>data.tt</DependentUpon>
+    </Compile>
     <Compile Include="Corporation.cs">
       <DependentUpon>data.tt</DependentUpon>
     </Compile>

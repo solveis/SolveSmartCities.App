@@ -9,13 +9,13 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using SolveChicago.Web.Models;
-using SolveChicago.Web.Common;
+using SolveChicago.Common;
 using SolveChicago.Web.Controllers;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.IO;
 using System.Collections.Generic;
 using SolveChicago.Entities;
-using SolveChicago.Web.Services;
+using SolveChicago.Service;
 
 namespace SolveChicago.Web.Controllers
 {

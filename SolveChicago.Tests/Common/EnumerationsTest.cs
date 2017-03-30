@@ -3,7 +3,7 @@ using Xunit;
 using Moq;
 using System.Data.Entity;
 using System.Collections.Generic;
-using SolveChicago.Web.Common;
+using SolveChicago.Common;
 using System.Diagnostics.CodeAnalysis;
 
 namespace SolveChicago.Tests.Common

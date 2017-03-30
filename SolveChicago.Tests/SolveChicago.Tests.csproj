@@ -166,9 +166,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SolveChicago.Common\SolveChicago.Common.csproj">
+      <Project>{ca01056b-1975-4fea-9750-03a508de30c4}</Project>
+      <Name>SolveChicago.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SolveChicago.Entities\SolveChicago.Entities.csproj">
       <Project>{9faba25f-26c0-4867-b7e6-62f29d8223d4}</Project>
       <Name>SolveChicago.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SolveChicago.Service\SolveChicago.Service.csproj">
+      <Project>{786eb081-ff8f-4cae-92d7-b69255ec6b12}</Project>
+      <Name>SolveChicago.Service</Name>
     </ProjectReference>
     <ProjectReference Include="..\SolveChicago.Web\SolveChicago.Web.csproj">
       <Project>{528f6cea-76f1-47bd-8d33-2a6a2f4813dc}</Project>

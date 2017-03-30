@@ -7,7 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using SolveChicago.Entities;
-using SolveChicago.Web.Services;
+using SolveChicago.Service;
 
 namespace SolveChicago.Web.Controllers
 {

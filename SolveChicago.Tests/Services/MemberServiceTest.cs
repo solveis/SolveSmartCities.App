@@ -5,9 +5,10 @@ using SolveChicago.Entities;
 using System.Data.Entity;
 using System.Collections.Generic;
 using System.Linq;
-using SolveChicago.Web.Services;
+using SolveChicago.Service;
 using SolveChicago.Web.Models.Profile;
-using SolveChicago.Web.Common;
+using SolveChicago.Common;
+using SolveChicago.Common.Models.Profile;
 
 namespace SolveChicago.Tests.Services
 {

@@ -201,11 +201,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\Constants.cs" />
-    <Compile Include="Common\Crypto.cs" />
-    <Compile Include="Common\Enumerations.cs" />
-    <Compile Include="Common\Helpers.cs" />
-    <Compile Include="Common\Settings.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -229,15 +224,8 @@
     <Compile Include="Models\Admin\AdminInviteModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\Profile\MemberProfile.cs" />
-    <Compile Include="Models\Profile\NonprofitProfile.cs" />
+    <Compile Include="Models\Profile\MemberProfileViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\AdminService.cs" />
-    <Compile Include="Services\BaseService.cs" />
-    <Compile Include="Services\CaseManagerService.cs" />
-    <Compile Include="Services\EmailService.cs" />
-    <Compile Include="Services\MemberService.cs" />
-    <Compile Include="Services\NonprofitService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -407,9 +395,17 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SolveChicago.Common\SolveChicago.Common.csproj">
+      <Project>{ca01056b-1975-4fea-9750-03a508de30c4}</Project>
+      <Name>SolveChicago.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SolveChicago.Entities\SolveChicago.Entities.csproj">
       <Project>{9faba25f-26c0-4867-b7e6-62f29d8223d4}</Project>
       <Name>SolveChicago.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SolveChicago.Service\SolveChicago.Service.csproj">
+      <Project>{786eb081-ff8f-4cae-92d7-b69255ec6b12}</Project>
+      <Name>SolveChicago.Service</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

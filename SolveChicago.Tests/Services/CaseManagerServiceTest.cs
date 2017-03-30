@@ -5,7 +5,7 @@ using SolveChicago.Entities;
 using System.Data.Entity;
 using System.Collections.Generic;
 using System.Linq;
-using SolveChicago.Web.Services;
+using SolveChicago.Service;
 
 namespace SolveChicago.Tests.Services
 {

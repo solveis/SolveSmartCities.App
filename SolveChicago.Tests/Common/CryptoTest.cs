@@ -1,4 +1,4 @@
-﻿using SolveChicago.Web.Common;
+﻿using SolveChicago.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;

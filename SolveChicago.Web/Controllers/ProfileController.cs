@@ -1,4 +1,4 @@
-﻿using SolveChicago.Web.Common;
+﻿using SolveChicago.Common;
 using SolveChicago.Web.Controllers;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,8 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using SolveChicago.Entities;
 using SolveChicago.Web.Models.Profile;
-using SolveChicago.Web.Services;
+using SolveChicago.Service;
+using SolveChicago.Common.Models.Profile;
 
 namespace SolveChicago.Web.Controllers
 {

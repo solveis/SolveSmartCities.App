@@ -57,5 +57,6 @@ namespace SolveChicago.Entities
         public virtual DbSet<SurveyQuestionOption> SurveyQuestionOptions { get; set; }
         public virtual DbSet<SurveyQuestion> SurveyQuestions { get; set; }
         public virtual DbSet<Survey> Surveys { get; set; }
+        public virtual DbSet<Communication> Communications { get; set; }
     }
 }

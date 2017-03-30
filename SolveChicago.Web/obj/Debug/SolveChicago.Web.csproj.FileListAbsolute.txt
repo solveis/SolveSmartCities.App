@@ -277,3 +277,10 @@ C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\zh
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\obj\Debug\SolveChicago.Web.csprojResolveAssemblyReference.cache
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\obj\Debug\SolveChicago.Web.dll
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\obj\Debug\SolveChicago.Web.pdb
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\SolveChicago.Common.dll
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\SolveChicago.Service.dll
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\SendGrid.dll
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\SendGrid.CSharp.HTTP.Client.dll
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\SolveChicago.Common.pdb
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\SolveChicago.Service.pdb
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\SolveChicago.Service.dll.config

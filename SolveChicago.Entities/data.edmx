@@ -120,6 +120,17 @@
           <Property Name="OutcomeId" Type="int" />
           <Property Name="OutcomeWeight" Type="decimal" Precision="18" Scale="4" />
         </EntityType>
+        <EntityType Name="Communications">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrganizationId" Type="int" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="256" />
+          <Property Name="Date" Type="datetime2" Precision="7" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" />
+          <Property Name="Success" Type="bit" />
+        </EntityType>
         <EntityType Name="Corporations">
           <Key>
             <PropertyRef Name="Id" />
@@ -479,6 +490,20 @@
             </Principal>
             <Dependent Role="CaseNotes">
               <PropertyRef Name="OutcomeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Communications_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Communications" Type="Self.Communications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Communications">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1201,6 +1226,7 @@
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CaseManagers" EntityType="Self.CaseManagers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CaseNotes" EntityType="Self.CaseNotes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Communications" EntityType="Self.Communications" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Corporations" EntityType="Self.Corporations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Families" EntityType="Self.Families" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FamilyAddresses" EntityType="Self.FamilyAddresses" Schema="dbo" store:Type="Tables" />
@@ -1253,6 +1279,10 @@
           <AssociationSet Name="FK_CaseNotes_Outcomes" Association="Self.FK_CaseNotes_Outcomes">
             <End Role="Outcomes" EntitySet="Outcomes" />
             <End Role="CaseNotes" EntitySet="CaseNotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Communications_AspNetUsers" Association="Self.FK_Communications_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Communications" EntitySet="Communications" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUser_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUser_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -1566,6 +1596,7 @@
           <NavigationProperty Name="Corporations" Relationship="Self.UserProfileCorporations" FromRole="AspNetUsers" ToRole="Corporations" />
           <NavigationProperty Name="Members" Relationship="Self.UserProfileMembers" FromRole="AspNetUsers" ToRole="Members" />
           <NavigationProperty Name="Nonprofits" Relationship="Self.UserProfileNonprofits" FromRole="AspNetUsers" ToRole="Nonprofits" />
+          <NavigationProperty Name="Communications" Relationship="SolveChicagoDevModel.FK_Communications_AspNetUsers" FromRole="AspNetUser" ToRole="Communication" />
         </EntityType>
         <EntityType Name="CaseManager">
           <Key>
@@ -2609,7 +2640,38 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Nonprofits" EntitySet="Nonprofits" />
           </AssociationSet>
+          <EntitySet Name="Communications" EntityType="SolveChicagoDevModel.Communication" />
+          <AssociationSet Name="FK_Communications_AspNetUsers" Association="SolveChicagoDevModel.FK_Communications_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Communication" EntitySet="Communications" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Communication">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrganizationId" Type="Int32" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Precision="7" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Success" Type="Boolean" />
+          <NavigationProperty Name="AspNetUser" Relationship="SolveChicagoDevModel.FK_Communications_AspNetUsers" FromRole="Communication" ToRole="AspNetUser" />
+        </EntityType>
+        <Association Name="FK_Communications_AspNetUsers">
+          <End Type="SolveChicagoDevModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="SolveChicagoDevModel.Communication" Role="Communication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Communication">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3053,6 +3115,18 @@
               <ScalarProperty Name="Id" ColumnName="NonprofitId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Communications">
+            <EntityTypeMapping TypeName="SolveChicagoDevModel.Communication">
+              <MappingFragment StoreEntitySet="Communications">
+                <ScalarProperty Name="Success" ColumnName="Success" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="OrganizationId" ColumnName="OrganizationId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

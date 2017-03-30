@@ -144,3 +144,10 @@ C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Tests\bin\
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Tests\bin\Debug\roslyn\vbc.rsp
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Tests\bin\Debug\roslyn\VBCSCompiler.exe
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Tests\bin\Debug\roslyn\VBCSCompiler.exe.config
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Tests\bin\Debug\SolveChicago.Common.dll
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Tests\bin\Debug\SolveChicago.Service.dll
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Tests\bin\Debug\SendGrid.dll
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Tests\bin\Debug\SendGrid.CSharp.HTTP.Client.dll
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Tests\bin\Debug\SolveChicago.Common.pdb
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Tests\bin\Debug\SolveChicago.Service.pdb
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Tests\bin\Debug\SolveChicago.Service.dll.config

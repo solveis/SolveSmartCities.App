@@ -9,11 +9,11 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using SolveChicago.Web.Models;
-using SolveChicago.Web.Common;
+using SolveChicago.Common;
 using SolveChicago.Web.Controllers;
 using System.Diagnostics.CodeAnalysis;
 using SolveChicago.Entities;
-using SolveChicago.Web.Services;
+using SolveChicago.Service;
 
 namespace SolveChicago.Web.Controllers
 {

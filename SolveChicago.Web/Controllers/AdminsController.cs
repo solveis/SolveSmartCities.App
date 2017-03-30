@@ -7,10 +7,10 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using SolveChicago.Entities;
-using SolveChicago.Web.Common;
+using SolveChicago.Common;
 using SolveChicago.Web.Models;
 using SolveChicago.Web.Models.Admin;
-using SolveChicago.Web.Services;
+using SolveChicago.Service;
 
 namespace SolveChicago.Web.Controllers
 {
