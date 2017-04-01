@@ -67,7 +67,7 @@ namespace SolveChicago.Service
                 SendGrid.CSharp.HTTP.Client.Response response = await sg.client.mail.send.post(requestBody: mail.Get());
                 success = true;
             }
-            catch (Exception ex)
+            catch
             {
                 success = false;
             }

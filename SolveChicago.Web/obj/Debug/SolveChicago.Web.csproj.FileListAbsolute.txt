@@ -285,3 +285,7 @@ C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\So
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\SolveChicago.Service.pdb
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\SolveChicago.Service.dll.config
 C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\SolveChicago.Common.dll.config
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\SendGrid.pdb
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\SendGrid.xml
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\SendGrid.CSharp.HTTP.Client.pdb
+C:\Users\Administrator\Documents\GitHub\SolveChicago.App\SolveChicago.Web\bin\SendGrid.CSharp.HTTP.Client.dll.config
