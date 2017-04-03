@@ -12,30 +12,20 @@ namespace SolveChicago.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class CaseManager
+    public partial class PropertyManager
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public CaseManager()
+        public PropertyManager()
         {
-            this.CaseNotes = new HashSet<CaseNote>();
-            this.MemberNonprofits = new HashSet<MemberNonprofit>();
             this.AspNetUsers = new HashSet<AspNetUser>();
         }
     
         public int Id { get; set; }
         public string Email { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string ProfilePicturePath { get; set; }
+        public string Name { get; set; }
         public string Phone { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
-        public Nullable<int> NonprofitId { get; set; }
     
-        public virtual Nonprofit Nonprofit { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CaseNote> CaseNotes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MemberNonprofit> MemberNonprofits { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
     }

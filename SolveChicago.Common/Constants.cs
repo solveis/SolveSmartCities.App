@@ -27,6 +27,7 @@ namespace SolveChicago.Common
             public const string CaseManager = "CaseManager";
             public const string Corporation = "Corporation";
             public const string Nonprofit = "Nonprofit";
+            public const string PropertyManager = "PropertyManager";
         }
 
         public static class Upload
@@ -36,6 +37,7 @@ namespace SolveChicago.Common
             public const string CaseManagerPhotos = "casemanagerphotos";
             public const string CorporationPhotos = "corporationphotos";
             public const string NonprofitPhotos = "nonprofitphotos";
+            public const string PropertyManagerPhotos = "propertymanagerphotos";
         }
 
         public static class Gender

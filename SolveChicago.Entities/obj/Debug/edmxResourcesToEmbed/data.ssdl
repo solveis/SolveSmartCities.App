@@ -334,6 +334,16 @@
     <Property Name="Id" Type="int" Nullable="false" />
     <Property Name="Number" Type="nvarchar" MaxLength="10" Nullable="false" />
   </EntityType>
+  <EntityType Name="PropertyManagers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="128" />
+    <Property Name="Phone" Type="nvarchar" MaxLength="128" />
+    <Property Name="CreatedDate" Type="datetime2" Precision="7" />
+  </EntityType>
   <EntityType Name="Schools">
     <Key>
       <PropertyRef Name="Id" />
@@ -425,6 +435,14 @@
     </Key>
     <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
     <Property Name="NonprofitId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserProfilePropertyManagers">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="PropertyManagerId" />
+    </Key>
+    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="PropertyManagerId" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="FK_AdminInviteCodes_Admin">
     <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
@@ -1114,7 +1132,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_UserProfileCaseManagers_Nonprofit">
+  <Association Name="FK_UserProfileCaseManagers_CaseManager">
     <End Role="CaseManagers" Type="Self.CaseManagers" Multiplicity="1">
       <OnDelete Action="Cascade" />
     </End>
@@ -1212,6 +1230,34 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_UserProfilePropertyManagers_AspNetUser">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="UserProfilePropertyManagers" Type="Self.UserProfilePropertyManagers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserProfilePropertyManagers">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserProfilePropertyManagers_PropertyManager">
+    <End Role="PropertyManagers" Type="Self.PropertyManagers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="UserProfilePropertyManagers" Type="Self.UserProfilePropertyManagers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PropertyManagers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserProfilePropertyManagers">
+        <PropertyRef Name="PropertyManagerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="SolveChicagoDevModelStoreContainer">
     <EntitySet Name="Addresses" EntityType="Self.Addresses" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AdminInviteCodes" EntityType="Self.AdminInviteCodes" Schema="dbo" store:Type="Tables" />
@@ -1246,6 +1292,7 @@
     <EntitySet Name="Nonprofits" EntityType="Self.Nonprofits" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Outcomes" EntityType="Self.Outcomes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PhoneNumbers" EntityType="Self.PhoneNumbers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PropertyManagers" EntityType="Self.PropertyManagers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Schools" EntityType="Self.Schools" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Skills" EntityType="Self.Skills" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SurveyAnswers" EntityType="Self.SurveyAnswers" Schema="dbo" store:Type="Tables" />
@@ -1257,6 +1304,7 @@
     <EntitySet Name="UserProfileCorporations" EntityType="Self.UserProfileCorporations" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserProfileMembers" EntityType="Self.UserProfileMembers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserProfileNonprofits" EntityType="Self.UserProfileNonprofits" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserProfilePropertyManagers" EntityType="Self.UserProfilePropertyManagers" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_AdminInviteCodes_Admin" Association="Self.FK_AdminInviteCodes_Admin">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="AdminInviteCodes" EntitySet="AdminInviteCodes" />
@@ -1461,7 +1509,7 @@
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="UserProfileCasemanagers" EntitySet="UserProfileCasemanagers" />
     </AssociationSet>
-    <AssociationSet Name="FK_UserProfileCaseManagers_Nonprofit" Association="Self.FK_UserProfileCaseManagers_Nonprofit">
+    <AssociationSet Name="FK_UserProfileCaseManagers_CaseManager" Association="Self.FK_UserProfileCaseManagers_CaseManager">
       <End Role="CaseManagers" EntitySet="CaseManagers" />
       <End Role="UserProfileCasemanagers" EntitySet="UserProfileCasemanagers" />
     </AssociationSet>
@@ -1488,6 +1536,14 @@
     <AssociationSet Name="FK_UserProfileNonprofits_Nonprofit" Association="Self.FK_UserProfileNonprofits_Nonprofit">
       <End Role="Nonprofits" EntitySet="Nonprofits" />
       <End Role="UserProfileNonprofits" EntitySet="UserProfileNonprofits" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserProfilePropertyManagers_AspNetUser" Association="Self.FK_UserProfilePropertyManagers_AspNetUser">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="UserProfilePropertyManagers" EntitySet="UserProfilePropertyManagers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserProfilePropertyManagers_PropertyManager" Association="Self.FK_UserProfilePropertyManagers_PropertyManager">
+      <End Role="PropertyManagers" EntitySet="PropertyManagers" />
+      <End Role="UserProfilePropertyManagers" EntitySet="UserProfilePropertyManagers" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

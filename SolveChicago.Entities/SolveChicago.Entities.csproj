@@ -146,6 +146,9 @@
       <DependentUpon>data.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PropertyManager.cs">
+      <DependentUpon>data.tt</DependentUpon>
+    </Compile>
     <Compile Include="School.cs">
       <DependentUpon>data.tt</DependentUpon>
     </Compile>

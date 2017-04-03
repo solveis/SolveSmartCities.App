@@ -32,7 +32,6 @@ namespace SolveChicago.Entities
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
-        public virtual DbSet<CaseManager> CaseManagers { get; set; }
         public virtual DbSet<CaseNote> CaseNotes { get; set; }
         public virtual DbSet<Corporation> Corporations { get; set; }
         public virtual DbSet<Family> Families { get; set; }
@@ -58,5 +57,7 @@ namespace SolveChicago.Entities
         public virtual DbSet<Communication> Communications { get; set; }
         public virtual DbSet<MemberSkill> MemberSkills { get; set; }
         public virtual DbSet<MemberNonprofit> MemberNonprofits { get; set; }
+        public virtual DbSet<CaseManager> CaseManagers { get; set; }
+        public virtual DbSet<PropertyManager> PropertyManagers { get; set; }
     }
 }

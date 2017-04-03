@@ -96,6 +96,28 @@ namespace SolveChicago.Web.Controllers
         }
 
         //
+        // GET: /Register/PropertyManager
+        [AllowAnonymous]
+        public ActionResult PropertyManager()
+        {
+            return View();
+        }
+
+        //
+        // POST: /Register/PropertyManager
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> PropertyManager(RegisterViewModel model)
+        {
+            var result = await CreateAccount(model.Email, model.Password, Enumerations.Role.PropertyManager);
+            if (result != null)
+                return result;
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+        //
         // GET: /Register/CaseManager
         [AllowAnonymous]
         public ActionResult CaseManager(int? nonprofitId)

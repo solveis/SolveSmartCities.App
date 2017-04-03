@@ -215,6 +215,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NonprofitsController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
+    <Compile Include="Controllers\PropertyManagersController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\ThanksController.cs" />
     <Compile Include="Global.asax.cs">
@@ -409,6 +410,11 @@
     <Content Include="Views\Corporations\Edit.cshtml" />
     <Content Include="Views\Corporations\Index.cshtml" />
     <Content Include="Views\Thanks\Index.cshtml" />
+    <Content Include="Views\PropertyManagers\Create.cshtml" />
+    <Content Include="Views\PropertyManagers\Delete.cshtml" />
+    <Content Include="Views\PropertyManagers\Details.cshtml" />
+    <Content Include="Views\PropertyManagers\Edit.cshtml" />
+    <Content Include="Views\PropertyManagers\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

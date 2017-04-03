@@ -237,6 +237,24 @@ namespace SolveChicago.Web.Controllers
             return CorporationRedirect(entity);
         }
 
+        public ActionResult PropertyManagerRedirect(PropertyManager entity)
+        {
+            if (string.IsNullOrEmpty(entity.Name))
+            {
+                return RedirectToAction("PropertyManager", "Profile");
+            }
+            else
+            {
+                return RedirectToAction("Index", "PropertyManagers");
+            }
+        }
+
+        public ActionResult PropertyManagerRedirect(int propertyManagerId)
+        {
+            PropertyManager entity = db.PropertyManagers.Single(x => x.Id == propertyManagerId);
+            return PropertyManagerRedirect(entity);
+        }
+
         public ActionResult CorporationRedirect(Corporation entity)
         {
             if (string.IsNullOrEmpty(entity.Name))
@@ -408,6 +426,20 @@ namespace SolveChicago.Web.Controllers
                             db.Corporations.Add(model);
                             db.SaveChanges();
                             return CorporationRedirect(model.Id);
+                        }
+                        return RedirectToAction("Index");
+                    }
+                case Enumerations.Role.PropertyManager:
+                    {
+                        AssertRole(Common.Constants.Roles.PropertyManager);
+                        await this.UserManager.AddToRoleAsync(user.Id, Common.Constants.Roles.PropertyManager);
+                        if (!UserProfileHasValidMappings(user.Id))
+                        {
+                            PropertyManager model = new PropertyManager { Email = userName };
+                            model.AspNetUsers.Add(aspnetUser);
+                            db.PropertyManagers.Add(model);
+                            db.SaveChanges();
+                            return PropertyManagerRedirect(model.Id);
                         }
                         return RedirectToAction("Index");
                     }

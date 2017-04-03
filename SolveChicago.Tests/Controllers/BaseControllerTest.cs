@@ -163,6 +163,52 @@ namespace SolveChicago.Tests.Controllers
             Assert.Equal("Corporation", result.RouteValues["action"]);
             Assert.Equal("Profile", result.RouteValues["controller"]);
         }
+        
+        [Fact]
+        public void BaseController_PropertyManagerRedirect_ReturnsRedirectToRouteResult_PropertyManagerIndex()
+        {
+            List<PropertyManager> data = new List<PropertyManager>
+            {
+                new PropertyManager()
+                {
+                    Email = "propertyManager@solvechicago.com",
+                    CreatedDate = DateTime.UtcNow.AddDays(-10),
+                    Id = 1,
+                    Name = "Tom Elliot",
+                }
+            };
+
+            var set = new Mock<DbSet<PropertyManager>>().SetupData(data);
+
+            var context = new Mock<SolveChicagoEntities>();
+            context.Setup(c => c.PropertyManagers).Returns(set.Object);
+
+            BaseController controller = new BaseController(context.Object);
+            var result = (RedirectToRouteResult)controller.PropertyManagerRedirect(1);
+
+            Assert.Equal("Index", result.RouteValues["action"]);
+            Assert.Equal("PropertyManagers", result.RouteValues["controller"]);
+        }
+
+        [Fact]
+        public void BaseController_PropertyManagerRedirect_ReturnsRedirectToRouteResult_ProfilePropertyManager()
+        {
+            List<PropertyManager> data = new List<PropertyManager>
+            {
+                new PropertyManager() { Id = 1 }
+            };
+
+            var set = new Mock<DbSet<PropertyManager>>().SetupData(data);
+
+            var context = new Mock<SolveChicagoEntities>();
+            context.Setup(c => c.PropertyManagers).Returns(set.Object);
+
+            BaseController controller = new BaseController(context.Object);
+            var result = (RedirectToRouteResult)controller.PropertyManagerRedirect(1);
+
+            Assert.Equal("PropertyManager", result.RouteValues["action"]);
+            Assert.Equal("Profile", result.RouteValues["controller"]);
+        }
 
         [Fact]
         public void BaseController_NonprofitRedirect_ReturnsRedirectToRouteResult_NonprofitIndex()

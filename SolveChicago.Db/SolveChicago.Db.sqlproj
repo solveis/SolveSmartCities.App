@@ -108,6 +108,8 @@
     <Build Include="dbo\Tables\MemberSchools.sql" />
     <Build Include="dbo\Tables\AdminInviteCodes.sql" />
     <Build Include="dbo\Tables\Communications.sql" />
+    <Build Include="dbo\Tables\PropertyManagers.sql" />
+    <Build Include="dbo\Tables\UserProfilePropertyManagers.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SolveChicago.Db.dbmdl" />

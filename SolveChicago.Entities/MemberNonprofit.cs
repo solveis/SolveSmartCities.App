@@ -20,8 +20,8 @@ namespace SolveChicago.Entities
         public string MemberEnjoyed { get; set; }
         public string MemberStruggled { get; set; }
     
-        public virtual CaseManager CaseManager { get; set; }
         public virtual Member Member { get; set; }
         public virtual Nonprofit Nonprofit { get; set; }
+        public virtual CaseManager CaseManager { get; set; }
     }
 }
