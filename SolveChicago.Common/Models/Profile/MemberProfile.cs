@@ -64,16 +64,25 @@ namespace SolveChicago.Common.Models.Profile
         public SchoolEntity[] Schools { get; set; }
         [Required]
         public string Interests { get; set; }
-        [Required]
-        public string NonprofitName { get; set; }
-        [Required]
-        public string NonprofitSkillsAcquired { get; set; }
-        [Required]
-        public string NonprofitEnjoyed { get; set; }
-        [Required]
-        public string NonprofitStruggled { get; set; }
+        public NonprofitEntity[] Nonprofits { get; set; }
         public JobEntity[] Jobs { get; set; }
     }
+
+    public class NonprofitEntity
+    {
+        public int NonprofitId { get; set; }
+        [Required]
+        public string NonprofitName { get; set; }
+        public int? CaseManagerId { get; set; }
+        public string CaseManagerName { get; set; }
+        [Required]
+        public string SkillsAcquired { get; set; }
+        [Required]
+        public string Enjoyed { get; set; }
+        [Required]
+        public string Struggled { get; set; }
+    }
+    
 
     public class JobEntity
     {

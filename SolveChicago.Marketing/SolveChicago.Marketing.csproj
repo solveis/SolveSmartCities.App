@@ -292,6 +292,10 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SolveChicago.Common\SolveChicago.Common.csproj">
+      <Project>{CA01056B-1975-4FEA-9750-03A508DE30C4}</Project>
+      <Name>SolveChicago.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SolveChicago.Entities\SolveChicago.Entities.csproj">
       <Project>{9faba25f-26c0-4867-b7e6-62f29d8223d4}</Project>
       <Name>SolveChicago.Entities</Name>

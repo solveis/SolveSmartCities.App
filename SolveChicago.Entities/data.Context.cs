@@ -41,11 +41,9 @@ namespace SolveChicago.Entities
         public virtual DbSet<MemberCorporation> MemberCorporations { get; set; }
         public virtual DbSet<MemberEmergencyContact> MemberEmergencyContacts { get; set; }
         public virtual DbSet<MemberGovernmentProgram> MemberGovernmentPrograms { get; set; }
-        public virtual DbSet<MemberNonprofit> MemberNonprofits { get; set; }
         public virtual DbSet<MemberParent> MemberParents { get; set; }
         public virtual DbSet<Member> Members { get; set; }
         public virtual DbSet<MemberSchool> MemberSchools { get; set; }
-        public virtual DbSet<MemberSkill> MemberSkills { get; set; }
         public virtual DbSet<MemberSpous> MemberSpouses { get; set; }
         public virtual DbSet<MemberSurvey> MemberSurveys { get; set; }
         public virtual DbSet<Nonprofit> Nonprofits { get; set; }
@@ -58,5 +56,7 @@ namespace SolveChicago.Entities
         public virtual DbSet<SurveyQuestion> SurveyQuestions { get; set; }
         public virtual DbSet<Survey> Surveys { get; set; }
         public virtual DbSet<Communication> Communications { get; set; }
+        public virtual DbSet<MemberSkill> MemberSkills { get; set; }
+        public virtual DbSet<MemberNonprofit> MemberNonprofits { get; set; }
     }
 }

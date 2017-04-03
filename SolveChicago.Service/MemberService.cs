@@ -35,14 +35,24 @@ namespace SolveChicago.Service
                     Id = member.Id,
                     Interests = member.Interests.Any() ? string.Join(",", member.Interests.Select(x => x.Name).ToArray()) : string.Empty,
                     LastName = member.LastName,
-                    NonprofitSkillsAcquired = member.MemberSkills.Any(x => x.NonprofitId == nonprofitId) ? string.Join(",", member.MemberSkills.Where(x => x.NonprofitId == nonprofitId).Select(x => x.Skill.Name).ToArray()) : string.Empty,
-                    NonprofitName = npo.Name,
+                    Nonprofits = GetNonprofits(member),
                     Phone = member.PhoneNumbers.Any() ? string.Join(",", member.PhoneNumbers.Select(x => x.Number).ToArray()) : string.Empty,
                     ProfilePicturePath = member.ProfilePicturePath,
                     Province = member.Addresses.Any() ? member.Addresses.Last().Province : string.Empty,
                     Schools = GetSchools(member),
                 };
             }
+        }
+
+        private NonprofitEntity[] GetNonprofits(Member member)
+        {
+            MemberNonprofit[] memberNonprofits = member.MemberNonprofits.ToArray();
+            if (memberNonprofits.Count() > 0)
+                return memberNonprofits.Select(x => new NonprofitEntity { CaseManagerId = x.CaseManagerId, CaseManagerName = string.Format("{0} {1}", x.CaseManager?.FirstName, x.CaseManager?.LastName), Enjoyed = x.MemberEnjoyed, Struggled = x.MemberStruggled, NonprofitId = x.NonprofitId, NonprofitName = x.Nonprofit.Name,
+                    SkillsAcquired = member.MemberSkills.Any(y => x.NonprofitId == x.NonprofitId) ? string.Join(",", member.MemberSkills.Where(y => x.NonprofitId == x.NonprofitId).Select(y => y.Skill.Name).ToArray()) : string.Empty,
+                }).ToArray();
+            else
+                return null;
         }
 
         private JobEntity[] GetJobs(Member member)
@@ -178,7 +188,7 @@ namespace SolveChicago.Service
                     UpdateMemberSchools(model, member);
                     UpdateMemberPhone(model, member);
                     UpdateMemberCorporations(model, member);
-                    UpdateMemberSkills(model, member);
+                    UpdateMemberNonprofits(model, member);
                     UpdateMemberInterests(model, member);
 
                     db.SaveChanges();
@@ -253,10 +263,39 @@ namespace SolveChicago.Service
             }
         }
 
-        private void UpdateMemberSkills(MemberProfile model, Member member)
+        private void UpdateMemberNonprofits(MemberProfile model, Member member)
+        {
+            foreach (var nonprofit in model.Nonprofits)
+            {
+                Nonprofit npo = db.Nonprofits.Where(x => (x.Id == nonprofit.NonprofitId || x.Name == nonprofit.NonprofitName)).FirstOrDefault();
+                if (npo == null)
+                {
+                    npo = new Nonprofit
+                    {
+                        Name = nonprofit.NonprofitName,
+                        CreatedDate = DateTime.UtcNow,
+                    };
+                    db.Nonprofits.Add(npo);
+                }
+                if (!member.MemberNonprofits.Select(x => x.NonprofitId).Contains(nonprofit.NonprofitId))
+                {
+                    member.MemberNonprofits.Add(new MemberNonprofit
+                    {
+                        MemberEnjoyed = nonprofit.Enjoyed,
+                        MemberStruggled = nonprofit.Struggled,
+                        MemberId = member.Id,
+                        NonprofitId = npo.Id,
+                        Nonprofit = npo
+                    });
+                }
+                UpdateMemberSkills(nonprofit, member);
+            }
+        }
+
+        private void UpdateMemberSkills(NonprofitEntity nonprofit, Member member)
         {
             List<Skill> skills = db.Skills.ToList();
-            string[] newSkills = model.NonprofitSkillsAcquired.Split(',');
+            string[] newSkills = nonprofit.SkillsAcquired.Split(',').ToArray();
             foreach (string skill in newSkills)
             {
                 string trimSkill = skill.Trim();
@@ -264,7 +303,7 @@ namespace SolveChicago.Service
                 {
                     Skill existingSkill = skills.Single(x => x.Name == trimSkill);
                     if(!member.MemberSkills.Select(x => x.SkillId).Contains(existingSkill.Id))
-                        member.MemberSkills.Add(new MemberSkill { MemberId = member.Id, SkillId = existingSkill.Id });
+                        member.MemberSkills.Add(new MemberSkill { MemberId = member.Id, SkillId = existingSkill.Id, NonprofitId = nonprofit.NonprofitId });
                 }
                 else
                     db.Skills.Add(new Skill { Name = skill, MemberSkills = new List<MemberSkill> { new MemberSkill { MemberId = member.Id } } });

@@ -229,6 +229,8 @@
     <Property Name="MemberId" Type="int" Nullable="false" />
     <Property Name="NonprofitId" Type="int" Nullable="false" />
     <Property Name="CaseManagerId" Type="int" />
+    <Property Name="MemberEnjoyed" Type="nvarchar(max)" />
+    <Property Name="MemberStruggled" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="MemberParents">
     <Key>

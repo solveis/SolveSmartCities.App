@@ -70,7 +70,14 @@ namespace SolveChicago.Common
             {
                 get
                 {
-                    return GetSetting<string>("Mail.FromAddress", "dev@solvechicago.com");
+                    return GetSetting<string>("Mail.FromAddress", "dev+info@solvechicago.com");
+                }
+            }
+            public static string InfoEmail
+            {
+                get
+                {
+                    return GetSetting<string>("Mail.FromAddress", "dev+info@solvechicago.com");
                 }
             }
         }

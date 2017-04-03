@@ -21,11 +21,9 @@
         <EntityTypeShape EntityType="SolveChicagoDevModel.MemberCorporation" Width="1.5" PointX="7.5" PointY="18.25" IsExpanded="true" />
         <EntityTypeShape EntityType="SolveChicagoDevModel.MemberEmergencyContact" Width="1.5" PointX="7.5" PointY="22.375" IsExpanded="true" />
         <EntityTypeShape EntityType="SolveChicagoDevModel.MemberGovernmentProgram" Width="1.5" PointX="10.5" PointY="19.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SolveChicagoDevModel.MemberNonprofit" Width="1.5" PointX="10.5" PointY="16.5" IsExpanded="true" />
         <EntityTypeShape EntityType="SolveChicagoDevModel.MemberParent" Width="1.5" PointX="7.5" PointY="31.375" IsExpanded="true" />
         <EntityTypeShape EntityType="SolveChicagoDevModel.Member" Width="1.5" PointX="5.25" PointY="17.375" IsExpanded="true" />
         <EntityTypeShape EntityType="SolveChicagoDevModel.MemberSchool" Width="1.5" PointX="10.5" PointY="23.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SolveChicagoDevModel.MemberSkill" Width="1.5" PointX="7.5" PointY="14.5" IsExpanded="true" />
         <EntityTypeShape EntityType="SolveChicagoDevModel.MemberSpous" Width="1.5" PointX="7.5" PointY="40.25" IsExpanded="true" />
         <EntityTypeShape EntityType="SolveChicagoDevModel.MemberSurvey" Width="1.5" PointX="7.5" PointY="25.5" IsExpanded="true" />
         <EntityTypeShape EntityType="SolveChicagoDevModel.Nonprofit" Width="1.5" PointX="5.25" PointY="12.375" IsExpanded="true" />
@@ -44,7 +42,6 @@
         <AssociationConnector Association="SolveChicagoDevModel.FK_Surveys_AspNetUser" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_CaseManagers_Nonprofit" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_CaseNotes_CaseManagers" ManuallyRouted="false" />
-        <AssociationConnector Association="SolveChicagoDevModel.FK_MemberNonprofits_CaseManagers" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_CaseNotes_Members" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_CaseNotes_Outcomes" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_MemberCorporations_Corporations" ManuallyRouted="false" />
@@ -53,19 +50,14 @@
         <AssociationConnector Association="SolveChicagoDevModel.FK_MemberCorporations_Members" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_MemberEmergencyContacts_Members" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_MemberGovernmentPrograms_Members" ManuallyRouted="false" />
-        <AssociationConnector Association="SolveChicagoDevModel.FK_MemberNonprofits_Members" ManuallyRouted="false" />
-        <AssociationConnector Association="SolveChicagoDevModel.FK_MemberNonprofits_Nonprofits" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_MemberParents_Child" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_MemberParents_Parent" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_MemberSchools_Member" ManuallyRouted="false" />
-        <AssociationConnector Association="SolveChicagoDevModel.FK_MemberSkills_Members" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_MemberSpouses_Spouse1" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_MemberSpouses_Spouse2" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_MemberSurveys_Members" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_Outcomes_Members" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_MemberSchools_School" ManuallyRouted="false" />
-        <AssociationConnector Association="SolveChicagoDevModel.FK_MemberSkills_Nonprofits" ManuallyRouted="false" />
-        <AssociationConnector Association="SolveChicagoDevModel.FK_MemberSkills_Skills" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_MemberSurveys_Surveys" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_SurveyAnswers_MemberSurveys" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_SurveyAnswers_SurveyQuestions" ManuallyRouted="false" />
@@ -85,6 +77,14 @@
         <AssociationConnector Association="SolveChicagoDevModel.UserProfileNonprofits" ManuallyRouted="false" />
         <EntityTypeShape EntityType="SolveChicagoDevModel.Communication" Width="1.5" PointX="5.25" PointY="36.25" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_Communications_AspNetUsers" />
+        <EntityTypeShape EntityType="SolveChicagoDevModel.MemberSkill" Width="1.5" PointX="7.5" PointY="14.375" />
+        <AssociationConnector Association="SolveChicagoDevModel.FK_MemberSkills_Members" />
+        <AssociationConnector Association="SolveChicagoDevModel.FK_MemberSkills_Nonprofits" />
+        <AssociationConnector Association="SolveChicagoDevModel.FK_MemberSkills_Skills" />
+        <EntityTypeShape EntityType="SolveChicagoDevModel.MemberNonprofit" Width="1.5" PointX="13.5" PointY="14.5" />
+        <AssociationConnector Association="SolveChicagoDevModel.FK_MemberNonprofits_CaseManagers" />
+        <AssociationConnector Association="SolveChicagoDevModel.FK_MemberNonprofits_Members" />
+        <AssociationConnector Association="SolveChicagoDevModel.FK_MemberNonprofits_Nonprofits" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

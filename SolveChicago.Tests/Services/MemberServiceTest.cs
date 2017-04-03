@@ -690,6 +690,7 @@ namespace SolveChicago.Tests.Services
             List<Skill> skills = new List<Skill> { new Skill { Id = 1, Name = "math" } };
             List<Interest> interests = new List<Interest> { new Interest { Id = 1, Name = "Jogging" } };
             List<PhoneNumber> phones = new List<PhoneNumber>();
+            List<Nonprofit> nonprofits = new List<Nonprofit>();
 
             var set = new Mock<DbSet<Member>>().SetupData(data);
             set.Setup(m => m.Find(It.IsAny<object[]>()))
@@ -725,6 +726,11 @@ namespace SolveChicago.Tests.Services
             phoneSet.Setup(m => m.Find(It.IsAny<object[]>()))
                 .Returns<object[]>(ids => phones.FirstOrDefault(d => d.Id == (int)ids[0]));
             context.Setup(c => c.PhoneNumbers).Returns(phoneSet.Object);
+
+            var npoSet = new Mock<DbSet<Nonprofit>>().SetupData(nonprofits);
+            npoSet.Setup(m => m.Find(It.IsAny<object[]>()))
+                .Returns<object[]>(ids => nonprofits.FirstOrDefault(d => d.Id == (int)ids[0]));
+            context.Setup(c => c.Nonprofits).Returns(npoSet.Object);
 
 
             MemberProfile model = new MemberProfile
@@ -774,10 +780,10 @@ namespace SolveChicago.Tests.Services
                 {
                     new JobEntity{ Name = "Walgreens", EmployeeStart = new DateTime(2015, 8, 25), EmployeePay = 12}
                 }.ToArray(),
-                NonprofitEnjoyed = "reading, writing, singing",
-                NonprofitSkillsAcquired = "critical thinking, math",
-                NonprofitName = "i.c. stars",
-                NonprofitStruggled = "leadership, brainstorming",
+                Nonprofits = new List<NonprofitEntity>
+                {
+                    new NonprofitEntity { Enjoyed = "reading, writing, singing", SkillsAcquired = "critical thinking, math", NonprofitName = "i.c. stars", Struggled = "leadership, brainstorming" }
+                }.ToArray(),
                 Phone = "1234567890",
                 ProfilePicturePath = "../path.jpg",
                 Province = "Illinois",
@@ -810,6 +816,7 @@ namespace SolveChicago.Tests.Services
             Assert.Equal(new DateTime(2007, 5, 1), updatedMember.Schools.First().End);
             Assert.Equal("Illinois", updatedMember.Province);
             Assert.Equal("Sam", updatedMember.Family.FamilyMembers.Where(x => x.Relation == "Husband").First().FirstName);
+            Assert.Equal("i.c. stars", updatedMember.Nonprofits.Last().NonprofitName);
         }
     }
 }

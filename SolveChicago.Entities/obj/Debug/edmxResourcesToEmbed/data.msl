@@ -184,15 +184,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="MemberNonprofits">
-      <EntityTypeMapping TypeName="SolveChicagoDevModel.MemberNonprofit">
-        <MappingFragment StoreEntitySet="MemberNonprofits">
-          <ScalarProperty Name="MemberId" ColumnName="MemberId" />
-          <ScalarProperty Name="NonprofitId" ColumnName="NonprofitId" />
-          <ScalarProperty Name="CaseManagerId" ColumnName="CaseManagerId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="MemberParents">
       <EntityTypeMapping TypeName="SolveChicagoDevModel.MemberParent">
         <MappingFragment StoreEntitySet="MemberParents">
@@ -227,15 +218,6 @@
           <ScalarProperty Name="End" ColumnName="End" />
           <ScalarProperty Name="IsCurrent" ColumnName="IsCurrent" />
           <ScalarProperty Name="Degree" ColumnName="Degree" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="MemberSkills">
-      <EntityTypeMapping TypeName="SolveChicagoDevModel.MemberSkill">
-        <MappingFragment StoreEntitySet="MemberSkills">
-          <ScalarProperty Name="MemberId" ColumnName="MemberId" />
-          <ScalarProperty Name="SkillId" ColumnName="SkillId" />
-          <ScalarProperty Name="NonprofitId" ColumnName="NonprofitId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -447,6 +429,26 @@
           <ScalarProperty Name="Type" ColumnName="Type" />
           <ScalarProperty Name="OrganizationId" ColumnName="OrganizationId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MemberSkills">
+      <EntityTypeMapping TypeName="SolveChicagoDevModel.MemberSkill">
+        <MappingFragment StoreEntitySet="MemberSkills">
+          <ScalarProperty Name="NonprofitId" ColumnName="NonprofitId" />
+          <ScalarProperty Name="SkillId" ColumnName="SkillId" />
+          <ScalarProperty Name="MemberId" ColumnName="MemberId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MemberNonprofits">
+      <EntityTypeMapping TypeName="SolveChicagoDevModel.MemberNonprofit">
+        <MappingFragment StoreEntitySet="MemberNonprofits">
+          <ScalarProperty Name="MemberStruggled" ColumnName="MemberStruggled" />
+          <ScalarProperty Name="MemberEnjoyed" ColumnName="MemberEnjoyed" />
+          <ScalarProperty Name="CaseManagerId" ColumnName="CaseManagerId" />
+          <ScalarProperty Name="NonprofitId" ColumnName="NonprofitId" />
+          <ScalarProperty Name="MemberId" ColumnName="MemberId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

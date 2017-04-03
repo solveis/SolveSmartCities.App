@@ -17,6 +17,8 @@ namespace SolveChicago.Entities
         public int MemberId { get; set; }
         public int NonprofitId { get; set; }
         public Nullable<int> CaseManagerId { get; set; }
+        public string MemberEnjoyed { get; set; }
+        public string MemberStruggled { get; set; }
     
         public virtual CaseManager CaseManager { get; set; }
         public virtual Member Member { get; set; }

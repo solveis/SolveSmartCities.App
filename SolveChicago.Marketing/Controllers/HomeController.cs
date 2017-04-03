@@ -1,4 +1,5 @@
-﻿using SolveChicago.Entities;
+﻿using SolveChicago.Common;
+using SolveChicago.Entities;
 using SolveChicago.Marketing.Models;
 using SolveChicago.Service;
 using System;
@@ -46,7 +47,7 @@ namespace SolveChicago.Marketing.Controllers
         {
             EmailService service = new EmailService(db);
             service.DeliverSendGridMessage(
-                "rcompton@solvechicago.com",
+                Settings.Mail.InfoEmail,
                 model.Name,
                 model.Subject,
                 "16ed84a1-3258-4965-ae84-29c5e96c2a81",

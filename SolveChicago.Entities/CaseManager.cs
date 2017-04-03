@@ -18,8 +18,8 @@ namespace SolveChicago.Entities
         public CaseManager()
         {
             this.CaseNotes = new HashSet<CaseNote>();
-            this.MemberNonprofits = new HashSet<MemberNonprofit>();
             this.AspNetUsers = new HashSet<AspNetUser>();
+            this.MemberNonprofits = new HashSet<MemberNonprofit>();
         }
     
         public int Id { get; set; }
@@ -35,8 +35,8 @@ namespace SolveChicago.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CaseNote> CaseNotes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MemberNonprofit> MemberNonprofits { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MemberNonprofit> MemberNonprofits { get; set; }
     }
 }
