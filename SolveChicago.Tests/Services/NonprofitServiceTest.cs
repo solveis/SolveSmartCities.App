@@ -32,7 +32,72 @@ namespace SolveChicago.Tests.Services
                     {
                         new CaseManager { Id = 1, FirstName = "Tim", LastName = "Keller" },
                         new CaseManager { Id = 2, FirstName = "Esme", LastName = "Pirouet" },
+                    },
+                    MemberNonprofits = new List<MemberNonprofit>
+                    {
+                        new MemberNonprofit
+                        {
+                            CaseManagerId = null,
+                            MemberId = 1,
+                            Member = new Member(),
+                            MemberEnjoyed = "everything",
+                            MemberStruggled = "nothing",
+                            NonprofitId = 1,
+                        },
+
+                        new MemberNonprofit
+                        {
+                            CaseManagerId = 1,
+                            MemberId = 2,
+                            Member = new Member(),
+                            MemberEnjoyed = "everything",
+                            MemberStruggled = "nothing",
+                            NonprofitId = 1,
+                        },
+
+                        new MemberNonprofit
+                        {
+                            CaseManagerId = 2,
+                            MemberId = 3,
+                            Member = new Member(),
+                            MemberEnjoyed = "everything",
+                            MemberStruggled = "nothing",
+                            NonprofitId = 1,
+                        }
                     }
+                }
+            };
+
+            List<MemberNonprofit> memberNonprofits = new List<MemberNonprofit>
+            {
+                new MemberNonprofit
+                {
+                    CaseManagerId = null,
+                    MemberId = 1,
+                    Member = new Member(),
+                    MemberEnjoyed = "everything",
+                    MemberStruggled = "nothing",
+                    NonprofitId = 1,
+                },
+
+                new MemberNonprofit
+                {
+                    CaseManagerId = 1,
+                    MemberId = 2,
+                    Member = new Member(),
+                    MemberEnjoyed = "everything",
+                    MemberStruggled = "nothing",
+                    NonprofitId = 1,
+                },
+
+                new MemberNonprofit
+                {
+                    CaseManagerId = 2,
+                    MemberId = 3,
+                    Member = new Member(),
+                    MemberEnjoyed = "everything",
+                    MemberStruggled = "nothing",
+                    NonprofitId = 1,
                 }
             };
 
@@ -40,6 +105,11 @@ namespace SolveChicago.Tests.Services
             set.Setup(m => m.Find(It.IsAny<object[]>()))
                 .Returns<object[]>(ids => data.FirstOrDefault(d => d.Id == (int)ids[0]));
             context.Setup(c => c.Nonprofits).Returns(set.Object);
+
+            var memberNonprofitSet = new Mock<DbSet<MemberNonprofit>>().SetupData(memberNonprofits);
+            memberNonprofitSet.Setup(m => m.Find(It.IsAny<object[]>()))
+                .Returns<object[]>(ids => memberNonprofits.FirstOrDefault(d => d.NonprofitId == (int)ids[0]));
+            context.Setup(c => c.MemberNonprofits).Returns(memberNonprofitSet.Object);
         }
 
         [Fact]
@@ -105,6 +175,40 @@ namespace SolveChicago.Tests.Services
             CaseManager[] cm = service.GetCaseManagers(10);
 
             Assert.Equal(0, cm.Count());
+        }
+
+        [Fact]
+        public void NonprofitService_GetMembers_ReturnsMemberArray()
+        {
+            NonprofitService service = new NonprofitService(context.Object);
+            Member[] members = service.GetMembers(1);
+
+            Assert.Equal(3, members.Count());
+        }
+
+        [Fact]
+        public void NonprofitService_GetMembers_ReturnsEmptyArray()
+        {
+            NonprofitService service = new NonprofitService(context.Object);
+            Member[] members = service.GetMembers(10);
+
+            Assert.Equal(0, members.Count());
+        }
+
+        [Fact]
+        public void NonprofitService_AssignCaseManager_Success()
+        {
+            NonprofitService service = new NonprofitService(context.Object);
+            service.AssignCaseManager(1, 1, 1);
+
+        }
+
+        [Fact]
+        public void NonprofitService_AssignCaseManager_ThrowsException()
+        {
+            NonprofitService service = new NonprofitService(context.Object);
+            Assert.Throws<ApplicationException>(() => service.AssignCaseManager(1, 4, 1));
+
         }
     }
 }

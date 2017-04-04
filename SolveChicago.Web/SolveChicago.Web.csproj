@@ -226,6 +226,7 @@
     <Compile Include="Models\Admin\AdminInviteModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Nonprofit\AssignCaseManagerViewModel.cs" />
     <Compile Include="Models\Profile\MemberProfileViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -372,6 +373,7 @@
     <Content Include="Views\PropertyManagers\Edit.cshtml" />
     <Content Include="Views\PropertyManagers\Index.cshtml" />
     <Content Include="Views\Members\Index.cshtml" />
+    <Content Include="Views\Nonprofits\Members.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

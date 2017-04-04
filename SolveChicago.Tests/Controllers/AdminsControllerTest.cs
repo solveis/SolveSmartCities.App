@@ -14,7 +14,6 @@ using Xunit;
 
 namespace SolveChicago.Tests.Controllers
 {
-    [ExcludeFromCodeCoverage]
     public class AdminsControllerTest
     {
         Mock<SolveChicagoEntities> context = new Mock<SolveChicagoEntities>();

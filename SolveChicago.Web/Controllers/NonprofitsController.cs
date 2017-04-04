@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using SolveChicago.Entities;
 using SolveChicago.Service;
+using SolveChicago.Web.Models.Nonprofit;
 
 namespace SolveChicago.Web.Controllers
 {
@@ -34,6 +35,42 @@ namespace SolveChicago.Web.Controllers
             NonprofitService service = new NonprofitService(this.db);
             CaseManager[] caseManagers = service.GetCaseManagers(State.NonprofitId);
             return View(caseManagers.ToList());
+        }
+
+        // GET : Nonprofits/Members
+        public ActionResult Members(int? nonprofitId)
+        {
+            ImpersonateNonprofit(nonprofitId);
+            NonprofitService service = new NonprofitService(this.db);
+            Member[] members = service.GetMembers(State.NonprofitId);
+            return View(members.ToList());
+        }
+
+        // GET : Nonprofits/AssignCaseManager
+        public ActionResult AssignCaseManager(int? nonprofitId, int memberId)
+        {
+            ImpersonateNonprofit(nonprofitId);
+            NonprofitService service = new NonprofitService(this.db);
+            AssignCaseManagerViewModel model = new AssignCaseManagerViewModel
+            {
+                NonprofitId = State.NonprofitId,
+                MemberId = memberId,
+                CaseManagers = service.GetCaseManagers(State.NonprofitId)
+            };
+            return View(model);
+        }
+
+        // POST : Nonprofits/AssignCaseManager
+        public ActionResult AssignCaseManager(AssignCaseManagerViewModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                ImpersonateNonprofit(model.NonprofitId);
+                NonprofitService service = new NonprofitService(this.db);
+                service.AssignCaseManager(model.NonprofitId, model.MemberId, model.CaseManagerId.Value);
+                return NonprofitRedirect(State.NonprofitId);
+            }
+            return View(model);
         }
 
         // GET: Nonprofits/Details/5

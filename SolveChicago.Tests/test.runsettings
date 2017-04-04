@@ -15,6 +15,11 @@
                 <ModulePath>.*entityframework.testing.moq.dll</ModulePath>
               </Exclude>
             </ModulePaths>
+            <Attributes>
+              <Exclude>
+                <Attribute>^System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute$</Attribute>
+              </Exclude>
+            </Attributes>
           </CodeCoverage>
         </Configuration>
       </DataCollector>
