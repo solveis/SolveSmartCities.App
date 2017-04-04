@@ -61,6 +61,7 @@ namespace SolveChicago.Web.Controllers
         }
 
         // POST : Nonprofits/AssignCaseManager
+        [HttpPost]
         public ActionResult AssignCaseManager(AssignCaseManagerViewModel model)
         {
             if(ModelState.IsValid)
