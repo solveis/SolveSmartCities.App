@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SolveChicago.Entities.CaseManager>
+﻿@model IEnumerable<SolveChicago.Entities.Member>
 
 @{
     ViewBag.Title = "Index";
@@ -16,9 +16,6 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.ProfilePicturePath)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Phone)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.CreatedDate)
@@ -39,9 +36,6 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.ProfilePicturePath)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Phone)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.CreatedDate)

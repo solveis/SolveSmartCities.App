@@ -45,6 +45,7 @@ namespace SolveChicago.Marketing.Controllers
         [HttpPost]
         public ActionResult Contact(ContactModel model)
         {
+            string communicationType = Constants.Communication.Inquiry;
             EmailService service = new EmailService(db);
             service.DeliverSendGridMessage(
                 Settings.Mail.InfoEmail,
@@ -60,8 +61,7 @@ namespace SolveChicago.Marketing.Controllers
                     { "-Body-", model.Body },
                 },
                 model.Email,
-                0,
-                "",
+                communicationType,
                 "",
                 null                
             ).Wait();

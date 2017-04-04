@@ -25,11 +25,21 @@ namespace SolveChicago.Service
 
         public void MarkAdminInviteCodeAsUsed(string invitingUserId, string inviteCode, string receivingUserId)
         {
-            AdminInviteCode invite = db.AdminInviteCodes.Single(x => x.InviteCode == inviteCode);
-            invite.RecevingAdminUserId = receivingUserId;
-            invite.IsStale = true;
+            try
+            {
+                AdminInviteCode invite = db.AdminInviteCodes.Single(x => x.InviteCode == inviteCode);
+                if (invite.IsStale)
+                    throw new ApplicationException($"Invite Code {inviteCode} has already been used.");
 
-            db.SaveChanges();
+                invite.RecevingAdminUserId = receivingUserId;
+                invite.IsStale = true;
+                db.SaveChanges();
+            }
+            catch
+            {
+                throw new ApplicationException($"Invite Code {inviteCode} is invalid");
+            }
+
         }
 
         public bool ValidateAdminInvite(string inviteCode, ref string userId)

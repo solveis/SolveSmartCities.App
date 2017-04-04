@@ -48,7 +48,14 @@ namespace SolveChicago.Service
         {
             MemberNonprofit[] memberNonprofits = member.MemberNonprofits.ToArray();
             if (memberNonprofits.Count() > 0)
-                return memberNonprofits.Select(x => new NonprofitEntity { CaseManagerId = x.CaseManagerId, CaseManagerName = string.Format("{0} {1}", x.CaseManager?.FirstName, x.CaseManager?.LastName), Enjoyed = x.MemberEnjoyed, Struggled = x.MemberStruggled, NonprofitId = x.NonprofitId, NonprofitName = x.Nonprofit.Name,
+                return memberNonprofits.Select(x => new NonprofitEntity
+                {
+                    CaseManagerId = x.CaseManagerId,
+                    CaseManagerName = string.Format("{0} {1}", x.CaseManager?.FirstName, x.CaseManager?.LastName),
+                    Enjoyed = x.MemberEnjoyed,
+                    Struggled = x.MemberStruggled,
+                    NonprofitId = x.NonprofitId,
+                    NonprofitName = x.Nonprofit.Name,
                     SkillsAcquired = member.MemberSkills.Any(y => x.NonprofitId == x.NonprofitId) ? string.Join(",", member.MemberSkills.Where(y => x.NonprofitId == x.NonprofitId).Select(y => y.Skill.Name).ToArray()) : string.Empty,
                 }).ToArray();
             else
@@ -70,7 +77,7 @@ namespace SolveChicago.Service
             if (schools.Count() > 0)
                 return schools.OrderByDescending(x => x.Start).ToArray();
             else
-                return new SchoolEntity[1];
+                return null;
         }
 
         private FamilyEntity GetFamily(Member member)
@@ -190,7 +197,6 @@ namespace SolveChicago.Service
                     UpdateMemberCorporations(model, member);
                     UpdateMemberNonprofits(model, member);
                     UpdateMemberInterests(model, member);
-
                     db.SaveChanges();
                 }
                 catch (Exception ex)
@@ -216,13 +222,16 @@ namespace SolveChicago.Service
             List<FamilyMember> familyMembers = GetFamilyMembers(member).ToList();
             foreach(FamilyMember familyMember in model.Family?.FamilyMembers)
             {
-                Member existingFamilyMember = db.Members.Find(familyMember.Id);
-                if (existingFamilyMember == null)
-                    existingFamilyMember = db.Members.Add(new Member { FirstName = familyMember.FirstName, LastName = familyMember.LastName, IsHeadOfHousehold = familyMember.IsHeadOfHousehold, Birthday = familyMember.Birthday, Gender = familyMember.Gender });
-                else if (string.IsNullOrEmpty(familyMember.FirstName) && string.IsNullOrEmpty(familyMember.LastName))
-                    db.Members.Remove(existingFamilyMember);
-                if (!familyMembers.Select(x => x.Id).Contains(existingFamilyMember.Id))
-                    AddFamilyMemberRelationship(existingFamilyMember, member, familyMember.Relation);
+                if(familyMember != null && !string.IsNullOrEmpty(familyMember.Name.Trim()) && familyMember.Gender != null && familyMember.Relation != null)
+                {
+                    Member existingFamilyMember = db.Members.Find(familyMember.Id);
+                    if (existingFamilyMember == null)
+                        existingFamilyMember = db.Members.Add(new Member { FirstName = familyMember.FirstName, LastName = familyMember.LastName, IsHeadOfHousehold = familyMember.IsHeadOfHousehold, Birthday = familyMember.Birthday, Gender = familyMember.Gender });
+                    else if (string.IsNullOrEmpty(familyMember.FirstName) && string.IsNullOrEmpty(familyMember.LastName))
+                        db.Members.Remove(existingFamilyMember);
+                    if (!familyMembers.Select(x => x.Id).Contains(existingFamilyMember.Id))
+                        AddFamilyMemberRelationship(existingFamilyMember, member, familyMember.Relation);
+                }
             }
         }
 
@@ -259,7 +268,9 @@ namespace SolveChicago.Service
                         member.Interests.Add(existingInterest);
                 }   
                 else
+                {
                     member.Interests.Add(new Interest { Name = interest });
+                }
             }
         }
 
@@ -277,7 +288,7 @@ namespace SolveChicago.Service
                     };
                     db.Nonprofits.Add(npo);
                 }
-                if (!member.MemberNonprofits.Select(x => x.NonprofitId).Contains(nonprofit.NonprofitId))
+                if (!member.MemberNonprofits.Select(x => x.NonprofitId).Contains(nonprofit.NonprofitId ?? 0))
                 {
                     member.MemberNonprofits.Add(new MemberNonprofit
                     {
@@ -299,14 +310,18 @@ namespace SolveChicago.Service
             foreach (string skill in newSkills)
             {
                 string trimSkill = skill.Trim();
-                if (skills.Select(x => x.Name).Contains(skill))
+                if (skills.Select(x => x.Name).Contains(trimSkill))
                 {
                     Skill existingSkill = skills.Single(x => x.Name == trimSkill);
                     if(!member.MemberSkills.Select(x => x.SkillId).Contains(existingSkill.Id))
                         member.MemberSkills.Add(new MemberSkill { MemberId = member.Id, SkillId = existingSkill.Id, NonprofitId = nonprofit.NonprofitId });
                 }
                 else
-                    db.Skills.Add(new Skill { Name = skill, MemberSkills = new List<MemberSkill> { new MemberSkill { MemberId = member.Id } } });
+                {
+                    Skill newSkill = new Skill { Name = trimSkill };
+                    db.Skills.Add(newSkill);
+                    member.MemberSkills.Add(new MemberSkill { Skill = newSkill, NonprofitId = nonprofit.NonprofitId });
+                }
             }
         }
 
@@ -324,7 +339,7 @@ namespace SolveChicago.Service
                     };
                     db.Corporations.Add(corporation);
                 }
-                if (!member.MemberCorporations.Select(x => x.CorporationId).Contains(job.CorporationId))
+                if (!member.MemberCorporations.Select(x => x.CorporationId).Contains(job.CorporationId ?? 0))
                 {
                     member.MemberCorporations.Add(new MemberCorporation
                     {
@@ -371,7 +386,7 @@ namespace SolveChicago.Service
                         End = s.End,
                         IsCurrent = s.IsCurrent,
                         School = school,
-                        Start = s.Start
+                        Start = s.Start.Value
                     });
                 }
             }

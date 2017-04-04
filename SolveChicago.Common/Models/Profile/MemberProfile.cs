@@ -38,7 +38,6 @@ namespace SolveChicago.Common.Models.Profile
 
         public string ProfilePicturePath { get; set; }
         public HttpPostedFileBase ProfilePicture { get; set; }
-        [Required]
         public string HighestEducation
         {
             get
@@ -46,14 +45,12 @@ namespace SolveChicago.Common.Models.Profile
                 return this.Schools != null && this.Schools.Any(x => x.End.HasValue) ? this.Schools.Where(x => x.End.HasValue).OrderByDescending(x => x.Start).First().Type : string.Empty;
             }
         }
-        [Required]
         public string Degree {
             get
             {
                 return this.Schools != null && this.Schools.Any(x => !string.IsNullOrEmpty(x.Degree)) ? this.Schools.Where(x => !string.IsNullOrEmpty(x.Degree)).OrderByDescending(x => x.Start).First().Degree : string.Empty;
             }
         }
-        [Required]
         public string LastSchool
         {
             get
@@ -70,7 +67,7 @@ namespace SolveChicago.Common.Models.Profile
 
     public class NonprofitEntity
     {
-        public int NonprofitId { get; set; }
+        public int? NonprofitId { get; set; }
         [Required]
         public string NonprofitName { get; set; }
         public int? CaseManagerId { get; set; }
@@ -86,7 +83,7 @@ namespace SolveChicago.Common.Models.Profile
 
     public class JobEntity
     {
-        public int CorporationId { get; set; }
+        public int? CorporationId { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]
@@ -99,7 +96,7 @@ namespace SolveChicago.Common.Models.Profile
 
     public class FamilyEntity
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public string FamilyName { get; set; }
         public string Phone { get; set; }
         public string Address1 { get; set; }
@@ -124,18 +121,21 @@ namespace SolveChicago.Common.Models.Profile
         public string Relation { get; set; }
         public bool? RelationBiological { get; set; }
         public bool? IsMarriageCurrent { get; set; }
-        public bool IsHeadOfHousehold { get; set; }
+        public bool? IsHeadOfHousehold { get; set; }
         public DateTime? Birthday { get; set; }
         public string Gender { get; set; }
-        public int Id { get; set; }
+        public int? Id { get; set; }
     }
 
     public class SchoolEntity
     {
         public int Id { get; set;}
+        [Required]
         public string Name { get; set; }
+        [Required]
         public string Type { get; set; }
-        public DateTime Start { get; set; }
+        [Required]
+        public DateTime? Start { get; set; }
         public DateTime? End { get; set; }
         public bool IsCurrent { get; set; }
         public string Degree { get; set; }

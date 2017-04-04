@@ -20,6 +20,11 @@ namespace SolveChicago.Common
             public const string Admin = "Solve Chicago Community Support";
         }
 
+        public class Communication
+        {
+            public const string Inquiry = "Inquiry";
+        }
+
         public class Roles
         {
             public const string Admin = "Admin";

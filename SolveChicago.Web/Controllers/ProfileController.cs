@@ -52,9 +52,9 @@ namespace SolveChicago.Web.Controllers
                 
                     service.UpdateProfile(model.Member);
                     return MemberRedirect(model.Member.Id);
-                
             }
-            return View(model);
+            model = FormatMemberProfileViewModel(model.Member);
+            return MemberRedirect(model.Member.Id);
         }
 
         private MemberProfileViewModel FormatMemberProfileViewModel(MemberProfile member)
@@ -75,11 +75,13 @@ namespace SolveChicago.Web.Controllers
             if (model.Family == null)
                 model.Family = new FamilyEntity();
             if (model.Family != null && (model.Family.FamilyMembers == null || model.Family.FamilyMembers.Count() == 0))
-                model.Family.FamilyMembers = new FamilyMember[1];
+                model.Family.FamilyMembers = new FamilyMember[1] { new FamilyMember() };
+            if (model.Nonprofits == null)
+                model.Nonprofits = new NonprofitEntity[1] { new NonprofitEntity() };
             if (model.Jobs == null || (model.Jobs != null && model.Jobs.Count() == 0))
-                model.Jobs = new JobEntity[1];
+                model.Jobs = new JobEntity[1] { new JobEntity() };
             if (model.Schools == null)
-                model.Schools = new SchoolEntity[1];
+                model.Schools = new SchoolEntity[1] { new SchoolEntity() };
 
             return model;
 

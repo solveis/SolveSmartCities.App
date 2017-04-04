@@ -15,7 +15,7 @@ namespace SolveChicago.Service
     {
         public EmailService(SolveChicagoEntities db) : base(db) { }
 
-        public async Task DeliverSendGridMessage(string toName, string fromName, string subject, string templateId, Dictionary<string, string> subs, string fromAddress, int organizationId = 0, string communicationType = "", string userId = "", Dictionary<string, byte[]> attachments = null)
+        public async Task DeliverSendGridMessage(string toName, string fromName, string subject, string templateId, Dictionary<string, string> subs, string fromAddress, string communicationType = "", string userId = "", Dictionary<string, byte[]> attachments = null)
         {
             string apiKey = Settings.SendGrid.ApiKey;
             dynamic sg = new SendGrid.SendGridAPIClient(apiKey, "https://api.sendgrid.com");
@@ -73,10 +73,10 @@ namespace SolveChicago.Service
             }
             finally
             {
-                if (organizationId > 0 && !string.IsNullOrEmpty(communicationType) && !string.IsNullOrEmpty(userId))
+                if (!string.IsNullOrEmpty(communicationType) && !string.IsNullOrEmpty(userId))
                 {
                     CommunicationService service = new CommunicationService(db);
-                    service.Log(DateTime.UtcNow, organizationId, communicationType, userId, success);
+                    service.Log(DateTime.UtcNow, communicationType, userId, success);
                 }  
             }
         }

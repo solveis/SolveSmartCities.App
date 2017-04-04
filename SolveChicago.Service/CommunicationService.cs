@@ -11,12 +11,11 @@ namespace SolveChicago.Service
     {
         public CommunicationService(SolveChicagoEntities db) : base(db) { }
 
-        public void Log(DateTime date, int organizationId, string communicationType, string userId, bool success)
+        public void Log(DateTime date, string communicationType, string userId, bool success)
         {
             db.Communications.Add(new Communication
             {
                 Date = date,
-                OrganizationId = organizationId,
                 Type = communicationType,
                 UserId = userId,
                 Success = success

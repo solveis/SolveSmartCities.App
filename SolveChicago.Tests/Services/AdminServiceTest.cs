@@ -74,5 +74,147 @@ namespace SolveChicago.Tests.Services
             AdminService service = new AdminService(context.Object);
             Assert.Throws<ApplicationException>(() => service.GenerateAdminInviteCode("ThisIsNotAUserId"));
         }
+
+        [Fact]
+        public void AdminService_ValidateAdminInviteCode_ReturnsTrue()
+        {
+            List<AdminInviteCode> data = new List<AdminInviteCode>
+            {
+                new AdminInviteCode
+                {
+                    Id = 1,
+                    InviteCode = "InviteCode1234",
+                    InvitingAdminUserId = "*&^%$EDFGHJ",
+                    IsStale = false,
+                }
+            };
+            
+            var dataSet = new Mock<DbSet<AdminInviteCode>>().SetupData(data);
+            var context = new Mock<SolveChicagoEntities>();
+            context.Setup(c => c.AdminInviteCodes).Returns(dataSet.Object);
+
+            AdminService service = new AdminService(context.Object);
+            string userId = "";
+            bool success = service.ValidateAdminInvite("InviteCode1234", ref userId);
+
+            Assert.True(success);
+            Assert.Equal(userId, "*&^%$EDFGHJ");
+        }
+
+        [Fact]
+        public void AdminService_ValidateAdminInviteCode_ReturnFalseStale()
+        {
+            List<AdminInviteCode> data = new List<AdminInviteCode>
+            {
+                new AdminInviteCode
+                {
+                    Id = 1,
+                    InviteCode = "InviteCode1234",
+                    InvitingAdminUserId = "*&^%$EDFGHJ",
+                    IsStale = true,
+                }
+            };
+
+            var dataSet = new Mock<DbSet<AdminInviteCode>>().SetupData(data);
+            var context = new Mock<SolveChicagoEntities>();
+            context.Setup(c => c.AdminInviteCodes).Returns(dataSet.Object);
+
+            AdminService service = new AdminService(context.Object);
+            string userId = "";
+            bool success = service.ValidateAdminInvite("InviteCode1234", ref userId);
+
+            Assert.False(success);
+        }
+
+        [Fact]
+        public void AdminService_ValidateAdminInviteCode_ReturnFalseBadCode()
+        {
+            List<AdminInviteCode> data = new List<AdminInviteCode>
+            {
+                new AdminInviteCode
+                {
+                    Id = 1,
+                    InviteCode = "InviteCode1234",
+                    InvitingAdminUserId = "*&^%$EDFGHJ",
+                    IsStale = false,
+                }
+            };
+
+            var dataSet = new Mock<DbSet<AdminInviteCode>>().SetupData(data);
+            var context = new Mock<SolveChicagoEntities>();
+            context.Setup(c => c.AdminInviteCodes).Returns(dataSet.Object);
+
+            AdminService service = new AdminService(context.Object);
+            string userId = "";
+            bool success = service.ValidateAdminInvite("InviteCode1234567890", ref userId);
+
+            Assert.False(success);
+        }
+
+        [Fact]
+        public void AdminService_MarkAdminInviteCodeAsUsed_NoExceptions()
+        {
+            List<AdminInviteCode> data = new List<AdminInviteCode>
+            {
+                new AdminInviteCode
+                {
+                    Id = 1,
+                    InviteCode = "InviteCode1234",
+                    InvitingAdminUserId = "*&^%$EDFGHJ",
+                    IsStale = false,
+                }
+            };
+
+            var dataSet = new Mock<DbSet<AdminInviteCode>>().SetupData(data);
+            var context = new Mock<SolveChicagoEntities>();
+            context.Setup(c => c.AdminInviteCodes).Returns(dataSet.Object);
+
+            AdminService service = new AdminService(context.Object);
+            service.MarkAdminInviteCodeAsUsed("*&^%$EDFGHJ", "InviteCode1234", "IOUGYTDR%I&^F*G(H");
+        }
+
+        [Fact]
+        public void AdminService_MarkAdminInviteCodeAsUsed_ThrowsExceptionIsStale()
+        {
+            List<AdminInviteCode> data = new List<AdminInviteCode>
+            {
+                new AdminInviteCode
+                {
+                    Id = 1,
+                    InviteCode = "InviteCode1234",
+                    InvitingAdminUserId = "*&^%$EDFGHJ",
+                    IsStale = true,
+                }
+            };
+
+            var dataSet = new Mock<DbSet<AdminInviteCode>>().SetupData(data);
+            var context = new Mock<SolveChicagoEntities>();
+            context.Setup(c => c.AdminInviteCodes).Returns(dataSet.Object);
+
+            AdminService service = new AdminService(context.Object);
+            Assert.Throws<ApplicationException>(() => service.MarkAdminInviteCodeAsUsed("*&^%$EDFGHJ", "InviteCode1234", "IOUGYTDR%I&^F*G(H"));
+        }
+
+        [Fact]
+        public void AdminService_MarkAdminInviteCodeAsUsed_ThrowsExceptionBadCode()
+        {
+            List<AdminInviteCode> data = new List<AdminInviteCode>
+            {
+                new AdminInviteCode
+                {
+                    Id = 1,
+                    InviteCode = "InviteCode1234",
+                    InvitingAdminUserId = "*&^%$EDFGHJ",
+                    IsStale = false,
+                }
+            };
+
+            var dataSet = new Mock<DbSet<AdminInviteCode>>().SetupData(data);
+            var context = new Mock<SolveChicagoEntities>();
+            context.Setup(c => c.AdminInviteCodes).Returns(dataSet.Object);
+
+            AdminService service = new AdminService(context.Object);
+            Assert.Throws<ApplicationException>(() => service.MarkAdminInviteCodeAsUsed("*&^%$EDFGHJ", "InviteCode1234567890", "IOUGYTDR%I&^F*G(H"));
+        }
     }
 }

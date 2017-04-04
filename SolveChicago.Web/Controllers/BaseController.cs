@@ -125,7 +125,7 @@ namespace SolveChicago.Web.Controllers
                 {
                     _state.Member = member;
                     _state.MemberId = member.Id;
-                    if (member.MemberNonprofits.Select(x => x.CaseManager) != null)
+                    if (member.MemberNonprofits.Select(x => x.CaseManager).FirstOrDefault() != null)
                     {
                         _state.CaseManager = member.MemberNonprofits.Select(x => x.CaseManager).First();
                         _state.CaseManagerId = member.MemberNonprofits.Select(x => x.CaseManager).First().Id;
