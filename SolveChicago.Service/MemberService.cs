@@ -48,6 +48,7 @@ namespace SolveChicago.Service
         {
             MemberNonprofit[] memberNonprofits = member.MemberNonprofits.ToArray();
             if (memberNonprofits.Count() > 0)
+            {
                 return memberNonprofits.Select(x => new NonprofitEntity
                 {
                     CaseManagerId = x.CaseManagerId,
@@ -55,9 +56,10 @@ namespace SolveChicago.Service
                     Enjoyed = x.MemberEnjoyed,
                     Struggled = x.MemberStruggled,
                     NonprofitId = x.NonprofitId,
-                    NonprofitName = x.Nonprofit.Name,
-                    SkillsAcquired = member.MemberSkills.Any(y => x.NonprofitId == x.NonprofitId) ? string.Join(",", member.MemberSkills.Where(y => x.NonprofitId == x.NonprofitId).Select(y => y.Skill.Name).ToArray()) : string.Empty,
+                    NonprofitName = x.Nonprofit?.Name,
+                    SkillsAcquired = member.MemberSkills.Any(y => y.NonprofitId == x.NonprofitId) ? string.Join(",", member.MemberSkills.Where(y => y.NonprofitId == x.NonprofitId).Select(y => y.Skill.Name).ToArray()) : string.Empty,
                 }).ToArray();
+            }
             else
                 return null;
         }
