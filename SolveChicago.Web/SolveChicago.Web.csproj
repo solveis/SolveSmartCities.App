@@ -286,6 +286,8 @@
     <Content Include="Content\bootstrap-tagsinput.less" />
     <Content Include="manifest.json" />
     <None Include="Scripts\jquery-2.2.4.intellisense.js" />
+    <Content Include="Scripts\profile_member.js" />
+    <Content Include="Scripts\functions.js" />
     <Content Include="Scripts\jquery-2.2.4.js" />
     <Content Include="Scripts\jquery-2.2.4.min.js" />
     <Content Include="Scripts\jquery-2.2.4.min.map" />

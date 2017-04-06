@@ -416,7 +416,7 @@ namespace SolveChicago.Tests.Services
 
 
             MemberService service = new MemberService(context.Object);
-            MemberProfile member = service.Get(1, 1);
+            MemberProfile member = service.Get(1);
 
             Assert.Equal("Aaron", member.FirstName);
             Assert.Equal("High School", member.HighestEducation);
@@ -600,7 +600,7 @@ namespace SolveChicago.Tests.Services
             context.Setup(c => c.Members).Returns(set.Object);
 
             MemberService service = new MemberService(context.Object);
-            MemberProfile member = service.Get(5, 1);
+            MemberProfile member = service.Get(5);
 
             Assert.Null(member);
         }
@@ -811,7 +811,7 @@ namespace SolveChicago.Tests.Services
                 .Returns<object[]>(ids => data.FirstOrDefault(d => d.Id == (int)ids[0]));
             context.Setup(c => c.Members).Returns(set.Object);
 
-            MemberProfile updatedMember = service.Get(model.Id, 1);
+            MemberProfile updatedMember = service.Get(model.Id);
 
             Assert.Equal(new DateTime(2007, 5, 1), updatedMember.Schools.First().End);
             Assert.Equal("Illinois", updatedMember.Province);

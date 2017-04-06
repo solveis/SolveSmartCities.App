@@ -35,8 +35,9 @@ namespace SolveChicago.Web.Controllers
         // GET: Profile/Member
         public ActionResult Member(int? id)
         {
+            ImpersonateMember(id);
             MemberService service = new MemberService(this.db);
-            MemberProfile member = service.Get(10, 3);
+            MemberProfile member = service.Get(State.MemberId);
             MemberProfileViewModel model = FormatMemberProfileViewModel(member);
             return View(model);
             

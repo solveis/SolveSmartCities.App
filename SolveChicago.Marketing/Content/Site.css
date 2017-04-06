@@ -329,7 +329,7 @@ h3 {
 }
 
 #Partners > div {
-    margin-top: 60px;
+    margin-top: 90px;
     margin-bottom: 60px;
 }
 
@@ -339,6 +339,10 @@ h3 {
 
 .partner-logo {
     max-height: 75px;
+}
+
+#Partners, #LetsTalk {
+    padding-top:130px;
 }
 
 #LetsTalk input, #LetsTalk textarea {

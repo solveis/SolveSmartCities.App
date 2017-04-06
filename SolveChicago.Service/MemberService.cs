@@ -12,14 +12,13 @@ namespace SolveChicago.Service
     {
         public MemberService(SolveChicagoEntities db) : base(db) { }
 
-        public MemberProfile Get(int id, int nonprofitId)
+        public MemberProfile Get(int id)
         {
             Member member = db.Members.Find(id);
             if (member == null)
                 return null;
             else
             {
-                Nonprofit npo = member.MemberNonprofits.Single(x => x.NonprofitId == nonprofitId).Nonprofit;
                 return new MemberProfile
                 {
                     Address1 = member.Addresses.Any() ? member.Addresses.Last().Address1 : string.Empty,

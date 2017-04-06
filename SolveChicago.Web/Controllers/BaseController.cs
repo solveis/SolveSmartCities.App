@@ -479,6 +479,24 @@ namespace SolveChicago.Web.Controllers
             return db.AspNetUsers.Single(x => x.Id == userId);
         }
 
+        public void ImpersonateMember(int? memberId)
+        {
+            if ((memberId.HasValue) && (memberId > 0))
+            {
+                if (State.Roles.Contains(Enumerations.Role.Admin) || State.Roles.Contains(Enumerations.Role.Nonprofit) || State.Roles.Contains(Enumerations.Role.CaseManager))
+                {
+                    Member member = db.Members.Find(memberId.Value);
+                    if (State.Roles.Contains(Enumerations.Role.Admin) || 
+                        (State.Roles.Contains(Enumerations.Role.Nonprofit) && member.MemberNonprofits.Any(x => x.NonprofitId == State.NonprofitId)) ||
+                        (State.Roles.Contains(Enumerations.Role.CaseManager) && member.MemberNonprofits.Any(x => x.CaseManagerId == State.CaseManagerId)))
+                    {
+                        State.Member = member;
+                        State.MemberId = member.Id;
+                    }
+                }
+            }
+        }
+
         public void ImpersonateCaseManager(int? caseManagerId)
         {
             if ((caseManagerId.HasValue) && (caseManagerId > 0))
