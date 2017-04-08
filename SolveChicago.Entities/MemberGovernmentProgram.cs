@@ -19,6 +19,7 @@ namespace SolveChicago.Entities
         public int GovernmentProgramId { get; set; }
         public System.DateTime Start { get; set; }
         public Nullable<System.DateTime> End { get; set; }
+        public Nullable<decimal> Amount { get; set; }
     
         public virtual GovernmentProgram GovernmentProgram { get; set; }
         public virtual Member Member { get; set; }

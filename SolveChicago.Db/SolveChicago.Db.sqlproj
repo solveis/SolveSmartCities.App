@@ -79,13 +79,8 @@
     <Build Include="dbo\Tables\MemberGovernmentPrograms.sql" />
     <Build Include="dbo\Tables\MemberNonprofits.sql" />
     <Build Include="dbo\Tables\Members.sql" />
-    <Build Include="dbo\Tables\MemberSurvey.sql" />
     <Build Include="dbo\Tables\Nonprofits.sql" />
     <Build Include="dbo\Tables\Outcomes.sql" />
-    <Build Include="dbo\Tables\SurveyAnswers.sql" />
-    <Build Include="dbo\Tables\SurveyQuestionOptions.sql" />
-    <Build Include="dbo\Tables\SurveyQuestions.sql" />
-    <Build Include="dbo\Tables\Surveys.sql" />
     <Build Include="dbo\Tables\UserProfileAdmins.sql" />
     <Build Include="dbo\Tables\UserProfileCaseManagers.sql" />
     <Build Include="dbo\Tables\UserProfileCorporations.sql" />

@@ -24,21 +24,14 @@
         <EntityTypeShape EntityType="SolveChicagoDevModel.Member" Width="1.5" PointX="5.25" PointY="17.375" IsExpanded="true" />
         <EntityTypeShape EntityType="SolveChicagoDevModel.MemberSchool" Width="1.5" PointX="10.5" PointY="23.25" IsExpanded="true" />
         <EntityTypeShape EntityType="SolveChicagoDevModel.MemberSpous" Width="1.5" PointX="7.5" PointY="40.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SolveChicagoDevModel.MemberSurvey" Width="1.5" PointX="7.5" PointY="25.5" IsExpanded="true" />
         <EntityTypeShape EntityType="SolveChicagoDevModel.Nonprofit" Width="1.5" PointX="5.25" PointY="12.375" IsExpanded="true" />
         <EntityTypeShape EntityType="SolveChicagoDevModel.Outcome" Width="1.5" PointX="7.5" PointY="46" IsExpanded="true" />
         <EntityTypeShape EntityType="SolveChicagoDevModel.PhoneNumber" Width="1.5" PointX="10.5" PointY="13.625" IsExpanded="true" />
         <EntityTypeShape EntityType="SolveChicagoDevModel.School" Width="1.5" PointX="8.25" PointY="35.625" IsExpanded="true" />
         <EntityTypeShape EntityType="SolveChicagoDevModel.Skill" Width="1.5" PointX="5.25" PointY="9.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="SolveChicagoDevModel.SurveyAnswer" Width="1.5" PointX="9.75" PointY="27.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="SolveChicagoDevModel.SurveyQuestionOption" Width="1.5" PointX="9.75" PointY="49.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="SolveChicagoDevModel.SurveyQuestion" Width="1.5" PointX="7.5" PointY="49.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SolveChicagoDevModel.Survey" Width="1.5" PointX="5.25" PointY="29.25" IsExpanded="true" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_AdminInviteCodes_Admin" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_dbo_AspNetUserClaims_dbo_AspNetUser_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_dbo_AspNetUserLogins_dbo_AspNetUser_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="SolveChicagoDevModel.FK_SurveyAnswers_AspNetUser" ManuallyRouted="false" />
-        <AssociationConnector Association="SolveChicagoDevModel.FK_Surveys_AspNetUser" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_CaseNotes_Members" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_CaseNotes_Outcomes" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_MemberCorporations_Corporations" ManuallyRouted="false" />
@@ -52,15 +45,8 @@
         <AssociationConnector Association="SolveChicagoDevModel.FK_MemberSchools_Member" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_MemberSpouses_Spouse1" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_MemberSpouses_Spouse2" ManuallyRouted="false" />
-        <AssociationConnector Association="SolveChicagoDevModel.FK_MemberSurveys_Members" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_Outcomes_Members" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_MemberSchools_School" ManuallyRouted="false" />
-        <AssociationConnector Association="SolveChicagoDevModel.FK_MemberSurveys_Surveys" ManuallyRouted="false" />
-        <AssociationConnector Association="SolveChicagoDevModel.FK_SurveyAnswers_MemberSurveys" ManuallyRouted="false" />
-        <AssociationConnector Association="SolveChicagoDevModel.FK_SurveyAnswers_SurveyQuestions" ManuallyRouted="false" />
-        <AssociationConnector Association="SolveChicagoDevModel.FK_SurveyAnswers_Surveys" ManuallyRouted="false" />
-        <AssociationConnector Association="SolveChicagoDevModel.FK_SurveyQuestionOptions_SurveyQuestions" ManuallyRouted="false" />
-        <AssociationConnector Association="SolveChicagoDevModel.FK_SurveyQuestions_Surveys" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.AspNetUserRoles" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FamilyAddresses" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FamilyPhoneNumbers" ManuallyRouted="false" />

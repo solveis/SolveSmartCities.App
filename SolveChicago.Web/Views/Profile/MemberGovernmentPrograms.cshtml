@@ -1,0 +1,100 @@
+﻿@using SolveChicago.Entities
+@model SolveChicago.Web.Models.Profile.MemberProfileGovernmentProgramViewModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Profile</h2>
+
+
+@using (Html.BeginForm("MemberGovernmentPrograms", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Member</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.MemberId)
+        
+        <div id="GovernmentPrograms">
+            <h3> Government Benefits</h3>
+            @for(int i = 0; i < Model.Member.GovernmentPrograms.Length; i++)
+            {
+                @Html.HiddenFor(m => Model.Member.GovernmentPrograms[i].Id)
+                <div id="GovernmentProgram" data-id="@(i)">
+                    @if (Model.Member.GovernmentPrograms[i].FamilyList?.Count() > 0 && Model.Member.IsHeadOfHousehold)
+                    {
+                    <div class="form-group">
+                        @Html.LabelFor(model => Model.Member.GovernmentPrograms[i].MemberId, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(model => Model.Member.GovernmentPrograms[i].MemberId, Model.Member.GovernmentPrograms[i].FamilyList.Select(x => new SelectListItem { Value = x.Key.ToString(), Text = x.Value, Selected = x.Key == Model.Member.GovernmentPrograms[i].MemberId }), new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => Model.Member.GovernmentPrograms[i].MemberId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    }
+                    else
+                    {
+                        <input type="hidden" name="Model.Member.GovernmentPrograms[i].MemberId" value="@Model.Member.Id" />
+                    }
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => Model.Member.GovernmentPrograms[i].ProgramId, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(model => Model.Member.GovernmentPrograms[i].ProgramId, Model.Member.GovernmentPrograms[i].ProgramList.Select(x => new SelectListItem { Value = x.Key.ToString(), Text = x.Value, Selected = x.Key == Model.Member.GovernmentPrograms[i].MemberId }), new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => Model.Member.GovernmentPrograms[i].ProgramId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => Model.Member.GovernmentPrograms[i].Start, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => Model.Member.GovernmentPrograms[i].Start, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => Model.Member.GovernmentPrograms[i].Start, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => Model.Member.GovernmentPrograms[i].IsCurrent, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.CheckBoxFor(model => Model.Member.GovernmentPrograms[i].IsCurrent, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => Model.Member.GovernmentPrograms[i].IsCurrent, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => Model.Member.GovernmentPrograms[i].End, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => Model.Member.GovernmentPrograms[i].End, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => Model.Member.GovernmentPrograms[i].End, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => Model.Member.GovernmentPrograms[i].Amount, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => Model.Member.GovernmentPrograms[i].Amount, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => Model.Member.GovernmentPrograms[i].Amount, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/profile_member")
+}

@@ -151,8 +151,8 @@ namespace SolveChicago.Web.Controllers
         {
             AdminService adminService = new AdminService(this.db);
             string inviteCode = adminService.GenerateAdminInviteCode(GetUserId(User.Identity.Name));
-            EmailService emailService = new EmailService();
-            emailService.SendAsync(new Microsoft.AspNet.Identity.IdentityMessage { Destination = model.EmailToInvite, Body = string.Format("http://localhost:2486/register/admin?invitecode={0}", HttpUtility.UrlEncode(inviteCode)), Subject = "admin invite" });
+            EmailService emailService = new EmailService(this.db);
+            emailService.DeliverSmtpMessageAsync(model.EmailToInvite, "admin invite", string.Format("{0}/register/admin?invitecode={1}", Settings.Website.BaseUrl, HttpUtility.UrlEncode(inviteCode)),false).Wait();
             
             return RedirectToAction("Index");
         }

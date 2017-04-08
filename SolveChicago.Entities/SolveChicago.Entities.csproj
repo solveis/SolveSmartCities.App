@@ -133,9 +133,6 @@
     <Compile Include="MemberSpous.cs">
       <DependentUpon>data.tt</DependentUpon>
     </Compile>
-    <Compile Include="MemberSurvey.cs">
-      <DependentUpon>data.tt</DependentUpon>
-    </Compile>
     <Compile Include="Nonprofit.cs">
       <DependentUpon>data.tt</DependentUpon>
     </Compile>
@@ -155,24 +152,11 @@
     <Compile Include="Skill.cs">
       <DependentUpon>data.tt</DependentUpon>
     </Compile>
-    <Compile Include="Survey.cs">
-      <DependentUpon>data.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SurveyAnswer.cs">
-      <DependentUpon>data.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SurveyQuestion.cs">
-      <DependentUpon>data.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SurveyQuestionOption.cs">
-      <DependentUpon>data.tt</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
     <EntityDeploy Include="data.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>data.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <None Include="data.edmx.diagram">
       <DependentUpon>data.edmx</DependentUpon>

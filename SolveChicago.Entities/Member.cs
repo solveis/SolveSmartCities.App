@@ -26,7 +26,6 @@ namespace SolveChicago.Entities
             this.MemberSchools = new HashSet<MemberSchool>();
             this.MemberSpouses = new HashSet<MemberSpous>();
             this.MemberSpouses1 = new HashSet<MemberSpous>();
-            this.MemberSurveys = new HashSet<MemberSurvey>();
             this.Outcomes = new HashSet<Outcome>();
             this.Addresses = new HashSet<Address>();
             this.Interests = new HashSet<Interest>();
@@ -46,6 +45,8 @@ namespace SolveChicago.Entities
         public Nullable<System.DateTime> Birthday { get; set; }
         public Nullable<int> FamilyId { get; set; }
         public Nullable<bool> IsHeadOfHousehold { get; set; }
+        public Nullable<decimal> Income { get; set; }
+        public Nullable<bool> IsDisabled { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CaseNote> CaseNotes { get; set; }
@@ -66,8 +67,6 @@ namespace SolveChicago.Entities
         public virtual ICollection<MemberSpous> MemberSpouses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MemberSpous> MemberSpouses1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MemberSurvey> MemberSurveys { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Outcome> Outcomes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -15,7 +15,6 @@ namespace SolveChicago.Entities
     public partial class Communication
     {
         public int Id { get; set; }
-        public int OrganizationId { get; set; }
         public string Type { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
         public string UserId { get; set; }

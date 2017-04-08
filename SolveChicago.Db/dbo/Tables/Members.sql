@@ -10,6 +10,8 @@
     [Birthday] DATETIME2 NULL, 
     [FamilyId] INT NULL, 
     [IsHeadOfHousehold] BIT NULL, 
+    [Income] MONEY NULL, 
+    [IsDisabled] BIT NULL, 
     CONSTRAINT [PK_Members] PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_Member_Family] FOREIGN KEY (FamilyId) REFERENCES [Families]([Id]) ON DELETE CASCADE,
 )

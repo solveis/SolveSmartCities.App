@@ -18,52 +18,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace SolveChicago.Web
 {
-    public class EmailService : IIdentityMessageService
-    {
-        public Task SendAsync(IdentityMessage message)
-        {
-            try
-            {
-                MailMessage mailMessage = new MailMessage(Settings.Mail.FromAddress, message.Destination)
-                {
-                    Subject = message.Subject,
-                    Body = message.Body,
-                    IsBodyHtml = true
-                };
-                List<MemoryStream> aMs = new List<MemoryStream>();
-                List<System.Net.Mail.Attachment> att = new List<System.Net.Mail.Attachment>();
-                //if (attachments != null)
-                //{
-                //    foreach (KeyValuePair<string, byte[]> a in attachments)
-                //    {
-                //        var ms = new MemoryStream(a.Value);
-                //        aMs.Add(ms);
-                //        var at = new System.Net.Mail.Attachment(ms, a.Key);
-                //        att.Add(at);
-                //        mailMessage.Attachments.Add(at);
-                //    }
-                //}
-                SmtpClient smtpClient = new SmtpClient();
-                smtpClient.Send(mailMessage);
-                foreach (var a in att)
-                {
-                    a.Dispose();
-                }
-                foreach (var m in aMs)
-                    m.Dispose();
-            }
-            catch
-            {
-                string errorMessage;
-                if (!string.IsNullOrEmpty(message.Destination) && !string.IsNullOrEmpty(message.Subject))
-                    errorMessage = string.Format("Could not send email to {0} with subject {1}", message.Destination, message.Subject);
-                else
-                    errorMessage = "Could not send email, but could not parse additional details as to why or to whom.";
-            }
-            return Task.FromResult(0);
-        }
-    }
-
+    [ExcludeFromCodeCoverage]
     public class SmsService : IIdentityMessageService
     {
         [ExcludeFromCodeCoverage]
@@ -77,13 +32,11 @@ namespace SolveChicago.Web
     // Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
     public class ApplicationUserManager : UserManager<ApplicationUser>
     {
-        [ExcludeFromCodeCoverage]
         public ApplicationUserManager(IUserStore<ApplicationUser> store)
             : base(store)
         {
         }
 
-        [ExcludeFromCodeCoverage]
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context) 
         {
             var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));
@@ -120,7 +73,6 @@ namespace SolveChicago.Web
                 Subject = "Security Code",
                 BodyFormat = "Your security code is {0}"
             });
-            manager.EmailService = new EmailService();
             manager.SmsService = new SmsService();
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)
@@ -131,8 +83,7 @@ namespace SolveChicago.Web
             return manager;
         }
     }
-
-    [ExcludeFromCodeCoverage]
+    
     // Configure the application sign-in manager which is used in this application.
     public class ApplicationSignInManager : SignInManager<ApplicationUser, string>
     {
@@ -141,14 +92,12 @@ namespace SolveChicago.Web
             : base(userManager, authenticationManager)
         {
         }
-
-        [ExcludeFromCodeCoverage]
+        
         public override Task<ClaimsIdentity> CreateUserIdentityAsync(ApplicationUser user)
         {
             return user.GenerateUserIdentityAsync((ApplicationUserManager)UserManager);
         }
-
-        [ExcludeFromCodeCoverage]
+        
         public static ApplicationSignInManager Create(IdentityFactoryOptions<ApplicationSignInManager> options, IOwinContext context)
         {
             return new ApplicationSignInManager(context.GetUserManager<ApplicationUserManager>(), context.Authentication);

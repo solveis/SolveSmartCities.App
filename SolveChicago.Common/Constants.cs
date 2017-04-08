@@ -81,5 +81,76 @@ namespace SolveChicago.Common
                 public const string PostGraduateCollege = "Post Graduate College";
             }
         }
+
+        public static class GovernmentPrograms
+        {
+            public static class Tier
+            {
+                public const string Federal = "Federal";
+                public const string State = "State";
+            }
+
+            public static class Locality
+            {
+                public class Federal
+                {
+                    public const string USA = "USA";
+                }
+
+                public static class State
+                {
+                    public const string Alabama = "Alabama ";
+                    public const string Alaska = "Alaska ";
+                    public const string Arizona = "Arizona ";
+                    public const string Arkansas = "Arkansas ";
+                    public const string California = "California ";
+                    public const string Colorado = "Colorado ";
+                    public const string Connecticut = "Connecticut ";
+                    public const string Delaware = "Delaware ";
+                    public const string Florida = "Florida ";
+                    public const string Georgia = "Georgia ";
+                    public const string Hawaii = "Hawaii ";
+                    public const string Idaho = "Idaho ";
+                    public const string Illinois = "Illinois";
+                    public const string Indiana = "Illinois Indiana ";
+                    public const string Iowa = "Iowa ";
+                    public const string Kansas = "Kansas ";
+                    public const string Kentucky = "Kentucky ";
+                    public const string Louisiana = "Louisiana ";
+                    public const string Maine = "Maine ";
+                    public const string Maryland = "Maryland ";
+                    public const string Massachusetts = "Massachusetts ";
+                    public const string Michigan = "Michigan ";
+                    public const string Minnesota = "Minnesota ";
+                    public const string Mississippi = "Mississippi ";
+                    public const string Missouri = "Missouri ";
+                    public const string Montana = "Montana";
+                    public const string Nebraska = "Montana Nebraska ";
+                    public const string Nevada = "Nevada ";
+                    public const string NewHampshire = "New Hampshire ";
+                    public const string NewJersey = "New Jersey ";
+                    public const string NewMexico = "New Mexico ";
+                    public const string NewYork = "New York ";
+                    public const string NorthCarolina = "North Carolina ";
+                    public const string NorthDakota = "North Dakota ";
+                    public const string Ohio = "Ohio ";
+                    public const string Oklahoma = "Oklahoma ";
+                    public const string Oregon = "Oregon ";
+                    public const string Pennsylvania = "Pennsylvania";
+                    public const string RhodeIsland = "Pennsylvania Rhode Island ";
+                    public const string SouthCarolina = "South Carolina ";
+                    public const string SouthDakota = "South Dakota ";
+                    public const string Tennessee = "Tennessee ";
+                    public const string Texas = "Texas ";
+                    public const string Utah = "Utah ";
+                    public const string Vermont = "Vermont ";
+                    public const string Virginia = "Virginia ";
+                    public const string Washington = "Washington ";
+                    public const string WestVirginia = "West Virginia ";
+                    public const string Wisconsin = "Wisconsin ";
+                    public const string Wyoming = "Wyoming";
+                }
+            }
+        }
     }
 }

@@ -44,16 +44,11 @@ namespace SolveChicago.Entities
         public virtual DbSet<Member> Members { get; set; }
         public virtual DbSet<MemberSchool> MemberSchools { get; set; }
         public virtual DbSet<MemberSpous> MemberSpouses { get; set; }
-        public virtual DbSet<MemberSurvey> MemberSurveys { get; set; }
         public virtual DbSet<Nonprofit> Nonprofits { get; set; }
         public virtual DbSet<Outcome> Outcomes { get; set; }
         public virtual DbSet<PhoneNumber> PhoneNumbers { get; set; }
         public virtual DbSet<School> Schools { get; set; }
         public virtual DbSet<Skill> Skills { get; set; }
-        public virtual DbSet<SurveyAnswer> SurveyAnswers { get; set; }
-        public virtual DbSet<SurveyQuestionOption> SurveyQuestionOptions { get; set; }
-        public virtual DbSet<SurveyQuestion> SurveyQuestions { get; set; }
-        public virtual DbSet<Survey> Surveys { get; set; }
         public virtual DbSet<Communication> Communications { get; set; }
         public virtual DbSet<MemberSkill> MemberSkills { get; set; }
         public virtual DbSet<MemberNonprofit> MemberNonprofits { get; set; }

@@ -1,0 +1,86 @@
+﻿@using SolveChicago.Entities
+@model SolveChicago.Web.Models.Profile.MemberProfileJobViewModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Profile</h2>
+
+
+@using (Html.BeginForm("MemberJobs", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Member</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.MemberId)
+
+        <div id="Jobs">
+            <h3>Jobs</h3>
+            @for (int i = 0; i < Model.Member.Jobs.Length; i++)
+            {
+                <div id="Job" data-id="@(i)">
+                    @Html.HiddenFor(model => Model.Member.Jobs[i].CorporationId)
+                    <div class="form-group">
+                        @Html.LabelFor(model => Model.Member.Jobs[i].Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => Model.Member.Jobs[i].Name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => Model.Member.Jobs[i].Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => Model.Member.Jobs[i].EmployeeStart, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => Model.Member.Jobs[i].EmployeeStart, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => Model.Member.Jobs[i].EmployeeStart, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => Model.Member.Jobs[i].EmployeeEnd, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => Model.Member.Jobs[i].EmployeeEnd, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => Model.Member.Jobs[i].EmployeeEnd, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => Model.Member.Jobs[i].EmployeeReasonForLeaving, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => Model.Member.Jobs[i].EmployeeReasonForLeaving, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => Model.Member.Jobs[i].EmployeeReasonForLeaving, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => Model.Member.Jobs[i].EmployeePay, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => Model.Member.Jobs[i].EmployeePay, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => Model.Member.Jobs[i].EmployeePay, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            }
+            <a href="javascript:void(0)" id="AddJob" class="addEntry">Add Job</a>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/profile_member")
+}

@@ -1,5 +1,5 @@
 ﻿using SolveChicago.Common;
-using SolveChicago.Common.Models.Profile;
+using SolveChicago.Common.Models.Profile.Member;
 using SolveChicago.Entities;
 using System;
 using System.Collections.Generic;
@@ -33,14 +33,163 @@ namespace SolveChicago.Service
                     Gender = member.Gender,
                     Id = member.Id,
                     Interests = member.Interests.Any() ? string.Join(",", member.Interests.Select(x => x.Name).ToArray()) : string.Empty,
+                    IsHeadOfHousehold = member.IsHeadOfHousehold ?? false,
                     LastName = member.LastName,
                     Nonprofits = GetNonprofits(member),
                     Phone = member.PhoneNumbers.Any() ? string.Join(",", member.PhoneNumbers.Select(x => x.Number).ToArray()) : string.Empty,
                     ProfilePicturePath = member.ProfilePicturePath,
                     Province = member.Addresses.Any() ? member.Addresses.Last().Province : string.Empty,
                     Schools = GetSchools(member),
+                    Income = member.Income,
+                    IsDisabled = member.IsDisabled,
+                    GovernmentPrograms = GetGovernmentPrograms(member)
                 };
             }
+        }
+
+        public MemberProfilePersonal GetProfilePersonal(int id)
+        {
+            Member member = db.Members.Find(id);
+            if (member == null)
+                return null;
+            else
+            {
+                return new MemberProfilePersonal
+                {
+                    Address1 = member.Addresses.Any() ? member.Addresses.Last().Address1 : string.Empty,
+                    Address2 = member.Addresses.Any() ? member.Addresses.Last().Address2 : string.Empty,
+                    Birthday = member.Birthday,
+                    City = member.Addresses.Any() ? member.Addresses.Last().City : string.Empty,
+                    Country = member.Addresses.Any() ? member.Addresses.Last().Country : string.Empty,
+                    Email = member.Email,
+                    FirstName = member.FirstName,
+                    Gender = member.Gender,
+                    Id = member.Id,
+                    Interests = member.Interests.Any() ? string.Join(",", member.Interests.Select(x => x.Name).ToArray()) : string.Empty,
+                    IsHeadOfHousehold = member.IsHeadOfHousehold ?? false,
+                    LastName = member.LastName,
+                    Phone = member.PhoneNumbers.Any() ? string.Join(",", member.PhoneNumbers.Select(x => x.Number).ToArray()) : string.Empty,
+                    ProfilePicturePath = member.ProfilePicturePath,
+                    Province = member.Addresses.Any() ? member.Addresses.Last().Province : string.Empty,
+                    Income = member.Income,
+                    ZipCode = member.Addresses.Any() ? member.Addresses.Last().ZipCode : string.Empty,
+                };
+            }
+        }
+
+        public MemberProfileFamily GetProfileFamily(int id)
+        {
+            Member member = db.Members.Find(id);
+            if (member == null)
+                return null;
+            else
+            {
+                return new MemberProfileFamily
+                {
+                    MemberId = member.Id,
+                    Family = GetFamily(member),
+                };
+            }
+        }
+
+        public MemberProfileSchools GetProfileSchools(int id)
+        {
+            Member member = db.Members.Find(id);
+            if (member == null)
+                return null;
+            else
+            {
+                return new MemberProfileSchools
+                {
+                    MemberId = member.Id,
+                    Schools = GetSchools(member),
+                };
+            }
+        }
+
+        public MemberProfileNonprofits GetProfileNonprofits(int id)
+        {
+            Member member = db.Members.Find(id);
+            if (member == null)
+                return null;
+            else
+            {
+                return new MemberProfileNonprofits
+                {
+                    MemberId = member.Id,    
+                    Nonprofits = GetNonprofits(member),
+                };
+            }
+        }
+
+        public MemberProfileJobs GetProfileJobs(int id)
+        {
+            Member member = db.Members.Find(id);
+            if (member == null)
+                return null;
+            else
+            {
+                return new MemberProfileJobs
+                {
+                    MemberId = member.Id,
+                    Jobs = GetJobs(member),
+                };
+            }
+        }
+
+        public MemberProfileGovernmentPrograms GetProfileGovernmentPrograms(int id)
+        {
+            Member member = db.Members.Find(id);
+            if (member == null)
+                return null;
+            else
+            {
+                return new MemberProfileGovernmentPrograms
+                {
+                    MemberId = member.Id,
+                    GovernmentPrograms = GetGovernmentPrograms(member)
+                };
+            }
+        }
+
+
+        private GovernmentProgramEntity[] GetGovernmentPrograms(Member member)
+        {
+            FamilyEntity family = GetFamily(member);
+            List<GovernmentProgramEntity> programs = member.MemberGovernmentPrograms.Select(x => new GovernmentProgramEntity
+            {
+                Amount = x.Amount,
+                End = x.End,
+                Id = x.Id,
+                IsCurrent = x.End == null,
+                MemberId = x.MemberId,
+                ProgramId = x.GovernmentProgramId,
+                Start = x.Start,
+                ProgramName = x.GovernmentProgram.Name
+            }).ToList();
+
+            //if(family != null && family.FamilyMembers.Count() > 0)
+            //{
+            //    foreach (FamilyMember fMember in family.FamilyMembers)
+            //    {
+            //        programs.AddRange(db.MemberGovernmentPrograms.Where(x => x.MemberId == fMember.Id).Select(x => new GovernmentProgramEntity
+            //        {
+            //            Amount = x.Amount,
+            //            End = x.End,
+            //            Id = x.Id,
+            //            IsCurrent = x.End == null,
+            //            MemberId = x.MemberId,
+            //            ProgramId = x.GovernmentProgramId,
+            //            Start = x.Start,
+            //            ProgramList = programList,
+            //            FamilyList = familyDictionary
+            //        }).ToList());
+            //    }
+            //}
+            if (programs.Count() > 0)
+                return programs.ToArray();
+            else
+                return null;
         }
 
         private NonprofitEntity[] GetNonprofits(Member member)
@@ -99,6 +248,36 @@ namespace SolveChicago.Service
                     FamilyMembers = GetFamilyMembers(member),
                 };
                 
+                return family;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public FamilyEntity GetFamily(int memberId)
+        {
+            Member member= db.Members.Find(memberId);
+            if (member == null)
+                return null;
+
+            Family memberFamily = member.Family;
+            if (memberFamily != null)
+            {
+                FamilyEntity family = new FamilyEntity
+                {
+                    Address1 = memberFamily.Addresses.Any() ? memberFamily.Addresses.Last().Address1 : string.Empty,
+                    Address2 = memberFamily.Addresses.Any() ? memberFamily.Addresses.Last().Address2 : string.Empty,
+                    City = memberFamily.Addresses.Any() ? memberFamily.Addresses.Last().City : string.Empty,
+                    Province = memberFamily.Addresses.Any() ? memberFamily.Addresses.Last().Province : string.Empty,
+                    Country = memberFamily.Addresses.Any() ? memberFamily.Addresses.Last().Country : string.Empty,
+                    FamilyName = memberFamily.FamilyName,
+                    Phone = memberFamily.PhoneNumbers.Any() ? memberFamily.PhoneNumbers.Last().Number : string.Empty,
+                    ZipCode = memberFamily.Addresses.Any() ? memberFamily.Addresses.Last().ZipCode : string.Empty,
+                    FamilyMembers = GetFamilyMembers(member),
+                };
+
                 return family;
             }
             else
@@ -181,59 +360,82 @@ namespace SolveChicago.Service
             }
         }
 
-        public void UpdateProfile(MemberProfile model)
+        public void UpdateMemberGovernmentPrograms(MemberProfileGovernmentPrograms model)
+        {
+            Member member = db.Members.Find(model.MemberId);
+            if (member == null)
+                throw new Exception($"Member with an id of {model.MemberId} not found");
+            else
+            {
+                foreach (var program in model.GovernmentPrograms)
+                {
+                    MemberGovernmentProgram mgp = member.MemberGovernmentPrograms.Where(x => x.GovernmentProgramId == program.ProgramId).FirstOrDefault();
+                    if (mgp == null)
+                    {
+                        mgp = new MemberGovernmentProgram
+                        {
+                            Amount = program.Amount,
+                            End = program.End,
+                            Id = program.Id,
+                            MemberId = program.MemberId,
+                            GovernmentProgramId = program.ProgramId,
+                            Start = program.Start,
+                        };
+                        member.MemberGovernmentPrograms.Add(mgp);
+                    }
+                }
+            }
+
+            db.SaveChanges();
+        }
+
+        public void UpdateMemberPersonal(MemberProfilePersonal model)
         {
             Member member = db.Members.Find(model.Id);
             if (member == null)
                 throw new Exception($"Member with an id of {model.Id} not found");
             else
             {
-                try
-                {
-                    UpdateMemberPersonalInformation(model, member);
-                    UpdateMemberFamily(model, member);
-                    UpdateMemberAddress(model, member);
-                    UpdateMemberSchools(model, member);
-                    UpdateMemberPhone(model, member);
-                    UpdateMemberCorporations(model, member);
-                    UpdateMemberNonprofits(model, member);
-                    UpdateMemberInterests(model, member);
-                    db.SaveChanges();
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception(ex.Message);
-                }
+                member.Birthday = model.Birthday;
+                member.Email = model.Email;
+                member.FirstName = model.FirstName;
+                member.Gender = model.Gender;
+                member.Id = model.Id;
+                member.LastName = model.LastName;
+                member.ProfilePicturePath = UploadPhoto(Constants.Upload.MemberPhotos, model.ProfilePicture, member.Id);
+
+                UpdateMemberAddress(model, member);
+                UpdateMemberPhone(model, member);
+                UpdateMemberInterests(model, member);
+
+                db.SaveChanges();
             }
         }
 
-        private void UpdateMemberPersonalInformation(MemberProfile model, Member member)
+        public void UpdateMemberFamily(MemberProfileFamily model)
         {
-            member.Birthday = model.Birthday;
-            member.Email = model.Email;
-            member.FirstName = model.FirstName;
-            member.Gender = model.Gender;
-            member.Id = model.Id;
-            member.LastName = model.LastName;
-            member.ProfilePicturePath = UploadPhoto(Constants.Upload.MemberPhotos, model.ProfilePicture, member.Id);
-        }
-
-        private void UpdateMemberFamily(MemberProfile model, Member member)
-        {
-            List<FamilyMember> familyMembers = GetFamilyMembers(member).ToList();
-            foreach(FamilyMember familyMember in model.Family?.FamilyMembers)
+            Member member = db.Members.Find(model.MemberId);
+            if (member == null)
+                throw new Exception($"Member with an id of {model.MemberId} not found");
+            else
             {
-                if(familyMember != null && !string.IsNullOrEmpty(familyMember.Name.Trim()) && familyMember.Gender != null && familyMember.Relation != null)
+                List<FamilyMember> familyMembers = GetFamilyMembers(member).ToList();
+                foreach (FamilyMember familyMember in model.Family?.FamilyMembers)
                 {
-                    Member existingFamilyMember = db.Members.Find(familyMember.Id);
-                    if (existingFamilyMember == null)
-                        existingFamilyMember = db.Members.Add(new Member { FirstName = familyMember.FirstName, LastName = familyMember.LastName, IsHeadOfHousehold = familyMember.IsHeadOfHousehold, Birthday = familyMember.Birthday, Gender = familyMember.Gender });
-                    else if (string.IsNullOrEmpty(familyMember.FirstName) && string.IsNullOrEmpty(familyMember.LastName))
-                        db.Members.Remove(existingFamilyMember);
-                    if (!familyMembers.Select(x => x.Id).Contains(existingFamilyMember.Id))
-                        AddFamilyMemberRelationship(existingFamilyMember, member, familyMember.Relation);
+                    if (familyMember != null && !string.IsNullOrEmpty(familyMember.Name.Trim()) && familyMember.Gender != null && familyMember.Relation != null)
+                    {
+                        Member existingFamilyMember = db.Members.Find(familyMember.Id);
+                        if (existingFamilyMember == null)
+                            existingFamilyMember = db.Members.Add(new Member { FirstName = familyMember.FirstName, LastName = familyMember.LastName, IsHeadOfHousehold = familyMember.IsHeadOfHousehold, Birthday = familyMember.Birthday, Gender = familyMember.Gender });
+                        else if (string.IsNullOrEmpty(familyMember.FirstName) && string.IsNullOrEmpty(familyMember.LastName))
+                            db.Members.Remove(existingFamilyMember);
+                        if (!familyMembers.Select(x => x.Id).Contains(existingFamilyMember.Id))
+                            AddFamilyMemberRelationship(existingFamilyMember, member, familyMember.Relation);
+                    }
                 }
-            }
+            }                
+
+            db.SaveChanges();
         }
 
         private void AddFamilyMemberRelationship(Member existingFamilyMember, Member member, string relation, bool isCurrent = true, bool isBiological = true)
@@ -255,7 +457,7 @@ namespace SolveChicago.Service
             }
         }
 
-        private void UpdateMemberInterests(MemberProfile model, Member member)
+        private void UpdateMemberInterests(MemberProfilePersonal model, Member member)
         {
             List<Interest> interests = db.Interests.ToList();
             string[] newInterests = model.Interests.Split(',');
@@ -273,35 +475,45 @@ namespace SolveChicago.Service
                     member.Interests.Add(new Interest { Name = interest });
                 }
             }
+
+            db.SaveChanges();
         }
 
-        private void UpdateMemberNonprofits(MemberProfile model, Member member)
+        public void UpdateMemberNonprofits(MemberProfileNonprofits model)
         {
-            foreach (var nonprofit in model.Nonprofits)
+            Member member = db.Members.Find(model.MemberId);
+            if (member == null)
+                throw new Exception($"Member with an id of {model.MemberId} not found");
+            else
             {
-                Nonprofit npo = db.Nonprofits.Where(x => (x.Id == nonprofit.NonprofitId || x.Name == nonprofit.NonprofitName)).FirstOrDefault();
-                if (npo == null)
+                foreach (var nonprofit in model.Nonprofits)
                 {
-                    npo = new Nonprofit
+                    Nonprofit npo = db.Nonprofits.Where(x => (x.Id == nonprofit.NonprofitId || x.Name == nonprofit.NonprofitName)).FirstOrDefault();
+                    if (npo == null)
                     {
-                        Name = nonprofit.NonprofitName,
-                        CreatedDate = DateTime.UtcNow,
-                    };
-                    db.Nonprofits.Add(npo);
-                }
-                if (!member.MemberNonprofits.Select(x => x.NonprofitId).Contains(nonprofit.NonprofitId ?? 0))
-                {
-                    member.MemberNonprofits.Add(new MemberNonprofit
+                        npo = new Nonprofit
+                        {
+                            Name = nonprofit.NonprofitName,
+                            CreatedDate = DateTime.UtcNow,
+                        };
+                        db.Nonprofits.Add(npo);
+                    }
+                    if (!member.MemberNonprofits.Select(x => x.NonprofitId).Contains(nonprofit.NonprofitId ?? 0))
                     {
-                        MemberEnjoyed = nonprofit.Enjoyed,
-                        MemberStruggled = nonprofit.Struggled,
-                        MemberId = member.Id,
-                        NonprofitId = npo.Id,
-                        Nonprofit = npo
-                    });
+                        member.MemberNonprofits.Add(new MemberNonprofit
+                        {
+                            MemberEnjoyed = nonprofit.Enjoyed,
+                            MemberStruggled = nonprofit.Struggled,
+                            MemberId = member.Id,
+                            NonprofitId = npo.Id,
+                            Nonprofit = npo
+                        });
+                    }
+                    UpdateMemberSkills(nonprofit, member);
                 }
-                UpdateMemberSkills(nonprofit, member);
-            }
+            }                
+
+            db.SaveChanges();
         }
 
         private void UpdateMemberSkills(NonprofitEntity nonprofit, Member member)
@@ -326,35 +538,43 @@ namespace SolveChicago.Service
             }
         }
 
-        private void UpdateMemberCorporations(MemberProfile model, Member member)
+        public void UpdateMemberJobs(MemberProfileJobs model)
         {
-            foreach (var job in model.Jobs)
+            Member member = db.Members.Find(model.MemberId);
+            if (member == null)
+                throw new Exception($"Member with an id of {model.MemberId} not found");
+            else
             {
-                Corporation corporation = db.Corporations.Where(x => (x.Id == job.CorporationId || x.Name == job.Name)).FirstOrDefault();
-                if (corporation == null)
+                foreach (var job in model.Jobs)
                 {
-                    corporation = new Corporation
+                    Corporation corporation = db.Corporations.Where(x => (x.Id == job.CorporationId || x.Name == job.Name)).FirstOrDefault();
+                    if (corporation == null)
                     {
-                        Name = job.Name,
-                        CreatedDate = DateTime.UtcNow,
-                    };
-                    db.Corporations.Add(corporation);
-                }
-                if (!member.MemberCorporations.Select(x => x.CorporationId).Contains(job.CorporationId ?? 0))
-                {
-                    member.MemberCorporations.Add(new MemberCorporation
+                        corporation = new Corporation
+                        {
+                            Name = job.Name,
+                            CreatedDate = DateTime.UtcNow,
+                        };
+                        db.Corporations.Add(corporation);
+                    }
+                    if (!member.MemberCorporations.Select(x => x.CorporationId).Contains(job.CorporationId ?? 0))
                     {
-                        End = job.EmployeeEnd,
-                        Pay = job.EmployeePay,
-                        ReasonForLeaving = job.EmployeeReasonForLeaving,
-                        Start = job.EmployeeStart.Value,
-                        Corporation = corporation
-                    });
+                        member.MemberCorporations.Add(new MemberCorporation
+                        {
+                            End = job.EmployeeEnd,
+                            Pay = job.EmployeePay,
+                            ReasonForLeaving = job.EmployeeReasonForLeaving,
+                            Start = job.EmployeeStart.Value,
+                            Corporation = corporation
+                        });
+                    }
                 }
             }
+
+            db.SaveChanges();
         }
 
-        private void UpdateMemberPhone(MemberProfile model, Member member)
+        private void UpdateMemberPhone(MemberProfilePersonal model, Member member)
         {
             PhoneNumber phone = model.Phone != null ? db.PhoneNumbers.Where(x => x.Number == model.Phone).FirstOrDefault() : null;
             if (phone == null)
@@ -365,35 +585,43 @@ namespace SolveChicago.Service
             member.PhoneNumbers.Add(phone);
         }
 
-        private void UpdateMemberSchools(MemberProfile model, Member member)
+        public void UpdateMemberSchools(MemberProfileSchools model)
         {
-            foreach (var s in model.Schools)
+            Member member = db.Members.Find(model.MemberId);
+            if (member == null)
+                throw new Exception($"Member with an id of {model.MemberId} not found");
+            else
             {
-                School school = db.Schools.Where(x => (x.Id == s.Id || x.SchoolName == s.Name)).FirstOrDefault();
-                if (school == null)
+                foreach (var s in model.Schools)
                 {
-                    school = new School
+                    School school = db.Schools.Where(x => (x.Id == s.Id || x.SchoolName == s.Name)).FirstOrDefault();
+                    if (school == null)
                     {
-                        SchoolName = s.Name,
-                        Type = s.Type,
-                    };
-                    db.Schools.Add(school);
-                }
-                if (!member.MemberSchools.Select(x => x.SchoolId).Contains(s.Id))
-                {
-                    member.MemberSchools.Add(new MemberSchool
+                        school = new School
+                        {
+                            SchoolName = s.Name,
+                            Type = s.Type,
+                        };
+                        db.Schools.Add(school);
+                    }
+                    if (!member.MemberSchools.Select(x => x.SchoolId).Contains(s.Id))
                     {
-                        Degree = s.Degree,
-                        End = s.End,
-                        IsCurrent = s.IsCurrent,
-                        School = school,
-                        Start = s.Start.Value
-                    });
+                        member.MemberSchools.Add(new MemberSchool
+                        {
+                            Degree = s.Degree,
+                            End = s.End,
+                            IsCurrent = s.IsCurrent,
+                            School = school,
+                            Start = s.Start.Value
+                        });
+                    }
                 }
             }
+
+            db.SaveChanges();
         }
 
-        private void UpdateMemberAddress(MemberProfile model, Member member)
+        private void UpdateMemberAddress(MemberProfilePersonal model, Member member)
         {
             Address address = db.Addresses.SingleOrDefault(x => x.Address1 == model.Address1 && x.Address2 == model.Address2 && x.City == model.City && x.Country == model.Country && x.Province == model.Province && x.ZipCode == model.ZipCode);
             if (address == null)

@@ -10,7 +10,7 @@ using System.Data.Entity;
 using SolveChicago.Entities;
 using SolveChicago.Web.Models.Profile;
 using SolveChicago.Service;
-using SolveChicago.Common.Models.Profile;
+using SolveChicago.Common.Models.Profile.Member;
 
 namespace SolveChicago.Web.Controllers
 {
@@ -32,62 +32,266 @@ namespace SolveChicago.Web.Controllers
         }
 
         [AllowAnonymous]
-        // GET: Profile/Member
-        public ActionResult Member(int? id)
+        // GET: Profile/MemberPersonal
+        public ActionResult MemberPersonal(int? id)
         {
             ImpersonateMember(id);
             MemberService service = new MemberService(this.db);
-            MemberProfile member = service.Get(State.MemberId);
-            MemberProfileViewModel model = FormatMemberProfileViewModel(member);
+            MemberProfilePersonal member = service.GetProfilePersonal(State.MemberId);
+            MemberProfilePersonalViewModel model = FormatMemberProfilePersonalViewModel(member);
             return View(model);
-            
         }
 
-        // POST: Profile/Member
+        // POST: Profile/MemberPersonal
         [HttpPost]
-        public ActionResult Member(MemberProfileViewModel model)
+        public ActionResult MemberPersonal(MemberProfilePersonalViewModel model)
         {
             if (ModelState.IsValid)
             {
                 MemberService service = new MemberService(this.db);
                 
-                    service.UpdateProfile(model.Member);
+                    service.UpdateMemberPersonal(model.Member);
                     return MemberRedirect(model.Member.Id);
             }
-            model = FormatMemberProfileViewModel(model.Member);
+            model = FormatMemberProfilePersonalViewModel(model.Member);
             return MemberRedirect(model.Member.Id);
         }
 
-        private MemberProfileViewModel FormatMemberProfileViewModel(MemberProfile member)
+        [AllowAnonymous]
+        // GET: Profile/MemberFamily
+        public ActionResult MemberFamily(int? id)
         {
-            MemberProfileViewModel model = new MemberProfileViewModel
+            ImpersonateMember(id);
+            MemberService service = new MemberService(this.db);
+            MemberProfileFamily member = service.GetProfileFamily(State.MemberId);
+            MemberProfileFamilyViewModel model = FormatMemberProfileFamilyViewModel(member);
+            return View(model);
+        }
+
+        // POST: Profile/Member
+        [HttpPost]
+        public ActionResult MemberFamily(MemberProfileFamilyViewModel model)
+        {
+            if (ModelState.IsValid)
             {
-                Member = PopulateEmptyFields(member),
-                DegreeList = GetDegreeList(),
+                MemberService service = new MemberService(this.db);
+
+                service.UpdateMemberFamily(model.Member);
+                return MemberRedirect(model.Member.MemberId);
+            }
+            model = FormatMemberProfileFamilyViewModel(model.Member);
+            return MemberRedirect(model.Member.MemberId);
+        }
+
+        [AllowAnonymous]
+        // GET: Profile/MemberSchools
+        public ActionResult MemberSchools(int? id)
+        {
+            ImpersonateMember(id);
+            MemberService service = new MemberService(this.db);
+            MemberProfileSchools member = service.GetProfileSchools(State.MemberId);
+            MemberProfileSchoolViewModel model = FormatMemberProfileSchoolsViewModel(member);
+            return View(model);
+        }
+
+        // POST: Profile/Member
+        [HttpPost]
+        public ActionResult MemberSchools(MemberProfileSchoolViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                MemberService service = new MemberService(this.db);
+
+                service.UpdateMemberSchools(model.Member);
+                return MemberRedirect(model.Member.MemberId);
+            }
+            model = FormatMemberProfileSchoolsViewModel(model.Member);
+            return MemberRedirect(model.Member.MemberId);
+        }
+
+        [AllowAnonymous]
+        // GET: Profile/MemberNonprofits
+        public ActionResult MemberNonprofits(int? id)
+        {
+            ImpersonateMember(id);
+            MemberService service = new MemberService(this.db);
+            MemberProfileNonprofits member = service.GetProfileNonprofits(State.MemberId);
+            MemberProfileNonprofitViewModel model = FormatMemberProfileNonprofitsViewModel(member);
+            return View(model);
+        }
+
+        // POST: Profile/Member
+        [HttpPost]
+        public ActionResult MemberNonprofits(MemberProfileNonprofitViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                MemberService service = new MemberService(this.db);
+
+                service.UpdateMemberNonprofits(model.Member);
+                return MemberRedirect(model.Member.MemberId);
+            }
+            model = FormatMemberProfileNonprofitsViewModel(model.Member);
+            return MemberRedirect(model.Member.MemberId);
+        }
+
+        [AllowAnonymous]
+        // GET: Profile/MemberJobs
+        public ActionResult MemberJobs(int? id)
+        {
+            ImpersonateMember(id);
+            MemberService service = new MemberService(this.db);
+            MemberProfileJobs member = service.GetProfileJobs(State.MemberId);
+            MemberProfileJobViewModel model = FormatMemberProfileJobsViewModel(member);
+            return View(model);
+        }
+
+        // POST: Profile/Member
+        [HttpPost]
+        public ActionResult MemberJobs(MemberProfileJobViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                MemberService service = new MemberService(this.db);
+
+                service.UpdateMemberJobs(model.Member);
+                return MemberRedirect(model.Member.MemberId);
+            }
+            model = FormatMemberProfileJobsViewModel(model.Member);
+            return MemberRedirect(model.Member.MemberId);
+        }
+
+        [AllowAnonymous]
+        // GET: Profile/MemberGovernmentPrograms
+        public ActionResult MemberGovernmentPrograms(int? id)
+        {
+            ImpersonateMember(id);
+            MemberService service = new MemberService(this.db);
+            MemberProfileGovernmentPrograms member = service.GetProfileGovernmentPrograms(State.MemberId);
+            MemberProfileGovernmentProgramViewModel model = FormatMemberProfileGovernmentProgramsViewModel(member);
+            return View(model);
+        }
+
+        // POST: Profile/Member
+        [HttpPost]
+        public ActionResult MemberGovernmentPrograms(MemberProfileGovernmentProgramViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                MemberService service = new MemberService(this.db);
+
+                service.UpdateMemberGovernmentPrograms(model.Member);
+                return MemberRedirect(model.Member.MemberId);
+            }
+            model = FormatMemberProfileGovernmentProgramsViewModel(model.Member);
+            return MemberRedirect(model.Member.MemberId);
+        }
+
+        private MemberProfilePersonalViewModel FormatMemberProfilePersonalViewModel(MemberProfilePersonal member)
+        {
+            MemberProfilePersonalViewModel model = new MemberProfilePersonalViewModel
+            {
+                Member = member,
                 GenderList = GetGenderList(),
-                RelationshipList = GetRelationshipList(),
-                SchoolTypeList = GetSchoolTypeList()
             };
             return model;
         }
 
-        private MemberProfile PopulateEmptyFields(MemberProfile model)
+        private MemberProfileFamilyViewModel FormatMemberProfileFamilyViewModel(MemberProfileFamily member)
+        {
+            MemberProfileFamilyViewModel model = new MemberProfileFamilyViewModel
+            {
+                Member = PopulateFamilyEmptyFields(member),
+                GenderList = GetGenderList(),
+                RelationshipList = GetRelationshipList(),
+            };
+            return model;
+        }
+
+        private MemberProfileSchoolViewModel FormatMemberProfileSchoolsViewModel(MemberProfileSchools member)
+        {
+            MemberProfileSchoolViewModel model = new MemberProfileSchoolViewModel
+            {
+                Member = PopulateSchoolEmptyFields(member),
+                SchoolTypeList = GetSchoolTypeList(),
+                DegreeList = GetDegreeList(),
+            };
+            return model;
+        }
+
+        private MemberProfileNonprofitViewModel FormatMemberProfileNonprofitsViewModel(MemberProfileNonprofits member)
+        {
+            MemberProfileNonprofitViewModel model = new MemberProfileNonprofitViewModel
+            {
+                Member = PopulateNonprofitEmptyFields(member),
+            };
+            return model;
+        }
+
+        private MemberProfileJobViewModel FormatMemberProfileJobsViewModel(MemberProfileJobs member)
+        {
+            MemberProfileJobViewModel model = new MemberProfileJobViewModel
+            {
+                Member = PopulateJobEmptyFields(member),
+            };
+            return model;
+        }
+
+        private MemberProfileGovernmentProgramViewModel FormatMemberProfileGovernmentProgramsViewModel(MemberProfileGovernmentPrograms member)
+        {
+            MemberService mService = new MemberService(this.db);
+            GovernmentProgramService gService = new GovernmentProgramService(this.db);
+            MemberProfileGovernmentProgramViewModel model = new MemberProfileGovernmentProgramViewModel
+            {
+                Member = PopulateGovernmentProgramEmptyFields(member),
+                GovernmentProgramList = gService.Get().ToDictionary(x => x.Id, x => x.Name),
+                FamilyList = mService.GetFamily(member.MemberId)?.FamilyMembers?.Where(x => x.Id.HasValue).ToDictionary(x => x.Id.Value, x => x.Name)
+            };
+            return model;
+        }
+
+        private MemberProfileFamily PopulateFamilyEmptyFields(MemberProfileFamily model)
         {
             if (model.Family == null)
                 model.Family = new FamilyEntity();
             if (model.Family != null && (model.Family.FamilyMembers == null || model.Family.FamilyMembers.Count() == 0))
                 model.Family.FamilyMembers = new FamilyMember[1] { new FamilyMember() };
-            if (model.Nonprofits == null)
-                model.Nonprofits = new NonprofitEntity[1] { new NonprofitEntity() };
-            if (model.Jobs == null || (model.Jobs != null && model.Jobs.Count() == 0))
-                model.Jobs = new JobEntity[1] { new JobEntity() };
+
+            return model;
+        }
+
+        private MemberProfileSchools PopulateSchoolEmptyFields(MemberProfileSchools model)
+        {
             if (model.Schools == null)
                 model.Schools = new SchoolEntity[1] { new SchoolEntity() };
 
             return model;
-
         }
-        
+
+        private MemberProfileNonprofits PopulateNonprofitEmptyFields(MemberProfileNonprofits model)
+        {
+            if (model.Nonprofits == null)
+                model.Nonprofits = new NonprofitEntity[1] { new NonprofitEntity() };
+
+            return model;
+        }
+
+        private MemberProfileJobs PopulateJobEmptyFields(MemberProfileJobs model)
+        {
+            if (model.Jobs == null || (model.Jobs != null && model.Jobs.Count() == 0))
+                model.Jobs = new JobEntity[1] { new JobEntity() };
+
+            return model;
+        }
+
+        private MemberProfileGovernmentPrograms PopulateGovernmentProgramEmptyFields(MemberProfileGovernmentPrograms model)
+        {
+            if (model.GovernmentPrograms == null)
+                model.GovernmentPrograms = new GovernmentProgramEntity[1] { new GovernmentProgramEntity() };
+
+            return model;
+        }
+
         private string[] GetGenderList()
         {
             return new string[]

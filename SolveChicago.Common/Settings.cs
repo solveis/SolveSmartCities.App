@@ -18,6 +18,17 @@ namespace SolveChicago.Common
             }
         }
 
+        public class Website
+        {
+            public static string BaseUrl
+            {
+                get
+                {
+                    return GetSetting<string>("Website.Baseurl", "http://localhost:2486");
+                }
+            }
+        }
+
         public class Crypto
         {
             public static string SharedSecret

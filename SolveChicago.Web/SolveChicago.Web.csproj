@@ -345,7 +345,7 @@
     <Content Include="Views\Profile\Admin.cshtml" />
     <Content Include="Views\Profile\CaseManager.cshtml" />
     <Content Include="Views\Profile\Corporation.cshtml" />
-    <Content Include="Views\Profile\Member.cshtml" />
+    <Content Include="Views\Profile\MemberPersonal.cshtml" />
     <Content Include="Views\Profile\Nonprofit.cshtml" />
     <Content Include="Views\Admins\Create.cshtml" />
     <Content Include="Views\Admins\Delete.cshtml" />
@@ -376,6 +376,11 @@
     <Content Include="Views\PropertyManagers\Index.cshtml" />
     <Content Include="Views\Members\Index.cshtml" />
     <Content Include="Views\Nonprofits\Members.cshtml" />
+    <Content Include="Views\Profile\MemberFamily.cshtml" />
+    <Content Include="Views\Profile\MemberSchools.cshtml" />
+    <Content Include="Views\Profile\MemberNonprofits.cshtml" />
+    <Content Include="Views\Profile\MemberJobs.cshtml" />
+    <Content Include="Views\Profile\MemberGovernmentPrograms.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

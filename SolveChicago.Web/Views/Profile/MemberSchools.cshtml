@@ -1,0 +1,94 @@
+﻿@using SolveChicago.Entities
+@model SolveChicago.Web.Models.Profile.MemberProfileSchoolViewModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Profile</h2>
+
+
+@using (Html.BeginForm("MemberSchools", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Member</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.MemberId)
+        
+        <div id="Schools">
+            <h3>Schools</h3>
+            @for (int i = 0; i < Model.Member.Schools.Length; i++)
+            {
+                <div id="School" data-id="@(i)">
+                    @Html.HiddenFor(m => Model.Member.Schools[i].Id)
+                    <div class="form-group">
+                        @Html.LabelFor(model => Model.Member.Schools[i].Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => Model.Member.Schools[i].Name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => Model.Member.Schools[i].Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => Model.Member.Schools[i].Type, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(model => Model.Member.Schools[i].Type, Model.SchoolTypeList.Select(x => new SelectListItem { Value = x, Text = x, Selected = x == Model.Member.Schools[i].Type }), "Choose a School Type", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => Model.Member.Schools[i].Type, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => Model.Member.Schools[i].Start, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => Model.Member.Schools[i].Start, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => Model.Member.Schools[i].Start, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => Model.Member.Schools[i].End, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => Model.Member.Schools[i].End, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => Model.Member.Schools[i].End, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => Model.Member.Schools[i].IsCurrent, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.CheckBoxFor(model => Model.Member.Schools[i].IsCurrent, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => Model.Member.Schools[i].IsCurrent, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => Model.Member.Schools[i].Degree, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => Model.Member.Schools[i].Degree, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => Model.Member.Schools[i].Degree, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            }
+            <a href="javascript:void(0)" id="AddSchool" class="addEntry">Add School</a>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/profile_member")
+}

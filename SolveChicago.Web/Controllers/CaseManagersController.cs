@@ -11,7 +11,7 @@ using SolveChicago.Service;
 
 namespace SolveChicago.Web.Controllers
 {
-    [Authorize(Roles = "Admin, Nonprofit")]
+    [Authorize(Roles = "Admin, Nonprofit, CaseManager")]
     public class CaseManagersController : BaseController, IDisposable
     {
         public CaseManagersController(SolveChicagoEntities entities = null)
