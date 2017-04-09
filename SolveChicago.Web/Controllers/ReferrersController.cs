@@ -10,107 +10,107 @@ using SolveChicago.Entities;
 
 namespace SolveChicago.Web.Controllers
 {
-    public class PropertyManagersController : Controller
+    public class ReferrersController : Controller
     {
         private SolveChicagoEntities db = new SolveChicagoEntities();
 
-        // GET: PropertyManagers
+        // GET: Referrers
         public ActionResult Index()
         {
-            return View(db.PropertyManagers.ToList());
+            return View(db.Referrers.ToList());
         }
 
-        // GET: PropertyManagers/Details/5
+        // GET: Referrers/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PropertyManager propertyManager = db.PropertyManagers.Find(id);
-            if (propertyManager == null)
+            Referrer Referrer = db.Referrers.Find(id);
+            if (Referrer == null)
             {
                 return HttpNotFound();
             }
-            return View(propertyManager);
+            return View(Referrer);
         }
 
-        // GET: PropertyManagers/Create
+        // GET: Referrers/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: PropertyManagers/Create
+        // POST: Referrers/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Email,Name,Phone,CreatedDate")] PropertyManager propertyManager)
+        public ActionResult Create([Bind(Include = "Id,Email,Name,Phone,CreatedDate")] Referrer Referrer)
         {
             if (ModelState.IsValid)
             {
-                db.PropertyManagers.Add(propertyManager);
+                db.Referrers.Add(Referrer);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(propertyManager);
+            return View(Referrer);
         }
 
-        // GET: PropertyManagers/Edit/5
+        // GET: Referrers/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PropertyManager propertyManager = db.PropertyManagers.Find(id);
-            if (propertyManager == null)
+            Referrer Referrer = db.Referrers.Find(id);
+            if (Referrer == null)
             {
                 return HttpNotFound();
             }
-            return View(propertyManager);
+            return View(Referrer);
         }
 
-        // POST: PropertyManagers/Edit/5
+        // POST: Referrers/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Email,Name,Phone,CreatedDate")] PropertyManager propertyManager)
+        public ActionResult Edit([Bind(Include = "Id,Email,Name,Phone,CreatedDate")] Referrer Referrer)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(propertyManager).State = EntityState.Modified;
+                db.Entry(Referrer).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(propertyManager);
+            return View(Referrer);
         }
 
-        // GET: PropertyManagers/Delete/5
+        // GET: Referrers/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PropertyManager propertyManager = db.PropertyManagers.Find(id);
-            if (propertyManager == null)
+            Referrer Referrer = db.Referrers.Find(id);
+            if (Referrer == null)
             {
                 return HttpNotFound();
             }
-            return View(propertyManager);
+            return View(Referrer);
         }
 
-        // POST: PropertyManagers/Delete/5
+        // POST: Referrers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            PropertyManager propertyManager = db.PropertyManagers.Find(id);
-            db.PropertyManagers.Remove(propertyManager);
+            Referrer Referrer = db.Referrers.Find(id);
+            db.Referrers.Remove(Referrer);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

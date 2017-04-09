@@ -96,21 +96,21 @@ namespace SolveChicago.Web.Controllers
         }
 
         //
-        // GET: /Register/PropertyManager
+        // GET: /Register/Referrer
         [AllowAnonymous]
-        public ActionResult PropertyManager()
+        public ActionResult Referrer()
         {
             return View();
         }
 
         //
-        // POST: /Register/PropertyManager
+        // POST: /Register/Referrer
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> PropertyManager(RegisterViewModel model)
+        public async Task<ActionResult> Referrer(RegisterViewModel model)
         {
-            var result = await CreateAccount(model.Email, model.Password, Enumerations.Role.PropertyManager);
+            var result = await CreateAccount(model.Email, model.Password, Enumerations.Role.Referrer);
             if (result != null)
                 return result;
             // If we got this far, something failed, redisplay form

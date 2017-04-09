@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[PropertyManagers]
+﻿CREATE TABLE [dbo].[Referrers]
 (
 	[Id] INT IDENTITY(1, 1) NOT NULL,
     [Email] NVARCHAR(128) NOT NULL,
@@ -6,5 +6,5 @@
 	[Phone] NVARCHAR(128) NULL, 
     [CreatedDate] DATETIME2 NULL, 
 
-    CONSTRAINT [PK_PropertyManagers] PRIMARY KEY CLUSTERED ([Id] ASC), 
+    CONSTRAINT [PK_Referrers] PRIMARY KEY CLUSTERED ([Id] ASC), 
 )

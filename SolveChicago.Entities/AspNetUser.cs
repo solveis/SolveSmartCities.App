@@ -27,7 +27,7 @@ namespace SolveChicago.Entities
             this.Nonprofits = new HashSet<Nonprofit>();
             this.Communications = new HashSet<Communication>();
             this.CaseManagers = new HashSet<CaseManager>();
-            this.PropertyManagers = new HashSet<PropertyManager>();
+            this.Referrers = new HashSet<Referrer>();
         }
     
         public string Id { get; set; }
@@ -68,6 +68,6 @@ namespace SolveChicago.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CaseManager> CaseManagers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PropertyManager> PropertyManagers { get; set; }
+        public virtual ICollection<Referrer> Referrers { get; set; }
     }
 }

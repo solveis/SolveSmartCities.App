@@ -237,22 +237,22 @@ namespace SolveChicago.Web.Controllers
             return CorporationRedirect(entity);
         }
 
-        public ActionResult PropertyManagerRedirect(PropertyManager entity)
+        public ActionResult ReferrerRedirect(Referrer entity)
         {
             if (string.IsNullOrEmpty(entity.Name))
             {
-                return RedirectToAction("PropertyManager", "Profile");
+                return RedirectToAction("Referrer", "Profile");
             }
             else
             {
-                return RedirectToAction("Index", "PropertyManagers");
+                return RedirectToAction("Index", "Referrers");
             }
         }
 
-        public ActionResult PropertyManagerRedirect(int propertyManagerId)
+        public ActionResult ReferrerRedirect(int ReferrerId)
         {
-            PropertyManager entity = db.PropertyManagers.Single(x => x.Id == propertyManagerId);
-            return PropertyManagerRedirect(entity);
+            Referrer entity = db.Referrers.Single(x => x.Id == ReferrerId);
+            return ReferrerRedirect(entity);
         }
 
         public ActionResult CorporationRedirect(Corporation entity)
@@ -429,17 +429,17 @@ namespace SolveChicago.Web.Controllers
                         }
                         return RedirectToAction("Index");
                     }
-                case Enumerations.Role.PropertyManager:
+                case Enumerations.Role.Referrer:
                     {
-                        AssertRole(Common.Constants.Roles.PropertyManager);
-                        await this.UserManager.AddToRoleAsync(user.Id, Common.Constants.Roles.PropertyManager);
+                        AssertRole(Common.Constants.Roles.Referrer);
+                        await this.UserManager.AddToRoleAsync(user.Id, Common.Constants.Roles.Referrer);
                         if (!UserProfileHasValidMappings(user.Id))
                         {
-                            PropertyManager model = new PropertyManager { Email = userName };
+                            Referrer model = new Referrer { Email = userName };
                             model.AspNetUsers.Add(aspnetUser);
-                            db.PropertyManagers.Add(model);
+                            db.Referrers.Add(model);
                             db.SaveChanges();
-                            return PropertyManagerRedirect(model.Id);
+                            return ReferrerRedirect(model.Id);
                         }
                         return RedirectToAction("Index");
                     }

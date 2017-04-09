@@ -165,48 +165,48 @@ namespace SolveChicago.Tests.Controllers
         }
         
         [Fact]
-        public void BaseController_PropertyManagerRedirect_ReturnsRedirectToRouteResult_PropertyManagerIndex()
+        public void BaseController_ReferrerRedirect_ReturnsRedirectToRouteResult_ReferrerIndex()
         {
-            List<PropertyManager> data = new List<PropertyManager>
+            List<Referrer> data = new List<Referrer>
             {
-                new PropertyManager()
+                new Referrer()
                 {
-                    Email = "propertyManager@solvechicago.com",
+                    Email = "Referrer@solvechicago.com",
                     CreatedDate = DateTime.UtcNow.AddDays(-10),
                     Id = 1,
                     Name = "Tom Elliot",
                 }
             };
 
-            var set = new Mock<DbSet<PropertyManager>>().SetupData(data);
+            var set = new Mock<DbSet<Referrer>>().SetupData(data);
 
             var context = new Mock<SolveChicagoEntities>();
-            context.Setup(c => c.PropertyManagers).Returns(set.Object);
+            context.Setup(c => c.Referrers).Returns(set.Object);
 
             BaseController controller = new BaseController(context.Object);
-            var result = (RedirectToRouteResult)controller.PropertyManagerRedirect(1);
+            var result = (RedirectToRouteResult)controller.ReferrerRedirect(1);
 
             Assert.Equal("Index", result.RouteValues["action"]);
-            Assert.Equal("PropertyManagers", result.RouteValues["controller"]);
+            Assert.Equal("Referrers", result.RouteValues["controller"]);
         }
 
         [Fact]
-        public void BaseController_PropertyManagerRedirect_ReturnsRedirectToRouteResult_ProfilePropertyManager()
+        public void BaseController_ReferrerRedirect_ReturnsRedirectToRouteResult_ProfileReferrer()
         {
-            List<PropertyManager> data = new List<PropertyManager>
+            List<Referrer> data = new List<Referrer>
             {
-                new PropertyManager() { Id = 1 }
+                new Referrer() { Id = 1 }
             };
 
-            var set = new Mock<DbSet<PropertyManager>>().SetupData(data);
+            var set = new Mock<DbSet<Referrer>>().SetupData(data);
 
             var context = new Mock<SolveChicagoEntities>();
-            context.Setup(c => c.PropertyManagers).Returns(set.Object);
+            context.Setup(c => c.Referrers).Returns(set.Object);
 
             BaseController controller = new BaseController(context.Object);
-            var result = (RedirectToRouteResult)controller.PropertyManagerRedirect(1);
+            var result = (RedirectToRouteResult)controller.ReferrerRedirect(1);
 
-            Assert.Equal("PropertyManager", result.RouteValues["action"]);
+            Assert.Equal("Referrer", result.RouteValues["action"]);
             Assert.Equal("Profile", result.RouteValues["controller"]);
         }
 

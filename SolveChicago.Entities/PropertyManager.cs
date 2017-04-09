@@ -12,10 +12,10 @@ namespace SolveChicago.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class PropertyManager
+    public partial class Referrer
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PropertyManager()
+        public Referrer()
         {
             this.AspNetUsers = new HashSet<AspNetUser>();
         }

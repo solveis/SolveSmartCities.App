@@ -1,4 +1,4 @@
-﻿@model SolveChicago.Entities.PropertyManager
+﻿@model SolveChicago.Entities.Referrer
 
 @{
     ViewBag.Title = "Edit";
@@ -11,7 +11,7 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>PropertyManager</h4>
+        <h4>Referrer</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)

@@ -337,7 +337,7 @@
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Number" Type="nvarchar" MaxLength="10" Nullable="false" />
         </EntityType>
-        <EntityType Name="PropertyManagers">
+        <EntityType Name="Referrers">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -402,13 +402,13 @@
           <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="NonprofitId" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="UserProfilePropertyManagers">
+        <EntityType Name="UserProfileReferrers">
           <Key>
             <PropertyRef Name="UserId" />
-            <PropertyRef Name="PropertyManagerId" />
+            <PropertyRef Name="ReferrerId" />
           </Key>
           <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="PropertyManagerId" Type="int" Nullable="false" />
+          <Property Name="ReferrerId" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_AdminInviteCodes_Admin">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
@@ -1076,31 +1076,31 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UserProfilePropertyManagers_AspNetUser">
+        <Association Name="FK_UserProfileReferrers_AspNetUser">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="UserProfilePropertyManagers" Type="Self.UserProfilePropertyManagers" Multiplicity="*" />
+          <End Role="UserProfileReferrers" Type="Self.UserProfileReferrers" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="UserProfilePropertyManagers">
+            <Dependent Role="UserProfileReferrers">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UserProfilePropertyManagers_PropertyManager">
-          <End Role="PropertyManagers" Type="Self.PropertyManagers" Multiplicity="1">
+        <Association Name="FK_UserProfileReferrers_Referrer">
+          <End Role="Referrers" Type="Self.Referrers" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="UserProfilePropertyManagers" Type="Self.UserProfilePropertyManagers" Multiplicity="*" />
+          <End Role="UserProfileReferrers" Type="Self.UserProfileReferrers" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PropertyManagers">
+            <Principal Role="Referrers">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="UserProfilePropertyManagers">
-              <PropertyRef Name="PropertyManagerId" />
+            <Dependent Role="UserProfileReferrers">
+              <PropertyRef Name="ReferrerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1137,7 +1137,7 @@
           <EntitySet Name="Nonprofits" EntityType="Self.Nonprofits" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Outcomes" EntityType="Self.Outcomes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PhoneNumbers" EntityType="Self.PhoneNumbers" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PropertyManagers" EntityType="Self.PropertyManagers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Referrers" EntityType="Self.Referrers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Schools" EntityType="Self.Schools" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Skills" EntityType="Self.Skills" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserProfileAdmins" EntityType="Self.UserProfileAdmins" Schema="dbo" store:Type="Tables" />
@@ -1145,7 +1145,7 @@
           <EntitySet Name="UserProfileCorporations" EntityType="Self.UserProfileCorporations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserProfileMembers" EntityType="Self.UserProfileMembers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserProfileNonprofits" EntityType="Self.UserProfileNonprofits" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserProfilePropertyManagers" EntityType="Self.UserProfilePropertyManagers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserProfileReferrers" EntityType="Self.UserProfileReferrers" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_AdminInviteCodes_Admin" Association="Self.FK_AdminInviteCodes_Admin">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AdminInviteCodes" EntitySet="AdminInviteCodes" />
@@ -1342,13 +1342,13 @@
             <End Role="Nonprofits" EntitySet="Nonprofits" />
             <End Role="UserProfileNonprofits" EntitySet="UserProfileNonprofits" />
           </AssociationSet>
-          <AssociationSet Name="FK_UserProfilePropertyManagers_AspNetUser" Association="Self.FK_UserProfilePropertyManagers_AspNetUser">
+          <AssociationSet Name="FK_UserProfileReferrers_AspNetUser" Association="Self.FK_UserProfileReferrers_AspNetUser">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="UserProfilePropertyManagers" EntitySet="UserProfilePropertyManagers" />
+            <End Role="UserProfileReferrers" EntitySet="UserProfileReferrers" />
           </AssociationSet>
-          <AssociationSet Name="FK_UserProfilePropertyManagers_PropertyManager" Association="Self.FK_UserProfilePropertyManagers_PropertyManager">
-            <End Role="PropertyManagers" EntitySet="PropertyManagers" />
-            <End Role="UserProfilePropertyManagers" EntitySet="UserProfilePropertyManagers" />
+          <AssociationSet Name="FK_UserProfileReferrers_Referrer" Association="Self.FK_UserProfileReferrers_Referrer">
+            <End Role="Referrers" EntitySet="Referrers" />
+            <End Role="UserProfileReferrers" EntitySet="UserProfileReferrers" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -1453,7 +1453,7 @@
           <NavigationProperty Name="Nonprofits" Relationship="Self.UserProfileNonprofits" FromRole="AspNetUsers" ToRole="Nonprofits" />
           <NavigationProperty Name="Communications" Relationship="SolveChicagoDevModel.FK_Communications_AspNetUsers" FromRole="AspNetUser" ToRole="Communication" />
           <NavigationProperty Name="CaseManagers" Relationship="SolveChicagoDevModel.UserProfileCasemanagers" FromRole="AspNetUser" ToRole="CaseManager" />
-          <NavigationProperty Name="PropertyManagers" Relationship="SolveChicagoDevModel.UserProfilePropertyManagers" FromRole="AspNetUser" ToRole="PropertyManager" />
+          <NavigationProperty Name="Referrers" Relationship="SolveChicagoDevModel.UserProfileReferrers" FromRole="AspNetUser" ToRole="Referrer" />
         </EntityType>
         <EntityType Name="CaseNote">
           <Key>
@@ -2122,7 +2122,7 @@
             <End Role="MemberNonprofit" EntitySet="MemberNonprofits" />
           </AssociationSet>
           <EntitySet Name="CaseManagers" EntityType="SolveChicagoDevModel.CaseManager" />
-          <EntitySet Name="PropertyManagers" EntityType="SolveChicagoDevModel.PropertyManager" />
+          <EntitySet Name="Referrers" EntityType="SolveChicagoDevModel.Referrer" />
           <AssociationSet Name="FK_CaseManagers_Nonprofit" Association="SolveChicagoDevModel.FK_CaseManagers_Nonprofit">
             <End Role="Nonprofit" EntitySet="Nonprofits" />
             <End Role="CaseManager" EntitySet="CaseManagers" />
@@ -2139,9 +2139,9 @@
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="CaseManager" EntitySet="CaseManagers" />
           </AssociationSet>
-          <AssociationSet Name="UserProfilePropertyManagers" Association="SolveChicagoDevModel.UserProfilePropertyManagers">
+          <AssociationSet Name="UserProfileReferrers" Association="SolveChicagoDevModel.UserProfileReferrers">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="PropertyManager" EntitySet="PropertyManagers" />
+            <End Role="Referrer" EntitySet="Referrers" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Communication">
@@ -2280,7 +2280,7 @@
           <NavigationProperty Name="MemberNonprofits" Relationship="SolveChicagoDevModel.FK_MemberNonprofits_CaseManagers" FromRole="CaseManager" ToRole="MemberNonprofit" />
           <NavigationProperty Name="AspNetUsers" Relationship="SolveChicagoDevModel.UserProfileCasemanagers" FromRole="CaseManager" ToRole="AspNetUser" />
         </EntityType>
-        <EntityType Name="PropertyManager">
+        <EntityType Name="Referrer">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -2289,7 +2289,7 @@
           <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Phone" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Precision="7" />
-          <NavigationProperty Name="AspNetUsers" Relationship="SolveChicagoDevModel.UserProfilePropertyManagers" FromRole="PropertyManager" ToRole="AspNetUser" />
+          <NavigationProperty Name="AspNetUsers" Relationship="SolveChicagoDevModel.UserProfileReferrers" FromRole="Referrer" ToRole="AspNetUser" />
         </EntityType>
         <Association Name="FK_CaseManagers_Nonprofit">
           <End Type="SolveChicagoDevModel.Nonprofit" Role="Nonprofit" Multiplicity="0..1" />
@@ -2331,9 +2331,9 @@
           <End Type="SolveChicagoDevModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
           <End Type="SolveChicagoDevModel.CaseManager" Role="CaseManager" Multiplicity="*" />
         </Association>
-        <Association Name="UserProfilePropertyManagers">
+        <Association Name="UserProfileReferrers">
           <End Type="SolveChicagoDevModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
-          <End Type="SolveChicagoDevModel.PropertyManager" Role="PropertyManager" Multiplicity="*" />
+          <End Type="SolveChicagoDevModel.Referrer" Role="Referrer" Multiplicity="*" />
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -2740,9 +2740,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PropertyManagers">
-            <EntityTypeMapping TypeName="SolveChicagoDevModel.PropertyManager">
-              <MappingFragment StoreEntitySet="PropertyManagers">
+          <EntitySetMapping Name="Referrers">
+            <EntityTypeMapping TypeName="SolveChicagoDevModel.Referrer">
+              <MappingFragment StoreEntitySet="Referrers">
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -2759,9 +2759,9 @@
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="UserProfilePropertyManagers" TypeName="SolveChicagoDevModel.UserProfilePropertyManagers" StoreEntitySet="UserProfilePropertyManagers">
-            <EndProperty Name="PropertyManager">
-              <ScalarProperty Name="Id" ColumnName="PropertyManagerId" />
+          <AssociationSetMapping Name="UserProfileReferrers" TypeName="SolveChicagoDevModel.UserProfileReferrers" StoreEntitySet="UserProfileReferrers">
+            <EndProperty Name="Referrer">
+              <ScalarProperty Name="Id" ColumnName="ReferrerId" />
             </EndProperty>
             <EndProperty Name="AspNetUser">
               <ScalarProperty Name="Id" ColumnName="UserId" />

@@ -53,6 +53,6 @@ namespace SolveChicago.Entities
         public virtual DbSet<MemberSkill> MemberSkills { get; set; }
         public virtual DbSet<MemberNonprofit> MemberNonprofits { get; set; }
         public virtual DbSet<CaseManager> CaseManagers { get; set; }
-        public virtual DbSet<PropertyManager> PropertyManagers { get; set; }
+        public virtual DbSet<Referrer> Referrers { get; set; }
     }
 }
