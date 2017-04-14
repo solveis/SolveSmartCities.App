@@ -27,6 +27,14 @@ namespace SolveChicago.Common
                     return GetSetting<string>("Website.Baseurl", "http://localhost:2486");
                 }
             }
+
+            public static string FromAddress
+            {
+                get
+                {
+                    return GetSetting<string>("Website.FromAddress", "dev+no-reply@solvechicago.com");
+                }
+            }
         }
 
         public class Crypto

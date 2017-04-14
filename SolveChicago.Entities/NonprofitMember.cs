@@ -12,7 +12,7 @@ namespace SolveChicago.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class MemberNonprofit
+    public partial class NonprofitMember
     {
         public int MemberId { get; set; }
         public int NonprofitId { get; set; }
@@ -20,8 +20,8 @@ namespace SolveChicago.Entities
         public string MemberEnjoyed { get; set; }
         public string MemberStruggled { get; set; }
     
+        public virtual CaseManager CaseManager { get; set; }
         public virtual Member Member { get; set; }
         public virtual Nonprofit Nonprofit { get; set; }
-        public virtual CaseManager CaseManager { get; set; }
     }
 }

@@ -36,23 +36,21 @@ namespace SolveChicago.Tests.Services
                             ZipCode = "60640"
                         }
                     },
-                    AspNetUsers = new List<AspNetUser>
-                    {
+                    AspNetUser =
                         new AspNetUser
                         {
                             Id = "HUIGYUFTYRD^$%&R^*T&(Y*)",
                             UserName = "member@member.com"
-                        }
-                    },
+                        },
                     Birthday = new DateTime(1988, 1, 2),
-                    Children = new List<MemberParent>
+                    MemberParents = new List<MemberParent>
                     {
                         new MemberParent
                         {
                             ChildId = 2,
                             IsBiological = true,
                             ParentId = 1,
-                            Children = new Member
+                            Member = new Member
                             {
                                 Id = 2,
                                 FirstName = "Samantha",
@@ -65,7 +63,7 @@ namespace SolveChicago.Tests.Services
                             ChildId = 3,
                             IsBiological = true,
                             ParentId = 1,
-                            Children = new Member
+                            Member = new Member
                             {
                                 Id = 3,
                                 FirstName = "Joe",
@@ -78,7 +76,7 @@ namespace SolveChicago.Tests.Services
                             ChildId = 4,
                             IsBiological = true,
                             ParentId = 1,
-                            Children = new Member
+                            Member = new Member
                             {
                                 Id = 4,
                                 FirstName = "Lynn",
@@ -139,9 +137,9 @@ namespace SolveChicago.Tests.Services
                             }
                         }
                     },
-                    MemberNonprofits = new List<MemberNonprofit>
+                    NonprofitMembers = new List<NonprofitMember>
                     {
-                        new MemberNonprofit
+                        new NonprofitMember
                         {
                             NonprofitId = 1,
                             MemberId = 1,
@@ -334,23 +332,21 @@ namespace SolveChicago.Tests.Services
                             ZipCode = "60640"
                         }
                     },
-                    AspNetUsers = new List<AspNetUser>
-                    {
+                    AspNetUser =
                         new AspNetUser
                         {
                             Id = "HUIGYUFTYRD^$%&R^*T&(Y*)",
                             UserName = "member@member.com"
-                        }
-                    },
+                        },
                     Birthday = new DateTime(1988, 1, 2),
-                    Children = new List<MemberParent>
+                    MemberParents = new List<MemberParent>
                     {
                         new MemberParent
                         {
                             ChildId = 2,
                             IsBiological = true,
                             ParentId = 1,
-                            Children = new Member
+                            Member = new Member
                             {
                                 Id = 2,
                                 FirstName = "Samantha",
@@ -363,7 +359,7 @@ namespace SolveChicago.Tests.Services
                             ChildId = 3,
                             IsBiological = true,
                             ParentId = 1,
-                            Children = new Member
+                            Member = new Member
                             {
                                 Id = 3,
                                 FirstName = "Joe",
@@ -376,7 +372,7 @@ namespace SolveChicago.Tests.Services
                             ChildId = 4,
                             IsBiological = true,
                             ParentId = 1,
-                            Children = new Member
+                            Member = new Member
                             {
                                 Id = 4,
                                 FirstName = "Lynn",
@@ -437,9 +433,9 @@ namespace SolveChicago.Tests.Services
                             }
                         }
                     },
-                    MemberNonprofits = new List<MemberNonprofit>
+                    NonprofitMembers = new List<NonprofitMember>
                     {
-                        new MemberNonprofit
+                        new NonprofitMember
                         {
                             NonprofitId = 1,
                             MemberId = 1,
@@ -508,21 +504,19 @@ namespace SolveChicago.Tests.Services
                     {
 
                     },
-                    AspNetUsers = new List<AspNetUser>
-                    {
+                    AspNetUser =
                         new AspNetUser
                         {
                             Id = "HUIGYUFTYRD^$%&R^*T&(Y*)",
                             UserName = "member@member.com"
-                        }
-                    },
+                        },
                     Birthday = new DateTime(1988, 1, 2),
-                    Children = new List<MemberParent>
+                    MemberParents = new List<MemberParent>
                     {
                         new MemberParent
                         {
                             ChildId = 6,
-                            Children = new Member
+                            Member = new Member
                             {
                                 Id = 6,
                                 FirstName = "Isaac",
@@ -547,9 +541,9 @@ namespace SolveChicago.Tests.Services
                     MemberCorporations = new List<MemberCorporation>
                     {
                     },
-                    MemberNonprofits = new List<MemberNonprofit>
+                    NonprofitMembers = new List<NonprofitMember>
                     {
-                        new MemberNonprofit
+                        new NonprofitMember
                         {
                             NonprofitId = 1,
                             MemberId = 1,
@@ -752,7 +746,7 @@ namespace SolveChicago.Tests.Services
         }
 
         [Fact]
-        public void MemberService_UpdateMemberNonprofits_Success()
+        public void MemberService_UpdateNonprofitMembers_Success()
         {
             Tuple<Mock<DbSet<Member>>, List<Member>> result = SetupPostData();
 

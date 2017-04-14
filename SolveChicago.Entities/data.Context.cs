@@ -32,7 +32,9 @@ namespace SolveChicago.Entities
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
+        public virtual DbSet<CaseManager> CaseManagers { get; set; }
         public virtual DbSet<CaseNote> CaseNotes { get; set; }
+        public virtual DbSet<Communication> Communications { get; set; }
         public virtual DbSet<Corporation> Corporations { get; set; }
         public virtual DbSet<Family> Families { get; set; }
         public virtual DbSet<GovernmentProgram> GovernmentPrograms { get; set; }
@@ -43,16 +45,14 @@ namespace SolveChicago.Entities
         public virtual DbSet<MemberParent> MemberParents { get; set; }
         public virtual DbSet<Member> Members { get; set; }
         public virtual DbSet<MemberSchool> MemberSchools { get; set; }
+        public virtual DbSet<MemberSkill> MemberSkills { get; set; }
         public virtual DbSet<MemberSpous> MemberSpouses { get; set; }
         public virtual DbSet<Nonprofit> Nonprofits { get; set; }
         public virtual DbSet<Outcome> Outcomes { get; set; }
         public virtual DbSet<PhoneNumber> PhoneNumbers { get; set; }
+        public virtual DbSet<Referrer> Referrers { get; set; }
         public virtual DbSet<School> Schools { get; set; }
         public virtual DbSet<Skill> Skills { get; set; }
-        public virtual DbSet<Communication> Communications { get; set; }
-        public virtual DbSet<MemberSkill> MemberSkills { get; set; }
-        public virtual DbSet<MemberNonprofit> MemberNonprofits { get; set; }
-        public virtual DbSet<CaseManager> CaseManagers { get; set; }
-        public virtual DbSet<Referrer> Referrers { get; set; }
+        public virtual DbSet<NonprofitMember> NonprofitMembers { get; set; }
     }
 }

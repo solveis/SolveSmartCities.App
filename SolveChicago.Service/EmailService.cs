@@ -134,7 +134,7 @@ namespace SolveChicago.Service
 
             subject = subject.Substring(0, subject.Length <= 78 ? subject.Length : 78);
             SmtpClient client = InitSendGridClient();
-            Mail mail = InitSendGridMessage(toAddresses, Constants.GenericNames.Admin, subject, body, isBodyHtml);
+            Mail mail = InitSendGridMessage(toAddresses, Constants.Global.Admin, subject, body, isBodyHtml);
             if (attachments != null && attachments.Any())
             {
                 foreach (KeyValuePair<string, byte[]> attachment in attachments)

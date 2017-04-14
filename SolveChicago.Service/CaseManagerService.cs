@@ -13,7 +13,7 @@ namespace SolveChicago.Service
         public Member[] GetMembersForCaseManager(int caseManagerId)
         {
             int nonprofitId = db.CaseManagers.Single(x => x.Id == caseManagerId).Nonprofit.Id;
-            return db.CaseManagers.Single(x => x.Id == caseManagerId).MemberNonprofits.Where(x => x.NonprofitId == nonprofitId).Select(x => x.Member).ToArray();
+            return db.CaseManagers.Single(x => x.Id == caseManagerId).NonprofitMembers.Where(x => x.NonprofitId == nonprofitId).Select(x => x.Member).ToArray();
         }
     }
 }

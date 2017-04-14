@@ -28,39 +28,33 @@ namespace SolveChicago.Tests.Controllers
                     Id = 1,
                     FirstName = "John",
                     LastName = " Doe",
-                    AspNetUsers = new List<AspNetUser>
-                    {
+                    AspNetUser = 
                         new AspNetUser
                         {
                             Id = ")(*Y&T^RDTXFGCHVUJI"
                         }
-                    }
                 },
                 new Admin
                 {
                     Id = 2,
                     FirstName = "Sayid",
                     LastName = "Khan",
-                    AspNetUsers = new List<AspNetUser>
-                    {
+                    AspNetUser = 
                         new AspNetUser
                         {
                             Id = "BHVGYCRD%$^&*()O"
                         }
-                    }
                 },
                 new Admin
                 {
                     Id = 3,
                     FirstName = "Jerry",
                     LastName = "Ellis",
-                    AspNetUsers = new List<AspNetUser>
-                    {
+                    AspNetUser = 
                         new AspNetUser
                         {
                             Id = "HGSE#%$^&G&IUBH"
                         }
-                    }
                 }
             };
 

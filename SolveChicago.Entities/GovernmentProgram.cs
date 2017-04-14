@@ -26,6 +26,8 @@ namespace SolveChicago.Entities
         public Nullable<int> MaxAge { get; set; }
         public Nullable<decimal> MinIncome { get; set; }
         public Nullable<decimal> MaxIncome { get; set; }
+        public string Tier { get; set; }
+        public string Locality { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MemberGovernmentProgram> MemberGovernmentPrograms { get; set; }

@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using SolveChicago.Entities;
 using SolveChicago.Service;
 using SolveChicago.Web.Models.Nonprofit;
+using SolveChicago.Web.Models.Member;
 
 namespace SolveChicago.Web.Controllers
 {

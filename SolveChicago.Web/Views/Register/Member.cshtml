@@ -7,6 +7,7 @@
 
 @using (Html.BeginForm("Member", "Register", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
+    @Html.HiddenFor(m => m.ReferrerId)
     @Html.AntiForgeryToken()
     <h4>Create a new account.</h4>
     <hr />

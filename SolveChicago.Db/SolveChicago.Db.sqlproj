@@ -77,14 +77,11 @@
     <Build Include="dbo\Tables\MemberCorporations.sql" />
     <Build Include="dbo\Tables\MemberEmergencyContacts.sql" />
     <Build Include="dbo\Tables\MemberGovernmentPrograms.sql" />
-    <Build Include="dbo\Tables\MemberNonprofits.sql" />
+    <Build Include="dbo\Tables\NonprofitMembers.sql" />
     <Build Include="dbo\Tables\Members.sql" />
     <Build Include="dbo\Tables\Nonprofits.sql" />
     <Build Include="dbo\Tables\Outcomes.sql" />
-    <Build Include="dbo\Tables\UserProfileAdmins.sql" />
-    <Build Include="dbo\Tables\UserProfileCaseManagers.sql" />
     <Build Include="dbo\Tables\UserProfileCorporations.sql" />
-    <Build Include="dbo\Tables\UserProfileMembers.sql" />
     <Build Include="dbo\Tables\UserProfileNonprofits.sql" />
     <Build Include="dbo\Tables\Families.sql" />
     <Build Include="dbo\Tables\Interests.sql" />
@@ -105,6 +102,7 @@
     <Build Include="dbo\Tables\Communications.sql" />
     <Build Include="dbo\Tables\Referrers.sql" />
     <Build Include="dbo\Tables\UserProfileReferrers.sql" />
+    <Build Include="dbo\Tables\ReferrerMembers.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SolveChicago.Db.dbmdl" />

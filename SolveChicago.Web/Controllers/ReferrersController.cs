@@ -7,17 +7,66 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using SolveChicago.Entities;
+using SolveChicago.Web.Models.Member;
+using SolveChicago.Service;
+using SolveChicago.Common;
 
 namespace SolveChicago.Web.Controllers
 {
-    public class ReferrersController : Controller
+    public class ReferrersController : BaseController, IDisposable
     {
-        private SolveChicagoEntities db = new SolveChicagoEntities();
+        public ReferrersController(SolveChicagoEntities entities = null)
+        {
+            if (entities == null)
+                db = new SolveChicagoEntities();
+            else
+                db = entities;
+        }
+        public ReferrersController() : base() { }
+
+        public new void Dispose()
+        {
+            base.Dispose();
+        }
 
         // GET: Referrers
         public ActionResult Index()
         {
             return View(db.Referrers.ToList());
+        }
+
+        //GET: Referrers/AddMember
+        public ActionResult AddMember(int? referrerId)
+        {
+            ImpersonateReferrer(referrerId);
+            AddMemberViewModel model = new AddMemberViewModel
+            {
+                ReferringPartyId = State.ReferrerId
+            };
+            return View(model);
+        }
+
+        // POST: Referrers/AddMember
+        public ActionResult AddMember(AddMemberViewModel model)
+        {
+            ImpersonateReferrer(model.ReferringPartyId);
+            if (ModelState.IsValid)
+            {
+
+                Member member = new Member
+                {
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Email = model.Email
+                };
+                db.SaveChanges();
+
+                CommunicationService service = new CommunicationService(this.db);
+                string surveyUrl = string.Format("{0}/Members/Survey?id={1}", Settings.Website.BaseUrl, model.ReferringPartyId);
+                service.SendSurveyToMember(member, State.Referrer.Name, surveyUrl);
+                return ReferrerRedirect(State.ReferrerId);
+            }
+            return View(model);
         }
 
         // GET: Referrers/Details/5

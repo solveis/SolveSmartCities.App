@@ -87,8 +87,12 @@ namespace SolveChicago.Web.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
+        // admin
         public string InvitedByUserId { get; set; }
         public string InviteCode { get; set; }
+
+        // member
+        public int? ReferrerId { get; set; }
     }
 
     [ExcludeFromCodeCoverage]

@@ -71,17 +71,17 @@ namespace SolveChicago.Service
             if (npo == null)
                 return new Member[0];
             else
-                return npo.MemberNonprofits.Select(x => x.Member).ToArray();
+                return npo.NonprofitMembers.Select(x => x.Member).ToArray();
         }
 
         public void AssignCaseManager(int nonprofitId, int memberId, int caseManagerId)
         {
-            MemberNonprofit memberNonprofit = db.MemberNonprofits.SingleOrDefault(x => x.NonprofitId == nonprofitId && x.MemberId == memberId);
-            if (memberNonprofit == null)
+            NonprofitMember nonprofitMember = db.NonprofitMembers.SingleOrDefault(x => x.NonprofitId == nonprofitId && x.MemberId == memberId);
+            if (nonprofitMember == null)
                 throw new ApplicationException("No Member-Nonprofit relationship exists between these two entities.");
             else
             {
-                memberNonprofit.CaseManagerId = caseManagerId;
+                nonprofitMember.CaseManagerId = caseManagerId;
                 db.SaveChanges();
             }
         }

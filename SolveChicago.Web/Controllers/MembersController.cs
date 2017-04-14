@@ -1,6 +1,7 @@
 ﻿using SolveChicago.Common.Models.Profile.Member;
 using SolveChicago.Entities;
 using SolveChicago.Service;
+using SolveChicago.Web.Models.Member;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,23 @@ namespace SolveChicago.Web.Controllers
         public ActionResult Details(int? memberId)
         {
             return Index(memberId);
+        }
+
+        public ActionResult Survey(int? id)
+        {
+            if (!id.HasValue)
+            {
+                return new HttpNotFoundResult();
+            }
+            else
+            {
+                Member member = db.Members.Find(id.Value);
+                if (member == null)
+                    return RedirectToAction("Member", "Register", new { referrerId = id.Value });
+                else
+                    return RedirectToAction("Login", "Account");
+            }
+                
         }
     }
 }

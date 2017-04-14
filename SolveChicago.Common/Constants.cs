@@ -15,14 +15,32 @@ namespace SolveChicago.Common
             public static string EmailPattern = "^[A-Za-z0-9_\\+-]+(\\.[A-Za-z0-9_\\+-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*\\.([A-Za-z]{2,4})$";
         }
 
-        public class GenericNames
+        public class Global
         {
             public const string Admin = "Solve Chicago Community Support";
+            public const string SolveChicago = "Solve Chicago";
         }
 
         public class Communication
         {
             public const string Inquiry = "Inquiry";
+            public const string MemberSurveyInvite = "MemberSurveyInvite";
+        }
+
+        public class Member
+        {
+            public class SurveyStep
+            {
+                public const string Invited = "Invited";
+                public const string Personal = "Personal";
+                public const string Family = "Family";
+                public const string Education = "Education";
+                public const string Jobs = "Jobs";
+                public const string Nonprofits = "Nonprofits";
+                public const string GovernmentPrograms = "GovernmentPrograms";
+                public const string Complete = "Complete";
+
+            }
         }
 
         public class Roles
@@ -35,7 +53,7 @@ namespace SolveChicago.Common
             public const string Referrer = "Referrer";
         }
 
-        public static class Upload
+        public class Upload
         {
             public const string AdminPhotos = "adminphotos";
             public const string MemberPhotos = "memberphotos";
@@ -45,14 +63,14 @@ namespace SolveChicago.Common
             public const string ReferrerPhotos = "Referrerphotos";
         }
 
-        public static class Gender
+        public class Gender
         {
             public const string Male = "Male";
             public const string Female = "Female";
             public const string Other = "Other";
         }
 
-        public static class Family
+        public class Family
         {
             public static class Relationships
             {
@@ -62,9 +80,9 @@ namespace SolveChicago.Common
             }
         }
 
-        public static class School
+        public class School
         {
-            public static class Degrees
+            public class Degrees
             {
                 public const string HSDiploma = "HS Diploma";
                 public const string GED = "GED";
@@ -73,7 +91,7 @@ namespace SolveChicago.Common
                 public const string PostGraduateDegree = "Post Graduate Degree";
             }
 
-            public static class Types
+            public class Types
             {
                 public const string HighSchool = "High School";
                 public const string UndergraduateCollege = "Undergraduate College";
@@ -82,73 +100,472 @@ namespace SolveChicago.Common
             }
         }
 
-        public static class GovernmentPrograms
+        public class GovernmentPrograms
         {
-            public static class Tier
+            public class Tier
             {
                 public const string Federal = "Federal";
                 public const string State = "State";
+                public const string County = "County";
+                public const string Municipal = "Municipal";
             }
 
             public static class Locality
             {
-                public class Federal
+                public static class USA
                 {
-                    public const string USA = "USA";
-                }
+                    public const string Name = "USA";
+                    public static class State
+                    {
+                        public static class Alabama
+                        {
+                            public const string Name = "USA - Alabama";
+                            public static class County
+                            {
 
-                public static class State
-                {
-                    public const string Alabama = "Alabama ";
-                    public const string Alaska = "Alaska ";
-                    public const string Arizona = "Arizona ";
-                    public const string Arkansas = "Arkansas ";
-                    public const string California = "California ";
-                    public const string Colorado = "Colorado ";
-                    public const string Connecticut = "Connecticut ";
-                    public const string Delaware = "Delaware ";
-                    public const string Florida = "Florida ";
-                    public const string Georgia = "Georgia ";
-                    public const string Hawaii = "Hawaii ";
-                    public const string Idaho = "Idaho ";
-                    public const string Illinois = "Illinois";
-                    public const string Indiana = "Illinois Indiana ";
-                    public const string Iowa = "Iowa ";
-                    public const string Kansas = "Kansas ";
-                    public const string Kentucky = "Kentucky ";
-                    public const string Louisiana = "Louisiana ";
-                    public const string Maine = "Maine ";
-                    public const string Maryland = "Maryland ";
-                    public const string Massachusetts = "Massachusetts ";
-                    public const string Michigan = "Michigan ";
-                    public const string Minnesota = "Minnesota ";
-                    public const string Mississippi = "Mississippi ";
-                    public const string Missouri = "Missouri ";
-                    public const string Montana = "Montana";
-                    public const string Nebraska = "Montana Nebraska ";
-                    public const string Nevada = "Nevada ";
-                    public const string NewHampshire = "New Hampshire ";
-                    public const string NewJersey = "New Jersey ";
-                    public const string NewMexico = "New Mexico ";
-                    public const string NewYork = "New York ";
-                    public const string NorthCarolina = "North Carolina ";
-                    public const string NorthDakota = "North Dakota ";
-                    public const string Ohio = "Ohio ";
-                    public const string Oklahoma = "Oklahoma ";
-                    public const string Oregon = "Oregon ";
-                    public const string Pennsylvania = "Pennsylvania";
-                    public const string RhodeIsland = "Pennsylvania Rhode Island ";
-                    public const string SouthCarolina = "South Carolina ";
-                    public const string SouthDakota = "South Dakota ";
-                    public const string Tennessee = "Tennessee ";
-                    public const string Texas = "Texas ";
-                    public const string Utah = "Utah ";
-                    public const string Vermont = "Vermont ";
-                    public const string Virginia = "Virginia ";
-                    public const string Washington = "Washington ";
-                    public const string WestVirginia = "West Virginia ";
-                    public const string Wisconsin = "Wisconsin ";
-                    public const string Wyoming = "Wyoming";
+                            }
+                        }
+                        public static class Alaska
+                        {
+                            public const string Name = "USA - Alaska";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class Arizona
+                        {
+                            public const string Name = "USA - Arizona";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class Arkansas
+                        {
+                            public const string Name = "USA - Arkansas";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class California
+                        {
+                            public const string Name = "USA - California";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class Colorado
+                        {
+                            public const string Name = "USA - Colorado";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class Connecticut
+                        {
+                            public const string Name = "USA - Connecticut";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class Delaware
+                        {
+                            public const string Name = "Delaware ";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class Florida
+                        {
+                            public const string Name = "USA - Florida";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class Georgia
+                        {
+                            public const string Name = "USA - Georgia";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class Hawaii
+                        {
+                            public const string Name = "USA - Hawaii";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class Idaho
+                        {
+                            public const string Name = "USA - Idaho";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class Illinois
+                        {
+                            public const string Name = "USA - Illinois";
+                            public static class County
+                            {
+                                public static class Cook
+                                {
+                                    public const string Name = "USA - IL - Cook";
+                                    public static class Municipal
+                                    {
+                                        public const string Chicago = "USA - IL - Cook - Chicago";
+                                    }
+                                }
+                            }
+                        }
+                        public static class Indiana
+                        {
+                            public const string Name = "USA - Indiana";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class Iowa
+                        {
+                            public const string Name = "USA - Iowa";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class Kansas
+                        {
+                            public const string Name = "USA - Kansas";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class Kentucky
+                        {
+                            public const string Name = "USA - Kentucky";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class Louisiana
+                        {
+                            public const string Name = "USA - Louisiana";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class Maine
+                        {
+                            public const string Name = "USA - Maine";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class Maryland
+                        {
+                            public const string Name = "USA - Maryland";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class Massachusetts
+                        {
+                            public const string Name = "USA - Massachusetts";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class Michigan
+                        {
+                            public const string Name = "USA - Michigan";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class Minnesota
+                        {
+                            public const string Name = "USA - Minnesota";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class Mississippi
+                        {
+                            public const string Name = "USA - Mississippi";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class Missouri
+                        {
+                            public const string Name = "USA - Missouri";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class Montana
+                        {
+                            public const string Name = "USA - Montana";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class Nebraska
+                        {
+                            public const string Name = "USA - Nebraska";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class Nevada
+                        {
+                            public const string Name = "USA - Nevada";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class NewHampshire
+                        {
+                            public const string Name = "USA - New Hampshire";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class NewJersey
+                        {
+                            public const string Name = "USA - New Jersey";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class NewMexico
+                        {
+                            public const string Name = "USA - New Mexico";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class NewYork
+                        {
+                            public const string Name = "USA - New York";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class NorthCarolina
+                        {
+                            public const string Name = "USA - North Carolina";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class NorthDakota
+                        {
+                            public const string Name = "USA - North Dakota";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class Ohio
+                        {
+                            public const string Name = "USA - Ohio";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class Oklahoma
+                        {
+                            public const string Name = "USA - Oklahoma";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class Oregon
+                        {
+                            public const string Name = "USA - Oregon";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class Pennsylvania
+                        {
+                            public const string Name = "USA - Pennsylvania";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class RhodeIsland
+                        {
+                            public const string Name = "USA - Rhode Island";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class SouthCarolina
+                        {
+                            public const string Name = "South Carolina ";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class SouthDakota
+                        {
+                            public const string Name = "USA - South Dakota";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class Tennessee
+                        {
+                            public const string Name = "USA - Tennessee";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class Texas
+                        {
+                            public const string Name = "USA - Texas";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class Utah
+                        {
+                            public const string Name = "USA - Utah";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class Vermont
+                        {
+                            public const string Name = "USA - Vermont";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class Virginia
+                        {
+                            public const string Name = "USA - Virginia";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class Washington
+                        {
+                            public const string Name = "USA - Washington";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class WestVirginia
+                        {
+                            public const string Name = "USA - West Virginia";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class Wisconsin
+                        {
+                            public const string Name = "USA - Wisconsin";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class Wyoming
+                        {
+                            public const string Name = "Wyoming";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class PuertoRico
+                        {
+                            public const string Name = "USA - Puerto Rico";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class Guam
+                        {
+                            public const string Name = "USA - Guam";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class MarianaIslands
+                        {
+                            public const string Name = "USA - Northern Mariana Islands";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class VirginIslands
+                        {
+                            public const string Name = "USA - U.S. Virgin Islands";
+                            public static class County
+                            {
+
+                            }
+                        }
+                        public static class AmericanSamoa
+                        {
+                            public const string Name = "USA - American Samoa";
+                            public static class County
+                            {
+
+                            }
+                        }
+
+                    }
                 }
             }
         }

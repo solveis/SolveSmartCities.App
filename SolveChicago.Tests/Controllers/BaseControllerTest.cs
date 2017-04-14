@@ -15,26 +15,160 @@ using static SolveChicago.Web.Controllers.BaseController;
 using SolveChicago.Entities;
 using System.Diagnostics.CodeAnalysis;
 using SolveChicago.Web.Models;
+using SolveChicago.Common;
 
 namespace SolveChicago.Tests.Controllers
 {
     [ExcludeFromCodeCoverage]
     public class BaseControllerTest
     {
+
+        [Fact]
+        public void BaseController_MemberRedirect_ReturnsRedirectToRouteResult_MembersSurvey()
+        {
+            List<Member> data = new List<Member>
+            {
+                new Member() { Id = 1, SurveyStep = Constants.Member.SurveyStep.Invited }
+            };
+
+            var set = new Mock<DbSet<Member>>().SetupData(data);
+
+            var context = new Mock<SolveChicagoEntities>();
+            context.Setup(c => c.Members).Returns(set.Object);
+
+            BaseController controller = new BaseController(context.Object);
+            var result = (RedirectToRouteResult)controller.MemberRedirect(1);
+
+            Assert.Equal("Survey", result.RouteValues["action"]);
+            Assert.Equal("Members", result.RouteValues["controller"]);
+        }
+
+        [Fact]
+        public void BaseController_MemberRedirect_ReturnsRedirectToRouteResult_ProfileMemberPersonal()
+        {
+            List<Member> data = new List<Member>
+            {
+                new Member() { Id = 1, SurveyStep = Constants.Member.SurveyStep.Personal }
+            };
+
+            var set = new Mock<DbSet<Member>>().SetupData(data);
+
+            var context = new Mock<SolveChicagoEntities>();
+            context.Setup(c => c.Members).Returns(set.Object);
+
+            BaseController controller = new BaseController(context.Object);
+            var result = (RedirectToRouteResult)controller.MemberRedirect(1);
+
+            Assert.Equal("MemberPersonal", result.RouteValues["action"]);
+            Assert.Equal("Profile", result.RouteValues["controller"]);
+        }
+
+        [Fact]
+        public void BaseController_MemberRedirect_ReturnsRedirectToRouteResult_ProfileMemberFamily()
+        {
+            List<Member> data = new List<Member>
+            {
+                new Member() { Id = 1, SurveyStep = Constants.Member.SurveyStep.Family }
+            };
+
+            var set = new Mock<DbSet<Member>>().SetupData(data);
+
+            var context = new Mock<SolveChicagoEntities>();
+            context.Setup(c => c.Members).Returns(set.Object);
+
+            BaseController controller = new BaseController(context.Object);
+            var result = (RedirectToRouteResult)controller.MemberRedirect(1);
+
+            Assert.Equal("MemberFamily", result.RouteValues["action"]);
+            Assert.Equal("Profile", result.RouteValues["controller"]);
+        }
+
+        [Fact]
+        public void BaseController_MemberRedirect_ReturnsRedirectToRouteResult_ProfileMemberEducation()
+        {
+            List<Member> data = new List<Member>
+            {
+                new Member() { Id = 1, SurveyStep = Constants.Member.SurveyStep.Education }
+            };
+
+            var set = new Mock<DbSet<Member>>().SetupData(data);
+
+            var context = new Mock<SolveChicagoEntities>();
+            context.Setup(c => c.Members).Returns(set.Object);
+
+            BaseController controller = new BaseController(context.Object);
+            var result = (RedirectToRouteResult)controller.MemberRedirect(1);
+
+            Assert.Equal("MemberSchools", result.RouteValues["action"]);
+            Assert.Equal("Profile", result.RouteValues["controller"]);
+        }
+
+        [Fact]
+        public void BaseController_MemberRedirect_ReturnsRedirectToRouteResult_ProfileMemberJobs()
+        {
+            List<Member> data = new List<Member>
+            {
+                new Member() { Id = 1, SurveyStep = Constants.Member.SurveyStep.Jobs }
+            };
+
+            var set = new Mock<DbSet<Member>>().SetupData(data);
+
+            var context = new Mock<SolveChicagoEntities>();
+            context.Setup(c => c.Members).Returns(set.Object);
+
+            BaseController controller = new BaseController(context.Object);
+            var result = (RedirectToRouteResult)controller.MemberRedirect(1);
+
+            Assert.Equal("MemberJobs", result.RouteValues["action"]);
+            Assert.Equal("Profile", result.RouteValues["controller"]);
+        }
+
+        [Fact]
+        public void BaseController_MemberRedirect_ReturnsRedirectToRouteResult_ProfileMemberNonprofits()
+        {
+            List<Member> data = new List<Member>
+            {
+                new Member() { Id = 1, SurveyStep = Constants.Member.SurveyStep.Nonprofits }
+            };
+
+            var set = new Mock<DbSet<Member>>().SetupData(data);
+
+            var context = new Mock<SolveChicagoEntities>();
+            context.Setup(c => c.Members).Returns(set.Object);
+
+            BaseController controller = new BaseController(context.Object);
+            var result = (RedirectToRouteResult)controller.MemberRedirect(1);
+
+            Assert.Equal("MemberNonprofits", result.RouteValues["action"]);
+            Assert.Equal("Profile", result.RouteValues["controller"]);
+        }
+
+        [Fact]
+        public void BaseController_MemberRedirect_ReturnsRedirectToRouteResult_ProfileMemberGovernmentPrograms()
+        {
+            List<Member> data = new List<Member>
+            {
+                new Member() { Id = 1, SurveyStep = Constants.Member.SurveyStep.GovernmentPrograms }
+            };
+
+            var set = new Mock<DbSet<Member>>().SetupData(data);
+
+            var context = new Mock<SolveChicagoEntities>();
+            context.Setup(c => c.Members).Returns(set.Object);
+
+            BaseController controller = new BaseController(context.Object);
+            var result = (RedirectToRouteResult)controller.MemberRedirect(1);
+
+            Assert.Equal("MemberGovernmentPrograms", result.RouteValues["action"]);
+            Assert.Equal("Profile", result.RouteValues["controller"]);
+        }
+
         [Fact]
         public void BaseController_MemberRedirect_ReturnsRedirectToRouteResult_MembersIndex()
         {
             List<Member> data = new List<Member>
             {
-                new Member
-                {
-                    Email = "member@solvechicago.com",
-                    CreatedDate = DateTime.UtcNow.AddDays(-10),
-                    Id = 1,
-                    FirstName = "Tom",
-                    LastName = "Elliot",
-                    ProfilePicturePath = "../image.jpg",
-                }
+                new Member() { Id = 1, SurveyStep = Constants.Member.SurveyStep.Complete }
             };
 
             var set = new Mock<DbSet<Member>>().SetupData(data);
@@ -50,11 +184,11 @@ namespace SolveChicago.Tests.Controllers
         }
 
         [Fact]
-        public void BaseController_MemberRedirect_ReturnsRedirectToRouteResult_ProfileMember()
+        public void BaseController_MemberRedirect_InvalidSurveyStep_ReturnsRedirectToRouteResult_ProfileMemberPersonal()
         {
             List<Member> data = new List<Member>
             {
-                new Member() { Id = 1 }
+                new Member() { Id = 1, SurveyStep = "NotASurveyStep" }
             };
 
             var set = new Mock<DbSet<Member>>().SetupData(data);
@@ -65,7 +199,7 @@ namespace SolveChicago.Tests.Controllers
             BaseController controller = new BaseController(context.Object);
             var result = (RedirectToRouteResult)controller.MemberRedirect(1);
 
-            Assert.Equal("Member", result.RouteValues["action"]);
+            Assert.Equal("MemberPersonal", result.RouteValues["action"]);
             Assert.Equal("Profile", result.RouteValues["controller"]);
         }
 
@@ -334,11 +468,10 @@ namespace SolveChicago.Tests.Controllers
                             FirstName = "Tom",
                             LastName = "Elliot",
                             ProfilePicturePath = "../image.jpg",
-                            MemberNonprofits = new List<MemberNonprofit>
+                            NonprofitMembers = new List<NonprofitMember>
                             {
-                                new MemberNonprofit
+                                new NonprofitMember
                                 {
-                                    CaseManagerId = 1,
                                     MemberId = 1,
                                     Member = new Member
                                     {
@@ -382,7 +515,7 @@ namespace SolveChicago.Tests.Controllers
             string name = controller.State.Member.FirstName;
             Assert.Equal("Tom", name);
 
-            string caseManagerName = controller.State.Member.MemberNonprofits.Select(x => x.CaseManager).First().FirstName;
+            string caseManagerName = controller.State.Member.NonprofitMembers.Select(x => x.CaseManager).First().FirstName;
             Assert.Equal("Terry", caseManagerName);
 
         }

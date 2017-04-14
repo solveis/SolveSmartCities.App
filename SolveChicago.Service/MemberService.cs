@@ -194,12 +194,12 @@ namespace SolveChicago.Service
 
         private NonprofitEntity[] GetNonprofits(Member member)
         {
-            MemberNonprofit[] memberNonprofits = member.MemberNonprofits.ToArray();
-            if (memberNonprofits.Count() > 0)
+            NonprofitMember[] NonprofitMembers = member.NonprofitMembers.ToArray();
+            if (NonprofitMembers.Count() > 0)
             {
-                return memberNonprofits.Select(x => new NonprofitEntity
+                return NonprofitMembers.Select(x => new NonprofitEntity
                 {
-                    CaseManagerId = x.CaseManagerId,
+                    CaseManagerId = x.CaseManager?.Id,
                     CaseManagerName = string.Format("{0} {1}", x.CaseManager?.FirstName, x.CaseManager?.LastName),
                     Enjoyed = x.MemberEnjoyed,
                     Struggled = x.MemberStruggled,
@@ -309,9 +309,9 @@ namespace SolveChicago.Service
         private static void GetChildTree(List<FamilyMember> familyMembers, Member member)
         {
             Member currentMember = member;
-            if (currentMember.Children.Any())
+            if (currentMember.MemberParents.Any())
             {
-                Member[] currentChildren = currentMember.Children.Select(x => x.Children).ToArray();
+                Member[] currentChildren = currentMember.MemberParents.Select(x => x.Member).ToArray();
                 string currentChildPrefix = "";
                 foreach (var child in currentChildren)
                 {
@@ -336,9 +336,9 @@ namespace SolveChicago.Service
         private static void GetParentTree(List<FamilyMember> familyMembers, Member member)
         {
             Member currentMember = member;
-            if (currentMember.Parents.Any())
+            if (currentMember.MemberParents1.Any())
             {
-                Member[] currentParents = currentMember.Parents.Select(x => x.Parents).ToArray();
+                Member[] currentParents = currentMember.MemberParents1.Select(x => x.Member1).ToArray();
                 string currentParentPrefix = "";
                 foreach (var parent in currentParents)
                 {
@@ -443,12 +443,12 @@ namespace SolveChicago.Service
             switch(relation)
             {
                 case Constants.Family.Relationships.Parent:
-                    if(!member.Parents.Any(x => x.ParentId == existingFamilyMember.Id && x.ChildId == member.Id))
-                        member.Parents.Add(new MemberParent { ParentId = existingFamilyMember.Id, ChildId = member.Id, IsBiological = isBiological, Children = member, Parents = existingFamilyMember });
+                    if(!member.MemberParents1.Any(x => x.ParentId == existingFamilyMember.Id && x.ChildId == member.Id))
+                        member.MemberParents1.Add(new MemberParent { ParentId = existingFamilyMember.Id, ChildId = member.Id, IsBiological = isBiological, Member = member, Member1 = existingFamilyMember });
                     break;
                 case Constants.Family.Relationships.Child:
-                    if (!member.Parents.Any(x => x.ParentId == member.Id && x.ChildId == existingFamilyMember.Id))
-                        member.Children.Add(new MemberParent { ParentId = member.Id, ChildId = existingFamilyMember.Id, IsBiological = isBiological, Children = existingFamilyMember, Parents = member });
+                    if (!member.MemberParents1.Any(x => x.ParentId == member.Id && x.ChildId == existingFamilyMember.Id))
+                        member.MemberParents.Add(new MemberParent { ParentId = member.Id, ChildId = existingFamilyMember.Id, IsBiological = isBiological, Member = existingFamilyMember, Member1 = member });
                     break;
                 case Constants.Family.Relationships.Spouse:
                     if(!member.MemberSpouses.Any(x => x.Spouse_1_Id == existingFamilyMember.Id && x.Spouse_2_Id == member.Id) && !member.MemberSpouses.Any(x => x.Spouse_1_Id == member.Id && x.Spouse_2_Id == existingFamilyMember.Id))
@@ -498,9 +498,9 @@ namespace SolveChicago.Service
                         };
                         db.Nonprofits.Add(npo);
                     }
-                    if (!member.MemberNonprofits.Select(x => x.NonprofitId).Contains(nonprofit.NonprofitId ?? 0))
+                    if (!member.NonprofitMembers.Select(x => x.NonprofitId).Contains(nonprofit.NonprofitId ?? 0))
                     {
-                        member.MemberNonprofits.Add(new MemberNonprofit
+                        member.NonprofitMembers.Add(new NonprofitMember
                         {
                             MemberEnjoyed = nonprofit.Enjoyed,
                             MemberStruggled = nonprofit.Struggled,

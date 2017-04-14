@@ -211,8 +211,10 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CaseManagersController.cs" />
     <Compile Include="Controllers\CorporationsController.cs" />
+    <Compile Include="Controllers\GovernmentProgramsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\Members1Controller.cs" />
     <Compile Include="Controllers\MembersController.cs" />
     <Compile Include="Controllers\NonprofitsController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
@@ -226,6 +228,7 @@
     <Compile Include="Models\Admin\AdminInviteModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Member\AddMemberViewModel.cs" />
     <Compile Include="Models\Nonprofit\AssignCaseManagerViewModel.cs" />
     <Compile Include="Models\Profile\MemberProfileViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -381,6 +384,17 @@
     <Content Include="Views\Profile\MemberNonprofits.cshtml" />
     <Content Include="Views\Profile\MemberJobs.cshtml" />
     <Content Include="Views\Profile\MemberGovernmentPrograms.cshtml" />
+    <Content Include="Views\GovernmentPrograms\Create.cshtml" />
+    <Content Include="Views\GovernmentPrograms\Delete.cshtml" />
+    <Content Include="Views\GovernmentPrograms\Details.cshtml" />
+    <Content Include="Views\GovernmentPrograms\Edit.cshtml" />
+    <Content Include="Views\GovernmentPrograms\Index.cshtml" />
+    <Content Include="Views\Members1\Create.cshtml" />
+    <Content Include="Views\Members1\Delete.cshtml" />
+    <Content Include="Views\Members1\Details.cshtml" />
+    <Content Include="Views\Members1\Edit.cshtml" />
+    <Content Include="Views\Members1\Index.cshtml" />
+    <Content Include="Views\Referrers\AddMember.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

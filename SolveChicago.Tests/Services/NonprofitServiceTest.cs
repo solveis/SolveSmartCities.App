@@ -33,11 +33,10 @@ namespace SolveChicago.Tests.Services
                         new CaseManager { Id = 1, FirstName = "Tim", LastName = "Keller" },
                         new CaseManager { Id = 2, FirstName = "Esme", LastName = "Pirouet" },
                     },
-                    MemberNonprofits = new List<MemberNonprofit>
+                    NonprofitMembers = new List<NonprofitMember>
                     {
-                        new MemberNonprofit
+                        new NonprofitMember
                         {
-                            CaseManagerId = null,
                             MemberId = 1,
                             Member = new Member(),
                             MemberEnjoyed = "everything",
@@ -45,9 +44,8 @@ namespace SolveChicago.Tests.Services
                             NonprofitId = 1,
                         },
 
-                        new MemberNonprofit
+                        new NonprofitMember
                         {
-                            CaseManagerId = 1,
                             MemberId = 2,
                             Member = new Member(),
                             MemberEnjoyed = "everything",
@@ -55,9 +53,8 @@ namespace SolveChicago.Tests.Services
                             NonprofitId = 1,
                         },
 
-                        new MemberNonprofit
+                        new NonprofitMember
                         {
-                            CaseManagerId = 2,
                             MemberId = 3,
                             Member = new Member(),
                             MemberEnjoyed = "everything",
@@ -68,11 +65,10 @@ namespace SolveChicago.Tests.Services
                 }
             };
 
-            List<MemberNonprofit> memberNonprofits = new List<MemberNonprofit>
+            List<NonprofitMember> NonprofitMembers = new List<NonprofitMember>
             {
-                new MemberNonprofit
+                new NonprofitMember
                 {
-                    CaseManagerId = null,
                     MemberId = 1,
                     Member = new Member(),
                     MemberEnjoyed = "everything",
@@ -80,9 +76,8 @@ namespace SolveChicago.Tests.Services
                     NonprofitId = 1,
                 },
 
-                new MemberNonprofit
+                new NonprofitMember
                 {
-                    CaseManagerId = 1,
                     MemberId = 2,
                     Member = new Member(),
                     MemberEnjoyed = "everything",
@@ -90,9 +85,8 @@ namespace SolveChicago.Tests.Services
                     NonprofitId = 1,
                 },
 
-                new MemberNonprofit
+                new NonprofitMember
                 {
-                    CaseManagerId = 2,
                     MemberId = 3,
                     Member = new Member(),
                     MemberEnjoyed = "everything",
@@ -106,10 +100,10 @@ namespace SolveChicago.Tests.Services
                 .Returns<object[]>(ids => data.FirstOrDefault(d => d.Id == (int)ids[0]));
             context.Setup(c => c.Nonprofits).Returns(set.Object);
 
-            var memberNonprofitSet = new Mock<DbSet<MemberNonprofit>>().SetupData(memberNonprofits);
-            memberNonprofitSet.Setup(m => m.Find(It.IsAny<object[]>()))
-                .Returns<object[]>(ids => memberNonprofits.FirstOrDefault(d => d.NonprofitId == (int)ids[0]));
-            context.Setup(c => c.MemberNonprofits).Returns(memberNonprofitSet.Object);
+            var NonprofitMemberset = new Mock<DbSet<NonprofitMember>>().SetupData(NonprofitMembers);
+            NonprofitMemberset.Setup(m => m.Find(It.IsAny<object[]>()))
+                .Returns<object[]>(ids => NonprofitMembers.FirstOrDefault(d => d.NonprofitId == (int)ids[0]));
+            context.Setup(c => c.NonprofitMembers).Returns(NonprofitMemberset.Object);
         }
 
         [Fact]

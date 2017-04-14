@@ -4,34 +4,44 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e467edb915d84453b44a4c58c1d37130" Name="Diagram1">
-        <EntityTypeShape EntityType="SolveChicagoDevModel.Address" Width="1.5" PointX="0.75" PointY="19.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="SolveChicagoDevModel.AdminInviteCode" Width="1.5" PointX="5.25" PointY="5.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="SolveChicagoDevModel.Admin" Width="1.5" PointX="0.75" PointY="11.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SolveChicagoDevModel.AspNetRole" Width="1.5" PointX="0.75" PointY="15.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SolveChicagoDevModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="2.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SolveChicagoDevModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="33" IsExpanded="true" />
-        <EntityTypeShape EntityType="SolveChicagoDevModel.AspNetUser" Width="1.5" PointX="3" PointY="11.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SolveChicagoDevModel.CaseNote" Width="1.5" PointX="9.75" PointY="31.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="SolveChicagoDevModel.Corporation" Width="1.5" PointX="5.25" PointY="25.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="SolveChicagoDevModel.Family" Width="1.5" PointX="3" PointY="19.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="SolveChicagoDevModel.GovernmentProgram" Width="1.5" PointX="8.25" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SolveChicagoDevModel.Interest" Width="1.5" PointX="3" PointY="23.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SolveChicagoDevModel.MemberCorporation" Width="1.5" PointX="7.5" PointY="18.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SolveChicagoDevModel.MemberEmergencyContact" Width="1.5" PointX="7.5" PointY="22.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SolveChicagoDevModel.MemberGovernmentProgram" Width="1.5" PointX="10.5" PointY="19.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SolveChicagoDevModel.MemberParent" Width="1.5" PointX="7.5" PointY="31.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SolveChicagoDevModel.Member" Width="1.5" PointX="5.25" PointY="17.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SolveChicagoDevModel.MemberSchool" Width="1.5" PointX="10.5" PointY="23.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SolveChicagoDevModel.MemberSpous" Width="1.5" PointX="7.5" PointY="40.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SolveChicagoDevModel.Nonprofit" Width="1.5" PointX="5.25" PointY="12.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SolveChicagoDevModel.Outcome" Width="1.5" PointX="7.5" PointY="46" IsExpanded="true" />
-        <EntityTypeShape EntityType="SolveChicagoDevModel.PhoneNumber" Width="1.5" PointX="10.5" PointY="13.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="SolveChicagoDevModel.School" Width="1.5" PointX="8.25" PointY="35.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="SolveChicagoDevModel.Skill" Width="1.5" PointX="5.25" PointY="9.125" IsExpanded="true" />
+      <Diagram DiagramId="f90cb9e9f81241c5ad7e29d4cc20320d" Name="Diagram1">
+        <EntityTypeShape EntityType="SolveChicagoDevModel.Address" Width="1.5" PointX="0.75" PointY="20.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SolveChicagoDevModel.AdminInviteCode" Width="1.5" PointX="5.25" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SolveChicagoDevModel.Admin" Width="1.5" PointX="5.25" PointY="30.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SolveChicagoDevModel.AspNetRole" Width="1.5" PointX="0.75" PointY="14.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SolveChicagoDevModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="34" IsExpanded="true" />
+        <EntityTypeShape EntityType="SolveChicagoDevModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SolveChicagoDevModel.AspNetUser" Width="1.5" PointX="3" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SolveChicagoDevModel.CaseManager" Width="1.5" PointX="5.25" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SolveChicagoDevModel.CaseNote" Width="1.5" PointX="9.75" PointY="30.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SolveChicagoDevModel.Communication" Width="1.5" PointX="5.25" PointY="37.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SolveChicagoDevModel.Corporation" Width="1.5" PointX="5.25" PointY="26.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SolveChicagoDevModel.Family" Width="1.5" PointX="3" PointY="20.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SolveChicagoDevModel.GovernmentProgram" Width="1.5" PointX="8.25" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SolveChicagoDevModel.Interest" Width="1.5" PointX="3" PointY="24.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SolveChicagoDevModel.MemberCorporation" Width="1.5" PointX="7.5" PointY="19.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SolveChicagoDevModel.MemberEmergencyContact" Width="1.5" PointX="7.5" PointY="23.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SolveChicagoDevModel.MemberGovernmentProgram" Width="1.5" PointX="10.5" PointY="20.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SolveChicagoDevModel.MemberParent" Width="1.5" PointX="7.5" PointY="29.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SolveChicagoDevModel.Member" Width="1.5" PointX="5.25" PointY="18" IsExpanded="true" />
+        <EntityTypeShape EntityType="SolveChicagoDevModel.MemberSchool" Width="1.5" PointX="10.5" PointY="16.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SolveChicagoDevModel.MemberSkill" Width="1.5" PointX="10.5" PointY="24.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SolveChicagoDevModel.MemberSpous" Width="1.5" PointX="7.5" PointY="38.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SolveChicagoDevModel.Nonprofit" Width="1.5" PointX="5.25" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SolveChicagoDevModel.Outcome" Width="1.5" PointX="7.5" PointY="44.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SolveChicagoDevModel.PhoneNumber" Width="1.5" PointX="7.5" PointY="26.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SolveChicagoDevModel.Referrer" Width="1.5" PointX="13.5" PointY="20.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SolveChicagoDevModel.School" Width="1.5" PointX="8.25" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SolveChicagoDevModel.Skill" Width="1.5" PointX="8.25" PointY="34.75" IsExpanded="true" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_AdminInviteCodes_Admin" ManuallyRouted="false" />
+        <AssociationConnector Association="SolveChicagoDevModel.FK_Admin_AspNetUser" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_dbo_AspNetUserClaims_dbo_AspNetUser_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_dbo_AspNetUserLogins_dbo_AspNetUser_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="SolveChicagoDevModel.FK_CaseManagers_AspNetUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SolveChicagoDevModel.FK_Communications_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="SolveChicagoDevModel.FK_Member_AspNetUser" ManuallyRouted="false" />
+        <AssociationConnector Association="SolveChicagoDevModel.FK_CaseManagers_Nonprofit" ManuallyRouted="false" />
+        <AssociationConnector Association="SolveChicagoDevModel.FK_CaseNotes_CaseManagers" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_CaseNotes_Members" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_CaseNotes_Outcomes" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_MemberCorporations_Corporations" ManuallyRouted="false" />
@@ -43,36 +53,27 @@
         <AssociationConnector Association="SolveChicagoDevModel.FK_MemberParents_Child" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_MemberParents_Parent" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_MemberSchools_Member" ManuallyRouted="false" />
+        <AssociationConnector Association="SolveChicagoDevModel.FK_MemberSkills_Members" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_MemberSpouses_Spouse1" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_MemberSpouses_Spouse2" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_Outcomes_Members" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_MemberSchools_School" ManuallyRouted="false" />
+        <AssociationConnector Association="SolveChicagoDevModel.FK_MemberSkills_Nonprofits" ManuallyRouted="false" />
+        <AssociationConnector Association="SolveChicagoDevModel.FK_MemberSkills_Skills" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.AspNetUserRoles" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FamilyAddresses" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FamilyPhoneNumbers" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.MemberAddresses" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.MemberInterests" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.MemberPhoneNumbers" ManuallyRouted="false" />
-        <AssociationConnector Association="SolveChicagoDevModel.UserProfileAdmins" ManuallyRouted="false" />
+        <AssociationConnector Association="SolveChicagoDevModel.ReferrerMembers" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.UserProfileCorporations" ManuallyRouted="false" />
-        <AssociationConnector Association="SolveChicagoDevModel.UserProfileMembers" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.UserProfileNonprofits" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="SolveChicagoDevModel.Communication" Width="1.5" PointX="5.25" PointY="36.25" />
-        <AssociationConnector Association="SolveChicagoDevModel.FK_Communications_AspNetUsers" />
-        <EntityTypeShape EntityType="SolveChicagoDevModel.MemberSkill" Width="1.5" PointX="7.5" PointY="14.375" />
-        <AssociationConnector Association="SolveChicagoDevModel.FK_MemberSkills_Members" />
-        <AssociationConnector Association="SolveChicagoDevModel.FK_MemberSkills_Nonprofits" />
-        <AssociationConnector Association="SolveChicagoDevModel.FK_MemberSkills_Skills" />
-        <EntityTypeShape EntityType="SolveChicagoDevModel.MemberNonprofit" Width="1.5" PointX="13.5" PointY="14.5" />
-        <AssociationConnector Association="SolveChicagoDevModel.FK_MemberNonprofits_Members" />
-        <AssociationConnector Association="SolveChicagoDevModel.FK_MemberNonprofits_Nonprofits" />
-        <EntityTypeShape EntityType="SolveChicagoDevModel.CaseManager" Width="1.5" PointX="7.5" PointY="9.875" />
-        <EntityTypeShape EntityType="SolveChicagoDevModel.Referrer" Width="1.5" PointX="5.25" PointY="39.5" />
-        <AssociationConnector Association="SolveChicagoDevModel.FK_CaseManagers_Nonprofit" />
-        <AssociationConnector Association="SolveChicagoDevModel.FK_CaseNotes_CaseManagers" />
-        <AssociationConnector Association="SolveChicagoDevModel.FK_MemberNonprofits_CaseManagers" />
-        <AssociationConnector Association="SolveChicagoDevModel.UserProfileCasemanagers" />
-        <AssociationConnector Association="SolveChicagoDevModel.UserProfileReferrers" />
+        <AssociationConnector Association="SolveChicagoDevModel.UserProfileReferrers" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="SolveChicagoDevModel.NonprofitMember" Width="1.5" PointX="7.5" PointY="15.625" />
+        <AssociationConnector Association="SolveChicagoDevModel.FK_NonprofitMembers_CaseManagers" />
+        <AssociationConnector Association="SolveChicagoDevModel.FK_NonprofitMembers_Members" />
+        <AssociationConnector Association="SolveChicagoDevModel.FK_NonprofitMembers_Nonprofits" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

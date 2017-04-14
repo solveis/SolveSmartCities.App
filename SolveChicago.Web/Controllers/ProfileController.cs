@@ -31,7 +31,7 @@ namespace SolveChicago.Web.Controllers
             base.Dispose();
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin, Nonprofit, CaseManager, Member")]
         // GET: Profile/MemberPersonal
         public ActionResult MemberPersonal(int? id)
         {
@@ -43,6 +43,7 @@ namespace SolveChicago.Web.Controllers
         }
 
         // POST: Profile/MemberPersonal
+        [Authorize(Roles = "Admin, Nonprofit, CaseManager, Member")]
         [HttpPost]
         public ActionResult MemberPersonal(MemberProfilePersonalViewModel model)
         {
@@ -51,13 +52,13 @@ namespace SolveChicago.Web.Controllers
                 MemberService service = new MemberService(this.db);
                 
                     service.UpdateMemberPersonal(model.Member);
-                    return MemberRedirect(model.Member.Id);
+                    return UpdateSurveyStatus(model.Member.Id, Constants.Member.SurveyStep.Personal);
             }
             model = FormatMemberProfilePersonalViewModel(model.Member);
-            return MemberRedirect(model.Member.Id);
+            return View(model);
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin, Nonprofit, CaseManager, Member")]
         // GET: Profile/MemberFamily
         public ActionResult MemberFamily(int? id)
         {
@@ -68,7 +69,8 @@ namespace SolveChicago.Web.Controllers
             return View(model);
         }
 
-        // POST: Profile/Member
+        // POST: Profile/MemberFamily
+        [Authorize(Roles = "Admin, Nonprofit, CaseManager, Member")]
         [HttpPost]
         public ActionResult MemberFamily(MemberProfileFamilyViewModel model)
         {
@@ -77,13 +79,13 @@ namespace SolveChicago.Web.Controllers
                 MemberService service = new MemberService(this.db);
 
                 service.UpdateMemberFamily(model.Member);
-                return MemberRedirect(model.Member.MemberId);
+                return UpdateSurveyStatus(model.Member.MemberId, Constants.Member.SurveyStep.Family);
             }
             model = FormatMemberProfileFamilyViewModel(model.Member);
-            return MemberRedirect(model.Member.MemberId);
+            return View(model);
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin, Nonprofit, CaseManager, Member")]
         // GET: Profile/MemberSchools
         public ActionResult MemberSchools(int? id)
         {
@@ -94,7 +96,8 @@ namespace SolveChicago.Web.Controllers
             return View(model);
         }
 
-        // POST: Profile/Member
+        // POST: Profile/MemberSchools
+        [Authorize(Roles = "Admin, Nonprofit, CaseManager, Member")]
         [HttpPost]
         public ActionResult MemberSchools(MemberProfileSchoolViewModel model)
         {
@@ -103,13 +106,13 @@ namespace SolveChicago.Web.Controllers
                 MemberService service = new MemberService(this.db);
 
                 service.UpdateMemberSchools(model.Member);
-                return MemberRedirect(model.Member.MemberId);
+                return UpdateSurveyStatus(model.Member.MemberId, Constants.Member.SurveyStep.Education);
             }
             model = FormatMemberProfileSchoolsViewModel(model.Member);
-            return MemberRedirect(model.Member.MemberId);
+            return View(model);
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin, Nonprofit, CaseManager, Member")]
         // GET: Profile/MemberNonprofits
         public ActionResult MemberNonprofits(int? id)
         {
@@ -120,7 +123,8 @@ namespace SolveChicago.Web.Controllers
             return View(model);
         }
 
-        // POST: Profile/Member
+        // POST: Profile/MemberNonprofits
+        [Authorize(Roles = "Admin, Nonprofit, CaseManager, Member")]
         [HttpPost]
         public ActionResult MemberNonprofits(MemberProfileNonprofitViewModel model)
         {
@@ -129,13 +133,13 @@ namespace SolveChicago.Web.Controllers
                 MemberService service = new MemberService(this.db);
 
                 service.UpdateMemberNonprofits(model.Member);
-                return MemberRedirect(model.Member.MemberId);
+                return UpdateSurveyStatus(model.Member.MemberId, Constants.Member.SurveyStep.Nonprofits);
             }
             model = FormatMemberProfileNonprofitsViewModel(model.Member);
-            return MemberRedirect(model.Member.MemberId);
+            return View(model);
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin, Nonprofit, CaseManager, Member")]
         // GET: Profile/MemberJobs
         public ActionResult MemberJobs(int? id)
         {
@@ -146,7 +150,8 @@ namespace SolveChicago.Web.Controllers
             return View(model);
         }
 
-        // POST: Profile/Member
+        // POST: Profile/MemberJobs
+        [Authorize(Roles = "Admin, Nonprofit, CaseManager, Member")]
         [HttpPost]
         public ActionResult MemberJobs(MemberProfileJobViewModel model)
         {
@@ -155,13 +160,13 @@ namespace SolveChicago.Web.Controllers
                 MemberService service = new MemberService(this.db);
 
                 service.UpdateMemberJobs(model.Member);
-                return MemberRedirect(model.Member.MemberId);
+                return UpdateSurveyStatus(model.Member.MemberId, Constants.Member.SurveyStep.Jobs);
             }
             model = FormatMemberProfileJobsViewModel(model.Member);
-            return MemberRedirect(model.Member.MemberId);
+            return View(model);
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin, Nonprofit, CaseManager, Member")]
         // GET: Profile/MemberGovernmentPrograms
         public ActionResult MemberGovernmentPrograms(int? id)
         {
@@ -172,8 +177,9 @@ namespace SolveChicago.Web.Controllers
             return View(model);
         }
 
-        // POST: Profile/Member
+        // POST: Profile/MemberGovernmentPrograms
         [HttpPost]
+        [Authorize(Roles = "Admin, Nonprofit, CaseManager, Member")]
         public ActionResult MemberGovernmentPrograms(MemberProfileGovernmentProgramViewModel model)
         {
             if (ModelState.IsValid)
@@ -181,10 +187,10 @@ namespace SolveChicago.Web.Controllers
                 MemberService service = new MemberService(this.db);
 
                 service.UpdateMemberGovernmentPrograms(model.Member);
-                return MemberRedirect(model.Member.MemberId);
+                return UpdateSurveyStatus(model.Member.MemberId, Constants.Member.SurveyStep.GovernmentPrograms);
             }
             model = FormatMemberProfileGovernmentProgramsViewModel(model.Member);
-            return MemberRedirect(model.Member.MemberId);
+            return View(model);
         }
 
         private MemberProfilePersonalViewModel FormatMemberProfilePersonalViewModel(MemberProfilePersonal member)

@@ -18,7 +18,7 @@ namespace SolveChicago.Entities
         public int ChildId { get; set; }
         public bool IsBiological { get; set; }
     
-        public virtual Member Children { get; set; }
-        public virtual Member Parents { get; set; }
+        public virtual Member Member { get; set; }
+        public virtual Member Member1 { get; set; }
     }
 }

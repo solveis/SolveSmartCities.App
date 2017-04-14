@@ -27,11 +27,10 @@ namespace SolveChicago.Tests.Services
                         Id = 1,
                         Name = "Nonprofit 1"
                     },
-                    MemberNonprofits = new List<MemberNonprofit>
+                    NonprofitMembers = new List<NonprofitMember>
                     {
-                        new MemberNonprofit
+                        new NonprofitMember
                         {
-                            CaseManagerId = 1,
                             NonprofitId = 1,
                             Member = new Member
                             {

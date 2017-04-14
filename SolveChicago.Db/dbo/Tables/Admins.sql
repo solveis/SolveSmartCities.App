@@ -9,5 +9,7 @@
     [CreatedDate] DATETIME2 NULL, 
 	[InvitedBy] NVARCHAR(50) NULL, 
 
+    [UserId] NVARCHAR(128) NOT NULL, 
     CONSTRAINT [PK_Admins] PRIMARY KEY CLUSTERED ([Id] ASC), 
+    CONSTRAINT [FK_Admin_AspNetUser] FOREIGN KEY (UserId) REFERENCES [AspNetUsers](Id) ON DELETE CASCADE, 
 )

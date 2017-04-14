@@ -59,6 +59,7 @@ namespace SolveChicago.Marketing.Controllers
                     { "-Email-", model.Email },
                     { "-Subject-", model.Subject },
                     { "-Body-", model.Body },
+                    { "-year-", DateTime.UtcNow.Year.ToString() },
                 },
                 model.Email,
                 communicationType,

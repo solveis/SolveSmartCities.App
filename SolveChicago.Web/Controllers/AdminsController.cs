@@ -34,7 +34,7 @@ namespace SolveChicago.Web.Controllers
         // GET: Admins
         public ActionResult Index()
         {
-            var admins = db.Admins.Include(a => a.AspNetUsers);
+            var admins = db.Admins.Include(a => a.AspNetUser);
             return View(admins.ToList());
         }
 

@@ -1,4 +1,5 @@
-﻿using SolveChicago.Entities;
+﻿using SolveChicago.Common;
+using SolveChicago.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,29 @@ namespace SolveChicago.Service
                 Success = success
             });
             db.SaveChanges();
+        }
+
+        public void SendSurveyToMember(Member member, string inviter, string surveyUrl)
+        {
+            string communicationType = Constants.Communication.MemberSurveyInvite;
+            EmailService service = new EmailService(db);
+            service.DeliverSendGridMessage(
+                member.Email,
+                Constants.Global.SolveChicago,
+                "",
+                "fe187dfe-6ce4-4137-bf86-9b309e6ea015",
+                new Dictionary<string, string>
+                {
+                    { "-name-", member.FirstName },
+                    { "-inviter-", inviter },
+                    { "-surveyUrl-", surveyUrl },
+                    { "-year-", DateTime.UtcNow.Year.ToString() },
+                },
+                Settings.Website.FromAddress,
+                communicationType,
+                "",
+                null
+            ).Wait();
         }
     }
 }
