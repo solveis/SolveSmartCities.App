@@ -24,7 +24,7 @@ namespace SolveChicago.Common
         public class Communication
         {
             public const string Inquiry = "Inquiry";
-            public const string MemberSurveyInvite = "MemberSurveyInvite";
+            public const string MemberSurveyInvite = "MemberSurveyInvite_{0}";
         }
 
         public class Member

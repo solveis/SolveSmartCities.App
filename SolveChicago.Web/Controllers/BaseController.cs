@@ -190,22 +190,27 @@ namespace SolveChicago.Web.Controllers
 
         public ActionResult UserRedirect()
         {
-            switch(State.Roles.First())
+            if(State.Roles.Count() == 0)
+                return HttpNotFound();
+            else
             {
-                case Enumerations.Role.Admin:
-                    return AdminRedirect(State.Admin);
-                case Enumerations.Role.CaseManager:
-                    return CaseManagerRedirect(State.CaseManager);
-                case Enumerations.Role.Corporation:
-                    return CorporationRedirect(State.Corporation);
-                case Enumerations.Role.Member:
-                    return MemberRedirect(State.Member);
-                case Enumerations.Role.Nonprofit:
-                    return NonprofitRedirect(State.Nonprofit);
-                case Enumerations.Role.Referrer:
-                    return ReferrerRedirect(State.Referrer);
-                default:
-                    return HttpNotFound();
+                switch (State.Roles.FirstOrDefault())
+                {
+                    case Enumerations.Role.Admin:
+                        return AdminRedirect(State.Admin);
+                    case Enumerations.Role.CaseManager:
+                        return CaseManagerRedirect(State.CaseManager);
+                    case Enumerations.Role.Corporation:
+                        return CorporationRedirect(State.Corporation);
+                    case Enumerations.Role.Member:
+                        return MemberRedirect(State.Member);
+                    case Enumerations.Role.Nonprofit:
+                        return NonprofitRedirect(State.Nonprofit);
+                    case Enumerations.Role.Referrer:
+                        return ReferrerRedirect(State.Referrer);
+                    default:
+                        return HttpNotFound();
+                }
             }
         }
 
@@ -387,7 +392,7 @@ namespace SolveChicago.Web.Controllers
         protected void AssertRole(string roleName)
         {
             if (!db.AspNetRoles.Any(x => x.Name == roleName))
-                db.AspNetRoles.Add(new AspNetRole { Name = roleName });
+                db.AspNetRoles.Add(new AspNetRole { Name = roleName, Id = Guid.NewGuid().ToString() });
             db.SaveChanges();
         }
 
@@ -442,7 +447,7 @@ namespace SolveChicago.Web.Controllers
                         await this.UserManager.AddToRoleAsync(user.Id, Common.Constants.Roles.Member);
                         if (!UserProfileHasValidMappings(user.Id))
                         {
-                            Member model = new Member { Email = userName, AspNetUser = aspnetUser };
+                            Member model = new Member { Email = userName, AspNetUser = aspnetUser, CreatedDate = DateTime.UtcNow };
                             db.Members.Add(model);
                             if(referrerId.HasValue)
                             {
@@ -461,7 +466,7 @@ namespace SolveChicago.Web.Controllers
                         await this.UserManager.AddToRoleAsync(user.Id, Common.Constants.Roles.CaseManager);
                         if (!UserProfileHasValidMappings(user.Id))
                         {
-                            CaseManager model = new CaseManager { Email = userName, AspNetUser = aspnetUser };
+                            CaseManager model = new CaseManager { Email = userName, AspNetUser = aspnetUser, CreatedDate = DateTime.UtcNow };
                             db.CaseManagers.Add(model);
                             db.SaveChanges();
                             return CaseManagerRedirect(model.Id);
@@ -474,7 +479,7 @@ namespace SolveChicago.Web.Controllers
                         await this.UserManager.AddToRoleAsync(user.Id, Common.Constants.Roles.Nonprofit);
                         if (!UserProfileHasValidMappings(user.Id))
                         {
-                            Nonprofit model = new Nonprofit { Email = userName };
+                            Nonprofit model = new Nonprofit { Email = userName, CreatedDate = DateTime.UtcNow };
                             model.AspNetUsers.Add(aspnetUser);
                             db.Nonprofits.Add(model);
                             db.SaveChanges();
@@ -488,7 +493,7 @@ namespace SolveChicago.Web.Controllers
                         await this.UserManager.AddToRoleAsync(user.Id, Common.Constants.Roles.Corporation);
                         if (!UserProfileHasValidMappings(user.Id))
                         {
-                            Corporation model = new Corporation { Email = userName };
+                            Corporation model = new Corporation { Email = userName, CreatedDate = DateTime.UtcNow };
                             model.AspNetUsers.Add(aspnetUser);
                             db.Corporations.Add(model);
                             db.SaveChanges();
@@ -502,7 +507,7 @@ namespace SolveChicago.Web.Controllers
                         await this.UserManager.AddToRoleAsync(user.Id, Common.Constants.Roles.Referrer);
                         if (!UserProfileHasValidMappings(user.Id))
                         {
-                            Referrer model = new Referrer { Email = userName };
+                            Referrer model = new Referrer { Email = userName, CreatedDate = DateTime.UtcNow };
                             model.AspNetUsers.Add(aspnetUser);
                             db.Referrers.Add(model);
                             db.SaveChanges();
@@ -516,7 +521,7 @@ namespace SolveChicago.Web.Controllers
                         await this.UserManager.AddToRoleAsync(user.Id, Common.Constants.Roles.Admin);
                         if (!UserProfileHasValidMappings(user.Id))
                         {
-                            Admin model = new Admin { Email = userName, InvitedBy = invitedByUserId, AspNetUser = aspnetUser };
+                            Admin model = new Admin { Email = userName, InvitedBy = invitedByUserId, AspNetUser = aspnetUser, CreatedDate = DateTime.UtcNow };
                             AdminService service = new AdminService(this.db);
                             service.MarkAdminInviteCodeAsUsed(invitedByUserId, inviteCode, user.Id);
                             db.Admins.Add(model);

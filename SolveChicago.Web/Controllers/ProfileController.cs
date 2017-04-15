@@ -397,7 +397,33 @@ namespace SolveChicago.Web.Controllers
                 db.Entry(model).State = EntityState.Modified;
                 db.SaveChanges();
             }
-            return RedirectToAction("Index", "Corporation");
+            return RedirectToAction("Index", "Corporations");
+        }
+
+        // GET: Profile/Referrer
+        public ActionResult Referrer()
+        {
+            Referrer model = State.Referrer;
+            return View(model);
+        }
+
+        // POST: Profile/Referrer
+        [HttpPost]
+        public ActionResult Referrer(Referrer model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    db.Entry(model).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            return RedirectToAction("Index", "Referrers");
         }
 
         // GET: Profile/Admin

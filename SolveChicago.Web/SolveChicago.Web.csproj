@@ -395,6 +395,8 @@
     <Content Include="Views\Members1\Edit.cshtml" />
     <Content Include="Views\Members1\Index.cshtml" />
     <Content Include="Views\Referrers\AddMember.cshtml" />
+    <Content Include="Views\Register\Referrer.cshtml" />
+    <Content Include="Views\Profile\Referrer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

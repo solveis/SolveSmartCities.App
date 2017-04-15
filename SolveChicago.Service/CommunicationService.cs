@@ -26,7 +26,7 @@ namespace SolveChicago.Service
 
         public void SendSurveyToMember(Member member, string inviter, string surveyUrl)
         {
-            string communicationType = Constants.Communication.MemberSurveyInvite;
+            string communicationType = string.Format(Constants.Communication.MemberSurveyInvite, member.Id);
             EmailService service = new EmailService(db);
             service.DeliverSendGridMessage(
                 member.Email,

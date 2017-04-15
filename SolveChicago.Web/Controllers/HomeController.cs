@@ -28,7 +28,10 @@ namespace SolveChicago.Web.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            if (User.Identity.IsAuthenticated)
+                return UserRedirect();
+            else
+                return View();
         }
 
         public ActionResult About()

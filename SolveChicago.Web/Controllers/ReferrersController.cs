@@ -30,12 +30,18 @@ namespace SolveChicago.Web.Controllers
         }
 
         // GET: Referrers
-        public ActionResult Index()
+        [HttpGet]
+        public ActionResult Index(int? referrerId)
         {
-            return View(db.Referrers.ToList());
+            ImpersonateReferrer(referrerId);
+            Referrer referrer = db.Referrers.Find(State.ReferrerId);
+            if (referrer == null)
+                return HttpNotFound();
+            return View(referrer.Members.ToList());
         }
 
         //GET: Referrers/AddMember
+        [HttpGet]
         public ActionResult AddMember(int? referrerId)
         {
             ImpersonateReferrer(referrerId);
@@ -47,6 +53,7 @@ namespace SolveChicago.Web.Controllers
         }
 
         // POST: Referrers/AddMember
+        [HttpPost]
         public ActionResult AddMember(AddMemberViewModel model)
         {
             ImpersonateReferrer(model.ReferringPartyId);
@@ -57,9 +64,22 @@ namespace SolveChicago.Web.Controllers
                 {
                     FirstName = model.FirstName,
                     LastName = model.LastName,
-                    Email = model.Email
+                    Email = model.Email,
+                    SurveyStep = Constants.Member.SurveyStep.Invited
                 };
-                db.SaveChanges();
+                Referrer referrer = db.Referrers.Find(State.ReferrerId);
+                if (referrer != null)
+                    referrer.Members.Add(member);
+                else
+                    db.Members.Add(member);
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine(exception.Message);
+                }
 
                 CommunicationService service = new CommunicationService(this.db);
                 string surveyUrl = string.Format("{0}/Members/Survey?id={1}", Settings.Website.BaseUrl, model.ReferringPartyId);
@@ -70,6 +90,7 @@ namespace SolveChicago.Web.Controllers
         }
 
         // GET: Referrers/Details/5
+        [HttpGet]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -85,6 +106,7 @@ namespace SolveChicago.Web.Controllers
         }
 
         // GET: Referrers/Create
+        [HttpGet]
         public ActionResult Create()
         {
             return View();
@@ -108,6 +130,7 @@ namespace SolveChicago.Web.Controllers
         }
 
         // GET: Referrers/Edit/5
+        [HttpGet]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -139,6 +162,7 @@ namespace SolveChicago.Web.Controllers
         }
 
         // GET: Referrers/Delete/5
+        [HttpGet]
         public ActionResult Delete(int? id)
         {
             if (id == null)
