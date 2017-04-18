@@ -30,7 +30,7 @@ namespace SolveChicago.Service
             EmailService service = new EmailService(db);
             service.DeliverSendGridMessage(
                 member.Email,
-                Constants.Global.SolveChicago,
+                Constants.Global.SolveSmartCities,
                 "",
                 "fe187dfe-6ce4-4137-bf86-9b309e6ea015",
                 new Dictionary<string, string>

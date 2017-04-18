@@ -17,8 +17,8 @@ namespace SolveChicago.Common
 
         public class Global
         {
-            public const string Admin = "Solve Chicago Community Support";
-            public const string SolveChicago = "Solve Chicago";
+            public const string Admin = "Solve Smart Cities Community Support";
+            public const string SolveSmartCities = "Solve Smart Cities";
         }
 
         public class Communication
