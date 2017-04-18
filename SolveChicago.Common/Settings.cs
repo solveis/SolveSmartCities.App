@@ -62,7 +62,7 @@ namespace SolveChicago.Common
             {
                 get
                 {
-                    return GetSetting<string>("SendGrid.Username", "username");
+                    return GetSetting<string>("SendGrid.Username", "azure_e141a28bef5aa8088c3d87fc0d73c9a4@azure.com");
                 }
             }
 
@@ -70,7 +70,7 @@ namespace SolveChicago.Common
             {
                 get
                 {
-                    return GetSetting<string>("SendGrid.Password", "password");
+                    return GetSetting<string>("SendGrid.Password", "JHGFD$%78909iOUIHGHFC");
                 }
             }
 
@@ -78,7 +78,7 @@ namespace SolveChicago.Common
             {
                 get
                 {
-                    return GetSetting<string>("SendGrid.ApiKey", "apikey");
+                    return GetSetting<string>("SendGrid.ApiKey", "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");
                 }
             }
         }
