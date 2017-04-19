@@ -341,6 +341,7 @@ namespace SolveChicago.Web.Controllers
         }
 
         // GET: Profile/CaseManager
+        [Authorize(Roles = "Admin, Nonprofit, CaseManager")]
         public ActionResult CaseManager()
         {
             CaseManager model = State.CaseManager;
@@ -348,6 +349,7 @@ namespace SolveChicago.Web.Controllers
         }
 
         // POST: Profile/CaseManager
+        [Authorize(Roles = "Admin, Nonprofit, CaseManager")]
         [HttpPost]
         public ActionResult CaseManager(CaseManager model)
         {
@@ -360,6 +362,7 @@ namespace SolveChicago.Web.Controllers
         }
 
         // GET: Profile/Nonprofit
+        [Authorize(Roles = "Admin, Nonprofit")]
         public ActionResult Nonprofit()
         {
             NonprofitService service = new NonprofitService(this.db);
@@ -369,7 +372,8 @@ namespace SolveChicago.Web.Controllers
             
         }
 
-        // POST: Profile/CaseManager
+        // POST: Profile/Nonprofit
+        [Authorize(Roles = "Admin, Nonprofit")]
         [HttpPost]
         public ActionResult Nonprofit(NonprofitProfile model)
         {
@@ -382,6 +386,7 @@ namespace SolveChicago.Web.Controllers
         }
 
         // GET: Profile/Corporation
+        [Authorize(Roles = "Admin, Corporation")]
         public ActionResult Corporation()
         {
             Corporation model = State.Corporation;
@@ -389,6 +394,7 @@ namespace SolveChicago.Web.Controllers
         }
 
         // POST: Profile/Corporation
+        [Authorize(Roles = "Admin, Corporation")]
         [HttpPost]
         public ActionResult Corporation(Corporation model)
         {
@@ -401,6 +407,7 @@ namespace SolveChicago.Web.Controllers
         }
 
         // GET: Profile/Referrer
+        [Authorize(Roles = "Admin, Referrer")]
         public ActionResult Referrer()
         {
             Referrer model = State.Referrer;
@@ -408,6 +415,7 @@ namespace SolveChicago.Web.Controllers
         }
 
         // POST: Profile/Referrer
+        [Authorize(Roles = "Admin, Referrer")]
         [HttpPost]
         public ActionResult Referrer(Referrer model)
         {
@@ -427,6 +435,7 @@ namespace SolveChicago.Web.Controllers
         }
 
         // GET: Profile/Admin
+        [Authorize(Roles = "Admin")]
         public ActionResult Admin()
         {
             Admin model = State.Admin;
@@ -434,6 +443,7 @@ namespace SolveChicago.Web.Controllers
         }
 
         // POST: Profile/Admin
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult Admin(Admin model)
         {

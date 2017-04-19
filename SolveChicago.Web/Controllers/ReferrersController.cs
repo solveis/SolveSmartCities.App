@@ -13,6 +13,7 @@ using SolveChicago.Common;
 
 namespace SolveChicago.Web.Controllers
 {
+    [Authorize(Roles = "Admin, Referrer")]
     public class ReferrersController : BaseController, IDisposable
     {
         public ReferrersController(SolveChicagoEntities entities = null)
@@ -82,7 +83,7 @@ namespace SolveChicago.Web.Controllers
                 }
 
                 CommunicationService service = new CommunicationService(this.db);
-                string surveyUrl = string.Format("{0}/Members/Survey?id={1}", Settings.Website.BaseUrl, model.ReferringPartyId);
+                string surveyUrl = string.Format("{0}/Members/Survey?id={1}", Settings.Website.BaseUrl, member.Id);
                 service.SendSurveyToMember(member, State.Referrer.Name, surveyUrl);
                 return ReferrerRedirect(State.ReferrerId);
             }

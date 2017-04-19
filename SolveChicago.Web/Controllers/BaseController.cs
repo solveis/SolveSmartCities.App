@@ -223,6 +223,11 @@ namespace SolveChicago.Web.Controllers
         public ActionResult UpdateSurveyStatus(int memberId, string currentStep)
         {
             Member entity = db.Members.Single(x => x.Id == memberId);
+            return UpdateSurveyStatus(entity, currentStep);
+        }
+
+        public ActionResult UpdateSurveyStatus(Member entity, string currentStep)
+        {
             string latestStep = entity.SurveyStep;
             if (GetSurveyStepOrderNumber(currentStep) > GetSurveyStepOrderNumber(latestStep))
                 entity.SurveyStep = currentStep;
@@ -414,7 +419,7 @@ namespace SolveChicago.Web.Controllers
         }
 
 
-        protected async Task<ActionResult> CreateAccount(string userName, string password, Enumerations.Role role, string invitedByUserId = "", string inviteCode = "", int? referrerId = null)
+        protected async Task<ActionResult> CreateAccount(string userName, string password, Enumerations.Role role, string invitedByUserId = "", string inviteCode = "")
         {
             var user = new ApplicationUser { UserName = userName, Email = userName };
             AspNetUser aspnetUser = new AspNetUser();
@@ -434,10 +439,10 @@ namespace SolveChicago.Web.Controllers
                 }
                 AddErrors(result);
             }
-            return await CreateUserAndAssignRoles(userName, role, invitedByUserId, user, aspnetUser, inviteCode, referrerId);
+            return await CreateUserAndAssignRoles(userName, role, invitedByUserId, user, aspnetUser, inviteCode);
         }
 
-        private async Task<ActionResult> CreateUserAndAssignRoles(string userName, Enumerations.Role role, string invitedByUserId, ApplicationUser user, AspNetUser aspnetUser, string inviteCode, int? referrerId)
+        private async Task<ActionResult> CreateUserAndAssignRoles(string userName, Enumerations.Role role, string invitedByUserId, ApplicationUser user, AspNetUser aspnetUser, string inviteCode)
         {
             switch (role)
             {
@@ -447,16 +452,16 @@ namespace SolveChicago.Web.Controllers
                         await this.UserManager.AddToRoleAsync(user.Id, Common.Constants.Roles.Member);
                         if (!UserProfileHasValidMappings(user.Id))
                         {
-                            Member model = new Member { Email = userName, AspNetUser = aspnetUser, CreatedDate = DateTime.UtcNow };
-                            db.Members.Add(model);
-                            if(referrerId.HasValue)
+                            Member model = db.Members.Where(x => x.Email == userName).FirstOrDefault();
+                            if (model == null)
                             {
-                                Referrer referrer = db.Referrers.Find(referrerId.Value);
-                                if (referrer != null) { }
-                                    //referrer.
+                                model = new Member { Email = userName, AspNetUser = aspnetUser, CreatedDate = DateTime.UtcNow };
+                                db.Members.Add(model);
                             }
+                            else
+                                model.AspNetUser = aspnetUser;
                             db.SaveChanges();
-                            return MemberRedirect(model.Id);
+                            return UpdateSurveyStatus(model, Common.Constants.Member.SurveyStep.Personal);
                         }
                         return RedirectToAction("Index");
                     }

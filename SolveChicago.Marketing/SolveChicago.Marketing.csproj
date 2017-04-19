@@ -227,6 +227,8 @@
     <Content Include="img\LinkedIn.png" />
     <Content Include="img\logo%402x.png" />
     <Content Include="img\logo.png" />
+    <Content Include="img\logo_white%402x.png" />
+    <Content Include="img\logo_white.png" />
     <Content Include="img\MF_Logo%402x.png" />
     <Content Include="img\MF_Logo.png" />
     <Content Include="img\og.image.jpg" />

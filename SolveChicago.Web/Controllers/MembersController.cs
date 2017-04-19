@@ -1,4 +1,5 @@
-﻿using SolveChicago.Common.Models.Profile.Member;
+﻿using SolveChicago.Common;
+using SolveChicago.Common.Models.Profile.Member;
 using SolveChicago.Entities;
 using SolveChicago.Service;
 using SolveChicago.Web.Models.Member;
@@ -36,6 +37,7 @@ namespace SolveChicago.Web.Controllers
             return Index(memberId);
         }
 
+        [AllowAnonymous]
         public ActionResult Survey(int? id)
         {
             if (!id.HasValue)
@@ -45,8 +47,8 @@ namespace SolveChicago.Web.Controllers
             else
             {
                 Member member = db.Members.Find(id.Value);
-                if (member == null)
-                    return RedirectToAction("Member", "Register", new { referrerId = id.Value });
+                if (member.SurveyStep == Constants.Member.SurveyStep.Invited)
+                    return RedirectToAction("Member", "Register", new { id = id.Value });
                 else
                     return RedirectToAction("Login", "Account");
             }

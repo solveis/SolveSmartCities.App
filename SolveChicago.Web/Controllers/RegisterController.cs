@@ -32,9 +32,10 @@ namespace SolveChicago.Web.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.InviteUserId = userId;
-            ViewBag.InviteCode = inviteCode;
-            return View();
+            AdminRegisterViewModel model = new AdminRegisterViewModel();
+            model.InvitedByUserId = userId;
+            model.InviteCode = inviteCode;
+            return View(model);
         }
 
         //
@@ -42,7 +43,7 @@ namespace SolveChicago.Web.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Admin(RegisterViewModel model)
+        public async Task<ActionResult> Admin(AdminRegisterViewModel model)
         {
             var result = await CreateAccount(model.Email, model.Password, Enumerations.Role.Admin, model.InvitedByUserId, model.InviteCode);
             if (result != null)
@@ -54,12 +55,18 @@ namespace SolveChicago.Web.Controllers
         //
         // GET: /Register/Member
         [AllowAnonymous]
-        public ActionResult Member(int? referrerId)
+        public ActionResult Member(int? id)
         {
-            RegisterViewModel model = new RegisterViewModel
+            MemberRegisterViewModel model = new MemberRegisterViewModel
             {
-                ReferrerId = referrerId
+                MemberId = id,
             };
+            if(id.HasValue)
+            {
+                Member member = db.Members.Find(id.Value);
+                if (member != null)
+                    model.Email = member.Email;
+            }
             return View(model);
         }
 
