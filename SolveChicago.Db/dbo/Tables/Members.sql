@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [dbo].[Members]
 (
 	[Id] INT IDENTITY(1, 1) NOT NULL,
-	[Email] NVARCHAR(128) NOT NULL,
+	[Email] NVARCHAR(128) NULL,
     [FirstName] NVARCHAR(128) NULL, 
     [LastName] NVARCHAR(128) NULL, 
     [ProfilePicturePath] NVARCHAR(MAX) NULL, 
@@ -12,7 +12,7 @@
     [IsHeadOfHousehold] BIT NULL, 
     [Income] MONEY NULL, 
     [IsDisabled] BIT NULL, 
-    [SurveyStep] NVARCHAR(50) NOT NULL DEFAULT 'Invited', 
+    [SurveyStep] NVARCHAR(50) NULL , 
     [UserId] NVARCHAR(128) NULL, 
     CONSTRAINT [PK_Members] PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_Member_Family] FOREIGN KEY (FamilyId) REFERENCES [Families]([Id]) ON DELETE SET NULL,

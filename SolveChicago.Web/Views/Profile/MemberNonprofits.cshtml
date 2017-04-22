@@ -8,7 +8,7 @@
 <h2>Profile</h2>
 
 
-@using (Html.BeginForm("NonprofitMembers", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("MemberNonprofits", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -16,7 +16,7 @@
         <h4>Member</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.MemberId)
+        @Html.HiddenFor(model => model.Member.MemberId)
 
         <div id="Nonprofits">
             <h3>Nonprofits</h3>

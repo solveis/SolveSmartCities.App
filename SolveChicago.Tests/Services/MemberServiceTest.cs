@@ -577,6 +577,8 @@ namespace SolveChicago.Tests.Services
             List<PhoneNumber> phones = new List<PhoneNumber>();
             List<Nonprofit> nonprofits = new List<Nonprofit>();
             List<MemberGovernmentProgram> membergovernmentprograms = new List<MemberGovernmentProgram>();
+            List<MemberParent> memberParents = new List<MemberParent>();
+            List<MemberSpous> memberSpouses = new List<MemberSpous>();
 
             var set = new Mock<DbSet<Member>>().SetupData(data);
             set.Setup(m => m.Find(It.IsAny<object[]>()))
@@ -622,6 +624,16 @@ namespace SolveChicago.Tests.Services
             mgpSet.Setup(m => m.Find(It.IsAny<object[]>()))
                 .Returns<object[]>(ids => membergovernmentprograms.FirstOrDefault(d => d.Id == (int)ids[0]));
             context.Setup(c => c.MemberGovernmentPrograms).Returns(mgpSet.Object);
+
+            var mpSet = new Mock<DbSet<MemberParent>>().SetupData(memberParents);
+            mpSet.Setup(m => m.Find(It.IsAny<object[]>()))
+                .Returns<object[]>(ids => memberParents.FirstOrDefault(d => d.ParentId == (int)ids[0]));
+            context.Setup(c => c.MemberParents).Returns(mpSet.Object);
+
+            var msSet = new Mock<DbSet<MemberSpous>>().SetupData(memberSpouses);
+            msSet.Setup(m => m.Find(It.IsAny<object[]>()))
+                .Returns<object[]>(ids => memberSpouses.FirstOrDefault(d => d.Spouse_1_Id == (int)ids[0]));
+            context.Setup(c => c.MemberSpouses).Returns(msSet.Object);
 
             return new Tuple<Mock<DbSet<Member>>, List<Member>>(set, data);
         }
@@ -684,7 +696,6 @@ namespace SolveChicago.Tests.Services
                             LastName = "Jones",
                             Relation = "Child",
                             RelationBiological = true,
-                            Id = 2
                         },
                         new FamilyMember
                         {
@@ -695,7 +706,6 @@ namespace SolveChicago.Tests.Services
                             Relation = "Spouse",
                             IsHeadOfHousehold = true,
                             IsMarriageCurrent = true,
-                            Id = 3
                         },
                         new FamilyMember
                         {
@@ -715,7 +725,7 @@ namespace SolveChicago.Tests.Services
 
             MemberProfileFamily updatedMember = service.GetProfileFamily(model.MemberId);
             
-            Assert.Equal("Sam", updatedMember.Family.FamilyMembers.Where(x => x.Relation == "Husband").First().FirstName);
+            Assert.Equal("Isaac", updatedMember.Family.FamilyMembers.Where(x => x.Relation == "Son").First().FirstName);
         }
 
         [Fact]

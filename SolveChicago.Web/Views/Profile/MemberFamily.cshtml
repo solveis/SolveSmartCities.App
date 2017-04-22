@@ -16,7 +16,7 @@
         <h4>Member</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.MemberId)
+        @Html.HiddenFor(model => model.Member.MemberId)
 
         <div id="Family">
             <h3>Family</h3>

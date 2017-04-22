@@ -52,7 +52,7 @@ namespace SolveChicago.Web.Controllers
                 MemberService service = new MemberService(this.db);
                 
                     service.UpdateMemberPersonal(model.Member);
-                    return UpdateSurveyStatus(model.Member.Id, Constants.Member.SurveyStep.Personal);
+                    return UpdateSurveyStatus(model.Member.Id, Constants.Member.SurveyStep.Family);
             }
             model = FormatMemberProfilePersonalViewModel(model.Member);
             return View(model);
@@ -79,7 +79,7 @@ namespace SolveChicago.Web.Controllers
                 MemberService service = new MemberService(this.db);
 
                 service.UpdateMemberFamily(model.Member);
-                return UpdateSurveyStatus(model.Member.MemberId, Constants.Member.SurveyStep.Family);
+                return UpdateSurveyStatus(model.Member.MemberId, Constants.Member.SurveyStep.Education);
             }
             model = FormatMemberProfileFamilyViewModel(model.Member);
             return View(model);
@@ -106,7 +106,7 @@ namespace SolveChicago.Web.Controllers
                 MemberService service = new MemberService(this.db);
 
                 service.UpdateMemberSchools(model.Member);
-                return UpdateSurveyStatus(model.Member.MemberId, Constants.Member.SurveyStep.Education);
+                return UpdateSurveyStatus(model.Member.MemberId, Constants.Member.SurveyStep.Jobs);
             }
             model = FormatMemberProfileSchoolsViewModel(model.Member);
             return View(model);
@@ -133,7 +133,7 @@ namespace SolveChicago.Web.Controllers
                 MemberService service = new MemberService(this.db);
 
                 service.UpdateMemberNonprofits(model.Member);
-                return UpdateSurveyStatus(model.Member.MemberId, Constants.Member.SurveyStep.Nonprofits);
+                return UpdateSurveyStatus(model.Member.MemberId, Constants.Member.SurveyStep.GovernmentPrograms);
             }
             model = FormatMemberProfileNonprofitsViewModel(model.Member);
             return View(model);
@@ -160,7 +160,7 @@ namespace SolveChicago.Web.Controllers
                 MemberService service = new MemberService(this.db);
 
                 service.UpdateMemberJobs(model.Member);
-                return UpdateSurveyStatus(model.Member.MemberId, Constants.Member.SurveyStep.Jobs);
+                return UpdateSurveyStatus(model.Member.MemberId, Constants.Member.SurveyStep.Nonprofits);
             }
             model = FormatMemberProfileJobsViewModel(model.Member);
             return View(model);
@@ -187,7 +187,7 @@ namespace SolveChicago.Web.Controllers
                 MemberService service = new MemberService(this.db);
 
                 service.UpdateMemberGovernmentPrograms(model.Member);
-                return UpdateSurveyStatus(model.Member.MemberId, Constants.Member.SurveyStep.GovernmentPrograms);
+                return UpdateSurveyStatus(model.Member.MemberId, Constants.Member.SurveyStep.Complete);
             }
             model = FormatMemberProfileGovernmentProgramsViewModel(model.Member);
             return View(model);

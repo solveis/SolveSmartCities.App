@@ -429,7 +429,7 @@ namespace SolveChicago.Web.Controllers
                 aspnetUser = GetUserById(user.Id);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    return CreateUserAndAssignRoles(userName, password, role, invitedByUserId, user, aspnetUser, inviteCode).Result;
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -439,10 +439,10 @@ namespace SolveChicago.Web.Controllers
                 }
                 AddErrors(result);
             }
-            return await CreateUserAndAssignRoles(userName, role, invitedByUserId, user, aspnetUser, inviteCode);
+            return RedirectToAction("Index","Home");
         }
 
-        private async Task<ActionResult> CreateUserAndAssignRoles(string userName, Enumerations.Role role, string invitedByUserId, ApplicationUser user, AspNetUser aspnetUser, string inviteCode)
+        private async Task<ActionResult> CreateUserAndAssignRoles(string userName, string password, Enumerations.Role role, string invitedByUserId, ApplicationUser user, AspNetUser aspnetUser, string inviteCode)
         {
             switch (role)
             {
@@ -536,6 +536,7 @@ namespace SolveChicago.Web.Controllers
                         return RedirectToAction("Index");
                     }
             }
+            await SignInManager.PasswordSignInAsync(userName, password, isPersistent: false, shouldLockout: false);
             return RedirectToAction("Index", "Home");
         }
 

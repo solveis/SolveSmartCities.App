@@ -30,6 +30,8 @@ namespace SolveChicago.Entities
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> NonprofitId { get; set; }
         public string UserId { get; set; }
+        public string Gender { get; set; }
+        public Nullable<System.DateTime> Birthday { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual Nonprofit Nonprofit { get; set; }

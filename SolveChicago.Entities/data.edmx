@@ -104,6 +104,8 @@
           <Property Name="Email" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="FirstName" Type="nvarchar" MaxLength="128" />
           <Property Name="LastName" Type="nvarchar" MaxLength="128" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="50" />
+          <Property Name="Birthday" Type="datetime2" Precision="7" />
           <Property Name="ProfilePicturePath" Type="nvarchar(max)" />
           <Property Name="Phone" Type="nvarchar" MaxLength="128" />
           <Property Name="CreatedDate" Type="datetime2" Precision="7" />
@@ -256,7 +258,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Email" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="128" />
           <Property Name="FirstName" Type="nvarchar" MaxLength="128" />
           <Property Name="LastName" Type="nvarchar" MaxLength="128" />
           <Property Name="ProfilePicturePath" Type="nvarchar(max)" />
@@ -267,7 +269,7 @@
           <Property Name="IsHeadOfHousehold" Type="bit" />
           <Property Name="Income" Type="money" />
           <Property Name="IsDisabled" Type="bit" />
-          <Property Name="SurveyStep" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="SurveyStep" Type="nvarchar" MaxLength="50" />
           <Property Name="UserId" Type="nvarchar" MaxLength="128" />
         </EntityType>
         <EntityType Name="MemberSchools">
@@ -316,7 +318,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Email" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="128" />
           <Property Name="Name" Type="nvarchar" MaxLength="128" />
           <Property Name="Phone" Type="nvarchar" MaxLength="128" />
           <Property Name="Address1" Type="nvarchar" MaxLength="128" />
@@ -1441,6 +1443,8 @@
           <NavigationProperty Name="Nonprofit" Relationship="Self.FK_CaseManagers_Nonprofit" FromRole="CaseManagers" ToRole="Nonprofits" />
           <NavigationProperty Name="CaseNotes" Relationship="Self.FK_CaseNotes_CaseManagers" FromRole="CaseManagers" ToRole="CaseNotes" />
           <NavigationProperty Name="NonprofitMembers" Relationship="SolveChicagoDevModel.FK_NonprofitMembers_CaseManagers" FromRole="CaseManager" ToRole="NonprofitMember" />
+          <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Birthday" Type="DateTime" Precision="7" />
         </EntityType>
         <EntityType Name="CaseNote">
           <Key>
@@ -1566,7 +1570,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Email" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="FirstName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="LastName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="ProfilePicturePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -1577,7 +1581,7 @@
           <Property Name="IsHeadOfHousehold" Type="Boolean" />
           <Property Name="Income" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="IsDisabled" Type="Boolean" />
-          <Property Name="SurveyStep" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SurveyStep" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_Member_AspNetUser" FromRole="Members" ToRole="AspNetUsers" />
           <NavigationProperty Name="CaseNotes" Relationship="Self.FK_CaseNotes_Members" FromRole="Members" ToRole="CaseNotes" />
@@ -1640,7 +1644,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Email" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Phone" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Address1" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
@@ -2444,6 +2448,8 @@
           <EntitySetMapping Name="CaseManagers">
             <EntityTypeMapping TypeName="SolveChicagoDevModel.CaseManager">
               <MappingFragment StoreEntitySet="CaseManagers">
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />

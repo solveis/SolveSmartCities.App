@@ -422,11 +422,17 @@ namespace SolveChicago.Service
                 List<FamilyMember> familyMembers = GetFamilyMembers(member).ToList();
                 foreach (FamilyMember familyMember in model.Family?.FamilyMembers)
                 {
-                    if (familyMember != null && !string.IsNullOrEmpty(familyMember.Name.Trim()) && familyMember.Gender != null && familyMember.Relation != null)
+                    if (familyMember != null && familyMember.Gender != null && familyMember.Relation != null)
                     {
-                        Member existingFamilyMember = db.Members.Find(familyMember.Id);
+                        Member existingFamilyMember = null;
+                        if (familyMember.Id.HasValue)
+                             existingFamilyMember = db.Members.Find(familyMember.Id);
                         if (existingFamilyMember == null)
-                            existingFamilyMember = db.Members.Add(new Member { FirstName = familyMember.FirstName, LastName = familyMember.LastName, IsHeadOfHousehold = familyMember.IsHeadOfHousehold, Birthday = familyMember.Birthday, Gender = familyMember.Gender });
+                        {
+                            existingFamilyMember = new Member { FirstName = familyMember.FirstName, LastName = familyMember.LastName, IsHeadOfHousehold = familyMember.IsHeadOfHousehold, Birthday = familyMember.Birthday, Gender = familyMember.Gender };
+                            db.Members.Add(existingFamilyMember);
+                            db.SaveChanges();
+                        }
                         else if (string.IsNullOrEmpty(familyMember.FirstName) && string.IsNullOrEmpty(familyMember.LastName))
                             db.Members.Remove(existingFamilyMember);
                         if (!familyMembers.Select(x => x.Id).Contains(existingFamilyMember.Id))
@@ -444,15 +450,15 @@ namespace SolveChicago.Service
             {
                 case Constants.Family.Relationships.Parent:
                     if(!member.MemberParents1.Any(x => x.ParentId == existingFamilyMember.Id && x.ChildId == member.Id))
-                        member.MemberParents1.Add(new MemberParent { ParentId = existingFamilyMember.Id, ChildId = member.Id, IsBiological = isBiological, Member = member, Member1 = existingFamilyMember });
+                        db.MemberParents.Add(new MemberParent { ParentId = existingFamilyMember.Id, ChildId = member.Id, IsBiological = isBiological });
                     break;
                 case Constants.Family.Relationships.Child:
-                    if (!member.MemberParents1.Any(x => x.ParentId == member.Id && x.ChildId == existingFamilyMember.Id))
-                        member.MemberParents.Add(new MemberParent { ParentId = member.Id, ChildId = existingFamilyMember.Id, IsBiological = isBiological, Member = existingFamilyMember, Member1 = member });
+                    if (!member.MemberParents.Any(x => x.ParentId == member.Id && x.ChildId == existingFamilyMember.Id))
+                        db.MemberParents.Add(new MemberParent { ParentId = member.Id, ChildId = existingFamilyMember.Id, IsBiological = isBiological });
                     break;
                 case Constants.Family.Relationships.Spouse:
                     if(!member.MemberSpouses.Any(x => x.Spouse_1_Id == existingFamilyMember.Id && x.Spouse_2_Id == member.Id) && !member.MemberSpouses.Any(x => x.Spouse_1_Id == member.Id && x.Spouse_2_Id == existingFamilyMember.Id))
-                        member.MemberSpouses.Add(new MemberSpous { Spouse_1_Id = member.Id, Spouse_2_Id = existingFamilyMember.Id, IsCurrent = isCurrent, Member = member, Member1 = existingFamilyMember });
+                        db.MemberSpouses.Add(new MemberSpous { Spouse_1_Id = member.Id, Spouse_2_Id = existingFamilyMember.Id, IsCurrent = isCurrent });
                     break;
             }
         }
