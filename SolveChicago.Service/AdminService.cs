@@ -23,15 +23,16 @@ namespace SolveChicago.Service
             throw new ApplicationException("You are not allowed to do this");
         }
 
-        public void MarkAdminInviteCodeAsUsed(string invitingUserId, string inviteCode, string receivingUserId)
+        public void MarkAdminInviteCodeAsUsed(string invitingUserId, string inviteCode, string receivingUserEmail)
         {
             try
             {
+                AspNetUser user = db.AspNetUsers.Single(x => x.Email == receivingUserEmail);
                 AdminInviteCode invite = db.AdminInviteCodes.Single(x => x.InviteCode == inviteCode);
                 if (invite.IsStale)
                     throw new ApplicationException($"Invite Code {inviteCode} has already been used.");
 
-                invite.RecevingAdminUserId = receivingUserId;
+                invite.RecevingAdminUserId = user.Id;
                 invite.IsStale = true;
                 db.SaveChanges();
             }

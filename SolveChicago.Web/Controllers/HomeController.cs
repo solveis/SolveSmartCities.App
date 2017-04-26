@@ -28,6 +28,7 @@ namespace SolveChicago.Web.Controllers
 
         public ActionResult Index()
         {
+
             if (User != null && User.Identity != null && User.Identity.IsAuthenticated)
                 return UserRedirect();
             else

@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using SolveChicago.Entities;
 using SolveChicago.Service;
+using SolveChicago.Common.Models.Profile.Member;
 
 namespace SolveChicago.Web.Controllers
 {
@@ -33,7 +34,7 @@ namespace SolveChicago.Web.Controllers
             ImpersonateCaseManager(caseManagerId);
             CaseManagerService service = new CaseManagerService(this.db);
             
-                Member[] caseManagers = service.GetMembersForCaseManager(State.CaseManagerId);
+                FamilyEntity[] caseManagers = service.GetFamiliesForCaseManager(State.CaseManagerId);
                 return View(caseManagers.ToList());
         }
         

@@ -394,11 +394,18 @@ namespace SolveChicago.Web.Controllers
             return UserRedirect();
         }
 
-        protected void AssertRole(string roleName)
+        protected string AssertRole(string roleName)
         {
-            if (!db.AspNetRoles.Any(x => x.Name == roleName))
-                db.AspNetRoles.Add(new AspNetRole { Name = roleName, Id = Guid.NewGuid().ToString() });
-            db.SaveChanges();
+            var roleManager = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
+
+            if (!roleManager.RoleExists(roleName))
+            {
+                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
+                role.Name = roleName;
+                roleManager.Create(role);
+
+            }
+            return roleManager.FindByName(roleName).Id;
         }
 
         protected Enumerations.Role[] GetRoles(string userName)
@@ -481,13 +488,14 @@ namespace SolveChicago.Web.Controllers
                 case Enumerations.Role.Nonprofit:
                     {
                         AssertRole(Common.Constants.Roles.Nonprofit);
-                        await this.UserManager.AddToRoleAsync(user.Id, Common.Constants.Roles.Nonprofit);
                         if (!UserProfileHasValidMappings(user.Id))
                         {
                             Nonprofit model = new Nonprofit { Email = userName, CreatedDate = DateTime.UtcNow };
+                            await this.UserManager.AddToRoleAsync(user.Id, Common.Constants.Roles.Nonprofit);
                             model.AspNetUsers.Add(aspnetUser);
                             db.Nonprofits.Add(model);
                             db.SaveChanges();
+                            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                             return NonprofitRedirect(model.Id);
                         }
                         return RedirectToAction("Index");

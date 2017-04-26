@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SolveChicago.Entities.Member>
+﻿@model IEnumerable<SolveChicago.Common.Models.Profile.Member.FamilyEntity>
 
 @{
     ViewBag.Title = "Index";
@@ -12,46 +12,49 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Email)
+            @Html.DisplayNameFor(model => model.Id)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ProfilePicturePath)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LastName)
+            @Html.DisplayNameFor(model => model.FamilyName)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProfilePicturePath)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
+@foreach (var item in Model)
+{
+    foreach (var member in item.FamilyMembers.Where(x => x.IsHeadOfHousehold == true))
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => member.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => member.FirstName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = member.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = member.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = member.Id })
+            </td>
+        </tr>
+    }
+    foreach(var member in item.FamilyMembers.Where(x => x.IsHeadOfHousehold == false))
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => member.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => member.FirstName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = member.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = member.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = member.Id })
+            </td>
+        </tr>
+    }
+
 }
 
 </table>

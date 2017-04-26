@@ -1,4 +1,4 @@
-﻿@model SolveChicago.Web.Models.RegisterViewModel
+﻿@model SolveChicago.Web.Models.CaseManagerRegisterViewModel
 @{
     ViewBag.Title = "Register";
 }
@@ -8,6 +8,7 @@
 @using (Html.BeginForm("CaseManager", "Register", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.NonprofitId)
     <h4>Create a new account.</h4>
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })

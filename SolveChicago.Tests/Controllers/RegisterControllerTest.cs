@@ -18,7 +18,7 @@ namespace SolveChicago.Tests.Controllers
             string password = Guid.NewGuid().ToString();
 
             RegisterController controller = new RegisterController();
-            controller.Member(new Web.Models.RegisterViewModel
+            controller.Member(new Web.Models.MemberRegisterViewModel
             {
                 Email = email,
                 Password = password,

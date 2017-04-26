@@ -358,7 +358,7 @@ namespace SolveChicago.Web.Controllers
                 db.Entry(model).State = EntityState.Modified;
                 db.SaveChanges();
             }
-            return RedirectToAction("Index", "CaseManager");
+            return RedirectToAction("Index", "CaseManagers");
         }
 
         // GET: Profile/Nonprofit

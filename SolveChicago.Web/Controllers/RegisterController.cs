@@ -46,6 +46,8 @@ namespace SolveChicago.Web.Controllers
         public async Task<ActionResult> Admin(AdminRegisterViewModel model)
         {
             var result = await CreateAccount(model.Email, model.Password, Enumerations.Role.Admin, model.InvitedByUserId, model.InviteCode);
+            AdminService service = new AdminService(this.db);
+            service.MarkAdminInviteCodeAsUsed(model.InvitedByUserId, model.InviteCode, model.Email);
             if (result != null)
                 return result;
             // If we got this far, something failed, redisplay form
@@ -55,11 +57,12 @@ namespace SolveChicago.Web.Controllers
         //
         // GET: /Register/Member
         [AllowAnonymous]
-        public ActionResult Member(int? id)
+        public ActionResult Member(int? id, int? referrerId)
         {
             MemberRegisterViewModel model = new MemberRegisterViewModel
             {
                 MemberId = id,
+                ReferrerId = referrerId
             };
             if(id.HasValue)
             {
@@ -75,9 +78,14 @@ namespace SolveChicago.Web.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Member(RegisterViewModel model)
+        public async Task<ActionResult> Member(MemberRegisterViewModel model)
         {
             var result = await CreateAccount(model.Email, model.Password, Enumerations.Role.Member);
+            if(model.ReferrerId.HasValue)
+            {
+                MemberService service = new MemberService(this.db);
+                service.AddToReferrer(service.GetMemberByEmail(model.Email).Id, model.ReferrerId.Value);
+            }
             if (result != null)
                 return result;
             // If we got this far, something failed, redisplay form
@@ -144,9 +152,14 @@ namespace SolveChicago.Web.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CaseManager(RegisterViewModel model)
+        public async Task<ActionResult> CaseManager(CaseManagerRegisterViewModel model)
         {
             var result = await CreateAccount(model.Email, model.Password, Enumerations.Role.CaseManager);
+            if(model.NonprofitId.HasValue)
+            {
+                CaseManagerService service = new CaseManagerService(this.db);
+                service.AddToNonprofit(service.GetCaseManagerByEmail(model.Email).Id, model.NonprofitId.Value);
+            }
             if (result != null)
                 return result;
             // If we got this far, something failed, redisplay form

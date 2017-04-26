@@ -12,6 +12,20 @@ namespace SolveChicago.Service
     {
         public MemberService(SolveChicagoEntities db) : base(db) { }
 
+        public Member GetMemberByEmail(string email)
+        {
+            return db.Members.Single(x => x.Email == email);
+        }
+
+        public void AddToReferrer(int memberId, int referrerId)
+        {
+            Member member = db.Members.Find(memberId);
+            Referrer referrer = db.Referrers.Find(referrerId);
+            if (member != null && referrer != null)
+                member.Referrers.Add(referrer);
+            db.SaveChanges();
+        }
+
         public MemberProfile Get(int id)
         {
             Member member = db.Members.Find(id);
@@ -230,7 +244,7 @@ namespace SolveChicago.Service
                 return null;
         }
 
-        private FamilyEntity GetFamily(Member member)
+        public FamilyEntity GetFamily(Member member)
         {
             Family memberFamily = member.Family;
             if (memberFamily != null)
@@ -261,34 +275,13 @@ namespace SolveChicago.Service
             Member member= db.Members.Find(memberId);
             if (member == null)
                 return null;
-
-            Family memberFamily = member.Family;
-            if (memberFamily != null)
-            {
-                FamilyEntity family = new FamilyEntity
-                {
-                    Address1 = memberFamily.Addresses.Any() ? memberFamily.Addresses.Last().Address1 : string.Empty,
-                    Address2 = memberFamily.Addresses.Any() ? memberFamily.Addresses.Last().Address2 : string.Empty,
-                    City = memberFamily.Addresses.Any() ? memberFamily.Addresses.Last().City : string.Empty,
-                    Province = memberFamily.Addresses.Any() ? memberFamily.Addresses.Last().Province : string.Empty,
-                    Country = memberFamily.Addresses.Any() ? memberFamily.Addresses.Last().Country : string.Empty,
-                    FamilyName = memberFamily.FamilyName,
-                    Phone = memberFamily.PhoneNumbers.Any() ? memberFamily.PhoneNumbers.Last().Number : string.Empty,
-                    ZipCode = memberFamily.Addresses.Any() ? memberFamily.Addresses.Last().ZipCode : string.Empty,
-                    FamilyMembers = GetFamilyMembers(member),
-                };
-
-                return family;
-            }
             else
-            {
-                return null;
-            }
+                return GetFamily(member);
         }
 
         private FamilyMember[] GetFamilyMembers(Member member)
         {
-            List<FamilyMember> familyMembers = new List<FamilyMember>();
+            List<FamilyMember> familyMembers = new List<FamilyMember>() { new FamilyMember { Birthday = member.Birthday, FirstName = member.FirstName, Gender = member.Gender, Id = member.Id, IsHeadOfHousehold = member.IsHeadOfHousehold, LastName = member.LastName } };
             // build tree;
 
             GetParentTree(familyMembers, member);
@@ -306,56 +299,52 @@ namespace SolveChicago.Service
                 familyMembers.AddRange(member.MemberSpouses1.Select(x => new FamilyMember { FirstName = x.Member.FirstName, LastName = x.Member.LastName, Relation = x.Member.Gender.ToLowerInvariant() == "male" ? "Husband" : x.Member.Gender.ToLowerInvariant() == "female" ? "Wife" : "Spouse", Id = x.Member.Id }));
         }
 
-        private static void GetChildTree(List<FamilyMember> familyMembers, Member member)
-        {
-            Member currentMember = member;
-            if (currentMember.MemberParents.Any())
-            {
-                Member[] currentChildren = currentMember.MemberParents.Select(x => x.Member).ToArray();
-                string currentChildPrefix = "";
-                foreach (var child in currentChildren)
-                {
-                    if (string.IsNullOrEmpty(currentChildPrefix))
-                        currentChildPrefix = "";
-                    else if (!string.IsNullOrEmpty(currentChildPrefix) && !currentChildPrefix.ToLowerInvariant().Contains("great") && !currentChildPrefix.ToLowerInvariant().Contains("grand"))
-                        currentChildPrefix = "Grand"; //
-                    else if (!string.IsNullOrEmpty(currentChildPrefix) && currentChildPrefix.ToLowerInvariant().Contains("grand") && !currentChildPrefix.ToLowerInvariant().Contains("great"))
-                        currentChildPrefix = "Great-grand";
-                    else
-                        currentChildPrefix = "Great-" + currentChildPrefix.ToLowerInvariant();
-
-                    string currentChildTitle = currentChildPrefix + (child.Gender.ToLowerInvariant() == "male" ? (string.IsNullOrEmpty(currentChildPrefix) ? "Son" : "son") : child.Gender.ToLowerInvariant() == "female" ? (string.IsNullOrEmpty(currentChildPrefix) ? "Daughter" : "daughter") : (string.IsNullOrEmpty(currentChildPrefix) ? "Child" : "child"));
-
-                    familyMembers.Add(new FamilyMember { FirstName = child.FirstName, LastName = child.LastName, IsHeadOfHousehold = (child.IsHeadOfHousehold ?? false), Relation = currentChildTitle, Gender = child.Gender, Birthday = child.Birthday, Id = child.Id });
-
-                    GetChildTree(familyMembers, child);
-                }
-            }
-        }
-
-        private static void GetParentTree(List<FamilyMember> familyMembers, Member member)
+        private static void GetChildTree(List<FamilyMember> familyMembers, Member member, string currentChildPrefix = "")
         {
             Member currentMember = member;
             if (currentMember.MemberParents1.Any())
             {
-                Member[] currentParents = currentMember.MemberParents1.Select(x => x.Member1).ToArray();
-                string currentParentPrefix = "";
+                Member[] currentChildren = currentMember.MemberParents1.Select(x => x.Member).ToArray();
+                foreach (var child in currentChildren)
+                {
+                    string currentChildTitle = currentChildPrefix + (child.Gender.ToLowerInvariant() == "male" ? (string.IsNullOrEmpty(currentChildPrefix) ? "Son" : "son") : child.Gender.ToLowerInvariant() == "female" ? (string.IsNullOrEmpty(currentChildPrefix) ? "Daughter" : "daughter") : (string.IsNullOrEmpty(currentChildPrefix) ? "Child" : "child"));
+                    familyMembers.Add(new FamilyMember { FirstName = child.FirstName, LastName = child.LastName, IsHeadOfHousehold = (child.IsHeadOfHousehold ?? false), Relation = currentChildTitle, Gender = child.Gender, Birthday = child.Birthday, Id = child.Id });
+
+                    //set prefix for recursive child generations
+                    string futureChildPrefix = currentChildPrefix;
+                    if (string.IsNullOrEmpty(futureChildPrefix))
+                        futureChildPrefix = "Grand";
+                    else if (!string.IsNullOrEmpty(futureChildPrefix) && !futureChildPrefix.ToLowerInvariant().Contains("great") && futureChildPrefix.ToLowerInvariant().Contains("grand"))
+                        futureChildPrefix = "Great-grand";
+                    else
+                        futureChildPrefix = "Great-" + futureChildPrefix.ToLowerInvariant();
+
+                    GetChildTree(familyMembers, child, futureChildPrefix);
+                }
+            }
+        }
+
+        private static void GetParentTree(List<FamilyMember> familyMembers, Member member, string currentParentPrefix = "")
+        {
+            Member currentMember = member;
+            if (currentMember.MemberParents.Any())
+            {
+                Member[] currentParents = currentMember.MemberParents.Select(x => x.Member1).ToArray();
                 foreach (var parent in currentParents)
                 {
-                    if (string.IsNullOrEmpty(currentParentPrefix))
-                        currentParentPrefix = "";
-                    else if (!string.IsNullOrEmpty(currentParentPrefix) && !currentParentPrefix.ToLowerInvariant().Contains("great") && !currentParentPrefix.ToLowerInvariant().Contains("grand"))
-                        currentParentPrefix = "Grand"; //
-                    else if (!string.IsNullOrEmpty(currentParentPrefix) && currentParentPrefix.ToLowerInvariant().Contains("grand") && !currentParentPrefix.ToLowerInvariant().Contains("great"))
-                        currentParentPrefix = "Great-grand";
-                    else
-                        currentParentPrefix = "Great-" + currentParentPrefix.ToLowerInvariant();
-
                     string currentParentTitle = currentParentPrefix + (parent.Gender.ToLowerInvariant() == "male" ? (string.IsNullOrEmpty(currentParentPrefix) ? "Father" : "father") : parent.Gender.ToLowerInvariant() == "female" ? (string.IsNullOrEmpty(currentParentPrefix) ? "Mother" : "mother") : (string.IsNullOrEmpty(currentParentPrefix) ? "Parent" : "parent"));
-
                     familyMembers.Add(new FamilyMember { FirstName = parent.FirstName, LastName = parent.LastName, IsHeadOfHousehold = (parent.IsHeadOfHousehold ?? false), Relation = currentParentTitle, Gender = parent.Gender, Birthday = parent.Birthday, Id = parent.Id });
 
-                    GetParentTree(familyMembers, parent);
+                    //set prefix for recursive parent generations
+                    string futureParentPrefix = currentParentPrefix;
+                    if (string.IsNullOrEmpty(currentParentPrefix))
+                        futureParentPrefix = "Grand";
+                    else if (!string.IsNullOrEmpty(currentParentPrefix) && !currentParentPrefix.ToLowerInvariant().Contains("great") && currentParentPrefix.ToLowerInvariant().Contains("grand"))
+                        futureParentPrefix = "Great-grand";
+                    else
+                        futureParentPrefix = "Great-" + currentParentPrefix.ToLowerInvariant();
+
+                    GetParentTree(familyMembers, parent, futureParentPrefix);
                 }
             }
         }
@@ -385,7 +374,6 @@ namespace SolveChicago.Service
                     }
                 }
             }
-
             db.SaveChanges();
         }
 
