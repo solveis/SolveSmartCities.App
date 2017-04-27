@@ -236,6 +236,14 @@
           <Property Name="MemberId" Type="int" Nullable="false" />
           <Property Name="InterestId" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="MemberMilitary">
+          <Key>
+            <PropertyRef Name="MemberId" />
+            <PropertyRef Name="MilitaryId" />
+          </Key>
+          <Property Name="MemberId" Type="int" Nullable="false" />
+          <Property Name="MilitaryId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="MemberParents">
           <Key>
             <PropertyRef Name="ParentId" />
@@ -268,7 +276,7 @@
           <Property Name="FamilyId" Type="int" />
           <Property Name="IsHeadOfHousehold" Type="bit" />
           <Property Name="Income" Type="money" />
-          <Property Name="IsDisabled" Type="bit" />
+          <Property Name="IsMilitary" Type="bit" />
           <Property Name="SurveyStep" Type="nvarchar" MaxLength="50" />
           <Property Name="UserId" Type="nvarchar" MaxLength="128" />
         </EntityType>
@@ -301,6 +309,14 @@
           <Property Name="Spouse_1_Id" Type="int" Nullable="false" />
           <Property Name="Spouse_2_Id" Type="int" Nullable="false" />
           <Property Name="IsCurrent" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MilitaryBranches">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Country" Type="nvarchar" MaxLength="50" />
+          <Property Name="BranchName" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="NonprofitMembers">
           <Key>
@@ -770,6 +786,34 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_MemberMilitary_Member">
+          <End Role="Members" Type="Self.Members" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MemberMilitary" Type="Self.MemberMilitary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MemberMilitary">
+              <PropertyRef Name="MemberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MemberMilitary_MilitaryBranch">
+          <End Role="MilitaryBranches" Type="Self.MilitaryBranches" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MemberMilitary" Type="Self.MemberMilitary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MilitaryBranches">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MemberMilitary">
+              <PropertyRef Name="MilitaryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_MemberParents_Child">
           <End Role="Members" Type="Self.Members" Multiplicity="1" />
           <End Role="MemberParents" Type="Self.MemberParents" Multiplicity="*" />
@@ -1103,12 +1147,14 @@
           <EntitySet Name="MemberEmergencyContacts" EntityType="Self.MemberEmergencyContacts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MemberGovernmentPrograms" EntityType="Self.MemberGovernmentPrograms" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MemberInterests" EntityType="Self.MemberInterests" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MemberMilitary" EntityType="Self.MemberMilitary" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MemberParents" EntityType="Self.MemberParents" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MemberPhoneNumbers" EntityType="Self.MemberPhoneNumbers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Members" EntityType="Self.Members" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MemberSchools" EntityType="Self.MemberSchools" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MemberSkills" EntityType="Self.MemberSkills" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MemberSpouses" EntityType="Self.MemberSpouses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MilitaryBranches" EntityType="Self.MilitaryBranches" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NonprofitMembers" EntityType="Self.NonprofitMembers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Nonprofits" EntityType="Self.Nonprofits" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Outcomes" EntityType="Self.Outcomes" Schema="dbo" store:Type="Tables" />
@@ -1227,6 +1273,14 @@
           <AssociationSet Name="FK_MemberInterests_Member" Association="Self.FK_MemberInterests_Member">
             <End Role="Members" EntitySet="Members" />
             <End Role="MemberInterests" EntitySet="MemberInterests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MemberMilitary_Member" Association="Self.FK_MemberMilitary_Member">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="MemberMilitary" EntitySet="MemberMilitary" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MemberMilitary_MilitaryBranch" Association="Self.FK_MemberMilitary_MilitaryBranch">
+            <End Role="MilitaryBranches" EntitySet="MilitaryBranches" />
+            <End Role="MemberMilitary" EntitySet="MemberMilitary" />
           </AssociationSet>
           <AssociationSet Name="FK_MemberParents_Child" Association="Self.FK_MemberParents_Child">
             <End Role="Members" EntitySet="Members" />
@@ -1580,7 +1634,6 @@
           <Property Name="FamilyId" Type="Int32" />
           <Property Name="IsHeadOfHousehold" Type="Boolean" />
           <Property Name="Income" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="IsDisabled" Type="Boolean" />
           <Property Name="SurveyStep" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_Member_AspNetUser" FromRole="Members" ToRole="AspNetUsers" />
@@ -1601,6 +1654,8 @@
           <NavigationProperty Name="PhoneNumbers" Relationship="Self.MemberPhoneNumbers" FromRole="Members" ToRole="PhoneNumbers" />
           <NavigationProperty Name="Referrers" Relationship="Self.ReferrerMembers" FromRole="Members" ToRole="Referrers" />
           <NavigationProperty Name="NonprofitMembers" Relationship="SolveChicagoDevModel.FK_NonprofitMembers_Members" FromRole="Member" ToRole="NonprofitMember" />
+          <Property Name="IsMilitary" Type="Boolean" />
+          <NavigationProperty Name="MilitaryBranches" Relationship="SolveChicagoDevModel.MemberMilitary" FromRole="Member" ToRole="MilitaryBranch" />
         </EntityType>
         <EntityType Name="MemberSchool">
           <Key>
@@ -2294,6 +2349,11 @@
             <End Role="Nonprofit" EntitySet="Nonprofits" />
             <End Role="NonprofitMember" EntitySet="NonprofitMembers" />
           </AssociationSet>
+          <EntitySet Name="MilitaryBranches" EntityType="SolveChicagoDevModel.MilitaryBranch" />
+          <AssociationSet Name="MemberMilitary" Association="SolveChicagoDevModel.MemberMilitary">
+            <End Role="Member" EntitySet="Members" />
+            <End Role="MilitaryBranch" EntitySet="MilitaryBranches" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="NonprofitMember">
           <Key>
@@ -2350,6 +2410,19 @@
               <PropertyRef Name="NonprofitId" />
             </Dependent>
           </ReferentialConstraint>
+        </Association>
+        <EntityType Name="MilitaryBranch">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BranchName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Members" Relationship="SolveChicagoDevModel.MemberMilitary" FromRole="MilitaryBranch" ToRole="Member" />
+        </EntityType>
+        <Association Name="MemberMilitary">
+          <End Type="SolveChicagoDevModel.Member" Role="Member" Multiplicity="*" />
+          <End Type="SolveChicagoDevModel.MilitaryBranch" Role="MilitaryBranch" Multiplicity="*" />
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -2574,6 +2647,7 @@
           <EntitySetMapping Name="Members">
             <EntityTypeMapping TypeName="SolveChicagoDevModel.Member">
               <MappingFragment StoreEntitySet="Members">
+                <ScalarProperty Name="IsMilitary" ColumnName="IsMilitary" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
@@ -2585,7 +2659,6 @@
                 <ScalarProperty Name="FamilyId" ColumnName="FamilyId" />
                 <ScalarProperty Name="IsHeadOfHousehold" ColumnName="IsHeadOfHousehold" />
                 <ScalarProperty Name="Income" ColumnName="Income" />
-                <ScalarProperty Name="IsDisabled" ColumnName="IsDisabled" />
                 <ScalarProperty Name="SurveyStep" ColumnName="SurveyStep" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
@@ -2775,6 +2848,23 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="MilitaryBranches">
+            <EntityTypeMapping TypeName="SolveChicagoDevModel.MilitaryBranch">
+              <MappingFragment StoreEntitySet="MilitaryBranches">
+                <ScalarProperty Name="BranchName" ColumnName="BranchName" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="MemberMilitary" TypeName="SolveChicagoDevModel.MemberMilitary" StoreEntitySet="MemberMilitary">
+            <EndProperty Name="MilitaryBranch">
+              <ScalarProperty Name="Id" ColumnName="MilitaryId" />
+            </EndProperty>
+            <EndProperty Name="Member">
+              <ScalarProperty Name="Id" ColumnName="MemberId" />
+            </EndProperty>
+          </AssociationSetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -130,6 +130,9 @@
     <Compile Include="MemberSpous.cs">
       <DependentUpon>data.tt</DependentUpon>
     </Compile>
+    <Compile Include="MilitaryBranch.cs">
+      <DependentUpon>data.tt</DependentUpon>
+    </Compile>
     <Compile Include="Nonprofit.cs">
       <DependentUpon>data.tt</DependentUpon>
     </Compile>

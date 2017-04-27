@@ -41,5 +41,13 @@ namespace SolveChicago.Common.Models.Profile.Member
         [Required]
         public string Interests { get; set; }
         public decimal? Income { get; set; }
+        public bool IsMilitary { get; set; }
+        public MilitaryEntity[] Military { get; set; }
+    }
+
+    public class MilitaryEntity
+    {
+        public int Id { get; set; }
+        public string MilitaryBranch { get; set; }
     }
 }

@@ -74,6 +74,8 @@
         <AssociationConnector Association="SolveChicagoDevModel.FK_NonprofitMembers_CaseManagers" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_NonprofitMembers_Members" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_NonprofitMembers_Nonprofits" />
+        <EntityTypeShape EntityType="SolveChicagoDevModel.MilitaryBranch" Width="1.5" PointX="7.5" PointY="4.875" />
+        <AssociationConnector Association="SolveChicagoDevModel.MemberMilitary" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

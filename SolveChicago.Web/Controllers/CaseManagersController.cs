@@ -53,9 +53,10 @@ namespace SolveChicago.Web.Controllers
             ImpersonateCaseManager(caseNote.CaseManagerId);
             if(ModelState.IsValid)
             {
+                caseNote.CreatedDate = DateTime.UtcNow;
                 db.CaseNotes.Add(caseNote);
                 db.SaveChanges();
-                CaseManagerRedirect(State.CaseManagerId);
+               return CaseManagerRedirect(State.CaseManagerId);
             }
             return View(caseNote);
         }

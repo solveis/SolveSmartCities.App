@@ -39,7 +39,7 @@ namespace SolveChicago.Common.Models.Profile.Member
         [Required]
         public string Interests { get; set; }
         public decimal? Income { get; set; }
-        public bool? IsDisabled { get; set; }
+        public bool? IsMilitary { get; set; }
         public string HighestEducation
         {
             get
@@ -60,6 +60,7 @@ namespace SolveChicago.Common.Models.Profile.Member
                 return this.Schools != null && this.Schools.Any() ? this.Schools.OrderByDescending(x => x.Start).First().Name : string.Empty;
             }
         }
+        public MilitaryEntity[] Military { get; set; }
         public FamilyEntity Family { get; set; }
         public SchoolEntity[] Schools { get; set; }
         public NonprofitEntity[] Nonprofits { get; set; }

@@ -54,5 +54,6 @@ namespace SolveChicago.Entities
         public virtual DbSet<School> Schools { get; set; }
         public virtual DbSet<Skill> Skills { get; set; }
         public virtual DbSet<NonprofitMember> NonprofitMembers { get; set; }
+        public virtual DbSet<MilitaryBranch> MilitaryBranches { get; set; }
     }
 }

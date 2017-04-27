@@ -55,7 +55,8 @@ namespace SolveChicago.Service
                     Province = member.Addresses.Any() ? member.Addresses.Last().Province : string.Empty,
                     Schools = GetSchools(member),
                     Income = member.Income,
-                    IsDisabled = member.IsDisabled,
+                    IsMilitary = member.IsMilitary,
+                    Military = GetMilitary(member),
                     GovernmentPrograms = GetGovernmentPrograms(member)
                 };
             }
@@ -166,6 +167,14 @@ namespace SolveChicago.Service
             }
         }
 
+        private MilitaryEntity[] GetMilitary(Member member)
+        {
+            return member.MilitaryBranches.Select(x => new MilitaryEntity
+            {
+                Id = x.Id,
+                MilitaryBranch = x.BranchName,
+            }).ToArray();
+        }
 
         private GovernmentProgramEntity[] GetGovernmentPrograms(Member member)
         {
@@ -391,10 +400,12 @@ namespace SolveChicago.Service
                 member.Id = model.Id;
                 member.LastName = model.LastName;
                 member.ProfilePicturePath = UploadPhoto(Constants.Upload.MemberPhotos, model.ProfilePicture, member.Id);
+                member.IsMilitary = model.IsMilitary;
 
                 UpdateMemberAddress(model, member);
                 UpdateMemberPhone(model, member);
                 UpdateMemberInterests(model, member);
+                UpdateMemberMilitary(model, member);
 
                 db.SaveChanges();
             }
@@ -448,6 +459,19 @@ namespace SolveChicago.Service
                     if(!member.MemberSpouses.Any(x => x.Spouse_1_Id == existingFamilyMember.Id && x.Spouse_2_Id == member.Id) && !member.MemberSpouses.Any(x => x.Spouse_1_Id == member.Id && x.Spouse_2_Id == existingFamilyMember.Id))
                         db.MemberSpouses.Add(new MemberSpous { Spouse_1_Id = member.Id, Spouse_2_Id = existingFamilyMember.Id, IsCurrent = isCurrent });
                     break;
+            }
+        }
+
+        private void UpdateMemberMilitary(MemberProfilePersonal model, Member member)
+        {
+            if(model.Military != null)
+            {
+                foreach (var military in model.Military)
+                {
+                    MilitaryBranch mBranch = db.MilitaryBranches.Single(x => x.Id == military.Id);
+                    if (!member.MilitaryBranches.Contains(mBranch))
+                        member.MilitaryBranches.Add(mBranch);
+                }
             }
         }
 

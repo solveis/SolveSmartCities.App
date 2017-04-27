@@ -6,6 +6,7 @@ using System.Data.Entity;
 using System.Collections.Generic;
 using System.Linq;
 using SolveChicago.Service;
+using SolveChicago.Web.Controllers;
 
 namespace SolveChicago.Tests.Services
 {
@@ -15,6 +16,7 @@ namespace SolveChicago.Tests.Services
         Mock<SolveChicagoEntities> context = new Mock<SolveChicagoEntities>();
         public CaseManagerServiceTest()
         {
+            List<CaseNote> caseNotes = new List<CaseNote>();
             List<CaseManager> caseManagers = new List<CaseManager>
             {
                 new CaseManager
@@ -49,6 +51,11 @@ namespace SolveChicago.Tests.Services
             caseManagerSet.Setup(m => m.Find(It.IsAny<object[]>()))
                 .Returns<object[]>(ids => caseManagers.FirstOrDefault(d => d.Id == (int)ids[0]));
             context.Setup(c => c.CaseManagers).Returns(caseManagerSet.Object);
+
+            var caseNoteSet = new Mock<DbSet<CaseNote>>().SetupData(caseNotes);
+            caseNoteSet.Setup(m => m.Find(It.IsAny<object[]>()))
+                .Returns<object[]>(ids => caseNotes.FirstOrDefault(d => d.Id == (int)ids[0]));
+            context.Setup(c => c.CaseNotes).Returns(caseNoteSet.Object);
         }
 
         [Fact]

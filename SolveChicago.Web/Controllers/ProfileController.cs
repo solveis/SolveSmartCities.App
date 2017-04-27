@@ -199,8 +199,14 @@ namespace SolveChicago.Web.Controllers
             {
                 Member = member,
                 GenderList = GetGenderList(),
+                MilitaryBranchList = GetMilitaryBranchList(),
             };
             return model;
+        }
+
+        private Dictionary<int, string> GetMilitaryBranchList()
+        {
+            return db.MilitaryBranches.ToDictionary(x => x.Id, x => x.BranchName);
         }
 
         private MemberProfileFamilyViewModel FormatMemberProfileFamilyViewModel(MemberProfileFamily member)

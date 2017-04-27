@@ -33,6 +33,7 @@ namespace SolveChicago.Entities
             this.PhoneNumbers = new HashSet<PhoneNumber>();
             this.Referrers = new HashSet<Referrer>();
             this.NonprofitMembers = new HashSet<NonprofitMember>();
+            this.MilitaryBranches = new HashSet<MilitaryBranch>();
         }
     
         public int Id { get; set; }
@@ -46,9 +47,9 @@ namespace SolveChicago.Entities
         public Nullable<int> FamilyId { get; set; }
         public Nullable<bool> IsHeadOfHousehold { get; set; }
         public Nullable<decimal> Income { get; set; }
-        public Nullable<bool> IsDisabled { get; set; }
         public string SurveyStep { get; set; }
         public string UserId { get; set; }
+        public Nullable<bool> IsMilitary { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -84,5 +85,7 @@ namespace SolveChicago.Entities
         public virtual ICollection<Referrer> Referrers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NonprofitMember> NonprofitMembers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MilitaryBranch> MilitaryBranches { get; set; }
     }
 }
