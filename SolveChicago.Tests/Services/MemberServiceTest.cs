@@ -50,7 +50,7 @@ namespace SolveChicago.Tests.Services
                             ChildId = 2,
                             IsBiological = true,
                             ParentId = 1,
-                            Member = new Member
+                            Member1 = new Member
                             {
                                 Id = 2,
                                 FirstName = "Samantha",
@@ -63,7 +63,7 @@ namespace SolveChicago.Tests.Services
                             ChildId = 3,
                             IsBiological = true,
                             ParentId = 1,
-                            Member = new Member
+                            Member1 = new Member
                             {
                                 Id = 3,
                                 FirstName = "Joe",
@@ -76,7 +76,7 @@ namespace SolveChicago.Tests.Services
                             ChildId = 4,
                             IsBiological = true,
                             ParentId = 1,
-                            Member = new Member
+                            Member1 = new Member
                             {
                                 Id = 4,
                                 FirstName = "Lynn",
@@ -516,7 +516,7 @@ namespace SolveChicago.Tests.Services
                         new MemberParent
                         {
                             ChildId = 6,
-                            Member = new Member
+                            Member1 = new Member
                             {
                                 Id = 6,
                                 FirstName = "Isaac",
@@ -725,7 +725,7 @@ namespace SolveChicago.Tests.Services
 
             MemberProfileFamily updatedMember = service.GetProfileFamily(model.MemberId);
             
-            Assert.Equal("Isaac", updatedMember.Family.FamilyMembers.Where(x => x.Relation == "Son").First().FirstName);
+            Assert.Equal("Isaac", updatedMember.Family.FamilyMembers.Where(x => x.Relation == "Father").First().FirstName);
         }
 
         [Fact]

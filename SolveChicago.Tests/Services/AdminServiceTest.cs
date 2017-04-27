@@ -154,6 +154,10 @@ namespace SolveChicago.Tests.Services
         [Fact]
         public void AdminService_MarkAdminInviteCodeAsUsed_NoExceptions()
         {
+            List<AspNetUser> users = new List<AspNetUser>
+            {
+                new AspNetUser { Id = "*&^%$EDFGHJ", Email = "test@test.com" }
+            };
             List<AdminInviteCode> data = new List<AdminInviteCode>
             {
                 new AdminInviteCode
@@ -169,8 +173,12 @@ namespace SolveChicago.Tests.Services
             var context = new Mock<SolveChicagoEntities>();
             context.Setup(c => c.AdminInviteCodes).Returns(dataSet.Object);
 
+
+            var userSet = new Mock<DbSet<AspNetUser>>().SetupData(users);
+            context.Setup(c => c.AspNetUsers).Returns(userSet.Object);
+
             AdminService service = new AdminService(context.Object);
-            service.MarkAdminInviteCodeAsUsed("*&^%$EDFGHJ", "InviteCode1234", "IOUGYTDR%I&^F*G(H");
+            service.MarkAdminInviteCodeAsUsed("*&^%$EDFGHJ", "InviteCode1234", "test@test.com");
         }
 
         [Fact]

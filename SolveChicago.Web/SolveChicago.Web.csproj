@@ -398,6 +398,7 @@
     <Content Include="Views\Register\Referrer.cshtml" />
     <Content Include="Views\Profile\Referrer.cshtml" />
     <Content Include="Views\Members\Details.cshtml" />
+    <Content Include="Views\CaseManagers\AddCaseNote.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -37,6 +37,28 @@ namespace SolveChicago.Web.Controllers
                 FamilyEntity[] caseManagers = service.GetFamiliesForCaseManager(State.CaseManagerId);
                 return View(caseManagers.ToList());
         }
+
+        // GET: CaseManagers/AddCaseNote
+        public ActionResult AddCaseNote(int? caseManagerId, int memberId)
+        {
+            ImpersonateCaseManager(caseManagerId);
+            CaseNote model = new CaseNote() { CaseManagerId = State.CaseManagerId, MemberId = memberId };
+            return View(model);
+        }
+
+        // POST: CaseManagers/AddCaseNote
+        [HttpPost]
+        public ActionResult AddCaseNote(CaseNote caseNote)
+        {
+            ImpersonateCaseManager(caseNote.CaseManagerId);
+            if(ModelState.IsValid)
+            {
+                db.CaseNotes.Add(caseNote);
+                db.SaveChanges();
+                CaseManagerRedirect(State.CaseManagerId);
+            }
+            return View(caseNote);
+        }
         
         // GET: CaseManagers/Details/5
         public ActionResult Details(int? id)
