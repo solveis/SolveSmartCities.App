@@ -147,10 +147,10 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Member.Military, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.Member.MilitaryId, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownListFor(model => model.Member.Military, Model.MilitaryBranchList.Select(x => new SelectListItem { Value = x.Key.ToString(), Text = x.Value }), new { htmlAttributes = new { @class = "form-control", data_role = "tagsinput" } })
-                    @Html.ValidationMessageFor(model => model.Member.IsMilitary, "", new { @class = "text-danger" })
+                    @Html.DropDownListFor(model => model.Member.MilitaryId, Model.MilitaryBranchList.Select(x => new SelectListItem { Value = x.Key.ToString(), Text = x.Value }), new { htmlAttributes = new { @class = "form-control", data_role = "tagsinput" } })
+                    @Html.ValidationMessageFor(model => model.Member.MilitaryId, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>

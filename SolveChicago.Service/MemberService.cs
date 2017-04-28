@@ -290,14 +290,28 @@ namespace SolveChicago.Service
 
         private FamilyMember[] GetFamilyMembers(Member member)
         {
-            List<FamilyMember> familyMembers = new List<FamilyMember>() { new FamilyMember { Birthday = member.Birthday, FirstName = member.FirstName, Gender = member.Gender, Id = member.Id, IsHeadOfHousehold = member.IsHeadOfHousehold, LastName = member.LastName } };
+            List<FamilyMember> familyMembers = new List<FamilyMember>();// { new FamilyMember { Birthday = member.Birthday, FirstName = member.FirstName, Gender = member.Gender, Id = member.Id, IsHeadOfHousehold = member.IsHeadOfHousehold, LastName = member.LastName } };
             // build tree;
 
             GetParentTree(familyMembers, member);
+            GetSiblingTree(familyMembers, member);
             GetChildTree(familyMembers, member);
             GetSpouseTree(familyMembers, member);
+            GetUnknownRelationTree(familyMembers, member);
 
             return familyMembers.ToArray();
+        }
+
+        private static void GetUnknownRelationTree(List<FamilyMember> familyMembers, Member member)
+        {
+            Member[] fm = member.Family.Members.ToArray();
+            foreach(Member m in fm)
+            {
+                FamilyMember f = new FamilyMember { FirstName = m.FirstName, Birthday = m.Birthday, Gender = m.Gender, Id = m.Id, IsHeadOfHousehold = m.IsHeadOfHousehold, LastName = m.LastName };
+                if (!familyMembers.Select(x => x.Id).Contains(f.Id) && f.Id != member.Id)
+                    familyMembers.Add(f);
+                    
+            }
         }
 
         private static void GetSpouseTree(List<FamilyMember> familyMembers, Member member)
@@ -306,6 +320,25 @@ namespace SolveChicago.Service
                 familyMembers.AddRange(member.MemberSpouses.Select(x => new FamilyMember { FirstName = x.Member1.FirstName, LastName = x.Member1.LastName, Relation = x.Member1.Gender.ToLowerInvariant() == "male" ? "Husband" : x.Member1.Gender.ToLowerInvariant() == "female" ? "Wife" : "Spouse", Id = x.Member1.Id }));
             else if (member.MemberSpouses1.Any(x => x.Member != null))
                 familyMembers.AddRange(member.MemberSpouses1.Select(x => new FamilyMember { FirstName = x.Member.FirstName, LastName = x.Member.LastName, Relation = x.Member.Gender.ToLowerInvariant() == "male" ? "Husband" : x.Member.Gender.ToLowerInvariant() == "female" ? "Wife" : "Spouse", Id = x.Member.Id }));
+        }
+
+        private static void GetSiblingTree(List<FamilyMember> familyMembers, Member member)
+        {
+            Member currentMember = member;
+            if (currentMember.MemberParents.Any())
+            {
+                Member[] currentParents = currentMember.MemberParents.Select(x => x.Member1).ToArray();
+                foreach (var parents in currentParents)
+                {
+                    Member[] siblings = parents.MemberParents1.Where(x => x.Member.Id != member.Id).Select(x => x.Member).ToArray();
+                    foreach (Member sibling in siblings)
+                    {
+                        FamilyMember fm = new FamilyMember { FirstName = sibling.FirstName, Birthday = sibling.Birthday, Gender = sibling.Gender, Id = sibling.Id, IsHeadOfHousehold = sibling.IsHeadOfHousehold, LastName = sibling.LastName, Relation = (sibling.Gender.ToLowerInvariant() == "male" ? "Brother" : sibling.Gender.ToLowerInvariant() == "female" ? "Sister" : "Sibling") };
+                        if (!familyMembers.Select(x => x.Id).Contains(fm.Id))
+                            familyMembers.Add(fm);
+                    }
+                }
+            }
         }
 
         private static void GetChildTree(List<FamilyMember> familyMembers, Member member, string currentChildPrefix = "")
@@ -403,11 +436,29 @@ namespace SolveChicago.Service
                 member.IsMilitary = model.IsMilitary;
 
                 UpdateMemberAddress(model, member);
+                MatchOrCreateFamily(model, member);
                 UpdateMemberPhone(model, member);
                 UpdateMemberInterests(model, member);
                 UpdateMemberMilitary(model, member);
 
                 db.SaveChanges();
+            }
+        }
+
+        private void MatchOrCreateFamily(MemberProfilePersonal model, Member member)
+        {
+            Family[] families = db.Families.ToArray();
+            Address address = member.Addresses.FirstOrDefault();
+            if (member.FamilyId.HasValue)
+                return;
+            else if(families.Any(x => x.Addresses.Contains(address)))
+            {
+                Family family = families.Where(x => x.Addresses.Contains(address)).First();
+                family.Members.Add(member);
+            }
+            else
+            {
+                member.Family = new Family { FamilyName = member.LastName, PhoneNumbers = member.PhoneNumbers.ToArray(), Addresses = member.Addresses.ToArray() };
             }
         }
 
@@ -428,7 +479,7 @@ namespace SolveChicago.Service
                              existingFamilyMember = db.Members.Find(familyMember.Id);
                         if (existingFamilyMember == null)
                         {
-                            existingFamilyMember = new Member { FirstName = familyMember.FirstName, LastName = familyMember.LastName, IsHeadOfHousehold = familyMember.IsHeadOfHousehold, Birthday = familyMember.Birthday, Gender = familyMember.Gender };
+                            existingFamilyMember = new Member { FirstName = familyMember.FirstName, LastName = familyMember.LastName, IsHeadOfHousehold = familyMember.IsHeadOfHousehold, Birthday = familyMember.Birthday, Gender = familyMember.Gender, FamilyId = member.FamilyId };
                             db.Members.Add(existingFamilyMember);
                             db.SaveChanges();
                         }
@@ -464,14 +515,11 @@ namespace SolveChicago.Service
 
         private void UpdateMemberMilitary(MemberProfilePersonal model, Member member)
         {
-            if(model.Military != null)
+            if(model.MilitaryId.HasValue)
             {
-                foreach (var military in model.Military)
-                {
-                    MilitaryBranch mBranch = db.MilitaryBranches.Single(x => x.Id == military.Id);
-                    if (!member.MilitaryBranches.Contains(mBranch))
-                        member.MilitaryBranches.Add(mBranch);
-                }
+                MilitaryBranch mBranch = db.MilitaryBranches.Single(x => x.Id == model.MilitaryId);
+                if (!member.MilitaryBranches.Contains(mBranch))
+                    member.MilitaryBranches.Add(mBranch);
             }
         }
 

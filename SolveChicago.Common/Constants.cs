@@ -77,6 +77,7 @@ namespace SolveChicago.Common
                 public const string Parent = "Parent";
                 public const string Child = "Child";
                 public const string Spouse = "Spouse";
+                public const string Other = "Other";
             }
         }
 

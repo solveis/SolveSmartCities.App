@@ -580,6 +580,7 @@ namespace SolveChicago.Tests.Services
             List<MemberParent> memberParents = new List<MemberParent>();
             List<MemberSpous> memberSpouses = new List<MemberSpous>();
             List<MilitaryBranch> militaryBranches = new List<MilitaryBranch>();
+            List<Family> families = new List<Family>();
 
             var set = new Mock<DbSet<Member>>().SetupData(data);
             set.Setup(m => m.Find(It.IsAny<object[]>()))
@@ -640,6 +641,11 @@ namespace SolveChicago.Tests.Services
             militarySet.Setup(m => m.Find(It.IsAny<object[]>()))
                 .Returns<object[]>(ids => militaryBranches.FirstOrDefault(d => d.Id == (int)ids[0]));
             context.Setup(c => c.MilitaryBranches).Returns(militarySet.Object);
+
+            var familySet = new Mock<DbSet<Family>>().SetupData(families);
+            familySet.Setup(m => m.Find(It.IsAny<object[]>()))
+                .Returns<object[]>(ids => families.FirstOrDefault(d => d.Id == (int)ids[0]));
+            context.Setup(c => c.Families).Returns(familySet.Object);
 
             return new Tuple<Mock<DbSet<Member>>, List<Member>>(set, data);
         }
