@@ -35,7 +35,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.Member.Nonprofits[i].SkillsAcquired, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.Member.Nonprofits[i].SkillsAcquired, new { htmlAttributes = new { @class = "form-control", data_role = "tagsinput" } })
+                            @Html.EditorFor(model => model.Member.Nonprofits[i].SkillsAcquired, new { htmlAttributes = new { @class = "form-control tokenfield" } })
                             @Html.ValidationMessageFor(model => model.Member.Nonprofits[i].SkillsAcquired, "", new { @class = "text-danger" })
                         </div>
                     </div>

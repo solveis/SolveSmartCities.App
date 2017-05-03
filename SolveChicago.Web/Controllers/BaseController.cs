@@ -436,17 +436,18 @@ namespace SolveChicago.Web.Controllers
                 aspnetUser = GetUserById(user.Id);
                 if (result.Succeeded)
                 {
+                    var eventualResult = await CreateUserAndAssignRoles(userName, password, role, invitedByUserId, user, aspnetUser, inviteCode);
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
+                    return eventualResult;
                 }
                 AddErrors(result);
             }
-            return await CreateUserAndAssignRoles(userName, password, role, invitedByUserId, user, aspnetUser, inviteCode);
+            return null;
         }
 
         private async Task<ActionResult> CreateUserAndAssignRoles(string userName, string password, Enumerations.Role role, string invitedByUserId, ApplicationUser user, AspNetUser aspnetUser, string inviteCode)
@@ -488,14 +489,13 @@ namespace SolveChicago.Web.Controllers
                 case Enumerations.Role.Nonprofit:
                     {
                         AssertRole(Common.Constants.Roles.Nonprofit);
+                        await this.UserManager.AddToRoleAsync(user.Id, Common.Constants.Roles.Nonprofit);
                         if (!UserProfileHasValidMappings(user.Id))
                         {
                             Nonprofit model = new Nonprofit { Email = userName, CreatedDate = DateTime.UtcNow };
-                            await this.UserManager.AddToRoleAsync(user.Id, Common.Constants.Roles.Nonprofit);
                             model.AspNetUsers.Add(aspnetUser);
                             db.Nonprofits.Add(model);
                             db.SaveChanges();
-                            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                             return NonprofitRedirect(model.Id);
                         }
                         return RedirectToAction("Index");

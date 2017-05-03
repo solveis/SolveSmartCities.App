@@ -11,6 +11,8 @@ namespace SolveChicago.Web.Models.Profile
         public MemberProfilePersonal Member { get; set; }
         public string[] GenderList { get; set; }
         public Dictionary<int, string> MilitaryBranchList { get; set; }
+        public string[] InterestList { get; set; }
+        public string[] CountryList { get; set; }
     }
 
     public class MemberProfileFamilyViewModel

@@ -1,4 +1,5 @@
-﻿/// <reference path="jquery-2.2.4.js" />
+﻿/// <reference path="jquery-ui-1.12.1.js" />
+/// <reference path="jquery-2.2.4.js" />
 /// <autosync enabled="true" />
 /// <reference path="bootstrap.min.js" />
 /// <reference path="jquery.validate.min.js" />

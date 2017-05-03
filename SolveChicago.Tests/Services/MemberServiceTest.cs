@@ -252,7 +252,7 @@ namespace SolveChicago.Tests.Services
             MemberProfilePersonal member = service.GetProfilePersonal(1);
 
             Assert.Equal("Aaron", member.FirstName);
-            Assert.Equal("Basketball,Science,Computers,Archery", member.Interests);
+            Assert.Equal("Basketball, Science, Computers, Archery", member.Interests);
         }
 
         [Fact]

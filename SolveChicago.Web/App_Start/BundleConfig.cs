@@ -21,7 +21,6 @@ namespace SolveChicago.Web
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
-                      "~/Scripts/bootstrap-tagsinput.js",
                       "~/Scripts/respond.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/functions").Include(
@@ -30,9 +29,17 @@ namespace SolveChicago.Web
             bundles.Add(new ScriptBundle("~/bundles/profile_member").Include(
                       "~/Scripts/profile_member.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/tokenfield").Include(
+                      "~/Scripts/bootstrap-tokenfield.js",
+                        "~/Scripts/jquery-ui-{version}.js"));
+
+                    
+            bundles.Add(new StyleBundle("~/Content/tokenfield").Include(
+                      "~/Content/bootstrap-tokenfield/bootstrap-tokenfield.css",
+                      "~/Content/themes/base/jquery-ui.css"));
+            
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/bootstrap-tagsinput.css",
                       "~/Content/site.css"));
         }
     }

@@ -10,6 +10,7 @@ namespace SolveChicago.Common.Models.Profile.Member
     public class MemberProfileFamily
     {
         public int MemberId { get; set; }
+        public bool IsHeadOfHousehold { get; set; }
         public FamilyEntity Family { get; set; }
     }
     public class FamilyEntity
@@ -44,5 +45,7 @@ namespace SolveChicago.Common.Models.Profile.Member
         public DateTime? Birthday { get; set; }
         public string Gender { get; set; }
         public int? Id { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
     }
 }

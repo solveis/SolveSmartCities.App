@@ -13,6 +13,7 @@
     [Income] MONEY NULL, 
     [IsMilitary] BIT NULL, 
     [SurveyStep] NVARCHAR(50) NULL, 
+    [ContactPreference] NVARCHAR(50) NULL, 
     [UserId] NVARCHAR(128) NULL, 
     CONSTRAINT [PK_Members] PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_Member_Family] FOREIGN KEY (FamilyId) REFERENCES [Families]([Id]) ON DELETE SET NULL,

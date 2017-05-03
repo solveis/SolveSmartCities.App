@@ -29,6 +29,11 @@ namespace SolveChicago.Common
 
         public class Member
         {
+            public class ContactPreference
+            {
+                public const string Email = "Email";
+                public const string Phone = "Phone";
+            }
             public class SurveyStep
             {
                 public const string Invited = "Invited";

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.2 (39069) - http://www.bohemiancoding.com/sketch -->
+    <title>error-icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1" points="10 1 19 19 1 19"></polygon>
+    </defs>
+    <g id="CASE-MANAGER" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="LOGIN" transform="translate(-566.000000, -424.000000)">
+            <g id="EMAIL" transform="translate(545.000000, 408.000000)">
+                <g id="error-icon" transform="translate(20.000000, 15.000000)">
+                    <g id="Triangle">
+                        <use fill="#F22613" fill-rule="evenodd" xlink:href="#path-1"></use>
+                        <path stroke="#F22613" stroke-width="1" d="M10,2.11803399 L18.190983,18.5 L1.80901699,18.5 L10,2.11803399 Z"></path>
+                    </g>
+                    <path d="M10,16.875 C9.65482203,16.875 9.375,16.595178 9.375,16.25 C9.375,15.904822 9.65482203,15.625 10,15.625 C10.345178,15.625 10.625,15.904822 10.625,16.25 C10.625,16.595178 10.345178,16.875 10,16.875 Z M10,8.125 C10.3475845,8.125 10.625,8.40413497 10.625,8.7484654 L10.625,13.1265346 C10.625,13.4786946 10.345178,13.75 10,13.75 C9.65241551,13.75 9.375,13.470865 9.375,13.1265346 L9.375,8.7484654 C9.375,8.39630544 9.65482203,8.125 10,8.125 Z" id="Oval-138" fill="#FFFFFF"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

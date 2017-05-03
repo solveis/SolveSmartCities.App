@@ -44,6 +44,7 @@ namespace SolveChicago.Common.Models.Profile.Member
         public bool IsMilitary { get; set; }
         public int? MilitaryId { get; set; }
         public MilitaryEntity[] Military { get; set; }
+        public string ContactPreference { get; set; }
     }
 
     public class MilitaryEntity

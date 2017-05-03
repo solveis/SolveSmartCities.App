@@ -200,8 +200,20 @@ namespace SolveChicago.Web.Controllers
                 Member = member,
                 GenderList = GetGenderList(),
                 MilitaryBranchList = GetMilitaryBranchList(),
+                InterestList = GetInterestList(),
+                CountryList = GetCountryList(),
             };
             return model;
+        }
+
+        private string[] GetCountryList()
+        {
+            return new string[] { "USA" };
+        }
+
+        public string[] GetInterestList()
+        {
+            return db.Interests.Select(x => x.Name).ToArray();
         }
 
         private Dictionary<int, string> GetMilitaryBranchList()

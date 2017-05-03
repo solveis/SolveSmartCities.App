@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title -Solve Smart Cities</title>
+    @Styles.Render("~/Content/css")
+    @RenderSection("styles", required: false)
+
+    <meta name="description" content="The description of my page" />
+</head>
+<body>
+    @RenderBody()
+      
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/functions")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

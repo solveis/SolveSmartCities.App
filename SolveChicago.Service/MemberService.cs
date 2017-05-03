@@ -80,7 +80,7 @@ namespace SolveChicago.Service
                     FirstName = member.FirstName,
                     Gender = member.Gender,
                     Id = member.Id,
-                    Interests = member.Interests.Any() ? string.Join(",", member.Interests.Select(x => x.Name).ToArray()) : string.Empty,
+                    Interests = member.Interests.Any() ? string.Join(", ", member.Interests.Select(x => x.Name).ToArray()) : string.Empty,
                     IsHeadOfHousehold = member.IsHeadOfHousehold ?? false,
                     LastName = member.LastName,
                     Phone = member.PhoneNumbers.Any() ? string.Join(",", member.PhoneNumbers.Select(x => x.Number).ToArray()) : string.Empty,
@@ -88,6 +88,8 @@ namespace SolveChicago.Service
                     Province = member.Addresses.Any() ? member.Addresses.Last().Province : string.Empty,
                     Income = member.Income,
                     ZipCode = member.Addresses.Any() ? member.Addresses.Last().ZipCode : string.Empty,
+                    ContactPreference = member.ContactPreference,
+                    IsMilitary = member.IsMilitary ?? false
                 };
             }
         }
@@ -102,6 +104,7 @@ namespace SolveChicago.Service
                 return new MemberProfileFamily
                 {
                     MemberId = member.Id,
+                    IsHeadOfHousehold = member.IsHeadOfHousehold ?? false,
                     Family = GetFamily(member),
                 };
             }
@@ -307,7 +310,7 @@ namespace SolveChicago.Service
             Member[] fm = member.Family.Members.ToArray();
             foreach(Member m in fm)
             {
-                FamilyMember f = new FamilyMember { FirstName = m.FirstName, Birthday = m.Birthday, Gender = m.Gender, Id = m.Id, IsHeadOfHousehold = m.IsHeadOfHousehold, LastName = m.LastName };
+                FamilyMember f = new FamilyMember { FirstName = m.FirstName, Birthday = m.Birthday, Gender = m.Gender, Id = m.Id, IsHeadOfHousehold = m.IsHeadOfHousehold, LastName = m.LastName, Email = m.Email, Phone = m.PhoneNumbers.Any() ? string.Join(", ", m.PhoneNumbers.Select(x => x.Number).ToArray()) : string.Empty };
                 if (!familyMembers.Select(x => x.Id).Contains(f.Id) && f.Id != member.Id)
                     familyMembers.Add(f);
                     
@@ -317,9 +320,9 @@ namespace SolveChicago.Service
         private static void GetSpouseTree(List<FamilyMember> familyMembers, Member member)
         {
             if (member.MemberSpouses.Any(x => x.Member1 != null))
-                familyMembers.AddRange(member.MemberSpouses.Select(x => new FamilyMember { FirstName = x.Member1.FirstName, LastName = x.Member1.LastName, Relation = x.Member1.Gender.ToLowerInvariant() == "male" ? "Husband" : x.Member1.Gender.ToLowerInvariant() == "female" ? "Wife" : "Spouse", Id = x.Member1.Id }));
+                familyMembers.AddRange(member.MemberSpouses.Select(x => new FamilyMember { FirstName = x.Member1.FirstName, LastName = x.Member1.LastName, Relation = x.Member1.Gender.ToLowerInvariant() == "male" ? "Husband" : x.Member1.Gender.ToLowerInvariant() == "female" ? "Wife" : "Spouse", Id = x.Member1.Id, Email = x.Member1.Email, Phone = x.Member1.PhoneNumbers.Any() ? string.Join(", ", x.Member1.PhoneNumbers.Select(y => y.Number).ToArray()) : string.Empty }));
             else if (member.MemberSpouses1.Any(x => x.Member != null))
-                familyMembers.AddRange(member.MemberSpouses1.Select(x => new FamilyMember { FirstName = x.Member.FirstName, LastName = x.Member.LastName, Relation = x.Member.Gender.ToLowerInvariant() == "male" ? "Husband" : x.Member.Gender.ToLowerInvariant() == "female" ? "Wife" : "Spouse", Id = x.Member.Id }));
+                familyMembers.AddRange(member.MemberSpouses1.Select(x => new FamilyMember { FirstName = x.Member.FirstName, LastName = x.Member.LastName, Relation = x.Member.Gender.ToLowerInvariant() == "male" ? "Husband" : x.Member.Gender.ToLowerInvariant() == "female" ? "Wife" : "Spouse", Id = x.Member.Id, Email = x.Member.Email, Phone = x.Member.PhoneNumbers.Any() ? string.Join(", ", x.Member.PhoneNumbers.Select(y => y.Number).ToArray()) : string.Empty }));
         }
 
         private static void GetSiblingTree(List<FamilyMember> familyMembers, Member member)
@@ -333,7 +336,7 @@ namespace SolveChicago.Service
                     Member[] siblings = parents.MemberParents1.Where(x => x.Member.Id != member.Id).Select(x => x.Member).ToArray();
                     foreach (Member sibling in siblings)
                     {
-                        FamilyMember fm = new FamilyMember { FirstName = sibling.FirstName, Birthday = sibling.Birthday, Gender = sibling.Gender, Id = sibling.Id, IsHeadOfHousehold = sibling.IsHeadOfHousehold, LastName = sibling.LastName, Relation = (sibling.Gender.ToLowerInvariant() == "male" ? "Brother" : sibling.Gender.ToLowerInvariant() == "female" ? "Sister" : "Sibling") };
+                        FamilyMember fm = new FamilyMember { FirstName = sibling.FirstName, Birthday = sibling.Birthday, Gender = sibling.Gender, Id = sibling.Id, IsHeadOfHousehold = sibling.IsHeadOfHousehold, LastName = sibling.LastName, Relation = (sibling.Gender.ToLowerInvariant() == "male" ? "Brother" : sibling.Gender.ToLowerInvariant() == "female" ? "Sister" : "Sibling"), Email = sibling.Email, Phone = sibling.PhoneNumbers.Any() ? string.Join(", ", sibling.PhoneNumbers.Select(x => x.Number).ToArray()) : string.Empty };
                         if (!familyMembers.Select(x => x.Id).Contains(fm.Id))
                             familyMembers.Add(fm);
                     }
@@ -350,7 +353,7 @@ namespace SolveChicago.Service
                 foreach (var child in currentChildren)
                 {
                     string currentChildTitle = currentChildPrefix + (child.Gender.ToLowerInvariant() == "male" ? (string.IsNullOrEmpty(currentChildPrefix) ? "Son" : "son") : child.Gender.ToLowerInvariant() == "female" ? (string.IsNullOrEmpty(currentChildPrefix) ? "Daughter" : "daughter") : (string.IsNullOrEmpty(currentChildPrefix) ? "Child" : "child"));
-                    familyMembers.Add(new FamilyMember { FirstName = child.FirstName, LastName = child.LastName, IsHeadOfHousehold = (child.IsHeadOfHousehold ?? false), Relation = currentChildTitle, Gender = child.Gender, Birthday = child.Birthday, Id = child.Id });
+                    familyMembers.Add(new FamilyMember { FirstName = child.FirstName, LastName = child.LastName, IsHeadOfHousehold = (child.IsHeadOfHousehold ?? false), Relation = currentChildTitle, Gender = child.Gender, Birthday = child.Birthday, Id = child.Id, Email = child.Email, Phone = child.PhoneNumbers.Any() ? string.Join(", ", child.PhoneNumbers.Select(x => x.Number).ToArray()) : string.Empty });
 
                     //set prefix for recursive child generations
                     string futureChildPrefix = currentChildPrefix;
@@ -375,7 +378,7 @@ namespace SolveChicago.Service
                 foreach (var parent in currentParents)
                 {
                     string currentParentTitle = currentParentPrefix + (parent.Gender.ToLowerInvariant() == "male" ? (string.IsNullOrEmpty(currentParentPrefix) ? "Father" : "father") : parent.Gender.ToLowerInvariant() == "female" ? (string.IsNullOrEmpty(currentParentPrefix) ? "Mother" : "mother") : (string.IsNullOrEmpty(currentParentPrefix) ? "Parent" : "parent"));
-                    familyMembers.Add(new FamilyMember { FirstName = parent.FirstName, LastName = parent.LastName, IsHeadOfHousehold = (parent.IsHeadOfHousehold ?? false), Relation = currentParentTitle, Gender = parent.Gender, Birthday = parent.Birthday, Id = parent.Id });
+                    familyMembers.Add(new FamilyMember { FirstName = parent.FirstName, LastName = parent.LastName, IsHeadOfHousehold = (parent.IsHeadOfHousehold ?? false), Relation = currentParentTitle, Gender = parent.Gender, Birthday = parent.Birthday, Id = parent.Id, Email = parent.Email, Phone = parent.PhoneNumbers.Any() ? string.Join(", ", parent.PhoneNumbers.Select(x => x.Number).ToArray()) : string.Empty });
 
                     //set prefix for recursive parent generations
                     string futureParentPrefix = currentParentPrefix;
@@ -434,6 +437,7 @@ namespace SolveChicago.Service
                 member.LastName = model.LastName;
                 member.ProfilePicturePath = UploadPhoto(Constants.Upload.MemberPhotos, model.ProfilePicture, member.Id);
                 member.IsMilitary = model.IsMilitary;
+                member.ContactPreference = model.ContactPreference;
 
                 UpdateMemberAddress(model, member);
                 MatchOrCreateFamily(model, member);
@@ -697,7 +701,7 @@ namespace SolveChicago.Service
                     Address1 = model.Address1,
                     Address2 = model.Address2,
                     City = model.City,
-                    Country = model.Country,
+                    Country = "USA",
                     ZipCode = model.ZipCode,
                     Province = model.Province,
                 };

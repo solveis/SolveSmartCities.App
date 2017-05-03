@@ -50,6 +50,7 @@ namespace SolveChicago.Entities
         public string SurveyStep { get; set; }
         public string UserId { get; set; }
         public Nullable<bool> IsMilitary { get; set; }
+        public string ContactPreference { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

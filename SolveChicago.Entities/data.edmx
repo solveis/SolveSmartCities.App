@@ -278,6 +278,7 @@
           <Property Name="Income" Type="money" />
           <Property Name="IsMilitary" Type="bit" />
           <Property Name="SurveyStep" Type="nvarchar" MaxLength="50" />
+          <Property Name="ContactPreference" Type="nvarchar" MaxLength="50" />
           <Property Name="UserId" Type="nvarchar" MaxLength="128" />
         </EntityType>
         <EntityType Name="MemberSchools">
@@ -1656,6 +1657,7 @@
           <NavigationProperty Name="NonprofitMembers" Relationship="SolveChicagoDevModel.FK_NonprofitMembers_Members" FromRole="Member" ToRole="NonprofitMember" />
           <Property Name="IsMilitary" Type="Boolean" />
           <NavigationProperty Name="MilitaryBranches" Relationship="SolveChicagoDevModel.MemberMilitary" FromRole="Member" ToRole="MilitaryBranch" />
+          <Property Name="ContactPreference" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="MemberSchool">
           <Key>
@@ -2647,6 +2649,7 @@
           <EntitySetMapping Name="Members">
             <EntityTypeMapping TypeName="SolveChicagoDevModel.Member">
               <MappingFragment StoreEntitySet="Members">
+                <ScalarProperty Name="ContactPreference" ColumnName="ContactPreference" />
                 <ScalarProperty Name="IsMilitary" ColumnName="IsMilitary" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Email" ColumnName="Email" />

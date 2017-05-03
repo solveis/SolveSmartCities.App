@@ -40,6 +40,7 @@ namespace SolveChicago.Common.Models.Profile.Member
         public string Interests { get; set; }
         public decimal? Income { get; set; }
         public bool? IsMilitary { get; set; }
+        public string ContactPreference { get; set; }
         public string HighestEducation
         {
             get

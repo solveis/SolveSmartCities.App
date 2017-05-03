@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Solve Smart Cities</title>
+    @Styles.Render("~/Content/css")
+    @RenderSection("styles", required: false)
+
+    <meta name="description" content="The description of my page" />
+</head>
+<body>
+    <div class="app-dashboard shrink-medium">
+        <div class="row expanded app-dashboard-top-nav-bar">
+            <div class="columns medium-2">
+                <a class="app-dashboard-logo">
+                    <img src="/img/solve-logo@2x.png">
+                </a>
+            </div>
+
+            <!-- <div class="columns show-for-medium">
+              <div class="app-dashboard-search-bar-container">
+                <input class="app-dashboard-search" type="search" placeholder="Search">
+                <i class="app-dashboard-search-icon fa fa-search"></i>
+              </div>
+            </div> -->
+            <!-- <div class="columns shrink app-dashboard-top-bar-actions">
+              <button href="#" class="button hollow">Logout</button>
+              <a href="#" height="30" width="30" alt=""><i class="fa fa-info-circle"></i></a>
+            </div> -->
+        </div>
+
+        <div class="app-dashboard-body off-canvas-wrapper">
+            @RenderBody()
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/functions")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
