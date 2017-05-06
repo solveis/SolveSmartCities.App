@@ -1,0 +1,609 @@
+﻿/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+body {
+    line-height: 1;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+blockquote, q {
+    quotes: none;
+}
+
+    blockquote:before, blockquote:after,
+    q:before, q:after {
+        content: '';
+        content: none;
+    }
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    font-family: Montserrat, sans-serif;
+    font-weight: 300;
+}
+
+::-moz-placeholder { /* Firefox 19+ */
+    font-family: Montserrat, sans-serif;
+    font-weight: 300;
+}
+
+:-ms-input-placeholder { /* IE 10+ */
+    font-family: Montserrat, sans-serif;
+    font-weight: 300;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+    font-family: Montserrat, sans-serif;
+    font-weight: 300;
+}
+
+textarea, input {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+section {
+    min-height: 100vh;
+    padding-top: 90px;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+div > .absolute-center {
+    position: relative;
+}
+
+.absolute-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.bottom-center {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translate(-50%, -10%);
+}
+
+.tier-dark h1.sectionHeader {
+    color: #FFFFFF;
+}
+
+    .tier-dark h1.sectionHeader .tag {
+        color: #FFFFFF;
+    }
+
+h1.sectionHeader {
+    font-size: 26px;
+    text-transform: uppercase;
+    font-family: Montserrat;
+    font-size: 35px;
+    font-weight: 300;
+    text-align: center;
+    line-height: 42px;
+    letter-spacing: 3px;
+    color: #394148;
+    width: 100%;
+}
+
+    h1.sectionHeader .tag {
+        font-family: 'Have Heart Two', sans-serif;
+        display: block;
+        font-family: "Have Heart Two";
+        font-size: 96px;
+        line-height: 66px;
+        letter-spacing: 4px;
+    }
+
+h3 {
+    font-weight: 700;
+}
+
+#Partners h1.sectionHeader .tag {
+    color: #8E44AD;
+    margin-left: 150px;
+}
+
+#LetsTalk .sectionHeader {
+    margin-bottom: 40px;
+}
+
+    #LetsTalk .sectionHeader .tag {
+        color: #22A7F0;
+        margin-left: 200px;
+    }
+
+#logo {
+    height: 45px;
+}
+
+#login-register {
+    background: #000;
+    height: 20px;
+    font-size: 12px;
+    text-align: right;
+    width: 100%;
+    padding: 4px;
+    font-weight: 100;
+    color: #fff;
+    position: fixed;
+    z-index: 1031;
+}
+
+#login-register a {
+    color:#fff;
+}
+
+#login-register p {
+    display:inline;
+    position:relative;
+}
+
+.register {
+    cursor:pointer;
+}
+
+#login-register:hover .register-submenu {
+    display:block;
+}
+
+.register-submenu {
+    background: #000;
+    padding: 10px 20px;
+    position: absolute;
+    top: 18px;
+    right: -22px;
+    display: none;
+}
+
+.register-submenu:hover {
+    display:block;
+}
+
+
+#main-nav {
+    background: rgba(255, 255, 255, 0.8) none repeat scroll 0 0;
+    padding-bottom: 18px;
+    padding-top: 7px;
+    border: none;
+    top:20px;
+}
+
+    #main-nav li {
+        padding: 10px 10px 0;
+    }
+
+    #main-nav .navbar-nav > li > a:not(.cta) {
+        text-transform: uppercase;
+        font-family: Montserrat;
+        font-size: 14px;
+        line-height: 17px;
+        letter-spacing: 2px;
+        color: #394148;
+    }
+
+    #main-nav a:not(.cta):hover {
+        text-decoration: underline;
+    }
+
+#Home {
+    background-image: url("../img/landing/Header@2x.jpg");
+    background-size: cover;
+    height: 100vh;
+}
+
+.advance, .regress,
+.advance:hover, .regress:hover,
+.advance:active, .regress:active,
+.advance:visited, .regress:visited,
+.advance:focus, .regress:focus {
+    color: #fff;
+    text-transform: uppercase;
+    font-family: Montserrat;
+    font-size: 14px;
+    line-height: 17px;
+    letter-spacing: 2px;
+    z-index: 101;
+    text-decoration: none;
+}
+
+    .advance img,
+    .regress img {
+        width: 30px;
+        margin: 10px auto;
+    }
+
+.caret-down {
+    transform: rotate(90deg);
+}
+
+#How {
+    position: relative;
+    z-index: 1;
+    margin-top: -160px;
+    height: auto;
+}
+
+    #How ul {
+        list-style: none;
+    }
+
+    #How li {
+        height: 380px;
+        background-size: cover;
+        position: relative;
+    }
+
+        #How li span.steps-headline {
+            position: absolute;
+            bottom: 42px;
+            right: 42px;
+            font-family: Montserrat;
+            font-size: 30px;
+            text-align: right;
+            line-height: 33px;
+            color: #FFFFFF;
+            text-transform: uppercase;
+        }
+
+        #How li span.steps-headline_sub {
+            font-size: 18px;
+            line-height: 22px;
+            text-transform: lowercase;
+        }
+
+        #How li:hover .steps-hover, #How li:focus .steps-hover {
+            display: block;
+        }
+
+.steps-hover {
+    background: none repeat scroll 0 0;
+    display: block;
+    height: 100%;
+    position: relative;
+    display: none;
+}
+
+.steps-hover_desc {
+    color: #fff;
+    font-family: montserrat;
+    font-size: 25px;
+    font-weight: 500;
+    line-height: 27px;
+    text-align: center;
+    text-transform: uppercase;
+    width: 90%;
+}
+
+#How li:nth-of-type(1) .steps-hover {
+    background: #F22613;
+}
+
+#How li:nth-of-type(1) {
+    background-image: url(../img/landing/1_One@2x.jpg);
+}
+
+#How li:nth-of-type(2) .steps-hover {
+    background: #2574A9;
+}
+
+#How li:nth-of-type(2) {
+    background-image: url(../img/landing/2_Two@2x.jpg);
+}
+
+#How li:nth-of-type(3) .steps-hover {
+    background: #3FC380;
+}
+
+#How li:nth-of-type(3) {
+    background-image: url(../img/landing/3_Three@2x.jpg);
+}
+
+#How li:nth-of-type(4) .steps-hover {
+    background: #F9BF3B;
+}
+
+#How li:nth-of-type(4) {
+    background-image: url(../img/landing/4_Four@2x.jpg);
+    height: 760px;
+}
+
+#How li:nth-of-type(5) .steps-hover {
+    background: #9B07B5;
+}
+
+#How li:nth-of-type(5) {
+    background-image: url(../img/landing/5_Five@2x.jpg);
+}
+
+#How li:nth-of-type(6) .steps-hover {
+    background: #22A7F0;
+}
+
+#How li:nth-of-type(6) {
+    background-image: url(../img/landing/6_Six@2x.jpg);
+}
+
+#How li:nth-of-type(7) .steps-hover {
+    background: #9DD3F6;
+}
+
+#How li:nth-of-type(7) {
+    background-image: url(../img/landing/7_Seven@2x.jpg);
+}
+
+#Partners > div {
+    margin-top: 90px;
+    margin-bottom: 60px;
+}
+
+#Partners img {
+    margin: 0 auto;
+}
+
+.partner-logo {
+    max-height: 75px;
+}
+
+#Partners, #LetsTalk {
+    padding-top: 130px;
+}
+
+    #LetsTalk input, #LetsTalk textarea {
+        border: 2px solid #6c7a89;
+        border-radius: 0;
+        margin: 5px 0;
+    }
+
+    #LetsTalk textarea {
+        margin-left: 2%;
+        width: 96%;
+        height: 216px;
+    }
+
+.cta, .navbar-default .navbar-nav > li > a.cta {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    border: 2px solid #f6941e;
+    color: #f6941e;
+    font-family: Montserrat,sans-serif;
+    text-transform: uppercase;
+}
+
+    .cta:hover, .navbar-default .navbar-nav > li > a.cta:hover {
+        background: #f6941e;
+        color: #fff;
+        text-decoration: none;
+    }
+
+nav .cta {
+    padding: 17px 23px;
+}
+
+form .cta {
+    margin-top: 44px;
+    padding: 17px 48px;
+}
+
+#contact-info h3 {
+    font-family: Montserrat;
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 29px;
+    color: #394148;
+}
+
+#contact-info > * {
+    margin-bottom: 30px;
+}
+
+#contact-info p, #contact-info a {
+    font-family: Montserrat;
+    font-size: 16px;
+    line-height: 35px;
+    color: #394148;
+}
+
+.phone img, .email img {
+    width: 15px;
+    margin-right: 10px;
+}
+
+.social-wrapper p small {
+    font-family: Montserrat;
+    font-size: 14px;
+    text-align: right;
+    line-height: 17px;
+    letter-spacing: 2px;
+    color: #394148;
+    text-transform: uppercase;
+}
+
+footer {
+    min-height: 155px;
+    color: #fff;
+    background-color: #394148;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 18px;
+}
+
+    footer > div {
+        margin-top: 50px;
+    }
+
+/* Large Devices, Wide Screens */
+@media only screen and (max-width : 1200px) {
+    #How li:nth-of-type(4) {
+        height: 380px;
+    }
+
+    h1.sectionHeader .tag {
+        margin-left: 0;
+        font-size: 70px;
+    }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width : 992px) {
+}
+
+/* Small Devices, Tablets */
+@media only screen and (max-width : 767px) {
+    h1.sectionHeader {
+        line-height: 1.5em;
+        font-size: 20px;
+    }
+
+        h1.sectionHeader .tag {
+            line-height: .7em;
+            letter-spacing: 1px;
+            font-size: 70px;
+        }
+
+    .navbar-default .navbar-collapse, .navbar-default .navbar-form {
+        border: none;
+    }
+
+    .navbar-default .navbar-brand {
+        padding: 5px 10px;
+    }
+
+    #main-nav {
+        background: rgba(255, 255, 255, 1) none repeat scroll 0 0;
+        box-shadow: 0 2px 3px rgba(0,0,0,0.5);
+    }
+
+        #main-nav li:not(:last-child) {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        #main-nav li:last-child {
+            padding: 30px 0 10px;
+        }
+
+        #main-nav .navbar-nav > li > a:not(.cta), #main-nav .navbar-nav > li > a {
+            font-size: 24px;
+            line-height: 30px;
+            font-weight: 700;
+        }
+
+        #main-nav li a.internalLink {
+            display: inline-block;
+            line-height: 24px;
+        }
+
+    #How {
+        margin-bottom: 0;
+    }
+
+        #How li {
+            margin-bottom: 20px;
+        }
+
+            #How li span.steps-headline {
+                right: 10px;
+            }
+
+    #Partners > div {
+        margin: 0;
+    }
+
+    #Partners img {
+        margin: 44px auto;
+    }
+
+    #Partners > .clearfix:nth-of-type(2) > div > img:first-child {
+        margin-top: 0;
+    }
+
+    .phone, .email {
+        display: block;
+    }
+
+    #LetsTalk {
+        text-align: center;
+    }
+
+        #LetsTalk .sectionHeader {
+            margin-bottom: 20px;
+        }
+
+        #LetsTalk input, #LetsTalk textarea {
+            margin: 20px 0;
+        }
+
+        #LetsTalk textarea {
+            margin-left: 2%;
+            width: 96%;
+        }
+
+    form .cta {
+        margin: 0 0 60px 0;
+    }
+
+    #social {
+        margin: 25px 0 60px;
+    }
+
+    footer > div > div {
+        margin-bottom: 40px;
+    }
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (max-width : 480px) {
+}
+
+/* Custom, iPhone Retina */
+@media only screen and (max-width : 320px) {
+}
+
+
+/* @font-face */
+@font-face {
+    font-family: 'Have Heart Two';
+    src: url('../fonts/landing/have_heart_two-webfont.woff2') format('woff2'), url('../fonts/landing/have_heart_two-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}

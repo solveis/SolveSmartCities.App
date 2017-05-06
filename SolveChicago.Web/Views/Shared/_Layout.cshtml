@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using SolveChicago.Common;
+<!DOCTYPE html>
 <html lang="en-us">
 <head>
     <meta charset="utf-8" />
@@ -6,36 +7,200 @@
     <title>@ViewBag.Title - Solve Smart Cities</title>
     @Styles.Render("~/Content/css")
     @RenderSection("styles", required: false)
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
 
-    <meta name="description" content="The description of my page" />
+    <meta property="og:title" content="Solve Smart Cities" />
+    <meta property="og:description" content="Our software creates smart cities in underserved communities by measure job training &amp; placement." />
+    <meta property="og:url" content="https://solvesmartcities.com" />
+    <meta property="og:type" content="Website" />
+    <meta property="og:image" content="https://solvesmartcities.com/img/og.image.jpg" />
+    <meta name="author" content="Solve Smart Cities" />
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+    <div class="app-dashboard shrink-medium">
+
+        <div class="row expanded app-dashboard-top-nav-bar">
+            <div class="columns medium-2">
+                <button data-toggle="app-dashboard-sidebar" class="menu-icon hide-for-medium"></button>
+                <a class="app-dashboard-logo">
+                    <img src="/img/solve-logo@2x.png">
+                </a>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
+
+            <!-- <div class="columns show-for-medium">
+          <div class="app-dashboard-search-bar-container">
+            <input class="app-dashboard-search" type="search" placeholder="Search">
+            <i class="app-dashboard-search-icon fa fa-search"></i>
+          </div>
+        </div> -->
+
+            <div class="columns shrink app-dashboard-top-bar-actions">
+
             </div>
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
+
+        <div class="app-dashboard-body off-canvas-wrapper">
+            <div id="app-dashboard-sidebar" class="app-dashboard-sidebar position-left off-canvas off-canvas-absolute reveal-for-medium" data-off-canvas>
+
+
+                <!-- <div class="app-dashboard-sidebar-title-area">
+                  <div class="app-dashboard-close-sidebar">
+
+                    <button id="close-sidebar" data-app-dashboard-toggle-shrink class="app-dashboard-sidebar-close-button show-for-medium" aria-label="Close menu" type="button">
+                      <span aria-hidden="true"><a href="#"><i class="large fa fa-angle-double-left"></i></a></span>
+                    </button>
+
+                  </div>
+
+                  <div class="app-dashboard-open-sidebar">
+                    <button id="open-sidebar" data-app-dashboard-toggle-shrink class="app-dashboard-open-sidebar-button show-for-medium" aria-label="open menu" type="button">
+                      <span aria-hidden="true"><a href="#"><i class="large fa fa-angle-double-right"></i></a></span>
+                    </button>
+                  </div>
+                </div> -->
+
+                <div class="app-dashboard-sidebar-inner">
+                    @if (User.IsInRole(Constants.Roles.Nonprofit))
+                    {
+                        <ul class="menu vertical">
+                            <li class="menu-link">
+                                <a href="/Nonprofits" class="is-active">
+                                    <img class="menu-icon" src="../img/side-nav-members-icon.svg">
+                                    <span class="app-dashboard-sidebar-text">Members</span>
+                                </a>
+                            </li>
+                            @*<li>
+                                <a href="#" class="is-active">
+                                    <img class="menu-icon" src="../img/side-nav-add-member-icon.svg">
+                                    <span class="app-dashboard-sidebar-text">Add Member</span>
+                                </a>
+                            </li>*@
+                            <li>
+                                <a href="/Prospects" class="is-active">
+                                    <img class="menu-icon" src="../img/side-nav-prospect-icon.svg">
+                                    <span class="app-dashboard-sidebar-text">Prospects</span>
+                                </a>
+                            </li>
+                        </ul>
+                    }
+                    else if (User.IsInRole(Constants.Roles.CaseManager))
+                    {
+                        <ul class="menu vertical">
+                            <li class="menu-link">
+                                <a href="#" class="is-active">
+                                    <img class="menu-icon" src="../img/side-nav-members-icon.svg">
+                                    <span class="app-dashboard-sidebar-text">Members</span>
+                                </a>
+                            </li>
+                            @*<li>
+                                <a href="#" class="is-active">
+                                    <img class="menu-icon" src="../img/side-nav-add-member-icon.svg">
+                                    <span class="app-dashboard-sidebar-text">Add Member</span>
+                                </a>
+                            </li>*@
+                            <li>
+                                <a href="?Prospects" class="is-active">
+                                    <img class="menu-icon" src="../img/side-nav-prospect-icon.svg">
+                                    <span class="app-dashboard-sidebar-text">Prospects</span>
+                                </a>
+                            </li>
+                        </ul>
+                    }
+                    else if (User.IsInRole(Constants.Roles.Referrer))
+                    {
+                        <ul class="menu vertical">
+                            <li class="menu-link">
+                                <a href="/Referrers" class="is-active">
+                                    <img class="menu-icon" src="../img/side-nav-members-icon.svg">
+                                    <span class="app-dashboard-sidebar-text">Members</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/Referrers/AddMember" class="is-active">
+                                    <img class="menu-icon" src="../img/side-nav-add-member-icon.svg">
+                                    <span class="app-dashboard-sidebar-text">Add Member</span>
+                                </a>
+                            </li>
+                        </ul>
+                    }
+                    else if (User.IsInRole(Constants.Roles.Admin))
+                    {
+                        <ul class="menu vertical">
+                            <li class="menu-link">
+                                <a href="/Admins/Nonprofits" class="is-active">
+                                    <img class="menu-icon" src="../img/side-nav-members-icon.svg">
+                                    <span class="app-dashboard-sidebar-text">Nonprofits</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/Prospects" class="is-active">
+                               
+                                    <img class="menu-icon" src="../img/side-nav-prospect-icon.svg">
+                                    <span class="app-dashboard-sidebar-text">Prospects</span>
+                                </a>
+                            </li>
+                        </ul>
+                    }
+                    else if (User.IsInRole(Constants.Roles.Corporation))
+                    {
+
+                    }
+                    else if (User.IsInRole(Constants.Roles.Member))
+                    {
+
+                    }
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <ul class="sub-menu">
+                            <li>
+                                <span class="case-manager-profile-picture">
+                                    <img class="case-manager-thumb" src="../img/side-nav-members-icon.svg">
+                                </span>
+
+                                <span class="case-manager-name">
+                                    Your Name
+                                </span>
+
+                                <span class="case-manager-company">
+                                    Your Employer
+                                </span>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img class="sub-menu-icon" src="../img/submenu-icon-settings.svg">
+                                    <span class="app-dashboard-sidebar-text">Settings</span>
+                                </a>
+                            </li>
+                            <li>
+                                @Html.Partial("_LoginPartial")
+                            </li>
+                        </ul>
+                    }
+                </div>
+
+            </div>
+
+            <div class="app-dashboard-body-content off-canvas-content" data-off-canvas-content>
+                @RenderBody()
+            </div>
+        </div>
     </div>
 
     @Scripts.Render("~/bundles/jquery")

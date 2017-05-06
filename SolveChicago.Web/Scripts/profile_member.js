@@ -8,20 +8,45 @@
             insertEntry = lastEntry.clone().html(function (i, oldHTML) { return oldHTML.replace(re1, "_" + nextId + "_").replace(re2, "[" + nextId + "]") }).attr('data-id', nextId);
         resetFormFields(insertEntry);
         lastEntry.after(insertEntry);
-    });
 
-    $('#Member_IsMilitary').on('change', function (e) {
-        if ($(this).val().toLowerCase() == "true")
-            $('#Member_MilitaryId').closest('.form-group').removeClass('hide');
-        else
-            $('#Member_MilitaryId').closest('.form-group').addClass('hide');
+        if (typeof window.addEntryCallback == 'function') { // this will be defined in a view file
+            addEntryCallback(insertEntry);
+        }
     });
-
+    
     function resetFormFields($entry) {
-        $entry.find('input').val('').attr('disabled', false);
+        $entry.find('input:not([type=hidden])').val('').attr('disabled', false);
         $entry.find('select').prop('selectedIndex', 0);
     }
+
+    $('.standard-datepicker').fdatepicker({
+        leftArrow: '<<',
+        rightArrow: '>>',
+    });
+
+    $('.ui.fluid.dropdown').dropdown();
 });
+
+// flexibly bind radio buttons to control content flow
+window.bindRadioContent = function ($boundElement, $trueElement, $falseElement, $otherElement) {
+    $boundElement.on('change', function (e) {
+        if ($(this).val().toLowerCase() == "true") {
+            $trueElement.length > 0 ? $trueElement.removeClass('hide') : "";
+            $falseElement.length > 0 ? $falseElement.addClass('hide') : "";
+            $otherElement.length > 0 ? $otherElement.addClass('hide') : "";
+        }
+        else if ($(this).val().toLowerCase() == "false") {
+            $trueElement.length > 0 ? $trueElement.addClass('hide') : "";
+            $falseElement.length > 0 ? $falseElement.removeClass('hide') : "";
+            $otherElement.length > 0 ? $otherElement.addClass('hide') : "";
+        }
+        else {
+            $trueElement.length > 0 ? $trueElement.addClass('hide') : "";
+            $falseElement.length > 0 ? $falseElement.addClass('hide') : "";
+            $otherElement.length > 0 ? $otherElement.removeClass('hide') : "";
+        }
+    });
+}
 
 window.bindAutocomplete = function ($element, list) {
     function split(val) {

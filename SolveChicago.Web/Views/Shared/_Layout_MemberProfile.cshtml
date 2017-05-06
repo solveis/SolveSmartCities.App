@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Solve Smart Cities</title>
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/foundation")
     @RenderSection("styles", required: false)
 
     <meta name="description" content="The description of my page" />
@@ -18,6 +19,7 @@
                 </a>
             </div>
 
+            @Html.Partial("_LoginPartial")
             <!-- <div class="columns show-for-medium">
               <div class="app-dashboard-search-bar-container">
                 <input class="app-dashboard-search" type="search" placeholder="Search">
@@ -36,6 +38,7 @@
     </div>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/foundation")
     @Scripts.Render("~/bundles/functions")
     @RenderSection("scripts", required: false)
 </body>

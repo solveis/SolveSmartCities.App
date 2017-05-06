@@ -19,6 +19,8 @@ namespace SolveChicago.Entities
         public Nullable<int> CaseManagerId { get; set; }
         public string MemberEnjoyed { get; set; }
         public string MemberStruggled { get; set; }
+        public System.DateTime Start { get; set; }
+        public Nullable<System.DateTime> End { get; set; }
     
         public virtual CaseManager CaseManager { get; set; }
         public virtual Member Member { get; set; }

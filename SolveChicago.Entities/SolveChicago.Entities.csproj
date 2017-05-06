@@ -162,23 +162,25 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>data.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="data.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>data.edmx</DependentUpon>
-      <LastGenOutput>data.Context.cs</LastGenOutput>
-    </None>
     <None Include="data.edmx.diagram">
       <DependentUpon>data.edmx</DependentUpon>
-    </None>
-    <None Include="data.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>data.edmx</DependentUpon>
-      <LastGenOutput>data.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="data.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>data.edmx</DependentUpon>
+      <LastGenOutput>data.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="data.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>data.edmx</DependentUpon>
+      <LastGenOutput>data.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

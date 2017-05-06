@@ -183,7 +183,7 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
+    <Content Include="Content\Landing.css" />
     <Content Include="img\1_One%402x.jpg" />
     <Content Include="img\1_One.jpg" />
     <Content Include="img\2_Two%402x.jpg" />
@@ -259,7 +259,7 @@
     <Content Include="ms-icon-70x70.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\functions.js" />
+    <Content Include="Scripts\landing.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />

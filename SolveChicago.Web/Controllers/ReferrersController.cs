@@ -66,7 +66,8 @@ namespace SolveChicago.Web.Controllers
                     FirstName = model.FirstName,
                     LastName = model.LastName,
                     Email = model.Email,
-                    SurveyStep = Constants.Member.SurveyStep.Invited
+                    SurveyStep = Constants.Member.SurveyStep.Invited,
+                    CreatedDate = DateTime.UtcNow,
                 };
                 Referrer referrer = db.Referrers.Find(State.ReferrerId);
                 if (referrer != null)

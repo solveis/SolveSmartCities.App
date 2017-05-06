@@ -71,6 +71,7 @@
     <Compile Include="Crypto.cs" />
     <Compile Include="Enumerations.cs" />
     <Compile Include="Helpers.cs" />
+    <Compile Include="Models\ContactModel.cs" />
     <Compile Include="Models\Profile\Member\MemberProfile.cs" />
     <Compile Include="Models\Profile\Member\MemberProfileFamily.cs" />
     <Compile Include="Models\Profile\Member\MemberProfileGovernmentPrograms.cs" />

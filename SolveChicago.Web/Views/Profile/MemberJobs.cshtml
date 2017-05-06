@@ -2,85 +2,105 @@
 @model SolveChicago.Web.Models.Profile.MemberProfileJobViewModel
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Jobs";
+    Layout = "~/Views/Shared/_Layout_MemberProfile.cshtml";
 }
 
-<h2>Profile</h2>
+@section Styles {
+    @Styles.Render("~/Content/tokenfield")
+}
+
+<div class="app-dashboard-body-content off-canvas-content" data-off-canvas-content>
+    <header class="questionnaire-header">
+        <h2>ANSWER THE FOLLOWING QUESTIONS</h2>
+    </header>
 
 
-@using (Html.BeginForm("MemberJobs", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
+    @using (Html.BeginForm("MemberJobs", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>Member</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Member.MemberId)
+        <div>
+            @Html.ValidationMessageFor(model => model.Member.CurrentlyLooking, "", new { @class = "text-danger" })
+            @Html.LabelFor(model => model.Member.CurrentlyLooking, "Are you currently looking for a job?")
+            @Html.RadioButtonFor(model => model.Member.CurrentlyLooking, true)
+            <label for="Member_CurrentlyLooking">Yes</label>
+            @Html.RadioButtonFor(model => model.Member.CurrentlyLooking, false)
+            <label for="Member_CurrentlyLooking">No</label>
 
-        <div id="Jobs">
-            <h3>Jobs</h3>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Member.MemberId)
             @for (int i = 0; i < Model.Member.Jobs.Length; i++)
             {
-                <div id="Job" data-id="@(i)">
-                    @Html.HiddenFor(model => Model.Member.Jobs[i].CorporationId)
-                    <div class="form-group">
-                        @Html.LabelFor(model => Model.Member.Jobs[i].Name, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => Model.Member.Jobs[i].Name, new { htmlAttributes = new { @class = "form-control" } })
+                <div class="Job" data-id="@(i)">
+                    <div class="row app-dashboard-form-container-space-around">
+                        <div class="form-holder">
+                            @Html.HiddenFor(model => Model.Member.Jobs[i].CorporationId)
+
                             @Html.ValidationMessageFor(model => Model.Member.Jobs[i].Name, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
+                            @Html.LabelFor(model => Model.Member.Jobs[i].Name, htmlAttributes: new { })
+                            @Html.EditorFor(model => Model.Member.Jobs[i].Name, "Company Name", new { htmlAttributes = new { @class = "corporation-list" } })
 
-                    <div class="form-group">
-                        @Html.LabelFor(model => Model.Member.Jobs[i].EmployeeStart, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => Model.Member.Jobs[i].EmployeeStart, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => Model.Member.Jobs[i].EmployeeStart, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => Model.Member.Jobs[i].EmployeeEnd, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => Model.Member.Jobs[i].EmployeeEnd, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => Model.Member.Jobs[i].EmployeeEnd, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => Model.Member.Jobs[i].EmployeeReasonForLeaving, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => Model.Member.Jobs[i].EmployeeReasonForLeaving, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => Model.Member.Jobs[i].EmployeeReasonForLeaving, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => Model.Member.Jobs[i].EmployeePay, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => Model.Member.Jobs[i].EmployeePay, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => Model.Member.Jobs[i].EmployeePay, "", new { @class = "text-danger" })
+                            @Html.LabelFor(model => Model.Member.Jobs[i].EmployeePay, htmlAttributes: new { })
+                            @Html.EditorFor(model => Model.Member.Jobs[i].EmployeePay, "What was your hourly pay?", new { htmlAttributes = new { } })
+                        </div>
+                        <div class="form-holder">
+                            @Html.ValidationMessageFor(model => Model.Member.Jobs[i].EmployeeStart, "", new { @class = "text-danger" })
+                            @Html.LabelFor(model => Model.Member.Jobs[i].EmployeeStart, htmlAttributes: new { })
+                            @Html.EditorFor(model => Model.Member.Jobs[i].EmployeeStart, "When did you start?", new { htmlAttributes = new { @class = "standard-datepicker" } })
+
+                            @Html.ValidationMessageFor(model => Model.Member.Jobs[i].IsCurrent, "", new { @class = "text-danger" })
+                            @Html.LabelFor(model => Model.Member.Jobs[i].IsCurrent, "Do you still work here?", htmlAttributes: new { })
+                            @Html.RadioButtonFor(model => model.Member.Jobs[i].IsCurrent, true, new { @class = "is-job-current" })
+                            <label for="Member_Jobs_[i]__IsCurrent">Yes</label>
+                            @Html.RadioButtonFor(model => model.Member.Jobs[i].IsCurrent, false, new { @class = "is-job-current" })
+                            <label for="Member_Jobs_[i]__IsCurrent">No</label>
+
+                            <div class="job-endinfo hide">
+                                @Html.ValidationMessageFor(model => Model.Member.Jobs[i].EmployeeEnd, "", new { @class = "text-danger" })
+                                @Html.LabelFor(model => Model.Member.Jobs[i].EmployeeEnd, htmlAttributes: new { })
+                                @Html.EditorFor(model => Model.Member.Jobs[i].EmployeeEnd, "When was your last day?", new { htmlAttributes = new { @class = "standard-datepicker" } })
+
+                                @Html.ValidationMessageFor(model => Model.Member.Jobs[i].EmployeeReasonForLeaving, "", new { @class = "text-danger" })
+                                @Html.LabelFor(model => Model.Member.Jobs[i].EmployeeReasonForLeaving, htmlAttributes: new { })
+                                @Html.EditorFor(model => Model.Member.Jobs[i].EmployeeReasonForLeaving, "Why did you leave?", new { htmlAttributes = new { } })
+                            </div>
                         </div>
                     </div>
                 </div>
             }
             <a href="javascript:void(0)" id="AddJob" class="addEntry">Add Job</a>
         </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
+        <hr />
+        <div class="row align-center">
+            <input type="submit" value="Submit" class="submit-create-profile" />
         </div>
-    </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
+    }
 </div>
 
 @section Scripts {
+    @Scripts.Render("~/bundles/tokenfield")
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/profile_member")
+
+    <script>
+        window.addEntryCallback = function (newEntry) {
+            var corporationsList = [];
+            @foreach(var corporation in Model.CorporationList)
+            {
+                @:corporationsList.push("@corporation");
+            }
+            newEntry.find('.corporation-list').autocomplete({ source: corporationsList });
+
+            $('.standard-datepicker').fdatepicker({
+                leftArrow: '<<',
+                rightArrow: '>>',
+            });
+
+            window.bindRadioContent(newEntry.find('.is-job-current'), "", newEntry.find('.job-endinfo'), "")
+        }
+
+        window.addEntryCallback($('.Job'));
+    </script>
 }

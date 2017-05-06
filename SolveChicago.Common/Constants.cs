@@ -90,6 +90,7 @@ namespace SolveChicago.Common
         {
             public class Degrees
             {
+                public const string None = "None";
                 public const string HSDiploma = "HS Diploma";
                 public const string GED = "GED";
                 public const string BachelorsDegree = "Bachelor's Degree";
@@ -99,6 +100,8 @@ namespace SolveChicago.Common
 
             public class Types
             {
+                public const string ElementarySchool = "Elementary School";
+                public const string MiddleSchool = "Middle School";
                 public const string HighSchool = "High School";
                 public const string UndergraduateCollege = "Undergraduate College";
                 public const string GraduateCollege = "Graduate College";

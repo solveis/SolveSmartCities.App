@@ -184,13 +184,9 @@ namespace SolveChicago.Service
             FamilyEntity family = GetFamily(member);
             List<GovernmentProgramEntity> programs = member.MemberGovernmentPrograms.Select(x => new GovernmentProgramEntity
             {
-                Amount = x.Amount,
-                End = x.End,
                 Id = x.Id,
-                IsCurrent = x.End == null,
                 MemberId = x.MemberId,
                 ProgramId = x.GovernmentProgramId,
-                Start = x.Start,
                 ProgramName = x.GovernmentProgram.Name
             }).ToList();
 
@@ -408,12 +404,9 @@ namespace SolveChicago.Service
                     {
                         mgp = new MemberGovernmentProgram
                         {
-                            Amount = program.Amount,
-                            End = program.End,
                             Id = program.Id,
                             MemberId = program.MemberId,
                             GovernmentProgramId = program.ProgramId,
-                            Start = program.Start,
                         };
                         member.MemberGovernmentPrograms.Add(mgp);
                     }
@@ -435,9 +428,12 @@ namespace SolveChicago.Service
                 member.Gender = model.Gender;
                 member.Id = model.Id;
                 member.LastName = model.LastName;
-                member.ProfilePicturePath = UploadPhoto(Constants.Upload.MemberPhotos, model.ProfilePicture, member.Id);
+                if(model.ProfilePicture != null)
+                    member.ProfilePicturePath = UploadPhoto(Constants.Upload.MemberPhotos, model.ProfilePicture, member.Id);
                 member.IsMilitary = model.IsMilitary;
                 member.ContactPreference = model.ContactPreference;
+                member.Income = model.Income;
+                member.IsHeadOfHousehold = model.IsHeadOfHousehold;
 
                 UpdateMemberAddress(model, member);
                 MatchOrCreateFamily(model, member);

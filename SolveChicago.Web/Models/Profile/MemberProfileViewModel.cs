@@ -27,6 +27,7 @@ namespace SolveChicago.Web.Models.Profile
         public MemberProfileSchools Member { get; set; }
         public string[] SchoolTypeList { get; set; }
         public string[] DegreeList { get; set; }
+        public string[] SchoolsList { get; set; }
     }
 
     public class MemberProfileNonprofitViewModel
@@ -37,12 +38,12 @@ namespace SolveChicago.Web.Models.Profile
     public class MemberProfileJobViewModel
     {
         public MemberProfileJobs Member { get; set; }
+        public string[] CorporationList { get; set; }
     }
 
     public class MemberProfileGovernmentProgramViewModel
     {
         public MemberProfileGovernmentPrograms Member { get; set; }
-        public Dictionary<int, string> FamilyList { get; set; }
         public Dictionary<int, string> GovernmentProgramList { get; set; }
     }
 }

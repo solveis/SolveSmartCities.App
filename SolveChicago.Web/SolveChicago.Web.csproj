@@ -1,10 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.4\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.4\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props')" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
-  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
-  <Import Project="..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>
@@ -62,9 +63,8 @@
       <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.2.0.4\lib\net45\Microsoft.Azure.KeyVault.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.4\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Data.Edm, Version=5.8.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -79,6 +79,33 @@
       <HintPath>..\packages\Microsoft.Data.Services.Client.5.8.2\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Owin, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.3.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.1.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.1.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Facebook, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.3.1.0\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.3.1.0\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.3.1.0\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.1.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Twitter, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.1.0\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.WindowsAzure.Configuration, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.3.2.3\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
       <Private>True</Private>
@@ -87,9 +114,8 @@
       <HintPath>..\packages\WindowsAzure.Storage.8.1.1\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -174,33 +200,6 @@
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Owin">
-      <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Host.SystemWeb">
-      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security">
-      <HintPath>..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security.Facebook">
-      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.3.0.1\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security.Cookies">
-      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security.OAuth">
-      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security.Google">
-      <HintPath>..\packages\Microsoft.Owin.Security.Google.3.0.1\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security.Twitter">
-      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.0.1\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount">
-      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.3.0.1\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -219,6 +218,7 @@
     <Compile Include="Controllers\MembersController.cs" />
     <Compile Include="Controllers\NonprofitsController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
+    <Compile Include="Controllers\ProspectsController.cs" />
     <Compile Include="Controllers\ReferrersController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\ThanksController.cs" />
@@ -260,6 +260,22 @@
     <Content Include="Content\bootstrap-tokenfield\tokenfield-typeahead.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\foundation-datepicker.css" />
+    <Content Include="Content\foundation-datepicker.min.css" />
+    <Content Include="Content\foundation-flex.css" />
+    <Content Include="Content\foundation-flex.min.css" />
+    <Content Include="Content\foundation-rtl.css" />
+    <Content Include="Content\foundation-rtl.min.css" />
+    <Content Include="Content\foundation.css" />
+    <Content Include="Content\foundation.min.css" />
+    <Content Include="Content\Landing.css" />
+    <Content Include="Content\semantic\semantic.css" />
+    <Content Include="Content\semantic\semantic.min.css" />
+    <Content Include="Content\semantic\themes\basic\assets\fonts\icons.svg" />
+    <Content Include="Content\semantic\themes\default\assets\fonts\icons.svg" />
+    <Content Include="Content\semantic\themes\default\assets\images\flags.png" />
+    <Content Include="Content\semantic\themes\github\assets\fonts\octicons.svg" />
+    <Content Include="Content\semantic\themes\material\assets\fonts\icons.svg" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -301,6 +317,72 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="dist\css\foundation-flex.css" />
+    <Content Include="dist\css\foundation-flex.min.css" />
+    <Content Include="dist\css\foundation-rtl.css" />
+    <Content Include="dist\css\foundation-rtl.min.css" />
+    <Content Include="dist\css\foundation.css" />
+    <Content Include="dist\css\foundation.min.css" />
+    <Content Include="dist\js\foundation.js" />
+    <Content Include="dist\js\foundation.min.js" />
+    <Content Include="dist\js\plugins\foundation.abide.js" />
+    <Content Include="dist\js\plugins\foundation.abide.min.js" />
+    <Content Include="dist\js\plugins\foundation.accordion.js" />
+    <Content Include="dist\js\plugins\foundation.accordion.min.js" />
+    <Content Include="dist\js\plugins\foundation.accordionMenu.js" />
+    <Content Include="dist\js\plugins\foundation.accordionMenu.min.js" />
+    <Content Include="dist\js\plugins\foundation.core.js" />
+    <Content Include="dist\js\plugins\foundation.core.min.js" />
+    <Content Include="dist\js\plugins\foundation.drilldown.js" />
+    <Content Include="dist\js\plugins\foundation.drilldown.min.js" />
+    <Content Include="dist\js\plugins\foundation.dropdown.js" />
+    <Content Include="dist\js\plugins\foundation.dropdown.min.js" />
+    <Content Include="dist\js\plugins\foundation.dropdownMenu.js" />
+    <Content Include="dist\js\plugins\foundation.dropdownMenu.min.js" />
+    <Content Include="dist\js\plugins\foundation.equalizer.js" />
+    <Content Include="dist\js\plugins\foundation.equalizer.min.js" />
+    <Content Include="dist\js\plugins\foundation.interchange.js" />
+    <Content Include="dist\js\plugins\foundation.interchange.min.js" />
+    <Content Include="dist\js\plugins\foundation.magellan.js" />
+    <Content Include="dist\js\plugins\foundation.magellan.min.js" />
+    <Content Include="dist\js\plugins\foundation.offcanvas.js" />
+    <Content Include="dist\js\plugins\foundation.offcanvas.min.js" />
+    <Content Include="dist\js\plugins\foundation.orbit.js" />
+    <Content Include="dist\js\plugins\foundation.orbit.min.js" />
+    <Content Include="dist\js\plugins\foundation.responsiveMenu.js" />
+    <Content Include="dist\js\plugins\foundation.responsiveMenu.min.js" />
+    <Content Include="dist\js\plugins\foundation.responsiveToggle.js" />
+    <Content Include="dist\js\plugins\foundation.responsiveToggle.min.js" />
+    <Content Include="dist\js\plugins\foundation.reveal.js" />
+    <Content Include="dist\js\plugins\foundation.reveal.min.js" />
+    <Content Include="dist\js\plugins\foundation.slider.js" />
+    <Content Include="dist\js\plugins\foundation.slider.min.js" />
+    <Content Include="dist\js\plugins\foundation.sticky.js" />
+    <Content Include="dist\js\plugins\foundation.sticky.min.js" />
+    <Content Include="dist\js\plugins\foundation.tabs.js" />
+    <Content Include="dist\js\plugins\foundation.tabs.min.js" />
+    <Content Include="dist\js\plugins\foundation.toggler.js" />
+    <Content Include="dist\js\plugins\foundation.toggler.min.js" />
+    <Content Include="dist\js\plugins\foundation.tooltip.js" />
+    <Content Include="dist\js\plugins\foundation.tooltip.min.js" />
+    <Content Include="dist\js\plugins\foundation.util.box.js" />
+    <Content Include="dist\js\plugins\foundation.util.box.min.js" />
+    <Content Include="dist\js\plugins\foundation.util.keyboard.js" />
+    <Content Include="dist\js\plugins\foundation.util.keyboard.min.js" />
+    <Content Include="dist\js\plugins\foundation.util.mediaQuery.js" />
+    <Content Include="dist\js\plugins\foundation.util.mediaQuery.min.js" />
+    <Content Include="dist\js\plugins\foundation.util.motion.js" />
+    <Content Include="dist\js\plugins\foundation.util.motion.min.js" />
+    <Content Include="dist\js\plugins\foundation.util.nest.js" />
+    <Content Include="dist\js\plugins\foundation.util.nest.min.js" />
+    <Content Include="dist\js\plugins\foundation.util.timerAndImageLoader.js" />
+    <Content Include="dist\js\plugins\foundation.util.timerAndImageLoader.min.js" />
+    <Content Include="dist\js\plugins\foundation.util.touch.js" />
+    <Content Include="dist\js\plugins\foundation.util.touch.min.js" />
+    <Content Include="dist\js\plugins\foundation.util.triggers.js" />
+    <Content Include="dist\js\plugins\foundation.util.triggers.min.js" />
+    <Content Include="dist\js\plugins\foundation.zf.responsiveAccordionTabs.js" />
+    <Content Include="dist\js\plugins\foundation.zf.responsiveAccordionTabs.min.js" />
     <Content Include="favicon-16x16.png" />
     <Content Include="favicon-32x32.png" />
     <Content Include="favicon-96x96.png" />
@@ -324,6 +406,59 @@
     <Content Include="img\error-icon%403x.png" />
     <Content Include="img\error-icon.png" />
     <Content Include="img\error-icon.svg" />
+    <Content Include="img\landing\1_One%402x.jpg" />
+    <Content Include="img\landing\1_One.jpg" />
+    <Content Include="img\landing\2_Two%402x.jpg" />
+    <Content Include="img\landing\2_Two.jpg" />
+    <Content Include="img\landing\3_Three%402x.jpg" />
+    <Content Include="img\landing\3_Three.jpg" />
+    <Content Include="img\landing\4_Four%402x.jpg" />
+    <Content Include="img\landing\4_Four.jpg" />
+    <Content Include="img\landing\5_Five%402x.jpg" />
+    <Content Include="img\landing\5_Five.jpg" />
+    <Content Include="img\landing\6_Six%402x.jpg" />
+    <Content Include="img\landing\6_Six.jpg" />
+    <Content Include="img\landing\7_Seven%402x.jpg" />
+    <Content Include="img\landing\7_Seven.jpg" />
+    <Content Include="img\landing\Cara_logo%402x.png" />
+    <Content Include="img\landing\Cara_logo.png" />
+    <Content Include="img\landing\CLA_logo%402x.png" />
+    <Content Include="img\landing\CLA_logo.png" />
+    <Content Include="img\landing\DONATE-ICON%402x.png" />
+    <Content Include="img\landing\DONATE-ICON.png" />
+    <Content Include="img\landing\Down_Arrow%402x.png" />
+    <Content Include="img\landing\Down_Arrow.png" />
+    <Content Include="img\landing\Email_icon%402x.png" />
+    <Content Include="img\landing\Facebook%402x.png" />
+    <Content Include="img\landing\Facebook.png" />
+    <Content Include="img\landing\Get_Involved%402x.png" />
+    <Content Include="img\landing\Get_Involved.png" />
+    <Content Include="img\landing\Go_top%402x.png" />
+    <Content Include="img\landing\Go_top.png" />
+    <Content Include="img\landing\Header%402x.jpg" />
+    <Content Include="img\landing\Header.jpg" />
+    <Content Include="img\landing\ICStars%402x.png" />
+    <Content Include="img\landing\ICStars_logo.png" />
+    <Content Include="img\landing\ideal%402x.png" />
+    <Content Include="img\landing\ideal.png" />
+    <Content Include="img\landing\Instagram%402x.png" />
+    <Content Include="img\landing\Instagram.png" />
+    <Content Include="img\landing\INVEST-ICON%402x.png" />
+    <Content Include="img\landing\INVEST-ICON.png" />
+    <Content Include="img\landing\LinkedIn%402x.png" />
+    <Content Include="img\landing\LinkedIn.png" />
+    <Content Include="img\landing\logo%402x.png" />
+    <Content Include="img\landing\logo.png" />
+    <Content Include="img\landing\logo_white%402x.png" />
+    <Content Include="img\landing\logo_white.png" />
+    <Content Include="img\landing\MF_Logo%402x.png" />
+    <Content Include="img\landing\MF_Logo.png" />
+    <Content Include="img\landing\og.image.jpg" />
+    <Content Include="img\landing\Phone_icon%402x.png" />
+    <Content Include="img\landing\ReWork_logo%402x.png" />
+    <Content Include="img\landing\ReWork_logo.png" />
+    <Content Include="img\landing\Twitter%402x.png" />
+    <Content Include="img\landing\Twitter.png" />
     <Content Include="img\login-bg-image%402x.png" />
     <Content Include="img\login-bg-image%403x.png" />
     <Content Include="img\login-bg-image.png" />
@@ -335,12 +470,64 @@
     <Content Include="img\password-icon%403x.png" />
     <Content Include="img\password-icon.png" />
     <Content Include="img\password-icon.svg" />
+    <Content Include="img\profile-thumb-example%402x.png" />
+    <Content Include="img\profile-thumb-example%403x.png" />
+    <Content Include="img\profile-thumb-example.png" />
+    <Content Include="img\side-nav-add-member-icon%402x.png" />
+    <Content Include="img\side-nav-add-member-icon%403x.png" />
+    <Content Include="img\side-nav-add-member-icon.png" />
+    <Content Include="img\side-nav-add-member-icon.svg" />
+    <Content Include="img\side-nav-members-icon%402x.png" />
+    <Content Include="img\side-nav-members-icon%403x.png" />
+    <Content Include="img\side-nav-members-icon.png" />
+    <Content Include="img\side-nav-members-icon.svg" />
+    <Content Include="img\side-nav-prospect-icon%402x.png" />
+    <Content Include="img\side-nav-prospect-icon%403x.png" />
+    <Content Include="img\side-nav-prospect-icon.png" />
+    <Content Include="img\side-nav-prospect-icon.svg" />
     <Content Include="img\solve-logo%402x.png" />
     <Content Include="img\solve-logo--reversed%402x.png" />
     <Content Include="img\solve-logo--reversed%403x.png" />
     <Content Include="img\solve-logo--reversed.png" />
     <Content Include="img\solve-logo--reversed.svg" />
     <Content Include="img\solve-logo.png" />
+    <Content Include="img\submenu-icon-logout%402x.png" />
+    <Content Include="img\submenu-icon-logout%403x.png" />
+    <Content Include="img\submenu-icon-logout.png" />
+    <Content Include="img\submenu-icon-logout.svg" />
+    <Content Include="img\submenu-icon-settings%402x.png" />
+    <Content Include="img\submenu-icon-settings%403x.png" />
+    <Content Include="img\submenu-icon-settings.png" />
+    <Content Include="img\submenu-icon-settings.svg" />
+    <Content Include="js\foundation.abide.js" />
+    <Content Include="js\foundation.accordion.js" />
+    <Content Include="js\foundation.accordionMenu.js" />
+    <Content Include="js\foundation.core.js" />
+    <Content Include="js\foundation.drilldown.js" />
+    <Content Include="js\foundation.dropdown.js" />
+    <Content Include="js\foundation.dropdownMenu.js" />
+    <Content Include="js\foundation.equalizer.js" />
+    <Content Include="js\foundation.interchange.js" />
+    <Content Include="js\foundation.magellan.js" />
+    <Content Include="js\foundation.offcanvas.js" />
+    <Content Include="js\foundation.orbit.js" />
+    <Content Include="js\foundation.responsiveMenu.js" />
+    <Content Include="js\foundation.responsiveToggle.js" />
+    <Content Include="js\foundation.reveal.js" />
+    <Content Include="js\foundation.slider.js" />
+    <Content Include="js\foundation.sticky.js" />
+    <Content Include="js\foundation.tabs.js" />
+    <Content Include="js\foundation.toggler.js" />
+    <Content Include="js\foundation.tooltip.js" />
+    <Content Include="js\foundation.util.box.js" />
+    <Content Include="js\foundation.util.keyboard.js" />
+    <Content Include="js\foundation.util.mediaQuery.js" />
+    <Content Include="js\foundation.util.motion.js" />
+    <Content Include="js\foundation.util.nest.js" />
+    <Content Include="js\foundation.util.timerAndImageLoader.js" />
+    <Content Include="js\foundation.util.touch.js" />
+    <Content Include="js\foundation.util.triggers.js" />
+    <Content Include="js\foundation.zf.responsiveAccordionTabs.js" />
     <Content Include="ms-icon-144x144.png" />
     <Content Include="ms-icon-150x150.png" />
     <Content Include="ms-icon-310x310.png" />
@@ -355,14 +542,99 @@
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
-    <None Include="Scripts\jquery-2.2.4.intellisense.js" />
+    <Content Include="fonts\landing\have_heart_two-webfont.woff2" />
+    <Content Include="fonts\landing\have_heart_two-webfont.woff" />
+    <Content Include="Content\semantic\themes\.DS_Store" />
+    <Content Include="Content\semantic\themes\basic\assets\fonts\icons.eot" />
+    <Content Include="Content\semantic\themes\basic\assets\fonts\icons.ttf" />
+    <Content Include="Content\semantic\themes\basic\assets\fonts\icons.woff" />
+    <Content Include="Content\semantic\themes\default\.DS_Store" />
+    <Content Include="Content\semantic\themes\default\assets\fonts\icons.eot" />
+    <Content Include="Content\semantic\themes\default\assets\fonts\icons.otf" />
+    <Content Include="Content\semantic\themes\default\assets\fonts\icons.ttf" />
+    <Content Include="Content\semantic\themes\default\assets\fonts\icons.woff" />
+    <Content Include="Content\semantic\themes\default\assets\fonts\icons.woff2" />
+    <Content Include="Content\semantic\themes\github\assets\fonts\octicons-local.ttf" />
+    <Content Include="Content\semantic\themes\github\assets\fonts\octicons.ttf" />
+    <Content Include="Content\semantic\themes\github\assets\fonts\octicons.woff" />
+    <Content Include="Content\semantic\themes\material\assets\fonts\icons.eot" />
+    <Content Include="Content\semantic\themes\material\assets\fonts\icons.ttf" />
+    <Content Include="Content\semantic\themes\material\assets\fonts\icons.woff" />
+    <Content Include="Scripts\foundation-datepicker.js" />
+    <Content Include="Scripts\foundation-datepicker.min.js" />
+    <Content Include="Scripts\foundation.js" />
+    <Content Include="Scripts\foundation.min.js" />
+    <Content Include="Content\foundation-datepicker.css.map" />
+    <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.1.1.js" />
+    <Content Include="Scripts\jquery-3.1.1.min.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
+    <Content Include="Scripts\landing.js" />
+    <Content Include="Scripts\plugins\foundation.abide.js" />
+    <Content Include="Scripts\plugins\foundation.abide.min.js" />
+    <Content Include="Scripts\plugins\foundation.accordion.js" />
+    <Content Include="Scripts\plugins\foundation.accordion.min.js" />
+    <Content Include="Scripts\plugins\foundation.accordionMenu.js" />
+    <Content Include="Scripts\plugins\foundation.accordionMenu.min.js" />
+    <Content Include="Scripts\plugins\foundation.core.js" />
+    <Content Include="Scripts\plugins\foundation.core.min.js" />
+    <Content Include="Scripts\plugins\foundation.drilldown.js" />
+    <Content Include="Scripts\plugins\foundation.drilldown.min.js" />
+    <Content Include="Scripts\plugins\foundation.dropdown.js" />
+    <Content Include="Scripts\plugins\foundation.dropdown.min.js" />
+    <Content Include="Scripts\plugins\foundation.dropdownMenu.js" />
+    <Content Include="Scripts\plugins\foundation.dropdownMenu.min.js" />
+    <Content Include="Scripts\plugins\foundation.equalizer.js" />
+    <Content Include="Scripts\plugins\foundation.equalizer.min.js" />
+    <Content Include="Scripts\plugins\foundation.interchange.js" />
+    <Content Include="Scripts\plugins\foundation.interchange.min.js" />
+    <Content Include="Scripts\plugins\foundation.magellan.js" />
+    <Content Include="Scripts\plugins\foundation.magellan.min.js" />
+    <Content Include="Scripts\plugins\foundation.offcanvas.js" />
+    <Content Include="Scripts\plugins\foundation.offcanvas.min.js" />
+    <Content Include="Scripts\plugins\foundation.orbit.js" />
+    <Content Include="Scripts\plugins\foundation.orbit.min.js" />
+    <Content Include="Scripts\plugins\foundation.responsiveMenu.js" />
+    <Content Include="Scripts\plugins\foundation.responsiveMenu.min.js" />
+    <Content Include="Scripts\plugins\foundation.responsiveToggle.js" />
+    <Content Include="Scripts\plugins\foundation.responsiveToggle.min.js" />
+    <Content Include="Scripts\plugins\foundation.reveal.js" />
+    <Content Include="Scripts\plugins\foundation.reveal.min.js" />
+    <Content Include="Scripts\plugins\foundation.slider.js" />
+    <Content Include="Scripts\plugins\foundation.slider.min.js" />
+    <Content Include="Scripts\plugins\foundation.sticky.js" />
+    <Content Include="Scripts\plugins\foundation.sticky.min.js" />
+    <Content Include="Scripts\plugins\foundation.tabs.js" />
+    <Content Include="Scripts\plugins\foundation.tabs.min.js" />
+    <Content Include="Scripts\plugins\foundation.toggler.js" />
+    <Content Include="Scripts\plugins\foundation.toggler.min.js" />
+    <Content Include="Scripts\plugins\foundation.tooltip.js" />
+    <Content Include="Scripts\plugins\foundation.tooltip.min.js" />
+    <Content Include="Scripts\plugins\foundation.util.box.js" />
+    <Content Include="Scripts\plugins\foundation.util.box.min.js" />
+    <Content Include="Scripts\plugins\foundation.util.keyboard.js" />
+    <Content Include="Scripts\plugins\foundation.util.keyboard.min.js" />
+    <Content Include="Scripts\plugins\foundation.util.mediaQuery.js" />
+    <Content Include="Scripts\plugins\foundation.util.mediaQuery.min.js" />
+    <Content Include="Scripts\plugins\foundation.util.motion.js" />
+    <Content Include="Scripts\plugins\foundation.util.motion.min.js" />
+    <Content Include="Scripts\plugins\foundation.util.nest.js" />
+    <Content Include="Scripts\plugins\foundation.util.nest.min.js" />
+    <Content Include="Scripts\plugins\foundation.util.timerAndImageLoader.js" />
+    <Content Include="Scripts\plugins\foundation.util.timerAndImageLoader.min.js" />
+    <Content Include="Scripts\plugins\foundation.util.touch.js" />
+    <Content Include="Scripts\plugins\foundation.util.touch.min.js" />
+    <Content Include="Scripts\plugins\foundation.util.triggers.js" />
+    <Content Include="Scripts\plugins\foundation.util.triggers.min.js" />
+    <Content Include="Scripts\plugins\foundation.zf.responsiveAccordionTabs.js" />
+    <Content Include="Scripts\plugins\foundation.zf.responsiveAccordionTabs.min.js" />
     <Content Include="Scripts\profile_member.js" />
     <Content Include="Scripts\functions.js" />
-    <Content Include="Scripts\jquery-2.2.4.js" />
-    <Content Include="Scripts\jquery-2.2.4.min.js" />
-    <Content Include="Scripts\jquery-2.2.4.min.map" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.1.1.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -373,6 +645,8 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\semantic.js" />
+    <Content Include="Scripts\semantic.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -465,6 +739,84 @@
     <Content Include="Views\CaseManagers\AddCaseNote.cshtml" />
     <Content Include="Views\Shared\_Layout_NoHeader.cshtml" />
     <Content Include="Views\Shared\_Layout_MemberProfile.cshtml" />
+    <Content Include="Views\Shared\_Layout_Landing.cshtml" />
+    <Content Include="Views\Shared\Sidebar\_Nonprofit.cshtml" />
+    <Content Include="Views\Prospects\Index.cshtml" />
+    <Content Include="scss\_global.scss" />
+    <Content Include="scss\util\_value.scss" />
+    <Content Include="scss\util\_util.scss" />
+    <Content Include="scss\util\_unit.scss" />
+    <Content Include="scss\util\_typography.scss" />
+    <Content Include="scss\util\_selector.scss" />
+    <Content Include="scss\util\_mixins.scss" />
+    <Content Include="scss\util\_math.scss" />
+    <Content Include="scss\util\_flex.scss" />
+    <Content Include="scss\util\_direction.scss" />
+    <Content Include="scss\util\_color.scss" />
+    <Content Include="scss\util\_breakpoint.scss" />
+    <Content Include="scss\typography\_typography.scss" />
+    <Content Include="scss\typography\_print.scss" />
+    <Content Include="scss\typography\_helpers.scss" />
+    <Content Include="scss\typography\_base.scss" />
+    <Content Include="scss\typography\_alignment.scss" />
+    <Content Include="scss\settings\_settings.scss" />
+    <Content Include="scss\grid\_size.scss" />
+    <Content Include="scss\grid\_row.scss" />
+    <Content Include="scss\grid\_position.scss" />
+    <Content Include="scss\grid\_layout.scss" />
+    <Content Include="scss\grid\_gutter.scss" />
+    <Content Include="scss\grid\_grid.scss" />
+    <Content Include="scss\grid\_flex-grid.scss" />
+    <Content Include="scss\grid\_column.scss" />
+    <Content Include="scss\grid\_classes.scss" />
+    <Content Include="scss\foundation.scss" />
+    <Content Include="scss\forms\_text.scss" />
+    <Content Include="scss\forms\_select.scss" />
+    <Content Include="scss\forms\_range.scss" />
+    <Content Include="scss\forms\_progress.scss" />
+    <Content Include="scss\forms\_meter.scss" />
+    <Content Include="scss\forms\_label.scss" />
+    <Content Include="scss\forms\_input-group.scss" />
+    <Content Include="scss\forms\_help-text.scss" />
+    <Content Include="scss\forms\_forms.scss" />
+    <Content Include="scss\forms\_fieldset.scss" />
+    <Content Include="scss\forms\_error.scss" />
+    <Content Include="scss\forms\_checkbox.scss" />
+    <Content Include="scss\components\_visibility.scss" />
+    <Content Include="scss\components\_top-bar.scss" />
+    <Content Include="scss\components\_tooltip.scss" />
+    <Content Include="scss\components\_title-bar.scss" />
+    <Content Include="scss\components\_thumbnail.scss" />
+    <Content Include="scss\components\_tabs.scss" />
+    <Content Include="scss\components\_table.scss" />
+    <Content Include="scss\components\_switch.scss" />
+    <Content Include="scss\components\_sticky.scss" />
+    <Content Include="scss\components\_slider.scss" />
+    <Content Include="scss\components\_reveal.scss" />
+    <Content Include="scss\components\_responsive-embed.scss" />
+    <Content Include="scss\components\_progress-bar.scss" />
+    <Content Include="scss\components\_pagination.scss" />
+    <Content Include="scss\components\_orbit.scss" />
+    <Content Include="scss\components\_off-canvas.scss" />
+    <Content Include="scss\components\_menu.scss" />
+    <Content Include="scss\components\_menu-icon.scss" />
+    <Content Include="scss\components\_media-object.scss" />
+    <Content Include="scss\components\_label.scss" />
+    <Content Include="scss\components\_float.scss" />
+    <Content Include="scss\components\_flex.scss" />
+    <Content Include="scss\components\_flex-video.scss" />
+    <Content Include="scss\components\_dropdown.scss" />
+    <Content Include="scss\components\_dropdown-menu.scss" />
+    <Content Include="scss\components\_drilldown.scss" />
+    <Content Include="scss\components\_close-button.scss" />
+    <Content Include="scss\components\_card.scss" />
+    <Content Include="scss\components\_callout.scss" />
+    <Content Include="scss\components\_button.scss" />
+    <Content Include="scss\components\_button-group.scss" />
+    <Content Include="scss\components\_breadcrumbs.scss" />
+    <Content Include="scss\components\_badge.scss" />
+    <Content Include="scss\components\_accordion.scss" />
+    <Content Include="scss\components\_accordion-menu.scss" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -490,6 +842,10 @@
       <Project>{786eb081-ff8f-4cae-92d7-b69255ec6b12}</Project>
       <Name>SolveChicago.Service</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="dist\js\foundation.d.ts" />
+    <TypeScriptCompile Include="Scripts\foundation.d.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -520,15 +876,15 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Target Name="BeforeBuild">
+    <TransformXml Source="Web.config" Transform="Web.$(Configuration).config" Destination="Web.config" />
+  </Target>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
-  </Target>
-  <Target Name="BeforeBuild">
-    <TransformXml Source="Web.config" Transform="Web.$(Configuration).config" Destination="Web.config" />
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.4\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.4\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
   </Target>
   <!--<Target Name="AfterBuild">
   </Target> -->

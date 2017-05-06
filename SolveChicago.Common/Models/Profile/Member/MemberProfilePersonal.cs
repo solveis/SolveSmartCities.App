@@ -33,17 +33,21 @@ namespace SolveChicago.Common.Models.Profile.Member
         public string Province { get; set; }
         [Required]
         public string Country { get; set; }
+        [Required]
         public string ZipCode { get; set; }
+        [Required]
         public bool IsHeadOfHousehold { get; set; }
-
         public string ProfilePicturePath { get; set; }
         public HttpPostedFileBase ProfilePicture { get; set; }
         [Required]
         public string Interests { get; set; }
+        [Required]
         public decimal? Income { get; set; }
+        [Required]
         public bool IsMilitary { get; set; }
         public int? MilitaryId { get; set; }
         public MilitaryEntity[] Military { get; set; }
+        [Required]
         public string ContactPreference { get; set; }
     }
 

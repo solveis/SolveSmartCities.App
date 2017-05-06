@@ -239,7 +239,7 @@ namespace SolveChicago.Tests.Services
             Assert.Equal("High School", member.HighestEducation);
             Assert.Equal("Diploma", member.Degree);
             Assert.Equal("Lakeview High School", member.LastSchool);
-            Assert.Equal(10000.00m, member.GovernmentPrograms.First().Amount);
+            Assert.Equal("Program 1", member.GovernmentPrograms.First().ProgramName);
         }
 
         [Fact]
@@ -806,12 +806,9 @@ namespace SolveChicago.Tests.Services
                 {
                     new GovernmentProgramEntity
                     {
-                        Amount = 10000.00m,
-                        End = null,
                         ProgramId = 1,
                         Id = 1,
                         MemberId = 1,
-                        Start = new DateTime(2017, 1, 1)
                     }
                 }.ToArray()
             };

@@ -2,99 +2,44 @@
 @model SolveChicago.Web.Models.Profile.MemberProfileGovernmentProgramViewModel
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Government Programs";
+    Layout = "~/Views/Shared/_Layout_MemberProfile.cshtml";
 }
 
-<h2>Profile</h2>
+<div class="app-dashboard-body-content off-canvas-content" data-off-canvas-content>
+    <header class="questionnaire-header">
+        <h2>ANSWER THE FOLLOWING QUESTIONS</h2>
+    </header>
 
+    @using (Html.BeginForm("MemberGovernmentPrograms", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
 
-@using (Html.BeginForm("MemberGovernmentPrograms", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <h4>Member</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Member.MemberId)
-        
-        <div id="GovernmentPrograms">
-            <h3> Government Benefits</h3>
-            @for(int i = 0; i < Model.Member.GovernmentPrograms.Length; i++)
+        <div>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Member.MemberId)
+            @for (int i = 0; i < Model.Member.GovernmentPrograms.Length; i++)
             {
                 @Html.HiddenFor(m => Model.Member.GovernmentPrograms[i].Id)
                 <div id="GovernmentProgram" data-id="@(i)">
-                    @if (Model.FamilyList?.Count() > 0)
-                    {
-                    <div class="form-group">
-                        @Html.LabelFor(model => Model.Member.GovernmentPrograms[i].MemberId, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.DropDownListFor(model => Model.Member.GovernmentPrograms[i].MemberId, Model.FamilyList.Select(x => new SelectListItem { Value = x.Key.ToString(), Text = x.Value, Selected = x.Key == Model.Member.GovernmentPrograms[i].MemberId }), new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => Model.Member.GovernmentPrograms[i].MemberId, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    }
-                    else
-                    {
-                        <input type="hidden" name="Model.Member.GovernmentPrograms[i].MemberId" value="@Model.Member.MemberId" />
-                    }
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => Model.Member.GovernmentPrograms[i].ProgramId, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.DropDownListFor(model => Model.Member.GovernmentPrograms[i].ProgramId, Model.GovernmentProgramList.Select(x => new SelectListItem { Value = x.Key.ToString(), Text = x.Value, Selected = x.Key == Model.Member.GovernmentPrograms[i].MemberId }), new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => Model.Member.GovernmentPrograms[i].ProgramId, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => Model.Member.GovernmentPrograms[i].Start, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => Model.Member.GovernmentPrograms[i].Start, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => Model.Member.GovernmentPrograms[i].Start, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => Model.Member.GovernmentPrograms[i].IsCurrent, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.CheckBoxFor(model => Model.Member.GovernmentPrograms[i].IsCurrent, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => Model.Member.GovernmentPrograms[i].IsCurrent, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => Model.Member.GovernmentPrograms[i].End, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => Model.Member.GovernmentPrograms[i].End, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => Model.Member.GovernmentPrograms[i].End, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => Model.Member.GovernmentPrograms[i].Amount, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => Model.Member.GovernmentPrograms[i].Amount, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => Model.Member.GovernmentPrograms[i].Amount, "", new { @class = "text-danger" })
-                        </div>
+                    <div class="row app-dashboard-form-container-space-around">
+                        @Html.LabelFor(model => Model.Member.GovernmentPrograms[i].ProgramId, htmlAttributes: new {  })
+                        @Html.DropDownListFor(model => Model.Member.GovernmentPrograms[i].ProgramId, Model.GovernmentProgramList.Select(x => new SelectListItem { Value = x.Key.ToString(), Text = x.Value, Selected = x.Key == Model.Member.GovernmentPrograms[i].MemberId }), new { @multiple = "",  @class = "ui fluid dropdown" })
+                        @Html.ValidationMessageFor(model => Model.Member.GovernmentPrograms[i].ProgramId, "", new { @class = "text-danger" })
                     </div>
                 </div>
             }
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+            <hr />
+            <div class="row align-center">
+                <input type="submit" value="Submit" class="submit-create-profile" />
             </div>
         </div>
+        }
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/profile_member")
+    @Scripts.Render("~/bundles/semantic")
+    @Styles.Render("~/Content/semantic")
 }

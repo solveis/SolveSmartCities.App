@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Solve Smart Cities</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Bitter:400,700" rel="stylesheet">
+    @Styles.Render("~/Content/landing")
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <meta property="og:title" content="Solve Smart Cities" />
+    <meta property="og:description" content="Our software creates smart cities in underserved communities by measure job training &amp; placement." />
+    <meta property="og:url" content="https://solvesmartcities.com" />
+    <meta property="og:type" content="Website" />
+    <meta property="og:image" content="https://solvesmartcities.com/img/og.image.jpg" />
+    <meta name="author" content="Solve Smart Cities" />
+</head>
+<body>
+    <div id="login-register">
+        <div class="container">
+            <p><a href="/account/login">Login</a></p>
+            &nbsp;&nbsp;/&nbsp;&nbsp;
+            <p class="register">
+                Register
+                <span class="register-submenu">
+                    <a href="/register/referrer">Referrer</a>
+                    <a href="/register/nonprofit">Nonprofit</a>
+                </span>
+            </p>
+            
+        </div>
+    </div>
+    <nav id="main-nav" class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <a class="navbar-brand internalLink" href="#Home">
+                    <img id="logo" src="/img/landing/logo@2x.png" height="80" alt="">
+                </a>
+                <a type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse" href="javascript:void(0)">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right text-center">
+                    <li><a class="internalLink" href="#Home">Home</a></li>
+                    <li><a class="internalLink" href="#How">How</a></li>
+                    <li><a class="internalLink" href="#Partners">Partners</a></li>
+                    <li><a class="internalLink cta" href="#LetsTalk">Let's Talk</a></li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container -->
+    </nav>
+    @RenderBody()
+    <footer class="container-fluid">
+        <div class="container text-center">
+            <div class="col-sm-2 col-sm-push-10 text-center">
+                <a href="#Home" class="regress text-center internalLink">
+                    <img width="30" src="/img/landing/Go_top@2x.png">
+                    <br>Back To Top
+                </a>
+            </div>
+            <div class="col-sm-8 text-center">
+                <p>Created with the community for our communities. <br> &copy; @DateTime.UtcNow.Year Solve Smart Cities. All Rights Reserved.</p>
+            </div>
+            <div class="col-sm-2 col-sm-pull-10">
+                <img src="/img/landing/logo_white@2x.png" height="45" alt="">
+            </div>
+        </div>
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/landing")
+    @RenderSection("scripts", required: false)
+
+    @* google analytics *@
+    <script>
+        (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-96560990-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+</body>
+</html>

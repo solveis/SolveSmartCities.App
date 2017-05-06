@@ -26,6 +26,9 @@ namespace SolveChicago.Web
             bundles.Add(new ScriptBundle("~/bundles/functions").Include(
                       "~/Scripts/functions.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/landing").Include(
+                      "~/Scripts/landing.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/profile_member").Include(
                       "~/Scripts/profile_member.js"));
 
@@ -33,14 +36,32 @@ namespace SolveChicago.Web
                       "~/Scripts/bootstrap-tokenfield.js",
                         "~/Scripts/jquery-ui-{version}.js"));
 
-                    
+            bundles.Add(new ScriptBundle("~/bundles/semantic").Include(
+                      "~/Scripts/semantic.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/foundation").Include(
+                      "~/dist/js/foundation.js",
+                      "~/Scripts/foundation-datepicker.js"));
+
+
             bundles.Add(new StyleBundle("~/Content/tokenfield").Include(
                       "~/Content/bootstrap-tokenfield/bootstrap-tokenfield.css",
                       "~/Content/themes/base/jquery-ui.css"));
-            
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new StyleBundle("~/Content/landing").Include(
+                       "~/Content/bootstrap.css",
+                       "~/Content/landing.css"));
+
+            bundles.Add(new StyleBundle("~/Content/semantic").Include(
+                       "~/Content/semantic/semantic.css"));
+
+            bundles.Add(new StyleBundle("~/Content/foundation").Include(
+                       "~/dist/css/foundation.css",
+                       "~/Content/foundation-datepicker.css"));
         }
     }
 }

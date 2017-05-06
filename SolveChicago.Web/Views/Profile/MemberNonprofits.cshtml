@@ -2,55 +2,43 @@
 @model SolveChicago.Web.Models.Profile.MemberProfileNonprofitViewModel
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Nonprofits";
+    Layout = "~/Views/Shared/_Layout_MemberProfile.cshtml";
 }
 
-<h2>Profile</h2>
+<div class="app-dashboard-body-content off-canvas-content" data-off-canvas-content>
+    <header class="questionnaire-header">
+        <h2>ANSWER THE FOLLOWING QUESTIONS</h2>
+    </header>
 
+    @using (Html.BeginForm("MemberNonprofits", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
 
-@using (Html.BeginForm("MemberNonprofits", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <h4>Member</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Member.MemberId)
-
-        <div id="Nonprofits">
-            <h3>Nonprofits</h3>
+        <div>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Member.MemberId)
             @for (int i = 0; i < Model.Member.Nonprofits.Length; i++)
             {
                 <div id="Nonprofit" data-id="@(i)">
-                    @Html.HiddenFor(m => Model.Member.Nonprofits[i].NonprofitId)
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Member.Nonprofits[i].NonprofitName, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
+                    <div class="row app-dashboard-form-container-space-around">
+                        <div class="form-holder">
+                            @Html.HiddenFor(m => Model.Member.Nonprofits[i].NonprofitId)
+
+                            @Html.LabelFor(model => model.Member.Nonprofits[i].NonprofitName, htmlAttributes: new { @class = "control-label col-md-2" })
                             @Html.EditorFor(model => model.Member.Nonprofits[i].NonprofitName, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.Member.Nonprofits[i].NonprofitName, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
 
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Member.Nonprofits[i].SkillsAcquired, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.Member.Nonprofits[i].SkillsAcquired, new { htmlAttributes = new { @class = "form-control tokenfield" } })
-                            @Html.ValidationMessageFor(model => model.Member.Nonprofits[i].SkillsAcquired, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Member.Nonprofits[i].Enjoyed, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
+                            @Html.LabelFor(model => model.Member.Nonprofits[i].Enjoyed, htmlAttributes: new { @class = "control-label col-md-2" })
                             @Html.EditorFor(model => model.Member.Nonprofits[i].Enjoyed, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.Member.Nonprofits[i].Enjoyed, "", new { @class = "text-danger" })
                         </div>
-                    </div>
+                        <div class="form-holder">
+                            @Html.LabelFor(model => model.Member.Nonprofits[i].SkillsAcquired, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.EditorFor(model => model.Member.Nonprofits[i].SkillsAcquired, new { htmlAttributes = new { @class = "form-control tokenfield" } })
+                            @Html.ValidationMessageFor(model => model.Member.Nonprofits[i].SkillsAcquired, "", new { @class = "text-danger" })
 
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Member.Nonprofits[i].Struggled, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
+                            @Html.LabelFor(model => model.Member.Nonprofits[i].Struggled, htmlAttributes: new { @class = "control-label col-md-2" })
                             @Html.EditorFor(model => model.Member.Nonprofits[i].Struggled, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.Member.Nonprofits[i].Struggled, "", new { @class = "text-danger" })
                         </div>
@@ -59,17 +47,11 @@
             }
             <a href="javascript:void(0)" id="AddNonprofit" class="addEntry">Add Nonprofit</a>
         </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
+        <hr />
+        <div class="row align-center">
+            <input type="submit" value="Submit" class="submit-create-profile" />
         </div>
-    </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
+    }
 </div>
 
 @section Scripts {

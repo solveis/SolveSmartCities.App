@@ -4,7 +4,7 @@
 @model SolveChicago.Web.Models.Profile.MemberProfilePersonalViewModel
 
 @{
-    ViewBag.Title = "Member Profile - Personal";
+    ViewBag.Title = "Personal";
     Layout = "~/Views/Shared/_Layout_MemberProfile.cshtml";
 }
 
@@ -25,86 +25,101 @@
 
         <div class="row app-dashboard-form-container-space-around">
             <div class="form-holder">
-                @Html.LabelFor(model => model.Member.FirstName)
-                @Html.EditorFor(model => model.Member.FirstName)
                 @Html.ValidationMessageFor(model => model.Member.FirstName, "", new { @class = "text-danger" })
-                @Html.LabelFor(model => model.Member.Gender)
-                @Html.DropDownListFor(model => model.Member.Gender, Model.GenderList.Select(x => new SelectListItem { Value = x, Text = x, Selected = x == Model.Member.Gender }), "Choose a Gender")
-                @Html.ValidationMessageFor(model => model.Member.Gender, "", new { @class = "text-danger" })
-                @Html.LabelFor(model => model.Member.Address1)
-                @Html.EditorFor(model => model.Member.Address1)
+                @Html.LabelFor(model => model.Member.FirstName, "First Name")
+                @Html.EditorFor(model => model.Member.FirstName)
+
+                @Html.ValidationMessageFor(model => model.Member.LastName, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.Member.LastName, "Last Name")
+                @Html.EditorFor(model => model.Member.LastName)
+
                 @Html.ValidationMessageFor(model => model.Member.Address1, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.Member.Address1, "Street Address")
+                @Html.EditorFor(model => model.Member.Address1)
+
+                @Html.ValidationMessageFor(model => model.Member.Address2, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.Member.Address2, "Apt, Unit #")
+                @Html.EditorFor(model => model.Member.Address2)
+
+                @Html.ValidationMessageFor(model => model.Member.City, "", new { @class = "text-danger" })
                 @Html.LabelFor(model => model.Member.City)
                 @Html.EditorFor(model => model.Member.City)
-                @Html.ValidationMessageFor(model => model.Member.City, "", new { @class = "text-danger" })
-                @Html.LabelFor(model => model.Member.ZipCode)
-                @Html.EditorFor(model => model.Member.ZipCode)
+
+                @Html.ValidationMessageFor(model => model.Member.Province, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.Member.Province, "State")
+                @Html.EditorFor(model => model.Member.Province)
+
                 @Html.ValidationMessageFor(model => model.Member.ZipCode, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.Member.ZipCode, "Zip Code")
+                @Html.EditorFor(model => model.Member.ZipCode)
+
+                @Html.ValidationMessageFor(model => model.Member.Country, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.Member.Country)
+                @Html.DropDownListFor(model => model.Member.Country, Model.CountryList.Select(x => new SelectListItem { Value = x, Text = x, Selected = x == Model.Member.Country }))
+
+
+                @Html.ValidationMessageFor(model => model.Member.Income, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.Member.Income, "Annual Income")
+                @Html.EditorFor(model => model.Member.Income)
+            </div>
+
+            <div class="form-holder">
+                @Html.ValidationMessageFor(model => model.Member.Gender, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.Member.Gender)
+                @Html.DropDownListFor(model => model.Member.Gender, Model.GenderList.Select(x => new SelectListItem { Value = x, Text = x, Selected = x == Model.Member.Gender }), "Choose a Gender")
+
+                @Html.ValidationMessageFor(model => model.Member.Birthday, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.Member.Birthday)
+                @Html.EditorFor(model => model.Member.Birthday)
+
+                @Html.ValidationMessageFor(model => model.Member.Email, "", new { @class = "text-danger" })
                 @Html.LabelFor(model => model.Member.Email)
                 @Html.EditorFor(model => model.Member.Email)
-                @Html.ValidationMessageFor(model => model.Member.Email, "", new { @class = "text-danger" })
-                @Html.LabelFor(model => model.Member.Phone)
-                @Html.EditorFor(model => model.Member.Phone)
+
                 @Html.ValidationMessageFor(model => model.Member.Phone, "", new { @class = "text-danger" })
-                @Html.LabelFor(model => model.Member.ProfilePicture)
-                @if (!string.IsNullOrEmpty(Model.Member.ProfilePicturePath) && Model.Member.ProfilePicturePath != "/img/noPhoto.png") { 
+                @Html.LabelFor(model => model.Member.Phone, "Phone Number")
+                @Html.EditorFor(model => model.Member.Phone)
+
+                @Html.ValidationMessageFor(model => model.Member.ContactPreference, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.Member.ContactPreference, "How would you prefer to be contacted?")
+                @Html.RadioButtonFor(model => model.Member.ContactPreference, Constants.Member.ContactPreference.Phone)
+                <label for="ContactPreference">Phone</label>
+                @Html.RadioButtonFor(model => model.Member.ContactPreference, Constants.Member.ContactPreference.Email)
+                <label for="ContactPreference">Email</label>
+
+                @Html.ValidationMessageFor(model => model.Member.ProfilePicture, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.Member.ProfilePicture, "Upload a Profile Picture")
+                @if (!string.IsNullOrEmpty(Model.Member.ProfilePicturePath) && Model.Member.ProfilePicturePath != "/img/noPhoto.png")
+                {
                     <div>
                         <img src="@Model.Member.ProfilePicturePath" />
                     </div>
                 }
                 @Html.TextBoxFor(model => model.Member.ProfilePicture, new { type = "file", htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Member.ProfilePicture, "", new { @class = "text-danger" })
 
-                @Html.LabelFor(model => model.Member.IsHeadOfHousehold)
-                <label for="ContactPreference">Yes</label>
-                @Html.RadioButtonFor(model => model.Member.IsHeadOfHousehold, true)
-                <label for="ContactPreference">No</label>
-                @Html.RadioButtonFor(model => model.Member.IsHeadOfHousehold, false)
-                @Html.ValidationMessageFor(model => model.Member.IsHeadOfHousehold, "", new { @class = "text-danger" })
-
-                @Html.LabelFor(model => model.Member.IsMilitary)
-                <label for="ContactPreference">Yes</label>
-                @Html.RadioButtonFor(model => model.Member.IsMilitary, true)
-                <label for="ContactPreference">No</label>
-                @Html.RadioButtonFor(model => model.Member.IsMilitary, false)
-                @Html.ValidationMessageFor(model => model.Member.IsMilitary, "", new { @class = "text-danger" })
-            </div>
-
-            <div class="form-holder">
-                @Html.LabelFor(model => model.Member.LastName)
-                @Html.EditorFor(model => model.Member.LastName)
-                @Html.ValidationMessageFor(model => model.Member.LastName, "", new { @class = "text-danger" })
-
-                @Html.LabelFor(model => model.Member.Birthday)
-                @Html.EditorFor(model => model.Member.Birthday)
-                @Html.ValidationMessageFor(model => model.Member.Birthday, "", new { @class = "text-danger" })
-
-                @Html.LabelFor(model => model.Member.Address2)
-                @Html.EditorFor(model => model.Member.Address2)
-                @Html.ValidationMessageFor(model => model.Member.Address2, "", new { @class = "text-danger" })
-
-                @Html.LabelFor(model => model.Member.Province)
-                @Html.EditorFor(model => model.Member.Province)
-                @Html.ValidationMessageFor(model => model.Member.Province, "", new { @class = "text-danger" })
-
-                @Html.LabelFor(model => model.Member.Country)
-                @Html.DropDownListFor(model => model.Member.Country, Model.CountryList.Select(x => new SelectListItem { Value = x, Text = x, Selected = x == Model.Member.Country }))
-                @Html.ValidationMessageFor(model => model.Member.Country, "", new { @class = "text-danger" })
-
-                @Html.LabelFor(model => model.Member.ContactPreference)
-                <label for="ContactPreference">Phone</label>
-                @Html.RadioButtonFor(model => model.Member.ContactPreference, Constants.Member.ContactPreference.Phone)
-                <label for="ContactPreference">Email</label>
-                @Html.RadioButtonFor(model => model.Member.ContactPreference, Constants.Member.ContactPreference.Email)
-                @Html.ValidationMessageFor(model => model.Member.ContactPreference, "", new { @class = "text-danger" })
-
-                @Html.LabelFor(model => model.Member.Interests)
-                @Html.EditorFor(model => model.Member.Interests, new { htmlAttributes = new { type = "text" } })
                 @Html.ValidationMessageFor(model => model.Member.Interests, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.Member.Interests, "Personal Interests (i.e. sports, fashion, movies")
+                @Html.EditorFor(model => model.Member.Interests, new { htmlAttributes = new { type = "text" } })
 
-                @Html.LabelFor(model => model.Member.MilitaryId)
-                @Html.DropDownListFor(model => model.Member.MilitaryId, Model.MilitaryBranchList.Select(x => new SelectListItem { Value = x.Key.ToString(), Text = x.Value }), "Please select a branch", new { htmlAttributes = new { @class = "tokenfield", @tokens = "reading, writing, eating" } })
-                @Html.ValidationMessageFor(model => model.Member.MilitaryId, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.Member.IsHeadOfHousehold, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.Member.IsHeadOfHousehold, "Are you the head of your household?")
+                @Html.RadioButtonFor(model => model.Member.IsHeadOfHousehold, true)
+                <label for="IsHeadOfHousehold">Yes</label>
+                @Html.RadioButtonFor(model => model.Member.IsHeadOfHousehold, false)
+                <label for="IsHeadOfHousehold">No</label>
+
+                @Html.ValidationMessageFor(model => model.Member.IsMilitary, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.Member.IsMilitary, "Are you a present/former member of the Armed Forces?")
+                @Html.RadioButtonFor(model => model.Member.IsMilitary, true)
+                <label for="Member_IsMilitary">Yes</label>
+                @Html.RadioButtonFor(model => model.Member.IsMilitary, false)
+                <label for="Member_IsMilitary">No</label>
+
+                <div id="Member_is_Military" class="@(Model.Member.IsMilitary ? "" : "hide")">
+                    @Html.ValidationMessageFor(model => model.Member.MilitaryId, "", new { @class = "text-danger" })
+                    @Html.LabelFor(model => model.Member.MilitaryId, "Military Branch")
+                    @Html.DropDownListFor(model => model.Member.MilitaryId, Model.MilitaryBranchList.Select(x => new SelectListItem { Value = x.Key.ToString(), Text = x.Value }), "Please select a branch", new { htmlAttributes = new { @class = "tokenfield", @tokens = "reading, writing, eating" } })
+                </div>
             </div>
         </div>
         <hr />
@@ -118,11 +133,20 @@
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/profile_member")
     <script>
-        var interestsList = [];
-        @foreach(var interest in Model.InterestList)
-        {
-            @:interestsList.push("@interest");
-        }
-        window.bindAutocomplete($('#Member_Interests'), interestsList);
+        $(document).ready(function () { 
+            var interestsList = [];
+            @foreach(var interest in Model.InterestList)
+            {
+                @:interestsList.push("@interest");
+            }
+            window.bindAutocomplete($('#Member_Interests'), interestsList);
+            $(document).foundation();
+            $('#Member_Birthday').fdatepicker({
+                leftArrow: '<<',
+                rightArrow: '>>'
+            });
+
+            window.bindRadioContent($('input[name=Member\\.IsMilitary]'), $("#Member_is_Military"), "", "");
+        });
     </script>
 }

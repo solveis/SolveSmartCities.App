@@ -239,8 +239,14 @@ namespace SolveChicago.Web.Controllers
                 Member = PopulateSchoolEmptyFields(member),
                 SchoolTypeList = GetSchoolTypeList(),
                 DegreeList = GetDegreeList(),
+                SchoolsList = GetSchoolsList(),
             };
             return model;
+        }
+
+        private string[] GetSchoolsList()
+        {
+            return db.Schools.Select(x => x.SchoolName).ToArray();
         }
 
         private MemberProfileNonprofitViewModel FormatMemberProfileNonprofitsViewModel(MemberProfileNonprofits member)
@@ -257,8 +263,14 @@ namespace SolveChicago.Web.Controllers
             MemberProfileJobViewModel model = new MemberProfileJobViewModel
             {
                 Member = PopulateJobEmptyFields(member),
+                CorporationList = GetCorporationList(),
             };
             return model;
+        }
+
+        private string[] GetCorporationList()
+        {
+            return db.Corporations.Select(x => x.Name).ToArray();
         }
 
         private MemberProfileGovernmentProgramViewModel FormatMemberProfileGovernmentProgramsViewModel(MemberProfileGovernmentPrograms member)
@@ -269,7 +281,6 @@ namespace SolveChicago.Web.Controllers
             {
                 Member = PopulateGovernmentProgramEmptyFields(member),
                 GovernmentProgramList = gService.Get().ToDictionary(x => x.Id, x => x.Name),
-                FamilyList = mService.GetFamily(member.MemberId)?.FamilyMembers?.Where(x => x.Id.HasValue).ToDictionary(x => x.Id.Value, x => x.Name)
             };
             return model;
         }
@@ -303,7 +314,7 @@ namespace SolveChicago.Web.Controllers
         private MemberProfileJobs PopulateJobEmptyFields(MemberProfileJobs model)
         {
             if (model.Jobs == null || (model.Jobs != null && model.Jobs.Count() == 0))
-                model.Jobs = new JobEntity[1] { new JobEntity() };
+                model.Jobs = new JobEntity[1] { new JobEntity() { IsCurrent = true } };
 
             return model;
         }
@@ -329,6 +340,7 @@ namespace SolveChicago.Web.Controllers
         {
             return new string[]
             {
+                Constants.School.Degrees.None,
                 Constants.School.Degrees.HSDiploma,
                 Constants.School.Degrees.GED,
                 Constants.School.Degrees.BachelorsDegree,
@@ -339,8 +351,10 @@ namespace SolveChicago.Web.Controllers
 
         private string[] GetSchoolTypeList()
         {
-            return new string[] 
+            return new string[]
             {
+                Constants.School.Types.ElementarySchool,
+                Constants.School.Types.MiddleSchool,
                 Constants.School.Types.HighSchool,
                 Constants.School.Types.UndergraduateCollege,
                 Constants.School.Types.GraduateCollege,
