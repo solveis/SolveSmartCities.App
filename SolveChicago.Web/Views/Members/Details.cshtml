@@ -1,10 +1,181 @@
-﻿@model SolveChicago.Entities.Member
+﻿@model SolveChicago.Common.Models.Profile.Member.MemberProfile
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Member Profile";
 }
 
-<h2>Details</h2>
+<div class="app-dashboard-body-content off-canvas-content" data-off-canvas-content>
+
+    <article class="user-profile">
+
+        <section class="hero-main-profile">
+            <div class="profile-image-container">
+                <img class="profile-image" src="@Model.ProfilePicturePath">
+            </div>
+
+            <div class="profile-information-container">
+
+                <div class="profile-wrapper">
+                    <div class="row medium-unstack">
+                        <div class="columns">
+
+                            <div class="lilac progress" role="progressbar" tabindex="0" aria-valuenow="@(Model.MemberStage.Percent)" aria-valuemin="0" aria-valuetext="@(Model.MemberStage.Percent) percent" aria-valuemax="100">
+
+                                <!-- value added by tweaking inline-style-->
+                                <div class="progress-meter" style="width: @(Model.MemberStage.Percent)%">
+
+                                </div>
+                            </div>
+                            <p class="progress-description">@(Model.MemberStage.Stage)</p>
+
+                        </div>
+                        <div class="profile-information columns">
+                            <span class="profile-name">
+                                @Model.FullName
+                            </span>
+                            <span class="profile-title">
+                                @* Put Something here *@
+                            </span>
+                            <span class="profile-description">
+                                @(Model.IsHeadOfHousehold ? "Head of Household" : "")
+                            </span>
+                        </div>
+                        <div class="columns align-middle edit-profile">
+                            <a href="/Profile/MemberOverview?memberId=@Model.Id" class="button">Edit Profile</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="profile-card">
+
+            <header>
+                <h1 class="profile-card-header">Personal Info</h1>
+            </header>
+
+            <!-- First Row-->
+            <div class="row large-unstack">
+                <div class="columns has-space">
+                    <p>Gender: <strong>@Model.Gender</strong></p>
+                </div>
+
+                <div class="columns has-space">
+                    <p>Birthdate: <strong>@(Model.Birthday.HasValue ? @Model.Birthday.Value.ToShortDateString() : "")</strong></p>
+                </div>
+
+                <div class="columns has-space">
+                    <p>Best way to contact: <strong>@Model.ContactPreference</strong></p>
+                </div>
+            </div>
+
+            <hr class="profile-card-line-divider">
+
+            <!-- Second Row-->
+            <div class="row large-unstack">
+                <div class="columns has-space">
+                    <img class="profile-icon" src="../img/profile-icon-location.svg">
+                    <p> @Model.Address</p>
+                </div>
+
+                <div class="columns has-space">
+                    <img class="profile-icon" src="../img/profile-icon-email.svg">
+                    <p>@Model.Email</p>
+                </div>
+
+                <div class="columns has-space">
+                    <img class="profile-icon" src="../img/profile-icon-phone.svg">
+                    <p><strong>@Model.Phone</strong></p>
+                </div>
+            </div>
+            <hr class="profile-card-line-divider">
+
+            <!-- Third Row-->
+            <div class="row large-unstack">
+                <div class="columns has-space">
+                    <p>
+                        Interests:
+                        <strong>@Model.Interests</strong>
+                    </p>
+                </div>
+            </div>
+
+        </section>
+
+
+        <section class="profile-card">
+
+            <header>
+                <h1 class="profile-card-header">Education</h1>
+            </header>
+
+            <!-- First Row-->
+            <div class="row large-unstack">
+                <div class="columns has-space">
+                    <p>Education: <strong>@Model.HighestEducation</strong></p>
+                </div>
+
+                <div class="columns has-space">
+                    <p>School: <strong>@Model.LastSchool</strong></p>
+                </div>
+
+                <div class="columns has-space">
+                    <p>Degree: <strong>@Model.Degree</strong></p>
+                </div>
+            </div>
+            <hr class="profile-card-line-divider">
+
+        </section>
+
+
+        <section class="profile-card">
+
+            <header>
+                <h1 class="profile-card-header">Professional</h1>
+            </header>
+
+            <!-- First Row-->
+            <div class="row large-unstack">
+                <div class="columns has-space">
+                    <p>Workforce development non-profit: <strong>@(Model.Nonprofits != null && Model.Nonprofits.Count() > 0 ? string.Join(", ", Model.Nonprofits.Select(x => x.NonprofitName)) : "N/A")</strong></p>
+                </div>
+            </div>
+            <hr class="profile-card-line-divider">
+
+            <!-- Second Row-->
+            <div class="row large-unstack">
+                <div class="columns has-space">
+                    <p>Career/Job: <strong>@(Model.Jobs != null && Model.Jobs.Count() > 0 ? string.Join(", ", Model.Jobs.Select(x => x.Name)) : "N/A")</strong></p>
+                </div>
+
+                <div class="columns has-space">
+                    <p>
+                        Government Programs:
+
+                        @if (Model.GovernmentPrograms != null)
+                        {
+                            foreach (var gp in Model.GovernmentPrograms)
+                            {
+                                <strong>@(gp.ProgramName), </strong>
+                            }
+                        }
+                    </p>
+                </div>
+            </div>
+        </section>
+
+
+    </article>
+
+
+</div>
+
+
+
+@*<h2>Details</h2>
 
 <div>
     <h4>Member</h4>
@@ -111,4 +282,4 @@
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
-</p>
+</p>*@

@@ -1,0 +1,31 @@
+﻿@model SolveChicago.Web.Models.Nonprofit.AssignCaseManagerViewModel
+
+@{
+    ViewBag.Title = "AssignCaseManager";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(m => m.NonprofitId)
+    @Html.HiddenFor(m => m.MemberId)
+    @Html.AntiForgeryToken()
+
+    <div class="row app-dashboard-form-container">
+        <div class="create-profile-form-holder">
+            <h4><strong>ASSIGN: </strong>Case Manager</h4>
+            <hr />
+
+            <p>Member: @Model.MemberName</p>
+            <p>Nonprofit: @Model.NonprofitName</p>
+
+            @Html.LabelFor(model => model.CaseManagerId, htmlAttributes: new { })
+            @Html.DropDownListFor(model => model.CaseManagerId, Model.CaseManagers.Select(x => new SelectListItem { Text = string.Format("{0} {1}", x.FirstName, x.LastName), Value = x.Id.ToString() }), new { htmlAttributes = new { } })
+            @Html.ValidationMessageFor(model => model.CaseManagerId, "", new { @class = "text-danger" })
+
+            <hr class="line-divider">
+            <input class="submit-create-profile" type="submit" value="Submit">
+        </div>
+    </div>
+
+}

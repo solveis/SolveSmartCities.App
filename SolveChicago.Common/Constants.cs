@@ -25,6 +25,7 @@ namespace SolveChicago.Common
         {
             public const string Inquiry = "Inquiry";
             public const string MemberSurveyInvite = "MemberSurveyInvite_{0}";
+            public const string CaseManagerInvite = "CaseManagerInvite_{0}";
         }
 
         public class Member
@@ -44,7 +45,16 @@ namespace SolveChicago.Common
                 public const string Nonprofits = "Nonprofits";
                 public const string GovernmentPrograms = "GovernmentPrograms";
                 public const string Complete = "Complete";
+            }
 
+            public class Stage
+            {
+                public const string InviteSent = "Invite Sent";
+                public const string ProfileInProgress = "Profile In Progress";
+                public const string ProfileCompleted = "Profile Completed";
+                public const string InTraining = "In Training";
+                public const string JobPlaced = "Job Placed";
+                public const string OffTrack = "Off Track";
             }
         }
 

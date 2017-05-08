@@ -1,14 +1,14 @@
 ﻿@model SolveChicago.Web.Models.Profile.NonprofitProfile
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Profile";
 }
 
 @using (Html.BeginForm("Nonprofit", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     <header>
-        <h4><strong>NONPROFIT:</strong> Personal Profile</h4>
+        <h4><strong>NONPROFIT:</strong> Profile</h4>
     </header>
 
     <div class="row app-dashboard-form-container">

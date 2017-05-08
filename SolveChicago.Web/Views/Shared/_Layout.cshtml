@@ -38,7 +38,7 @@
         <div class="row expanded app-dashboard-top-nav-bar">
             <div class="columns medium-2">
                 <button data-toggle="app-dashboard-sidebar" class="menu-icon hide-for-medium"></button>
-                <a class="app-dashboard-logo">
+                <a href="/" class="app-dashboard-logo">
                     <img src="/img/solve-logo@2x.png">
                 </a>
             </div>
@@ -78,84 +78,19 @@
                 <div class="app-dashboard-sidebar-inner">
                     @if (User.IsInRole(Constants.Roles.Nonprofit))
                     {
-                        <ul class="menu vertical">
-                            <li class="menu-link">
-                                <a href="/Nonprofits" class="is-active">
-                                    <img class="menu-icon" src="../img/side-nav-members-icon.svg">
-                                    <span class="app-dashboard-sidebar-text">Members</span>
-                                </a>
-                            </li>
-                            @*<li>
-                                <a href="#" class="is-active">
-                                    <img class="menu-icon" src="../img/side-nav-add-member-icon.svg">
-                                    <span class="app-dashboard-sidebar-text">Add Member</span>
-                                </a>
-                            </li>*@
-                            <li>
-                                <a href="/Prospects" class="is-active">
-                                    <img class="menu-icon" src="../img/side-nav-prospect-icon.svg">
-                                    <span class="app-dashboard-sidebar-text">Prospects</span>
-                                </a>
-                            </li>
-                        </ul>
+                        @Html.Action("Nonprofit", "Sidebar")
                     }
                     else if (User.IsInRole(Constants.Roles.CaseManager))
                     {
-                        <ul class="menu vertical">
-                            <li class="menu-link">
-                                <a href="#" class="is-active">
-                                    <img class="menu-icon" src="../img/side-nav-members-icon.svg">
-                                    <span class="app-dashboard-sidebar-text">Members</span>
-                                </a>
-                            </li>
-                            @*<li>
-                                <a href="#" class="is-active">
-                                    <img class="menu-icon" src="../img/side-nav-add-member-icon.svg">
-                                    <span class="app-dashboard-sidebar-text">Add Member</span>
-                                </a>
-                            </li>*@
-                            <li>
-                                <a href="?Prospects" class="is-active">
-                                    <img class="menu-icon" src="../img/side-nav-prospect-icon.svg">
-                                    <span class="app-dashboard-sidebar-text">Prospects</span>
-                                </a>
-                            </li>
-                        </ul>
+                        @Html.Action("CaseManager", "Sidebar")
                     }
                     else if (User.IsInRole(Constants.Roles.Referrer))
                     {
-                        <ul class="menu vertical">
-                            <li class="menu-link">
-                                <a href="/Referrers" class="is-active">
-                                    <img class="menu-icon" src="../img/side-nav-members-icon.svg">
-                                    <span class="app-dashboard-sidebar-text">Members</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/Referrers/AddMember" class="is-active">
-                                    <img class="menu-icon" src="../img/side-nav-add-member-icon.svg">
-                                    <span class="app-dashboard-sidebar-text">Add Member</span>
-                                </a>
-                            </li>
-                        </ul>
+                        @Html.Action("Referrer", "Sidebar")
                     }
                     else if (User.IsInRole(Constants.Roles.Admin))
                     {
-                        <ul class="menu vertical">
-                            <li class="menu-link">
-                                <a href="/Admins/Nonprofits" class="is-active">
-                                    <img class="menu-icon" src="../img/side-nav-members-icon.svg">
-                                    <span class="app-dashboard-sidebar-text">Nonprofits</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/Prospects" class="is-active">
-                               
-                                    <img class="menu-icon" src="../img/side-nav-prospect-icon.svg">
-                                    <span class="app-dashboard-sidebar-text">Prospects</span>
-                                </a>
-                            </li>
-                        </ul>
+                        @Html.Action("Admin", "Sidebar")
                     }
                     else if (User.IsInRole(Constants.Roles.Corporation))
                     {
@@ -164,34 +99,6 @@
                     else if (User.IsInRole(Constants.Roles.Member))
                     {
 
-                    }
-
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <ul class="sub-menu">
-                            <li>
-                                <span class="case-manager-profile-picture">
-                                    <img class="case-manager-thumb" src="../img/side-nav-members-icon.svg">
-                                </span>
-
-                                <span class="case-manager-name">
-                                    Your Name
-                                </span>
-
-                                <span class="case-manager-company">
-                                    Your Employer
-                                </span>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <img class="sub-menu-icon" src="../img/submenu-icon-settings.svg">
-                                    <span class="app-dashboard-sidebar-text">Settings</span>
-                                </a>
-                            </li>
-                            <li>
-                                @Html.Partial("_LoginPartial")
-                            </li>
-                        </ul>
                     }
                 </div>
 

@@ -21,48 +21,51 @@ namespace SolveChicago.Tests.Controllers
         public AdminsControllerTest()
         {
             List<AspNetUser> users = new List<AspNetUser>();
-            List<Admin> data = new List<Admin>
+            List<Nonprofit> data = new List<Nonprofit>
             {
-                new Admin
+                new Nonprofit
                 {
                     Id = 1,
-                    FirstName = "John",
-                    LastName = " Doe",
-                    AspNetUser = 
+                    Name = "NPO 1",
+                    AspNetUsers = new List<AspNetUser>
+                    {
                         new AspNetUser
                         {
                             Id = ")(*Y&T^RDTXFGCHVUJI"
                         }
+                    }                        
                 },
-                new Admin
+                new Nonprofit
                 {
                     Id = 2,
-                    FirstName = "Sayid",
-                    LastName = "Khan",
-                    AspNetUser = 
+                    Name = "NPO 2",
+                    AspNetUsers = new List<AspNetUser>
+                    {
                         new AspNetUser
                         {
-                            Id = "BHVGYCRD%$^&*()O"
+                            Id = "YTDXCVHJI"
                         }
+                    }
                 },
-                new Admin
+                new Nonprofit
                 {
                     Id = 3,
-                    FirstName = "Jerry",
-                    LastName = "Ellis",
-                    AspNetUser = 
+                    Name = "NPO 3",
+                    AspNetUsers = new List<AspNetUser>
+                    {
                         new AspNetUser
                         {
-                            Id = "HGSE#%$^&G&IUBH"
+                            Id = "OJIHUGYFTRCYVUIOP"
                         }
+                    }
                 }
             };
 
-            var set = new Mock<DbSet<Admin>>().SetupData(data);
+            var set = new Mock<DbSet<Nonprofit>>().SetupData(data);
             var userSet = new Mock<DbSet<AspNetUser>>().SetupData(users);
             set.Setup(m => m.Find(It.IsAny<object[]>()))
                 .Returns<object[]>(ids => data.FirstOrDefault(d => d.Id == (int)ids[0]));
-            context.Setup(c => c.Admins).Returns(set.Object);
+            context.Setup(c => c.Nonprofits).Returns(set.Object);
             context.Setup(c => c.AspNetUsers).Returns(userSet.Object);
 
         }
@@ -75,7 +78,7 @@ namespace SolveChicago.Tests.Controllers
             var result = (ViewResult)controller.Index();
 
             var viewResult = Assert.IsType<ViewResult>(result);
-            var model = Assert.IsAssignableFrom<IEnumerable<Admin>>(
+            var model = Assert.IsAssignableFrom<IEnumerable<Nonprofit>>(
                 viewResult.ViewData.Model);
             Assert.Equal(3, model.Count());
         }

@@ -19,6 +19,7 @@ namespace SolveChicago.Entities
         public Nullable<System.DateTime> Date { get; set; }
         public string UserId { get; set; }
         public Nullable<bool> Success { get; set; }
+        public string HtmlContent { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
     }

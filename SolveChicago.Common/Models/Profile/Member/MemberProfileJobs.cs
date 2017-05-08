@@ -19,12 +19,9 @@ namespace SolveChicago.Common.Models.Profile.Member
     public class JobEntity
     {
         public int? CorporationId { get; set; }
-        [Required]
         public string Name { get; set; }
-        [Required]
         public DateTime? EmployeeStart { get; set; }
         public DateTime? EmployeeEnd { get; set; }
-        [Required]
         public decimal? EmployeePay { get; set; }
         public string EmployeeReasonForLeaving { get; set; }
         public bool IsCurrent { get; set; }

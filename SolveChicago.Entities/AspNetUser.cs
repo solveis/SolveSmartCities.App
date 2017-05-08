@@ -21,13 +21,13 @@ namespace SolveChicago.Entities
             this.Admins = new HashSet<Admin>();
             this.AspNetUserClaims = new HashSet<AspNetUserClaim>();
             this.AspNetUserLogins = new HashSet<AspNetUserLogin>();
-            this.CaseManagers = new HashSet<CaseManager>();
             this.Communications = new HashSet<Communication>();
             this.Members = new HashSet<Member>();
             this.AspNetRoles = new HashSet<AspNetRole>();
             this.Corporations = new HashSet<Corporation>();
             this.Nonprofits = new HashSet<Nonprofit>();
             this.Referrers = new HashSet<Referrer>();
+            this.CaseManagers = new HashSet<CaseManager>();
         }
     
         public string Id { get; set; }
@@ -56,8 +56,6 @@ namespace SolveChicago.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetUserLogin> AspNetUserLogins { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CaseManager> CaseManagers { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Communication> Communications { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Member> Members { get; set; }
@@ -69,5 +67,7 @@ namespace SolveChicago.Entities
         public virtual ICollection<Nonprofit> Nonprofits { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Referrer> Referrers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CaseManager> CaseManagers { get; set; }
     }
 }

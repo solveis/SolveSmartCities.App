@@ -53,11 +53,6 @@
     </Reference>
     <Reference Include="Elmah, Version=1.2.14706.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Elmah.Mvc, Version=2.1.2.1389, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Elmah.Mvc.2.1.2\lib\net40\Elmah.Mvc.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Azure.KeyVault.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.2.0.4\lib\net45\Microsoft.Azure.KeyVault.Core.dll</HintPath>
@@ -221,6 +216,7 @@
     <Compile Include="Controllers\ProspectsController.cs" />
     <Compile Include="Controllers\ReferrersController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
+    <Compile Include="Controllers\SidebarController.cs" />
     <Compile Include="Controllers\ThanksController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -230,6 +226,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Member\AddMemberViewModel.cs" />
+    <Compile Include="Models\Nonprofit\AddCaseManagerViewModel.cs" />
     <Compile Include="Models\Nonprofit\AssignCaseManagerViewModel.cs" />
     <Compile Include="Models\Profile\MemberProfileViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -253,6 +250,7 @@
     <Content Include="apple-icon-76x76.png" />
     <Content Include="apple-icon-precomposed.png" />
     <Content Include="apple-icon.png" />
+    <Content Include="App_Readme\Elmah.txt" />
     <Content Include="browserconfig.xml" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -565,6 +563,7 @@
     <Content Include="Scripts\foundation.js" />
     <Content Include="Scripts\foundation.min.js" />
     <Content Include="Content\foundation-datepicker.css.map" />
+    <None Include="Properties\PublishProfiles\SolveSmartCities-Staging - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
@@ -817,6 +816,17 @@
     <Content Include="scss\components\_badge.scss" />
     <Content Include="scss\components\_accordion.scss" />
     <Content Include="scss\components\_accordion-menu.scss" />
+    <Content Include="Views\Account\Settings.cshtml" />
+    <Content Include="Views\Nonprofits\AddCaseManager.cshtml" />
+    <Content Include="Views\Profile\MemberOverview.cshtml" />
+    <Content Include="Views\Nonprofits\AssignCaseManager.cshtml" />
+    <Content Include="Views\Admins\CaseManagers.cshtml" />
+    <Content Include="Views\Admins\Members.cshtml" />
+    <Content Include="Views\Shared\Sidebar\_Admin.cshtml" />
+    <Content Include="Views\Shared\Sidebar\_CaseManager.cshtml" />
+    <Content Include="Views\Shared\Sidebar\_Corporation.cshtml" />
+    <Content Include="Views\Shared\Sidebar\_Member.cshtml" />
+    <Content Include="Views\Shared\Sidebar\_Referrer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

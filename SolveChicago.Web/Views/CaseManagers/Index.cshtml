@@ -32,9 +32,8 @@
                 @Html.DisplayFor(modelItem => member.FirstName)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = member.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = member.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = member.Id })
+                @Html.ActionLink("Edit", "MemberOverview", "Profile", new { memberId = member.Id }, null) |
+                @Html.ActionLink("Details", "Details", "Members", new { memberId = member.Id }, null)
             </td>
         </tr>
     }
@@ -48,9 +47,8 @@
                 @Html.DisplayFor(modelItem => member.FirstName)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = member.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = member.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = member.Id })
+                @Html.ActionLink("Edit", "MemberOverview", "Profile", new { memberId = member.Id }, null) |
+                @Html.ActionLink("Details", "Details", "Members", new { @memberId = member.Id }, null)
             </td>
         </tr>
     }

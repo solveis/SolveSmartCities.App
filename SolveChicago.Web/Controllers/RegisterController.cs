@@ -47,7 +47,6 @@ namespace SolveChicago.Web.Controllers
         {
             var result = await CreateAccount(model.Email, model.Password, Enumerations.Role.Admin, model.InvitedByUserId, model.InviteCode);
             AdminService service = new AdminService(this.db);
-            service.MarkAdminInviteCodeAsUsed(model.InvitedByUserId, model.InviteCode, model.Email);
             if (result != null)
                 return result;
             // If we got this far, something failed, redisplay form

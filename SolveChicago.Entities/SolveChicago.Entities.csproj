@@ -97,6 +97,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>data.edmx</DependentUpon>
     </Compile>
+    <Compile Include="ELMAH_Error.cs">
+      <DependentUpon>data.tt</DependentUpon>
+    </Compile>
     <Compile Include="Family.cs">
       <DependentUpon>data.tt</DependentUpon>
     </Compile>

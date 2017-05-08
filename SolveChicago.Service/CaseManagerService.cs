@@ -32,7 +32,7 @@ namespace SolveChicago.Service
             List<FamilyEntity> families = new List<FamilyEntity>();
             foreach(Member m in members)
             {
-                families.Add(service.GetFamily(m));
+                families.Add(service.GetFamily(m, true));
             }
             return families.ToArray();
         }

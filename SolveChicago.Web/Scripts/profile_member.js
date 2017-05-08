@@ -30,12 +30,12 @@
 // flexibly bind radio buttons to control content flow
 window.bindRadioContent = function ($boundElement, $trueElement, $falseElement, $otherElement) {
     $boundElement.on('change', function (e) {
-        if ($(this).val().toLowerCase() == "true") {
+        if ($(this).val().toLowerCase() == "true" || $(this).val().toLowerCase() == "yes") {
             $trueElement.length > 0 ? $trueElement.removeClass('hide') : "";
             $falseElement.length > 0 ? $falseElement.addClass('hide') : "";
             $otherElement.length > 0 ? $otherElement.addClass('hide') : "";
         }
-        else if ($(this).val().toLowerCase() == "false") {
+        else if ($(this).val().toLowerCase() == "false" || $(this).val().toLowerCase() == "no") {
             $trueElement.length > 0 ? $trueElement.addClass('hide') : "";
             $falseElement.length > 0 ? $falseElement.removeClass('hide') : "";
             $otherElement.length > 0 ? $otherElement.addClass('hide') : "";

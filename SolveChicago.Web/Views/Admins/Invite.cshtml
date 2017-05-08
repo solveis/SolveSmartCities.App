@@ -4,11 +4,22 @@
     ViewBag.Title = "Invite";
 }
 
-<h2>Invite</h2>
+
 @using (Html.BeginForm("Invite", "Admins", FormMethod.Post))
 {
     @Html.AntiForgeryToken();
     @Html.HiddenFor(m => m.AdminId)
-    @Html.TextBoxFor(x => x.EmailToInvite)
-    <button>Continue</button>
+
+
+    <div class="row app-dashboard-form-container">
+        <div class="create-profile-form-holder">
+            <h4><strong>ADD: </strong>Case Manager</h4>
+            <hr />
+
+            @Html.TextBoxFor(x => x.EmailToInvite)
+
+            <hr class="line-divider">
+            <input class="submit-create-profile" type="submit" value="Submit">
+        </div>
+    </div>
 }

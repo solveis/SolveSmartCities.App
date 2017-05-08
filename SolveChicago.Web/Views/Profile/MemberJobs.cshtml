@@ -57,7 +57,7 @@
                             @Html.RadioButtonFor(model => model.Member.Jobs[i].IsCurrent, false, new { @class = "is-job-current" })
                             <label for="Member_Jobs_[i]__IsCurrent">No</label>
 
-                            <div class="job-endinfo hide">
+                            <div class="job-endinfo @(Model.Member.Jobs[i].IsCurrent ? "hide" : "")">
                                 @Html.ValidationMessageFor(model => Model.Member.Jobs[i].EmployeeEnd, "", new { @class = "text-danger" })
                                 @Html.LabelFor(model => Model.Member.Jobs[i].EmployeeEnd, htmlAttributes: new { })
                                 @Html.EditorFor(model => Model.Member.Jobs[i].EmployeeEnd, "When was your last day?", new { htmlAttributes = new { @class = "standard-datepicker" } })

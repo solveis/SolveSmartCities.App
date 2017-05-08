@@ -337,11 +337,26 @@ namespace SolveChicago.Web.Controllers
             return View(model);
         }
 
+        // GET: /Account/Settings
+        [Authorize]
+        public ActionResult Settings()
+        {
+            return View();
+        }
+
         //
         // POST: /Account/LogOff
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
+        {
+            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            return RedirectToAction("Index", "Home");
+        }
+
+        // Not public anywhere, but helpful for debugging. Use the POST above for actual application usage.
+        // GET: /Account/LogOff
+        public ActionResult Logout()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");

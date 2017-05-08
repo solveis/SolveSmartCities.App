@@ -1,0 +1,35 @@
+﻿@model SolveChicago.Web.Models.Nonprofit.AddCaseManagerViewModel
+
+@{
+    ViewBag.Title = "Add Case Manager";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(m => m.NonprofitId)
+    @Html.AntiForgeryToken()
+
+    <div class="row app-dashboard-form-container">
+        <div class="create-profile-form-holder">
+            <h4><strong>ADD: </strong>Case Manager</h4>
+            <hr />
+
+
+            @Html.LabelFor(model => model.FirstName, htmlAttributes: new { })
+            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { } })
+            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+
+            @Html.LabelFor(model => model.LastName, htmlAttributes: new { })
+            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { } })
+            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { })
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+
+            <hr class="line-divider">
+            <input class="submit-create-profile" type="submit" value="Submit">
+        </div>
+    </div>
+}

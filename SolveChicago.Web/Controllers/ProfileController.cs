@@ -31,6 +31,27 @@ namespace SolveChicago.Web.Controllers
             base.Dispose();
         }
 
+        [Authorize]
+        public ActionResult Index()
+        {
+            if (State.Roles.Select(x => x.ToString()).Contains(Constants.Roles.Admin))
+                return RedirectToAction("Admin");
+            else if (State.Roles.Select(x => x.ToString()).Contains(Constants.Roles.Nonprofit))
+                return RedirectToAction("Nonprofit");
+            else if (State.Roles.Select(x => x.ToString()).Contains(Constants.Roles.CaseManager))
+                return RedirectToAction("CaseManager");
+            else if (State.Roles.Select(x => x.ToString()).Contains(Constants.Roles.Referrer))
+                return RedirectToAction("Referrer");
+            else if (State.Roles.Select(x => x.ToString()).Contains(Constants.Roles.Member))
+                return RedirectToAction("MemberPersonal");
+            else if (State.Roles.Select(x => x.ToString()).Contains(Constants.Roles.Corporation))
+                return RedirectToAction("Corporation");
+            else
+                throw new ApplicationException("User has no roles assigned");
+
+
+        }
+
         [Authorize(Roles = "Admin, Nonprofit, CaseManager, Member")]
         // GET: Profile/MemberPersonal
         public ActionResult MemberPersonal(int? id)
@@ -193,6 +214,15 @@ namespace SolveChicago.Web.Controllers
             return View(model);
         }
 
+        // GET: Profile/MemberOverview
+        public ActionResult MemberOverview(int? memberId)
+        {
+            ImpersonateMember(memberId);
+            MemberService service = new MemberService(this.db);
+            MemberProfile model = service.Get(State.MemberId);
+            return View(model);
+        }
+
         private MemberProfilePersonalViewModel FormatMemberProfilePersonalViewModel(MemberProfilePersonal member)
         {
             MemberProfilePersonalViewModel model = new MemberProfilePersonalViewModel
@@ -254,8 +284,20 @@ namespace SolveChicago.Web.Controllers
             MemberProfileNonprofitViewModel model = new MemberProfileNonprofitViewModel
             {
                 Member = PopulateNonprofitEmptyFields(member),
+                NonprofitsList = GetNonprofitsList(),
+                SkillsList = GetSkillsList(),
             };
             return model;
+        }
+
+        private string[] GetSkillsList()
+        {
+            return db.Skills.Select(x => x.Name).ToArray();
+        }
+
+        private string[] GetNonprofitsList()
+        {
+            return db.Nonprofits.Select(x => x.Name).ToArray();
         }
 
         private MemberProfileJobViewModel FormatMemberProfileJobsViewModel(MemberProfileJobs member)
@@ -273,13 +315,15 @@ namespace SolveChicago.Web.Controllers
             return db.Corporations.Select(x => x.Name).ToArray();
         }
 
-        private MemberProfileGovernmentProgramViewModel FormatMemberProfileGovernmentProgramsViewModel(MemberProfileGovernmentPrograms member)
+        private MemberProfileGovernmentProgramViewModel 
+            FormatMemberProfileGovernmentProgramsViewModel(MemberProfileGovernmentPrograms member)
         {
             MemberService mService = new MemberService(this.db);
             GovernmentProgramService gService = new GovernmentProgramService(this.db);
             MemberProfileGovernmentProgramViewModel model = new MemberProfileGovernmentProgramViewModel
             {
                 Member = PopulateGovernmentProgramEmptyFields(member),
+                IsUtilizingGovernmentPrograms = member.GovernmentPrograms.Count() > 0,
                 GovernmentProgramList = gService.Get().ToDictionary(x => x.Id, x => x.Name),
             };
             return model;
@@ -322,7 +366,7 @@ namespace SolveChicago.Web.Controllers
         private MemberProfileGovernmentPrograms PopulateGovernmentProgramEmptyFields(MemberProfileGovernmentPrograms model)
         {
             if (model.GovernmentPrograms == null)
-                model.GovernmentPrograms = new GovernmentProgramEntity[1] { new GovernmentProgramEntity() };
+                model.GovernmentPrograms = new int[0];
 
             return model;
         }
@@ -484,7 +528,7 @@ namespace SolveChicago.Web.Controllers
                 db.Entry(model).State = EntityState.Modified;
                 db.SaveChanges();
             }
-            return RedirectToAction("Index", "Admin");
+            return RedirectToAction("Index", "Admins");
         }
     }
 }

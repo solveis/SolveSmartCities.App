@@ -11,8 +11,8 @@
         @using (Html.BeginForm("Admin", "Register", FormMethod.Post, new { @class = "form-registration-group", role = "form" }))
         {
             @Html.AntiForgeryToken()
-            @Html.Hidden("InvitedByUserId", Model.InviteByUserid)
-            @Html.Hidden("InviteCode", Model.InviteCode)
+            @Html.HiddenFor(m => m.InvitedByUserId)
+            @Html.HiddenFor(m => m.InviteCode)
             @Html.ValidationSummary("", new { @class = "text-danger" })
             @Html.TextBoxFor(m => m.Email, new { @class = "form-registration-input form-registration-input--has-email-icon", type = "email", @placeholder = "Email" })
             @Html.PasswordFor(m => m.Password, new { @class = "form-registration-input form-registration-input--has-password-icon", type = "password", @placeholder = "Password" })

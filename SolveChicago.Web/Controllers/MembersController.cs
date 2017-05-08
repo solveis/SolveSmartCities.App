@@ -38,7 +38,7 @@ namespace SolveChicago.Web.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult Survey(int? id)
+        public ActionResult CreateProfile(int? id)
         {
             if (!id.HasValue)
             {

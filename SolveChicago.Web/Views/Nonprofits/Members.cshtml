@@ -41,9 +41,9 @@
             @Html.DisplayFor(modelItem => item.CreatedDate)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", "Members", new { id = item.Id }, null) |
-            @Html.ActionLink("Details", "Details", "Members", new { id= item.Id }, null) |
-            @Html.ActionLink("Delete", "Delete", "Members", new { id=item.Id }, null)
+            @Html.ActionLink("Edit", "MemberOverview", "Profile", new { memberId = item.Id }, null) |
+            @Html.ActionLink("Details", "Details", "Members", new { memberId = item.Id }, null) |
+            @Html.ActionLink("Assign Case Manager", "AssignCaseManager", new { memberId = item.Id, nonprofitId = ViewBag.NonprofitId })
         </td>
     </tr>
 }

@@ -16,19 +16,21 @@
         @Html.AntiForgeryToken()
 
         <div>
+            <label for="Member_UtilizingGovernmentPrograms">Are you currently utilizing any Government Programs?</label>
+            @Html.RadioButtonFor(m => m.IsUtilizingGovernmentPrograms, true)
+            <label for="Member_UtilizingGovernmentPrograms">Yes</label>
+            @Html.RadioButtonFor(m => m.IsUtilizingGovernmentPrograms, false)
+            <label for="Member_UtilizingGovernmentProgramsMember_UtilizingGovernmentPrograms">No</label>
+
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.Member.MemberId)
-            @for (int i = 0; i < Model.Member.GovernmentPrograms.Length; i++)
-            {
-                @Html.HiddenFor(m => Model.Member.GovernmentPrograms[i].Id)
-                <div id="GovernmentProgram" data-id="@(i)">
-                    <div class="row app-dashboard-form-container-space-around">
-                        @Html.LabelFor(model => Model.Member.GovernmentPrograms[i].ProgramId, htmlAttributes: new {  })
-                        @Html.DropDownListFor(model => Model.Member.GovernmentPrograms[i].ProgramId, Model.GovernmentProgramList.Select(x => new SelectListItem { Value = x.Key.ToString(), Text = x.Value, Selected = x.Key == Model.Member.GovernmentPrograms[i].MemberId }), new { @multiple = "",  @class = "ui fluid dropdown" })
-                        @Html.ValidationMessageFor(model => Model.Member.GovernmentPrograms[i].ProgramId, "", new { @class = "text-danger" })
-                    </div>
+            <div id="GovernmentProgram" class="@(Model.IsUtilizingGovernmentPrograms ? "" : "hide")">
+                <div class="row app-dashboard-form-container-space-around">
+                    @Html.ValidationMessageFor(model => Model.Member.GovernmentPrograms, "", new { @class = "text-danger" })
+                    @Html.LabelFor(model => Model.Member.GovernmentPrograms, htmlAttributes: new {  })
+                    @Html.DropDownListFor(model => Model.Member.GovernmentPrograms, Model.GovernmentProgramList.Select(x => new SelectListItem { Value = x.Key.ToString(), Text = x.Value }), "Please select the programs you are currently utilizing", new { @multiple = "", @class = "ui fluid dropdown" })
                 </div>
-            }
+            </div>
             <hr />
             <div class="row align-center">
                 <input type="submit" value="Submit" class="submit-create-profile" />
@@ -42,4 +44,12 @@
     @Scripts.Render("~/bundles/profile_member")
     @Scripts.Render("~/bundles/semantic")
     @Styles.Render("~/Content/semantic")
+
+    <script>
+        window.bindRadioContent($('input[name=IsUtilizingGovernmentPrograms]'), $('#GovernmentProgram'), "", "");
+        @foreach(var a in Model.Member.GovernmentPrograms)
+        {
+            @:$('#Member_GovernmentPrograms').dropdown('set selected', @(a));
+        }
+    </script>
 }

@@ -4,27 +4,27 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static SolveChicago.Common.Enumerations;
 
 namespace SolveChicago.Common.Models.Profile.Member
 {
     public class MemberProfileNonprofits
     {
         public int MemberId { get; set; }
+        public string InterestedInWorkforceSkill { get; set; }
         public NonprofitEntity[] Nonprofits { get; set; }
     }
 
     public class NonprofitEntity
     {
         public int? NonprofitId { get; set; }
-        [Required]
         public string NonprofitName { get; set; }
         public int? CaseManagerId { get; set; }
         public string CaseManagerName { get; set; }
-        [Required]
         public string SkillsAcquired { get; set; }
-        [Required]
         public string Enjoyed { get; set; }
-        [Required]
         public string Struggled { get; set; }
+        public DateTime? Start { get; set; }
+        public DateTime? End { get; set; }
     }
 }

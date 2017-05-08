@@ -10,6 +10,7 @@ using SolveChicago.Entities;
 using SolveChicago.Service;
 using SolveChicago.Web.Models.Nonprofit;
 using SolveChicago.Web.Models.Member;
+using SolveChicago.Common;
 
 namespace SolveChicago.Web.Controllers
 {
@@ -47,15 +48,59 @@ namespace SolveChicago.Web.Controllers
             return View(members.ToList());
         }
 
-        // GET : Nonprofits/AssignCaseManager
+
+
+        //GET: Nonprofits/AddCaseManager
+        [HttpGet]
+        public ActionResult AddCaseManager(int? nonprofitId)
+        {
+            ImpersonateNonprofit(nonprofitId);
+            AddCaseManagerViewModel model = new AddCaseManagerViewModel
+            {
+                NonprofitId = State.NonprofitId
+            };
+            return View(model);
+        }
+
+        // POST: Nonprofits/AddCaseManager
+        [HttpPost]
+        public ActionResult AddCaseManager(AddCaseManagerViewModel model)
+        {
+            ImpersonateNonprofit(model.NonprofitId);
+            if (ModelState.IsValid)
+            {
+
+                CaseManager caseManager = new CaseManager
+                {
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Email = model.Email,
+                    CreatedDate = DateTime.UtcNow,
+                    NonprofitId = State.NonprofitId
+                };
+                db.CaseManagers.Add(caseManager);
+                db.SaveChanges();
+
+                CommunicationService service = new CommunicationService(this.db);
+                string inviteUrl = string.Format("{0}/Register/CaseManager?id={1}", Settings.Website.BaseUrl, caseManager.Id);
+                service.NonprofitInviteCaseManager(caseManager, State.Nonprofit.Name, inviteUrl);
+                return NonprofitRedirect(State.NonprofitId);
+            }
+            return View(model);
+        }
+
+        // POST : Nonprofits/AssignCaseManager
         public ActionResult AssignCaseManager(int? nonprofitId, int memberId)
         {
             ImpersonateNonprofit(nonprofitId);
             NonprofitService service = new NonprofitService(this.db);
+            Member member = db.Members.Find(memberId);
             AssignCaseManagerViewModel model = new AssignCaseManagerViewModel
             {
                 NonprofitId = State.NonprofitId,
+                NonprofitName = State.Nonprofit.Name,
                 MemberId = memberId,
+                MemberName = string.Format("{0} {1}", member.FirstName, member.LastName),
                 CaseManagers = service.GetCaseManagers(State.NonprofitId)
             };
             return View(model);

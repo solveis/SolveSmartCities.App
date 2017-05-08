@@ -84,7 +84,7 @@ namespace SolveChicago.Web.Controllers
                 }
 
                 CommunicationService service = new CommunicationService(this.db);
-                string surveyUrl = string.Format("{0}/Members/Survey?id={1}", Settings.Website.BaseUrl, member.Id);
+                string surveyUrl = string.Format("{0}/Members/CreateProfile?id={1}", Settings.Website.BaseUrl, member.Id);
                 service.SendSurveyToMember(member, State.Referrer.Name, surveyUrl);
                 return ReferrerRedirect(State.ReferrerId);
             }

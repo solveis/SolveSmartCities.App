@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<SolveChicago.Entities.Member>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Prospects";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <table class="table">
@@ -24,9 +24,10 @@
                 @Html.DisplayFor(modelItem => member.FirstName)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = member.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = member.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = member.Id })
+                @if (User.IsInRole("Nonprofit") || User.IsInRole("CaseManager"))
+                {
+                    @Html.ActionLink("Invite", "InviteMember", new { memberId = member.Id, nonprofitId = ViewBag.NonprofitId })
+                }
             </td>
         </tr>
     }

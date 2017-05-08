@@ -31,11 +31,25 @@ namespace SolveChicago.Web.Controllers
             base.Dispose();
         }
 
-        // GET: Admins
+        // GET: Admins - Nonprofit List
         public ActionResult Index()
         {
-            var admins = db.Admins.Include(a => a.AspNetUser);
-            return View(admins.ToList());
+            var nonprofits = db.Nonprofits.ToArray();
+            return View(nonprofits.ToList());
+        }
+
+        // GET: Admins/CaseManagers
+        public ActionResult CaseManagers()
+        {
+            var caseManagers = db.CaseManagers.ToArray();
+            return View(caseManagers.ToList());
+        }
+
+        // GET: Admins/Members
+        public ActionResult Members()
+        {
+            var members = db.Members.ToArray();
+            return View(members.ToList());
         }
 
         // GET: Admins/Details/5

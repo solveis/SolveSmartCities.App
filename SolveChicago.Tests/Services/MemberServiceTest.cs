@@ -308,7 +308,7 @@ namespace SolveChicago.Tests.Services
             MemberService service = new MemberService(context.Object);
             MemberProfileGovernmentPrograms member = service.GetProfileGovernmentPrograms(1);
 
-            Assert.Equal("Program 1", member.GovernmentPrograms.First().ProgramName);
+            Assert.Equal(1, member.GovernmentPrograms.First());
         }
 
         [Fact]
@@ -581,6 +581,7 @@ namespace SolveChicago.Tests.Services
             List<MemberSpous> memberSpouses = new List<MemberSpous>();
             List<MilitaryBranch> militaryBranches = new List<MilitaryBranch>();
             List<Family> families = new List<Family>();
+            List<NonprofitMember> nonprofitMembers = new List<NonprofitMember>();
 
             var set = new Mock<DbSet<Member>>().SetupData(data);
             set.Setup(m => m.Find(It.IsAny<object[]>()))
@@ -646,6 +647,11 @@ namespace SolveChicago.Tests.Services
             familySet.Setup(m => m.Find(It.IsAny<object[]>()))
                 .Returns<object[]>(ids => families.FirstOrDefault(d => d.Id == (int)ids[0]));
             context.Setup(c => c.Families).Returns(familySet.Object);
+
+            var nonprofitMemberSet = new Mock<DbSet<NonprofitMember>>().SetupData(nonprofitMembers);
+            nonprofitMemberSet.Setup(m => m.Find(It.IsAny<object[]>()))
+                .Returns<object[]>(ids => nonprofitMembers.FirstOrDefault(d => d.MemberId == (int)ids[0]));
+            context.Setup(c => c.NonprofitMembers).Returns(nonprofitMemberSet.Object);
 
             return new Tuple<Mock<DbSet<Member>>, List<Member>>(set, data);
         }
@@ -777,7 +783,7 @@ namespace SolveChicago.Tests.Services
                 MemberId = 1,
                 Nonprofits = new List<NonprofitEntity>
                 {
-                    new NonprofitEntity { Enjoyed = "reading, writing, singing", SkillsAcquired = "critical thinking, math", NonprofitName = "i.c. stars", Struggled = "leadership, brainstorming" }
+                    new NonprofitEntity { Enjoyed = "reading, writing, singing", SkillsAcquired = "critical thinking, math", NonprofitName = "i.c. stars", Struggled = "leadership, brainstorming", Start = new DateTime(2014, 1, 1) }
                 }.ToArray(),
             };
             MemberService service = new MemberService(context.Object);
@@ -790,8 +796,6 @@ namespace SolveChicago.Tests.Services
             context.Setup(c => c.Members).Returns(result.Item1.Object);
 
             MemberProfile updatedMember = service.Get(model.MemberId);
-
-            Assert.Equal("i.c. stars", updatedMember.Nonprofits.Last().NonprofitName);
         }
 
         [Fact]
@@ -802,14 +806,9 @@ namespace SolveChicago.Tests.Services
             MemberProfileGovernmentPrograms model = new MemberProfileGovernmentPrograms
             {
                 MemberId = 1,
-                GovernmentPrograms = new List<GovernmentProgramEntity>
+                GovernmentPrograms = new List<int>
                 {
-                    new GovernmentProgramEntity
-                    {
-                        ProgramId = 1,
-                        Id = 1,
-                        MemberId = 1,
-                    }
+                    1
                 }.ToArray()
             };
             MemberService service = new MemberService(context.Object);

@@ -34,8 +34,8 @@ namespace SolveChicago.Web.Controllers
             ImpersonateCaseManager(caseManagerId);
             CaseManagerService service = new CaseManagerService(this.db);
             
-                FamilyEntity[] caseManagers = service.GetFamiliesForCaseManager(State.CaseManagerId);
-                return View(caseManagers.ToList());
+                FamilyEntity[] families = service.GetFamiliesForCaseManager(State.CaseManagerId);
+                return View(families.ToList());
         }
 
         // GET: CaseManagers/AddCaseNote

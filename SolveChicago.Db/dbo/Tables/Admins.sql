@@ -4,7 +4,7 @@
     [Email] NVARCHAR(128) NOT NULL, 
 	[FirstName] NVARCHAR(128) NULL, 
 	[LastName] NVARCHAR(128) NULL, 
-    [ProfilePicturePath] NCHAR(10) NULL, 
+    [ProfilePicturePath] NVARCHAR(128) NULL, 
 	[Phone] NVARCHAR(128) NULL, 
     [CreatedDate] DATETIME2 NULL, 
 	[InvitedBy] NVARCHAR(50) NULL, 

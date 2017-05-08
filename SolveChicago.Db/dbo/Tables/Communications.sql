@@ -5,6 +5,7 @@
     [Date] DATETIME2 NULL, 
     [UserId] NVARCHAR(128) NULL, 
     [Success] BIT NULL, 
+    [HtmlContent] NVARCHAR(MAX) NULL, 
     CONSTRAINT [PK_Communications] PRIMARY KEY (Id), 
 	CONSTRAINT [FK_Communications_AspNetUsers] FOREIGN KEY (UserId) REFERENCES AspNetUsers(Id) ON DELETE CASCADE
 )

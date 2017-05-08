@@ -14,6 +14,13 @@ namespace SolveChicago.Common.Models.Profile.Member
         public string FirstName { get; set; }
         [Required]
         public string LastName { get; set; }
+        public string FullName
+        {
+            get
+            {
+                return this.FirstName + " " + this.LastName;
+            }
+        }
         [Required]
         public string Email { get; set; }
         [Required]
@@ -32,6 +39,13 @@ namespace SolveChicago.Common.Models.Profile.Member
         [Required]
         public string Country { get; set; }
         public string ZipCode { get; set; }
+        public string Address
+        {
+            get
+            {
+                return this.Address1 + " " + this.Address2 + " " + this.City + ", " + this.Province + " " + this.Country;
+            }
+        }
         public bool IsHeadOfHousehold { get; set; }
 
         public string ProfilePicturePath { get; set; }
@@ -45,20 +59,20 @@ namespace SolveChicago.Common.Models.Profile.Member
         {
             get
             {
-                return this.Schools != null && this.Schools.Any(x => x.End.HasValue) ? this.Schools.Where(x => x.End.HasValue).OrderByDescending(x => x.Start).First().Type : string.Empty;
+                return this.Schools != null && this.Schools.Any(x => x.End.HasValue) ? this.Schools.Where(x => x.End.HasValue).OrderByDescending(x => x.Start).First().Type : "-";
             }
         }
         public string Degree {
             get
             {
-                return this.Schools != null && this.Schools.Any(x => !string.IsNullOrEmpty(x.Degree)) ? this.Schools.Where(x => !string.IsNullOrEmpty(x.Degree)).OrderByDescending(x => x.Start).First().Degree : string.Empty;
+                return this.Schools != null && this.Schools.Any(x => !string.IsNullOrEmpty(x.Degree)) ? this.Schools.Where(x => !string.IsNullOrEmpty(x.Degree)).OrderByDescending(x => x.Start).First().Degree : "-";
             }
         }
         public string LastSchool
         {
             get
             {
-                return this.Schools != null && this.Schools.Any() ? this.Schools.OrderByDescending(x => x.Start).First().Name : string.Empty;
+                return this.Schools != null && this.Schools.Any() ? this.Schools.OrderByDescending(x => x.Start).First().Name : "-";
             }
         }
         public MilitaryEntity[] Military { get; set; }
@@ -67,5 +81,12 @@ namespace SolveChicago.Common.Models.Profile.Member
         public NonprofitEntity[] Nonprofits { get; set; }
         public JobEntity[] Jobs { get; set; }
         public GovernmentProgramEntity[] GovernmentPrograms { get; set; }
+        public MemberStage MemberStage { get; set; }
+    }
+
+    public class MemberStage
+    {
+        public string Stage { get; set; }
+        public int Percent { get; set; }
     }
 }

@@ -1,0 +1,54 @@
+﻿@using SolveChicago.Common;
+
+<ul class="menu vertical">
+    <li class="menu-link">
+        <a href="/Admins" class="is-active">
+            <img class="menu-icon" src="../img/side-nav-members-icon.svg">
+            <span class="app-dashboard-sidebar-text">Nonprofits</span>
+        </a>
+    </li>
+    <li class="menu-link">
+        <a href="/Admins/CaseManagers" class="is-active">
+            <img class="menu-icon" src="../img/side-nav-members-icon.svg">
+            <span class="app-dashboard-sidebar-text">CaseManagers</span>
+        </a>
+    </li>
+    <li class="menu-link">
+        <a href="/Admins/Members" class="is-active">
+            <img class="menu-icon" src="../img/side-nav-members-icon.svg">
+            <span class="app-dashboard-sidebar-text">Members</span>
+        </a>
+    </li>
+    <li>
+        <a href="/Prospects" class="is-active">
+
+            <img class="menu-icon" src="../img/side-nav-prospect-icon.svg">
+            <span class="app-dashboard-sidebar-text">Prospects</span>
+        </a>
+    </li>
+</ul>
+
+<ul class="sub-menu">
+    <li>
+        <span class="case-manager-profile-picture">
+            <img class="case-manager-thumb" src="@(ViewBag.AdminProfilePicture)">
+        </span>
+
+        <span class="case-manager-name">
+            @(ViewBag.AdminName)
+        </span>
+
+        <span class="case-manager-company">
+            @(Constants.Global.SolveSmartCities)
+        </span>
+    </li>
+    <li>
+        <a href="/Account/Settings">
+            <img class="sub-menu-icon" src="../img/submenu-icon-settings.svg">
+            <span class="app-dashboard-sidebar-text">Settings</span>
+        </a>
+    </li>
+    <li>
+        @Html.Partial("_LoginPartial")
+    </li>
+</ul>

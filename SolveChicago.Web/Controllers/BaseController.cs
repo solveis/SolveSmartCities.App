@@ -127,10 +127,20 @@ namespace SolveChicago.Web.Controllers
                 {
                     _state.Member = member;
                     _state.MemberId = member.Id;
+
+                    ViewBag.MemberId = member.Id;
+                    ViewBag.MemberName = string.Format("{0} {1}", member.FirstName, member.LastName);
+                    ViewBag.MemberProfilePicture = member.ProfilePicturePath;
+
                     if (member.NonprofitMembers.Select(x => x.CaseManager).FirstOrDefault() != null)
                     {
-                        _state.CaseManager = member.NonprofitMembers.Select(x => x.CaseManager).First();
-                        _state.CaseManagerId = member.NonprofitMembers.Select(x => x.CaseManager).First().Id;
+                        CaseManager caseManager = member.NonprofitMembers.Select(x => x.CaseManager).First();
+                        _state.CaseManager = caseManager;
+                        _state.CaseManagerId = caseManager.Id;
+
+                        ViewBag.CaseManagerId = caseManager.Id;
+                        ViewBag.CaseManagerName = string.Format("{0} {1}", caseManager.FirstName, caseManager.LastName);
+                        ViewBag.CaseManagerProfilePicture = caseManager.ProfilePicturePath;
                     }
                 }
             }
@@ -142,6 +152,19 @@ namespace SolveChicago.Web.Controllers
                 {
                     _state.CaseManager = caseManager;
                     _state.CaseManagerId = caseManager.Id;
+                    
+                    ViewBag.CaseManagerId = caseManager.Id;
+                    ViewBag.CaseManagerName = string.Format("{0} {1}", caseManager.FirstName, caseManager.LastName);
+                    ViewBag.CaseManagerProfilePicture = caseManager.ProfilePicturePath;
+
+                    if(caseManager.NonprofitId.HasValue)
+                    {
+                        _state.Nonprofit = caseManager.Nonprofit;
+                        _state.NonprofitId = caseManager.Nonprofit.Id;
+
+                        ViewBag.NonprofitId = caseManager.Nonprofit.Id;
+                        ViewBag.NonprofitName = caseManager.Nonprofit.Name;
+                    }
                 }
             }
             if (_state.Roles.Contains(Enumerations.Role.Corporation))
@@ -152,6 +175,9 @@ namespace SolveChicago.Web.Controllers
                 {
                     _state.Corporation = corporation;
                     _state.CorporationId = corporation.Id;
+                    
+                    ViewBag.CorporationId = corporation.Id;
+                    ViewBag.CorporationName = corporation.Name;
                 }
             }
             if (_state.Roles.Contains(Enumerations.Role.Nonprofit))
@@ -162,6 +188,9 @@ namespace SolveChicago.Web.Controllers
                 {
                     _state.Nonprofit = nonprofit;
                     _state.NonprofitId = nonprofit.Id;
+
+                    ViewBag.NonprofitId = nonprofit.Id;
+                    ViewBag.NonprofitName = nonprofit.Name;
                 }
             }
 
@@ -173,6 +202,10 @@ namespace SolveChicago.Web.Controllers
                 {
                     _state.Admin = admin;
                     _state.AdminId = admin.Id;
+
+                    ViewBag.AdminId = admin.Id;
+                    ViewBag.AdminName = string.Format("{0} {1}", admin.FirstName, admin.LastName);
+                    ViewBag.AdminProfilePicture = admin.ProfilePicturePath;
                 }
             }
 
@@ -184,6 +217,9 @@ namespace SolveChicago.Web.Controllers
                 {
                     _state.Referrer = referrer;
                     _state.ReferrerId = referrer.Id;
+
+                    ViewBag.ReferrerId = referrer.Id;
+                    ViewBag.ReferrerName = referrer.Name;
                 }
             }
         }
@@ -253,6 +289,8 @@ namespace SolveChicago.Web.Controllers
                     return 5;
                 case Common.Constants.Member.SurveyStep.GovernmentPrograms: // gov benefits
                     return 6;
+                case Common.Constants.Member.SurveyStep.Complete: // complete
+                    return 7;
                 default:
                     return 0;
             }
@@ -429,14 +467,12 @@ namespace SolveChicago.Web.Controllers
         protected async Task<ActionResult> CreateAccount(string userName, string password, Enumerations.Role role, string invitedByUserId = "", string inviteCode = "")
         {
             var user = new ApplicationUser { UserName = userName, Email = userName };
-            AspNetUser aspnetUser = new AspNetUser();
             if (ModelState.IsValid)
             {
                 var result = await UserManager.CreateAsync(user, password);
-                aspnetUser = GetUserById(user.Id);
                 if (result.Succeeded)
                 {
-                    var eventualResult = await CreateUserAndAssignRoles(userName, password, role, invitedByUserId, user, aspnetUser, inviteCode);
+                    var eventualResult = await CreateUserAndAssignRoles(userName, password, role, invitedByUserId, user, inviteCode);
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
@@ -450,13 +486,14 @@ namespace SolveChicago.Web.Controllers
             return null;
         }
 
-        private async Task<ActionResult> CreateUserAndAssignRoles(string userName, string password, Enumerations.Role role, string invitedByUserId, ApplicationUser user, AspNetUser aspnetUser, string inviteCode)
+        private async Task<ActionResult> CreateUserAndAssignRoles(string userName, string password, Enumerations.Role role, string invitedByUserId, ApplicationUser user, string inviteCode)
         {
             switch (role)
             {
                 case Enumerations.Role.Member:
                     {
                         AssertRole(Common.Constants.Roles.Member);
+                        AspNetUser aspnetUser = GetUserById(user.Id);
                         await this.UserManager.AddToRoleAsync(user.Id, Common.Constants.Roles.Member);
                         if (!UserProfileHasValidMappings(user.Id))
                         {
@@ -476,6 +513,7 @@ namespace SolveChicago.Web.Controllers
                 case Enumerations.Role.CaseManager:
                     {
                         AssertRole(Common.Constants.Roles.CaseManager);
+                        AspNetUser aspnetUser = GetUserById(user.Id);
                         await this.UserManager.AddToRoleAsync(user.Id, Common.Constants.Roles.CaseManager);
                         if (!UserProfileHasValidMappings(user.Id))
                         {
@@ -489,6 +527,7 @@ namespace SolveChicago.Web.Controllers
                 case Enumerations.Role.Nonprofit:
                     {
                         AssertRole(Common.Constants.Roles.Nonprofit);
+                        AspNetUser aspnetUser = GetUserById(user.Id);
                         await this.UserManager.AddToRoleAsync(user.Id, Common.Constants.Roles.Nonprofit);
                         if (!UserProfileHasValidMappings(user.Id))
                         {
@@ -503,6 +542,7 @@ namespace SolveChicago.Web.Controllers
                 case Enumerations.Role.Corporation:
                     {
                         AssertRole(Common.Constants.Roles.Corporation);
+                        AspNetUser aspnetUser = GetUserById(user.Id);
                         await this.UserManager.AddToRoleAsync(user.Id, Common.Constants.Roles.Corporation);
                         if (!UserProfileHasValidMappings(user.Id))
                         {
@@ -517,6 +557,7 @@ namespace SolveChicago.Web.Controllers
                 case Enumerations.Role.Referrer:
                     {
                         AssertRole(Common.Constants.Roles.Referrer);
+                        AspNetUser aspnetUser = GetUserById(user.Id);
                         await this.UserManager.AddToRoleAsync(user.Id, Common.Constants.Roles.Referrer);
                         if (!UserProfileHasValidMappings(user.Id))
                         {
@@ -531,12 +572,13 @@ namespace SolveChicago.Web.Controllers
                 case Enumerations.Role.Admin:
                     {
                         AssertRole(Common.Constants.Roles.Admin);
+                        AspNetUser aspnetUser = GetUserById(user.Id);
                         await this.UserManager.AddToRoleAsync(user.Id, Common.Constants.Roles.Admin);
                         if (!UserProfileHasValidMappings(user.Id))
                         {
                             Admin model = new Admin { Email = userName, InvitedBy = invitedByUserId, AspNetUser = aspnetUser, CreatedDate = DateTime.UtcNow };
                             AdminService service = new AdminService(this.db);
-                            service.MarkAdminInviteCodeAsUsed(invitedByUserId, inviteCode, user.Id);
+                            service.MarkAdminInviteCodeAsUsed(invitedByUserId, inviteCode, userName);
                             db.Admins.Add(model);
                             db.SaveChanges();
                             return AdminRedirect(model.Id);
@@ -593,6 +635,8 @@ namespace SolveChicago.Web.Controllers
                     {
                         State.CaseManager = caseManager;
                         State.CaseManagerId = caseManager.Id;
+
+                        ViewBag.CaseManagerId = caseManager.Id;
                     }
                 }
             }
@@ -607,6 +651,8 @@ namespace SolveChicago.Web.Controllers
                     Nonprofit nonprofit = db.Nonprofits.Find(nonprofitId.Value);
                     State.NonprofitId = nonprofit.Id;
                     State.Nonprofit = nonprofit;
+
+                    ViewBag.NonprofitId = nonprofit.Id;
                 }
             }
         }
@@ -620,6 +666,8 @@ namespace SolveChicago.Web.Controllers
                     Referrer referrer = db.Referrers.Find(referrerId.Value);
                     State.ReferrerId = referrer.Id;
                     State.Referrer = referrer;
+
+                    ViewBag.ReferrerId = referrer.Id;
                 }
             }
         }

@@ -39,6 +39,7 @@ namespace SolveChicago.Service
                     Address2 = member.Addresses.Any() ? member.Addresses.Last().Address2 : string.Empty,
                     Birthday = member.Birthday,
                     City = member.Addresses.Any() ? member.Addresses.Last().City : string.Empty,
+                    ContactPreference = member.ContactPreference,
                     Country = member.Addresses.Any() ? member.Addresses.Last().Country : string.Empty,
                     Email = member.Email,
                     Jobs = GetJobs(member),
@@ -46,20 +47,57 @@ namespace SolveChicago.Service
                     FirstName = member.FirstName,
                     Gender = member.Gender,
                     Id = member.Id,
-                    Interests = member.Interests.Any() ? string.Join(",", member.Interests.Select(x => x.Name).ToArray()) : string.Empty,
+                    Interests = member.Interests.Any() ? string.Join(", ", member.Interests.Select(x => x.Name).ToArray()) : string.Empty,
                     IsHeadOfHousehold = member.IsHeadOfHousehold ?? false,
                     LastName = member.LastName,
                     Nonprofits = GetNonprofits(member),
-                    Phone = member.PhoneNumbers.Any() ? string.Join(",", member.PhoneNumbers.Select(x => x.Number).ToArray()) : string.Empty,
+                    Phone = member.PhoneNumbers.Any() ? string.Join(", ", member.PhoneNumbers.Select(x => x.Number).ToArray()) : string.Empty,
                     ProfilePicturePath = member.ProfilePicturePath,
                     Province = member.Addresses.Any() ? member.Addresses.Last().Province : string.Empty,
                     Schools = GetSchools(member),
                     Income = member.Income,
                     IsMilitary = member.IsMilitary,
                     Military = GetMilitary(member),
-                    GovernmentPrograms = GetGovernmentPrograms(member)
+                    GovernmentPrograms = GetGovernmentPrograms(member),
+                    MemberStage = GetMemberStage(member),
                 };
             }
+        }
+
+        private MemberStage GetMemberStage(Member member)
+        {
+            MemberStage model = new MemberStage();
+            if (member.SurveyStep == Constants.Member.SurveyStep.Invited)
+            {
+                model.Stage = Constants.Member.Stage.InviteSent;
+                model.Percent = 20;
+            }
+            else if (member.SurveyStep != null && member.SurveyStep != Constants.Member.SurveyStep.Invited && member.SurveyStep != Constants.Member.SurveyStep.Complete)
+            {
+                model.Stage = Constants.Member.Stage.ProfileInProgress;
+                model.Percent = 40;
+            }
+            else if (member.SurveyStep == Constants.Member.SurveyStep.Complete)
+            {
+                model.Stage = Constants.Member.Stage.ProfileCompleted;
+                model.Percent = 60;
+            }
+            else if (member.NonprofitMembers.Any(x => x.Start > member.CreatedDate && !x.End.HasValue))
+            {
+                model.Stage = Constants.Member.Stage.InTraining;
+                model.Percent = 80;
+            }
+            else if (member.MemberCorporations.Any(x => x.Start > member.CreatedDate && !x.End.HasValue))
+            {
+                model.Stage = Constants.Member.Stage.JobPlaced;
+                model.Percent = 100;
+            }
+            else
+            {
+                model.Stage = Constants.Member.Stage.OffTrack;
+                model.Percent = 0;
+            }
+            return model;
         }
 
         public MemberProfilePersonal GetProfilePersonal(int id)
@@ -135,6 +173,7 @@ namespace SolveChicago.Service
                 return new MemberProfileNonprofits
                 {
                     MemberId = member.Id,    
+                    InterestedInWorkforceSkill = (member.IsWorkforceInterested.HasValue && member.IsWorkforceInterested.Value == true) ? Enumerations.TripleBoolean.Yes.ToString() : (member.NonprofitMembers.Count() > 0 ? Enumerations.TripleBoolean.Other.ToString() : Enumerations.TripleBoolean.No.ToString()),
                     Nonprofits = GetNonprofits(member),
                 };
             }
@@ -165,7 +204,7 @@ namespace SolveChicago.Service
                 return new MemberProfileGovernmentPrograms
                 {
                     MemberId = member.Id,
-                    GovernmentPrograms = GetGovernmentPrograms(member)
+                    GovernmentPrograms = GetGovernmentProgramIds(member)
                 };
             }
         }
@@ -181,14 +220,22 @@ namespace SolveChicago.Service
 
         private GovernmentProgramEntity[] GetGovernmentPrograms(Member member)
         {
-            FamilyEntity family = GetFamily(member);
             List<GovernmentProgramEntity> programs = member.MemberGovernmentPrograms.Select(x => new GovernmentProgramEntity
             {
-                Id = x.Id,
-                MemberId = x.MemberId,
-                ProgramId = x.GovernmentProgramId,
-                ProgramName = x.GovernmentProgram.Name
+                ProgramId = x.Id,
+                ProgramName = x.GovernmentProgram.Name,
             }).ToList();
+
+            if (programs.Count() > 0)
+                return programs.ToArray();
+            else
+                return null;
+        }
+
+        private int[] GetGovernmentProgramIds(Member member)
+        {
+            FamilyEntity family = GetFamily(member);
+            int[] programs = member.MemberGovernmentPrograms.Select(x => x.GovernmentProgramId).ToArray();
 
             //if(family != null && family.FamilyMembers.Count() > 0)
             //{
@@ -209,7 +256,7 @@ namespace SolveChicago.Service
             //    }
             //}
             if (programs.Count() > 0)
-                return programs.ToArray();
+                return programs;
             else
                 return null;
         }
@@ -228,6 +275,8 @@ namespace SolveChicago.Service
                     NonprofitId = x.NonprofitId,
                     NonprofitName = x.Nonprofit?.Name,
                     SkillsAcquired = member.MemberSkills.Any(y => y.NonprofitId == x.NonprofitId) ? string.Join(",", member.MemberSkills.Where(y => y.NonprofitId == x.NonprofitId).Select(y => y.Skill.Name).ToArray()) : string.Empty,
+                    Start = x.Start,
+                    End = x.End,
                 }).ToArray();
             }
             else
@@ -238,7 +287,7 @@ namespace SolveChicago.Service
         {
             MemberCorporation[] memberCorporations = member.MemberCorporations.OrderByDescending(x => x.Start).ToArray();
             if (memberCorporations.Count() > 0)
-                return memberCorporations.Select(x => new JobEntity { CorporationId = x.CorporationId, EmployeeEnd = x.End, EmployeePay = x.Pay, EmployeeStart = x.Start, Name = x.Corporation.Name }).ToArray();
+                return memberCorporations.Select(x => new JobEntity { CorporationId = x.CorporationId, EmployeeEnd = x.End, EmployeePay = x.Pay, EmployeeStart = x.Start, Name = x.Corporation.Name, IsCurrent = !x.End.HasValue }).ToArray();
             else
                 return null;
         }
@@ -252,7 +301,7 @@ namespace SolveChicago.Service
                 return null;
         }
 
-        public FamilyEntity GetFamily(Member member)
+        public FamilyEntity GetFamily(Member member, bool includeSelf = false)
         {
             Family memberFamily = member.Family;
             if (memberFamily != null)
@@ -267,7 +316,7 @@ namespace SolveChicago.Service
                     FamilyName = memberFamily.FamilyName,
                     Phone = memberFamily.PhoneNumbers.Any() ? memberFamily.PhoneNumbers.Last().Number : string.Empty,
                     ZipCode = memberFamily.Addresses.Any() ? memberFamily.Addresses.Last().ZipCode : string.Empty,
-                    FamilyMembers = GetFamilyMembers(member),
+                    FamilyMembers = GetFamilyMembers(member, includeSelf),
                 };
                 
                 return family;
@@ -287,10 +336,10 @@ namespace SolveChicago.Service
                 return GetFamily(member);
         }
 
-        private FamilyMember[] GetFamilyMembers(Member member)
+        private FamilyMember[] BuildFamilyTree(Member member, List<FamilyMember> familyMembers = null)
         {
-            List<FamilyMember> familyMembers = new List<FamilyMember>();// { new FamilyMember { Birthday = member.Birthday, FirstName = member.FirstName, Gender = member.Gender, Id = member.Id, IsHeadOfHousehold = member.IsHeadOfHousehold, LastName = member.LastName } };
-            // build tree;
+            if (familyMembers == null)
+                familyMembers = new List<FamilyMember>();
 
             GetParentTree(familyMembers, member);
             GetSiblingTree(familyMembers, member);
@@ -299,6 +348,16 @@ namespace SolveChicago.Service
             GetUnknownRelationTree(familyMembers, member);
 
             return familyMembers.ToArray();
+        }
+
+        private FamilyMember[] GetFamilyMembers(Member member, bool includeSelf = false)
+        {
+            List<FamilyMember> familyMembers = new List<FamilyMember>();
+
+            if (includeSelf)
+                familyMembers.Add(new FamilyMember { Birthday = member.Birthday, FirstName = member.FirstName, Gender = member.Gender, Id = member.Id, IsHeadOfHousehold = member.IsHeadOfHousehold, LastName = member.LastName });
+            
+            return BuildFamilyTree(member, familyMembers);
         }
 
         private static void GetUnknownRelationTree(List<FamilyMember> familyMembers, Member member)
@@ -399,14 +458,13 @@ namespace SolveChicago.Service
             {
                 foreach (var program in model.GovernmentPrograms)
                 {
-                    MemberGovernmentProgram mgp = member.MemberGovernmentPrograms.Where(x => x.GovernmentProgramId == program.ProgramId).FirstOrDefault();
+                    MemberGovernmentProgram mgp = member.MemberGovernmentPrograms.Where(x => x.GovernmentProgramId == program).FirstOrDefault();
                     if (mgp == null)
                     {
                         mgp = new MemberGovernmentProgram
                         {
-                            Id = program.Id,
-                            MemberId = program.MemberId,
-                            GovernmentProgramId = program.ProgramId,
+                            MemberId = member.Id,
+                            GovernmentProgramId = program,
                         };
                         member.MemberGovernmentPrograms.Add(mgp);
                     }
@@ -552,30 +610,36 @@ namespace SolveChicago.Service
                 throw new Exception($"Member with an id of {model.MemberId} not found");
             else
             {
+                member.IsWorkforceInterested = model.InterestedInWorkforceSkill == Enumerations.TripleBoolean.Yes.ToString();
+
                 foreach (var nonprofit in model.Nonprofits)
                 {
-                    Nonprofit npo = db.Nonprofits.Where(x => (x.Id == nonprofit.NonprofitId || x.Name == nonprofit.NonprofitName)).FirstOrDefault();
-                    if (npo == null)
+                    if (!string.IsNullOrEmpty(nonprofit.NonprofitName) || nonprofit.NonprofitId.HasValue) // not the best way to do this, but the default value for IsCurrent makes the model bind an empty object to itself on POST. Should refactor this later.
                     {
-                        npo = new Nonprofit
+                        Nonprofit npo = db.Nonprofits.Where(x => (x.Id == nonprofit.NonprofitId || x.Name == nonprofit.NonprofitName)).FirstOrDefault();
+                        if (npo == null)
                         {
-                            Name = nonprofit.NonprofitName,
-                            CreatedDate = DateTime.UtcNow,
-                        };
-                        db.Nonprofits.Add(npo);
-                    }
-                    if (!member.NonprofitMembers.Select(x => x.NonprofitId).Contains(nonprofit.NonprofitId ?? 0))
-                    {
-                        member.NonprofitMembers.Add(new NonprofitMember
+                            npo = new Nonprofit
+                            {
+                                Name = nonprofit.NonprofitName,
+                                CreatedDate = DateTime.UtcNow,
+                            };
+                            db.Nonprofits.Add(npo);
+                        }
+                        if (!member.NonprofitMembers.Select(x => x.NonprofitId).Contains(nonprofit.NonprofitId ?? 0))
                         {
-                            MemberEnjoyed = nonprofit.Enjoyed,
-                            MemberStruggled = nonprofit.Struggled,
-                            MemberId = member.Id,
-                            NonprofitId = npo.Id,
-                            Nonprofit = npo
-                        });
+                            member.NonprofitMembers.Add(new NonprofitMember
+                            {
+                                MemberEnjoyed = nonprofit.Enjoyed,
+                                MemberStruggled = nonprofit.Struggled,
+                                MemberId = member.Id,
+                                NonprofitId = npo.Id,
+                                Start = nonprofit.Start.Value,
+                                End = nonprofit.End,
+                            });
+                        }
+                        UpdateMemberSkills(nonprofit, member);
                     }
-                    UpdateMemberSkills(nonprofit, member);
                 }
             }                
 
@@ -589,17 +653,20 @@ namespace SolveChicago.Service
             foreach (string skill in newSkills)
             {
                 string trimSkill = skill.Trim();
-                if (skills.Select(x => x.Name).Contains(trimSkill))
+                if(!string.IsNullOrEmpty(skill))
                 {
-                    Skill existingSkill = skills.Single(x => x.Name == trimSkill);
-                    if(!member.MemberSkills.Select(x => x.SkillId).Contains(existingSkill.Id))
-                        member.MemberSkills.Add(new MemberSkill { MemberId = member.Id, SkillId = existingSkill.Id, NonprofitId = nonprofit.NonprofitId });
-                }
-                else
-                {
-                    Skill newSkill = new Skill { Name = trimSkill };
-                    db.Skills.Add(newSkill);
-                    member.MemberSkills.Add(new MemberSkill { Skill = newSkill, NonprofitId = nonprofit.NonprofitId });
+                    if (skills.Select(x => x.Name).Contains(trimSkill))
+                    {
+                        Skill existingSkill = skills.Single(x => x.Name == trimSkill);
+                        if (!member.MemberSkills.Select(x => x.SkillId).Contains(existingSkill.Id))
+                            member.MemberSkills.Add(new MemberSkill { MemberId = member.Id, SkillId = existingSkill.Id, NonprofitId = nonprofit.NonprofitId });
+                    }
+                    else
+                    {
+                        Skill newSkill = new Skill { Name = trimSkill };
+                        db.Skills.Add(newSkill);
+                        member.MemberSkills.Add(new MemberSkill { Skill = newSkill, NonprofitId = nonprofit.NonprofitId });
+                    }
                 }
             }
         }
@@ -613,26 +680,29 @@ namespace SolveChicago.Service
             {
                 foreach (var job in model.Jobs)
                 {
-                    Corporation corporation = db.Corporations.Where(x => (x.Id == job.CorporationId || x.Name == job.Name)).FirstOrDefault();
-                    if (corporation == null)
+                    if(!string.IsNullOrEmpty(job.Name) || job.CorporationId.HasValue) // not the best way to do this, but the default value for IsCurrent makes the model bind an empty object to itself on POST. Should refactor this later.
                     {
-                        corporation = new Corporation
+                        Corporation corporation = db.Corporations.Where(x => (x.Id == job.CorporationId || x.Name == job.Name)).FirstOrDefault();
+                        if (corporation == null)
                         {
-                            Name = job.Name,
-                            CreatedDate = DateTime.UtcNow,
-                        };
-                        db.Corporations.Add(corporation);
-                    }
-                    if (!member.MemberCorporations.Select(x => x.CorporationId).Contains(job.CorporationId ?? 0))
-                    {
-                        member.MemberCorporations.Add(new MemberCorporation
+                            corporation = new Corporation
+                            {
+                                Name = job.Name,
+                                CreatedDate = DateTime.UtcNow,
+                            };
+                            db.Corporations.Add(corporation);
+                        }
+                        if (!member.MemberCorporations.Select(x => x.CorporationId).Contains(job.CorporationId ?? 0))
                         {
-                            End = job.EmployeeEnd,
-                            Pay = job.EmployeePay,
-                            ReasonForLeaving = job.EmployeeReasonForLeaving,
-                            Start = job.EmployeeStart.Value,
-                            Corporation = corporation
-                        });
+                            member.MemberCorporations.Add(new MemberCorporation
+                            {
+                                End = job.EmployeeEnd,
+                                Pay = job.EmployeePay,
+                                ReasonForLeaving = job.EmployeeReasonForLeaving,
+                                Start = job.EmployeeStart.Value,
+                                Corporation = corporation
+                            });
+                        }
                     }
                 }
             }

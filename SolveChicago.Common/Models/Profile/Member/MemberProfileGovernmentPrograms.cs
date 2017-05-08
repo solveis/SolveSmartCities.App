@@ -10,7 +10,7 @@ namespace SolveChicago.Common.Models.Profile.Member
     public class MemberProfileGovernmentPrograms
     {
         public int MemberId { get; set; }
-        public GovernmentProgramEntity[] GovernmentPrograms { get; set; }
+        public int[] GovernmentPrograms { get; set; }
     }
 
     public class GovernmentProgramEntity
@@ -19,9 +19,9 @@ namespace SolveChicago.Common.Models.Profile.Member
         public int MemberId { get; set; }
         public int ProgramId { get; set; }
         public string ProgramName { get; set; }
-        //public DateTime Start { get; set; }
-        //public bool IsCurrent { get; set; }
-        //public DateTime? End { get; set; }
-        //public decimal? Amount { get; set; }
+        public DateTime Start { get; set; }
+        public bool IsCurrent { get; set; }
+        public DateTime? End { get; set; }
+        public decimal? Amount { get; set; }
     }
 }
