@@ -13,9 +13,10 @@
 
     <div class="row app-dashboard-form-container">
         <div class="create-profile-form-holder">
-            <h4><strong>ADD: </strong>Case Manager</h4>
+            <h4><strong>INVITE: </strong>Admin</h4>
             <hr />
 
+            @Html.LabelFor(m => m.EmailToInvite, "Email", null)
             @Html.TextBoxFor(x => x.EmailToInvite)
 
             <hr class="line-divider">

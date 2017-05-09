@@ -89,6 +89,7 @@
     <Compile Include="EmailService.cs" />
     <Compile Include="GovernmentProgramService.cs" />
     <Compile Include="MemberService.cs" />
+    <Compile Include="ReferrerService.cs" />
     <Compile Include="NonprofitService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

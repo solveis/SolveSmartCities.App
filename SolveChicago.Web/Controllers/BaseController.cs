@@ -191,6 +191,7 @@ namespace SolveChicago.Web.Controllers
 
                     ViewBag.NonprofitId = nonprofit.Id;
                     ViewBag.NonprofitName = nonprofit.Name;
+                    ViewBag.NonprofitProfilePicture = nonprofit.ProfilePicturePath;
                 }
             }
 
@@ -517,8 +518,14 @@ namespace SolveChicago.Web.Controllers
                         await this.UserManager.AddToRoleAsync(user.Id, Common.Constants.Roles.CaseManager);
                         if (!UserProfileHasValidMappings(user.Id))
                         {
-                            CaseManager model = new CaseManager { Email = userName, AspNetUser = aspnetUser, CreatedDate = DateTime.UtcNow };
-                            db.CaseManagers.Add(model);
+                            CaseManager model = db.CaseManagers.Where(x => x.Email == userName).FirstOrDefault();
+                            if (model == null)
+                            {
+                                model = new CaseManager { Email = userName, AspNetUser = aspnetUser, CreatedDate = DateTime.UtcNow };
+                                db.CaseManagers.Add(model);
+                            }
+                            else
+                                model.AspNetUser = aspnetUser;
                             db.SaveChanges();
                             return CaseManagerRedirect(model.Id);
                         }
@@ -618,6 +625,10 @@ namespace SolveChicago.Web.Controllers
                     {
                         State.Member = member;
                         State.MemberId = member.Id;
+                    }
+                    else
+                    {
+                        throw new ApplicationException("You do not have permission to view this page");
                     }
                 }
             }

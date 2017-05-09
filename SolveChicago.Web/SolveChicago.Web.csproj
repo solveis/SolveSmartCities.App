@@ -267,6 +267,7 @@
     <Content Include="Content\foundation.css" />
     <Content Include="Content\foundation.min.css" />
     <Content Include="Content\Landing.css" />
+    <Content Include="Content\Overwrites.css" />
     <Content Include="Content\semantic\semantic.css" />
     <Content Include="Content\semantic\semantic.min.css" />
     <Content Include="Content\semantic\themes\basic\assets\fonts\icons.svg" />
@@ -827,6 +828,7 @@
     <Content Include="Views\Shared\Sidebar\_Corporation.cshtml" />
     <Content Include="Views\Shared\Sidebar\_Member.cshtml" />
     <Content Include="Views\Shared\Sidebar\_Referrer.cshtml" />
+    <Content Include="Views\Members\MemberOverview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

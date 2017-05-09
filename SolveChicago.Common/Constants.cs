@@ -26,6 +26,7 @@ namespace SolveChicago.Common
             public const string Inquiry = "Inquiry";
             public const string MemberSurveyInvite = "MemberSurveyInvite_{0}";
             public const string CaseManagerInvite = "CaseManagerInvite_{0}";
+            public const string AdminInvite = "AdminInvite";
         }
 
         public class Member
@@ -56,6 +57,8 @@ namespace SolveChicago.Common
                 public const string JobPlaced = "Job Placed";
                 public const string OffTrack = "Off Track";
             }
+
+            public const string NoPhotoUrl = "/img/side-nav-members-icon.svg";
         }
 
         public class Roles

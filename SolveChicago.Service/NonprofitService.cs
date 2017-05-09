@@ -1,4 +1,5 @@
 ﻿using SolveChicago.Common;
+using SolveChicago.Common.Models.Profile.Member;
 using SolveChicago.Entities;
 using SolveChicago.Web.Models.Profile;
 using System;
@@ -65,13 +66,20 @@ namespace SolveChicago.Service
                 return npo.CaseManagers.ToArray();
         }
 
-        public Member[] GetMembers(int id)
+        public FamilyEntity[] GetMembers(int id)
         {
+            List<FamilyEntity> families = new List<FamilyEntity>();
             Nonprofit npo = db.Nonprofits.Find(id);
-            if (npo == null)
-                return new Member[0];
-            else
-                return npo.NonprofitMembers.Select(x => x.Member).ToArray();
+            if(npo != null)
+            {
+                MemberService service = new MemberService(this.db);
+                foreach(var member in npo.NonprofitMembers)
+                {
+                    families.Add(service.GetFamily(member.Member, true));
+                }
+            }
+            return families.ToArray();
+                
         }
 
         public void AssignCaseManager(int nonprofitId, int memberId, int caseManagerId)

@@ -4,48 +4,57 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<header class="members-header">
+    <h2><strong>NONPROFITS:</strong> OVERVIEW</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Phone)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedDate)
-        </th>
-        <th></th>
-    </tr>
+    @*<div class="small-12 medium-12 large-3">
+            <input class="search-members" type="text" name="search" placeholder="Search..">
+        </div>*@
+</header>
+@if (Model.Count() > 0)
+{
+    <div class="member-card member-card-header">
+        <div class="member-overview">
+            <div class="row large-unstack">
+                <div class="columns has-space">
+                    <strong>Name</strong>
+                </div>
+                <div class="columns has-space">
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Phone)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedDate)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Index", "Nonprofits", new { nonprofitId = item.Id }, null) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
+                </div>
+                <div class="columns has-space">
+
+                </div>
+                <div class="columns has-space">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    foreach (var item in Model)
+    {
+        <section class="member-card">
+            <div class="member-overview">
+                <div class="row large-unstack">
+                    <span class="member-card-thumb"><img src="@(item.ProfilePicturePath)" /></span>
+                    <div class="columns centered has-space">
+                        <span class="member-name">@(item.Name)</span>
+                    </div>
+                    <div class="columns has-space">
+                        <span></span>
+                    </div>
+                    <div class="columns">
+
+                    </div>
+                    <div class="columns">
+                        <a href="/nonprofits?nonprofitId=@item.Id" class="show-family button">View</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
 }
-
-</table>
+else
+{
+    <p>No Nonprofits.</p>
+}

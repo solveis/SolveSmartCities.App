@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
     $('.addEntry').off('click').on('click', function (e) {
-        var lastEntry = $(this).parent().children('div:last'),
+        var lastEntry = $(this).parent().parent().children('.entry:last'),
             lastId = lastEntry.attr('data-id'),
             nextId = (parseInt(lastId) + 1).toString(),
             re1 = new RegExp("_" + lastId + "_", "g"),
@@ -17,12 +17,16 @@
     function resetFormFields($entry) {
         $entry.find('input:not([type=hidden])').val('').attr('disabled', false);
         $entry.find('select').prop('selectedIndex', 0);
+        bindDatepicker();
     }
 
-    $('.standard-datepicker').fdatepicker({
-        leftArrow: '<<',
-        rightArrow: '>>',
-    });
+    function bindDatepicker() {
+        $('.standard-datepicker').fdatepicker({
+            leftArrow: '<<',
+            rightArrow: '>>',
+        });
+    }
+    bindDatepicker();
 
     $('.ui.fluid.dropdown').dropdown();
 });

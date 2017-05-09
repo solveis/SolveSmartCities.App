@@ -25,6 +25,8 @@ namespace SolveChicago.Common.Models.Profile.Member
         public string Country { get; set; }
         public string ZipCode { get; set; }
         public FamilyMember[] FamilyMembers { get; set; }
+        public int AverageScore { get; set; }
+        public string HeadOfHouseholdProfilePicturePath { get; set; }
     }
 
     public class FamilyMember
@@ -47,5 +49,8 @@ namespace SolveChicago.Common.Models.Profile.Member
         public int? Id { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
+        public string ProfilePicturePath { get; set; }
+        public MemberStage MemberStage { get; set; }
+        public string CurrentOccupation { get; set; }
     }
 }

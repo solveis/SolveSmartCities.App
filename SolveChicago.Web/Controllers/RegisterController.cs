@@ -138,12 +138,27 @@ namespace SolveChicago.Web.Controllers
         //
         // GET: /Register/CaseManager
         [AllowAnonymous]
-        public ActionResult CaseManager(int? nonprofitId)
+        public ActionResult CaseManager(int? id)
         {
-            if (!nonprofitId.HasValue)
-                return HttpNotFound();
-            ViewBag.NonProfitId = nonprofitId.Value;
-            return View();
+
+            CaseManagerRegisterViewModel model = new CaseManagerRegisterViewModel
+            {
+                CaseManagerId = id,
+            };
+            if (id.HasValue)
+            {
+                CaseManager caseManager = db.CaseManagers.Find(id.Value);
+                if (caseManager != null)
+                {
+                    model.Email = caseManager.Email;
+                    model.NonprofitId = caseManager.NonprofitId;
+                }   
+            }
+
+            ViewBag.NonProfitId = model.NonprofitId;
+            ViewBag.CaseManagerId = model.CaseManagerId;
+
+            return View(model);
         }
 
         //

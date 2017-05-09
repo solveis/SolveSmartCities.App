@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[PhoneNumbers]
 (
-	[Id] INT NOT NULL PRIMARY KEY, 
+	[Id] INT IDENTITY(1, 1) NOT NULL PRIMARY KEY, 
     [Number] NVARCHAR(10) NOT NULL
 )

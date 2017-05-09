@@ -16,25 +16,55 @@
         <h2>ANSWER THE FOLLOWING QUESTIONS</h2>
     </header>
 
+    <ol class="progress-indicator">
+        <li class="is-complete" data-step="1">
+            <span>Personal</span>
+        </li>
+        <li class="is-complete" data-step="2">
+            <span>Family</span>
+        </li>
+        <li class="is-complete" data-step="3">
+            <span>Education</span>
+        </li>
+        <li class="is-complete" data-step="4">
+            <span>Professional</span>
+        </li>
+        <li class="is-current" data-step="5">
+            <span>Training</span>
+        </li>
+        <li class="" data-step="6">
+            <span>Gov. Benefits</span>
+        </li>
+        <li class="" data-step="7">
+            <span>Finish</span>
+        </li>
+    </ol>
+    
     @using (Html.BeginForm("MemberNonprofits", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
 
         <div>
-            <label for="Member_InterestedInWorkforceSkill">Are you interested in acquiring a new workforce skill</label>
-            @Html.RadioButtonFor(m => m.Member.InterestedInWorkforceSkill, Enumerations.TripleBoolean.Yes.ToString())
-            <label for="Member_InterestedInWorkforceSkill">Yes</label>
-            @Html.RadioButtonFor(m => m.Member.InterestedInWorkforceSkill, Enumerations.TripleBoolean.No.ToString())
-            <label for="Member_InterestedInWorkforceSkill">No</label>
-            @Html.RadioButtonFor(m => m.Member.InterestedInWorkforceSkill, Enumerations.TripleBoolean.Other.ToString())
-            <label for="Member_InterestedInWorkforceSkill">I already have</label>
+
+            <div class="main-questions row align-center">
+                <label for="Member_InterestedInWorkforceSkill">Are you interested in acquiring a new workforce skill</label>
+                <div>
+                    @Html.RadioButtonFor(m => m.Member.InterestedInWorkforceSkill, Enumerations.TripleBoolean.Yes.ToString())
+                    <label for="Member_InterestedInWorkforceSkill">Yes</label>
+                    @Html.RadioButtonFor(m => m.Member.InterestedInWorkforceSkill, Enumerations.TripleBoolean.No.ToString())
+                    <label for="Member_InterestedInWorkforceSkill">No</label>
+                    @Html.RadioButtonFor(m => m.Member.InterestedInWorkforceSkill, Enumerations.TripleBoolean.Other.ToString())
+                    <label for="Member_InterestedInWorkforceSkill">I already have</label>
+                </div>
+            </div>
+
 
             <div id="npo-wrapper" class="@(Model.Member.InterestedInWorkforceSkill == Enumerations.TripleBoolean.Other.ToString() ? "" : "hide")">
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 @Html.HiddenFor(model => model.Member.MemberId)
                 @for (int i = 0; i < Model.Member.Nonprofits.Length; i++)
                 {
-                    <div class="Nonprofit" data-id="@(i)">
+                    <div class="Nonprofit entry" data-id="@(i)">
                         <div class="row app-dashboard-form-container-space-around">
                             <div class="form-holder">
                                 @Html.HiddenFor(m => Model.Member.Nonprofits[i].NonprofitId)
@@ -65,12 +95,14 @@
                                 @Html.EditorFor(model => model.Member.Nonprofits[i].Struggled, new { htmlAttributes = new { } })
                             </div>
                         </div>
+                        <hr />
                     </div>
                 }
-                <a href="javascript:void(0)" id="AddNonprofit" class="addEntry">Add Nonprofit</a>
+                <div class="row align-center has-border">
+                    <a class="add-job addEntry" href="javascript:void(0)"> <img class="add-job-icon" src="../img/icon-add.svg"> Add Nonprofit</a>
+                </div>
             </div>
         </div>
-        <hr />
         <div class="row align-center">
             <input type="submit" value="Submit" class="submit-create-profile" />
         </div>

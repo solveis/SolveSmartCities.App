@@ -14,6 +14,31 @@
     <header class="questionnaire-header">
         <h2>ANSWER THE FOLLOWING QUESTIONS</h2>
     </header>
+
+    <ol class="progress-indicator">
+        <li class="is-complete" data-step="1">
+            <span>Personal</span>
+        </li>
+        <li class="is-complete" data-step="2">
+            <span>Family</span>
+        </li>
+        <li class="is-current" data-step="3">
+            <span>Education</span>
+        </li>
+        <li class="" data-step="4">
+            <span>Professional</span>
+        </li>
+        <li class="" data-step="5">
+            <span>Training</span>
+        </li>
+        <li class="" data-step="6">
+            <span>Gov. Benefits</span>
+        </li>
+        <li class="" data-step="7">
+            <span>Finish</span>
+        </li>
+    </ol>
+
     @using (Html.BeginForm("MemberSchools", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
@@ -22,7 +47,7 @@
             @Html.HiddenFor(model => model.Member.MemberId)
             @for (int i = 0; i < Model.Member.Schools.Length; i++)
             {
-                <div class="School" data-id="@(i)">
+                <div class="School entry" data-id="@(i)">
                     <div class="row app-dashboard-form-container-space-around">
                         <div class="form-holder">
                             @Html.HiddenFor(m => Model.Member.Schools[i].Id)
@@ -62,7 +87,9 @@
                     <hr />
                 </div>
             }
-            <a href="javascript:void(0)" id="AddSchool" class="addEntry">Add School</a>
+            <div class="row align-center has-border">
+                <a class="add-job addEntry" href="javascript:void(0)"> <img class="add-job-icon" src="../img/icon-add.svg"> Add School</a>
+            </div>
         </div>
 
         <div class="row align-center">

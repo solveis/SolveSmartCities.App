@@ -1,5 +1,7 @@
-﻿using SolveChicago.Common.Models.Profile.Member;
+﻿using SolveChicago.Common;
+using SolveChicago.Common.Models.Profile.Member;
 using SolveChicago.Entities;
+using SolveChicago.Web.Models.Profile;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +12,48 @@ namespace SolveChicago.Service
     public class CaseManagerService : BaseService
     {
         public CaseManagerService(SolveChicagoEntities db) : base(db) { }
+
+        public CaseManagerProfile Get(int id)
+        {
+            CaseManager caseManager = db.CaseManagers.Find(id);
+            if (caseManager == null)
+                return null;
+            else
+            {
+                return new CaseManagerProfile
+                {
+                    Id = caseManager.Id,
+                    Phone = caseManager.Phone,
+                    ProfilePicturePath = caseManager.ProfilePicturePath,
+                    FirstName = caseManager.FirstName,
+                    LastName = caseManager.LastName,
+                    Birthday = caseManager.Birthday,
+                    Gender = caseManager.Gender,
+                    NonprofitId = caseManager.NonprofitId,
+                    UserId = caseManager.UserId
+                };
+            }
+        }
+
+        public void Post(CaseManagerProfile model)
+        {
+            CaseManager caseManager = db.CaseManagers.Find(model.Id);
+            if (caseManager == null)
+                throw new Exception($"Case Manager with Id of {model.Id} not found.");
+            else
+            {
+                if (model.ProfilePicture != null)
+                    caseManager.ProfilePicturePath = UploadPhoto(Constants.Upload.CaseManagerPhotos, model.ProfilePicture, model.Id);
+                
+                caseManager.Phone = model.Phone;
+                caseManager.FirstName = model.FirstName;
+                caseManager.LastName = model.LastName;
+                caseManager.Gender = model.Gender;
+                caseManager.Birthday = model.Birthday;
+
+                db.SaveChanges();
+            }
+        }
 
         public Member[] GetMembersForCaseManager(int caseManagerId)
         {

@@ -102,6 +102,7 @@ namespace SolveChicago.Web.Models
 
     public class CaseManagerRegisterViewModel : RegisterViewModel
     {
+        public int? CaseManagerId { get; set; }
         public int? NonprofitId { get; set; }
     }
 

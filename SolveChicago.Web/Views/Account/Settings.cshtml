@@ -10,6 +10,10 @@
         <hr />
 
         <p>@Html.ActionLink("Edit Profile", "Index", "Profile")</p>
+        @if (User.IsInRole("Admin"))
+        {
+            <p>@Html.ActionLink("Invite Admin", "Invite", "Admins")</p>
+        }
 
     </div>
 </div>

@@ -11,6 +11,30 @@
         <h2>ANSWER THE FOLLOWING QUESTIONS</h2>
     </header>
 
+    <ol class="progress-indicator">
+        <li class="is-complete" data-step="1">
+            <span>Personal</span>
+        </li>
+        <li class="is-current" data-step="2">
+            <span>Family</span>
+        </li>
+        <li class="" data-step="3">
+            <span>Education</span>
+        </li>
+        <li class="" data-step="4">
+            <span>Professional</span>
+        </li>
+        <li class="" data-step="5">
+            <span>Training</span>
+        </li>
+        <li class="" data-step="6">
+            <span>Gov. Benefits</span>
+        </li>
+        <li class="" data-step="7">
+            <span>Finish</span>
+        </li>
+    </ol>
+
     @using (Html.BeginForm("MemberFamily", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
@@ -20,7 +44,7 @@
             @Html.HiddenFor(model => model.Member.MemberId)
             @for (int i = 0; i < Model.Member.Family.FamilyMembers.Length; i++)
             {
-            <div id="FamilyMember" data-id="@(i)">
+            <div class="FamilyMember entry" data-id="@(i)">
                 <div class="row app-dashboard-form-container-space-around">
                     <div class="form-holder">
                         @Html.HiddenFor(model => Model.Member.Family.FamilyMembers[i].Id)
@@ -58,7 +82,7 @@
                         <div id="fm-contact-info" class="hide">
                             @Html.ValidationMessageFor(model => Model.Member.Family.FamilyMembers[i].Phone, "", new { @class = "text-danger" })
                             @Html.LabelFor(model => Model.Member.Family.FamilyMembers[i].Phone, htmlAttributes: new { })
-                            @Html.EditorFor(model => Model.Member.Family.FamilyMembers[i].Phone, new { htmlAttributes = new { } })
+                            @Html.EditorFor(model => Model.Member.Family.FamilyMembers[i].Phone, new { htmlAttributes = new { @type = "number", min = "1111111111", max = "9999999999" } })
 
                             @Html.LabelFor(model => Model.Member.Family.FamilyMembers[i].Email, htmlAttributes: new { })
                             @Html.EditorFor(model => Model.Member.Family.FamilyMembers[i].Email, (Model.Member.Family.FamilyMembers[i].Id.HasValue) ? new {  @disabled = true } : null)
@@ -66,11 +90,13 @@
                         </div>
                     </div>
                 </div>
+                <hr />
             </div>
             }
-            <a href="javascript:void(0)" id="AddFamilyMember" class="addEntry">Add Family Member</a>
+            <div class="row align-center has-border">
+                <a class="add-job addEntry" href="javascript:void(0)"> <img class="add-job-icon" src="../img/icon-add.svg"> Add Family Member</a>
+            </div>
         </div>
-        <hr />
         <div class="row align-center">
             <input type="submit" value="Submit" class="submit-create-profile" />
         </div>
@@ -82,16 +108,19 @@
         @Scripts.Render("~/bundles/profile_member")
 
         <script>
-            $('.fm-birthday').fdatepicker({
-                leftArrow: '<<',
-                rightArrow: '>>',
-            }).on('changeDate', function () {
-                var date = new Date($(this).val()),
-                    sixteenYearsAgo = new Date(new Date(new Date().setFullYear(new Date().getFullYear() - 16)));
-                if (date < sixteenYearsAgo)
-                    $('#fm-contact-info').removeClass('hide');
-                else
-                    $('#fm-contact-info').addClass('hide');
-            });
+            window.addEntryCallback = function (newEntry) {
+                $('.fm-birthday').fdatepicker({
+                    leftArrow: '<<',
+                    rightArrow: '>>',
+                }).on('changeDate', function () {
+                    var date = new Date($(this).val()),
+                        sixteenYearsAgo = new Date(new Date(new Date().setFullYear(new Date().getFullYear() - 16)));
+                    if (date < sixteenYearsAgo)
+                        $('#fm-contact-info').removeClass('hide');
+                    else
+                        $('#fm-contact-info').addClass('hide');
+                });
+            }
+            window.addEntryCallback($('.FamilyMember'));
         </script>
     }

@@ -10,6 +10,7 @@ using SolveChicago.Entities;
 using SolveChicago.Web.Models.Member;
 using SolveChicago.Service;
 using SolveChicago.Common;
+using SolveChicago.Common.Models.Profile.Member;
 
 namespace SolveChicago.Web.Controllers
 {
@@ -38,7 +39,10 @@ namespace SolveChicago.Web.Controllers
             Referrer referrer = db.Referrers.Find(State.ReferrerId);
             if (referrer == null)
                 return HttpNotFound();
-            return View(referrer.Members.ToList());
+
+            ReferrerService service = new ReferrerService(this.db);
+            MemberProfile[] members = service.GetMembers(State.ReferrerId);
+            return View(members);
         }
 
         //GET: Referrers/AddMember

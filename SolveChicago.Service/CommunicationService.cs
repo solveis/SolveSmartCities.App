@@ -24,6 +24,28 @@ namespace SolveChicago.Service
             db.SaveChanges();
         }
 
+        public void AdminInvite(string invitee, string inviter, string inviteUrl)
+        {
+            string communicationType = string.Format(Constants.Communication.AdminInvite);
+            EmailService service = new EmailService(db);
+            service.DeliverSendGridMessage(
+                invitee,
+                Constants.Global.SolveSmartCities,
+                inviter,
+                "1b6d368a-4488-42ea-b189-d26a9d503a8b",
+                new Dictionary<string, string>
+                {
+                    { "-inviter-", inviter },
+                    { "-inviteUrl-", inviteUrl },
+                    { "-year-", DateTime.UtcNow.Year.ToString() },
+                },
+                Settings.Website.FromAddress,
+                communicationType,
+                "",
+                null
+            ).Wait();
+        }
+
         public void NonprofitInviteCaseManager(CaseManager caseManager, string inviter, string inviteUrl)
         {
             string communicationType = string.Format(Constants.Communication.CaseManagerInvite, caseManager.Id);

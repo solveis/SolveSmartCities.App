@@ -35,7 +35,7 @@
           <Property Name="Email" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="FirstName" Type="nvarchar" MaxLength="128" />
           <Property Name="LastName" Type="nvarchar" MaxLength="128" />
-          <Property Name="ProfilePicturePath" Type="nchar" MaxLength="10" />
+          <Property Name="ProfilePicturePath" Type="nvarchar" MaxLength="128" />
           <Property Name="Phone" Type="nvarchar" MaxLength="128" />
           <Property Name="CreatedDate" Type="datetime2" Precision="7" />
           <Property Name="InvitedBy" Type="nvarchar" MaxLength="50" />
@@ -379,7 +379,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Number" Type="nvarchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <EntityType Name="ReferrerMembers">
@@ -1454,7 +1454,7 @@
           <Property Name="Email" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="FirstName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="LastName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="ProfilePicturePath" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ProfilePicturePath" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Phone" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Precision="7" />
           <Property Name="InvitedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />

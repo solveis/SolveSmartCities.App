@@ -1,0 +1,54 @@
+﻿/* Not ideal, but do this until SASS is integrated and I can edit the source files */
+/* Overwriting generated SASS */
+
+@media print, screen and (min-width: 64em) {
+    .app-dashboard-body-content .form-holder:last-child {
+        float: right;
+        -ms-flex-item-align: start !important;
+        align-self: flex-start !important;
+    }
+}
+
+input[type="radio"], input[type="checkbox"] {
+    margin: 4px 0 1rem;
+    line-height: normal;
+}
+
+.add-job {
+    height: 50px !important;
+    margin-bottom: -25px !important;
+}
+
+.app-dashboard-sidebar .app-dashboard-sidebar-inner .sub-menu li .case-manager-profile-picture,
+.member-card .member-card-thumb,
+.member-details .member-detail-thumb,
+.hero-main-profile .profile-image-container {
+    background: none !important;
+    overflow: hidden !important;
+}
+
+.small-progress-description {
+    position:absolute;
+}
+
+.overview-card {
+    margin-bottom:30px;
+}
+
+.member-card {
+    border-bottom:1px solid white;
+}
+
+.sub-menu .active > a {
+    background: #1779ba;
+    color: #ffffff;
+}
+.member-card.member-card-header {
+    background:none;
+    height:50px;
+    color:#aaa;
+}
+
+.member-card.prospects:nth-child(2n) {
+    background:#ececec;
+}

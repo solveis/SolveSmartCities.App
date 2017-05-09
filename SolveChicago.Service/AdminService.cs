@@ -1,4 +1,6 @@
-﻿using SolveChicago.Entities;
+﻿using SolveChicago.Common;
+using SolveChicago.Entities;
+using SolveChicago.Web.Models.Profile;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,44 @@ namespace SolveChicago.Service
     public class AdminService : BaseService
     {
         public AdminService(SolveChicagoEntities db) : base(db) { }
+        
+        public AdminProfile Get(int adminId)
+        {
+            Admin admin = db.Admins.Find(adminId);
+            if (admin == null)
+                return null;
+            else
+            {
+                return new AdminProfile
+                {
+                    Id = admin.Id,
+                    Phone = admin.Phone,
+                    ProfilePicturePath = admin.ProfilePicturePath,
+                    FirstName = admin.FirstName,
+                    LastName = admin.LastName,
+                    UserId = admin.UserId,
+                };
+            }
+        }
+
+        public void Post(AdminProfile model)
+        {
+            Admin admin = db.Admins.Find(model.Id);
+            if (admin == null)
+                throw new Exception($"Admin with Id of {model.Id} not found.");
+            else
+            {
+                if (model.ProfilePicture != null)
+                    admin.ProfilePicturePath = UploadPhoto(Constants.Upload.AdminPhotos, model.ProfilePicture, model.Id);
+
+                admin.Phone = model.Phone;
+                admin.FirstName = model.FirstName;
+                admin.LastName = model.LastName;
+
+                db.SaveChanges();
+            }
+        }
+
 
         public string GenerateAdminInviteCode(string userId)
         {

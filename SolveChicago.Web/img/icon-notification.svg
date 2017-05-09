@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="27px" viewBox="0 0 20 27" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.2 (39069) - http://www.bohemiancoding.com/sketch -->
+    <title>icon-notification</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="CASE-MANAGER" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="DASHBOARD" transform="translate(-1131.000000, -32.000000)" fill="#ECECEC">
+            <g id="—TOP-BAR">
+                <g id="icon-notification" transform="translate(1095.000000, 0.000000)">
+                    <path d="M40,32.0004909 L56,32.0004909 L50.8571429,38.9993242 L56,46.0004909 L40,46.0004909 L40,32.0004909 Z M36,59 L36,32 L38,32 L38,59 L36,59 Z"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

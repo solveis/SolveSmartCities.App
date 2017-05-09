@@ -1,50 +1,91 @@
-﻿@model IEnumerable<SolveChicago.Entities.Member>
+﻿@model IEnumerable<SolveChicago.Common.Models.Profile.Member.FamilyEntity>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Members";
 }
 
-<h2>Index</h2>
+<header class="members-header">
+    <h2><strong>MEMBERS:</strong> OVERVIEW</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LastName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedDate)
-        </th>
-        <th></th>
-    </tr>
+    @*<div class="small-12 medium-12 large-3">
+            <input class="search-members" type="text" name="search" placeholder="Search..">
+        </div>*@
+</header>
+@foreach (var item in Model)
+{
+    <section class="member-card">
+        <div class="member-overview">
+            <div class="row large-unstack">
+                <span class="member-card-thumb"><img src="@(item.HeadOfHouseholdProfilePicturePath)" /></span>
+                <div class="columns centered has-space">
+                    <span class="member-name">@(item.FamilyName)</span>
+                </div>
+                <div class="columns has-space">
+                    <span></span>
+                </div>
+                <div class="columns">
+                    <div class="progress-bar-spacer purple progress" role="progressbar" tabindex="0" aria-valuenow="@item.AverageScore" aria-valuemin="0" aria-valuetext="@(item.AverageScore) percent" aria-valuemax="100">
+                        <!-- value added by tweaking inline-style-->
+                        <div class="progress-meter" style="width: @(item.AverageScore)%">
+                        </div>
+                    </div>
+                </div>
+                <div class="columns">
+                    <a href="javascript:void(0)" class="show-family button">View</a>
+                </div>
+            </div>
+        </div>
+        <div class="familyMemberWrapper" style="display:none;">
+            @foreach (var member in item.FamilyMembers)
+            {
+                <div class="member-details">
+                    <div class="row large-unstack">
+                        <span class="member-detail-thumb"><img src="@(member.ProfilePicturePath)" /></span>
+                        <div class="columns has-small-space">
+                            <span>@member.Name</span>
+                        </div>
+                        <div class="columns has-small-space">
+                            <span>@(member.CurrentOccupation)</span>
+                        </div>
+                        <div class="columns">
+                            <div class="small-progress-bar-spacer lilac progress" role="progressbar" tabindex="0" aria-valuenow="@(member.MemberStage.Percent)" aria-valuemin="0" aria-valuetext="@(member.MemberStage.Percent) percent" aria-valuemax="100">
+                                <!-- value added by tweaking inline-style-->
+                                <div class="progress-meter" style="width: @(member.MemberStage.Percent)%">
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedDate)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", "Members", new { memberId = item.Id }, null) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
+                                </div>
+                                <p class="small-progress-description">@(member.MemberStage.Stage)</p>
+                            </div>
+                        </div>
+                        <div class="columns">
+                            <ul class="member-details-menu">
+                                <li>
+                                    <a href="/Members/Details?memberId=@(member.Id)">
+                                        <img class="sub-menu-icon" src="../img/icon-view.svg">
+                                        View
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/CaseManagers/AddCaseNote?memberId=@(member.Id)&caseManagerId=@(ViewBag.CaseManagerId)">
+                                        <img class="sub-menu-icon" src="../img/icon-add-note.svg">
+                                        Add Note
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/Profile/MemberOverview?memberId=@(member.Id)">
+                                        <img class="sub-menu-icon" src="../img/icon-edit.svg">
+                                        Edit
+                                    </a>
+                                </li>
+                                @*<li>
+                                        <a href="#">
+                                            <img class="sub-menu-icon" src="../assets/img/icon-delete.svg">
+                                            Delete
+                                        </a>
+                                    </li>*@
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
 }
-
-</table>

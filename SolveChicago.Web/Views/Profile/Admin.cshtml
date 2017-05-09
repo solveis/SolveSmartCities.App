@@ -1,4 +1,4 @@
-﻿@model SolveChicago.Entities.Admin
+﻿@model SolveChicago.Web.Models.Profile.AdminProfile
 
 @{
     ViewBag.Title = "Profile";
@@ -16,7 +16,6 @@
         <div class="create-profile-form-holder">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.Id)
-            @Html.HiddenFor(model => model.CreatedDate)
             @Html.HiddenFor(m => m.UserId)
 
             @Html.LabelFor(model => model.FirstName, htmlAttributes: new { })
@@ -27,17 +26,19 @@
             @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { } })
             @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
 
-            @Html.LabelFor(model => model.ProfilePicturePath, htmlAttributes: new { })
-            @Html.EditorFor(model => model.ProfilePicturePath, new { htmlAttributes = new { } })
-            @Html.ValidationMessageFor(model => model.ProfilePicturePath, "", new { @class = "text-danger" })
+            @Html.LabelFor(model => model.ProfilePicture, htmlAttributes: new { })
+            @if (!string.IsNullOrEmpty(Model.ProfilePicturePath) && Model.ProfilePicturePath != "/img/side-nav-members-icon.svg")
+            {
+                <div>
+                    <img src="@Model.ProfilePicturePath" />
+                </div>
+            }
+            @Html.TextBoxFor(model => model.ProfilePicture, new { type = "file", @class = "file-input" })
+            @Html.ValidationMessageFor(model => model.ProfilePicture, "", new { @class = "text-danger" })
 
             @Html.LabelFor(model => model.Phone, htmlAttributes: new { })
-            @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { } })
+            @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @type = "number", @min = "1111111111", @max = "9999999999" } })
             @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
-
-            @Html.LabelFor(model => model.Email, htmlAttributes: new { })
-            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { } })
-            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
 
             <input class="submit-create-profile" type="submit" value="Submit">
         </div>

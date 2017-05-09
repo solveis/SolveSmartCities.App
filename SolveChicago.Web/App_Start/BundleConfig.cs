@@ -50,6 +50,7 @@ namespace SolveChicago.Web
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/overwrites.css",
                       "~/Content/site.css"));
 
             bundles.Add(new StyleBundle("~/Content/landing").Include(

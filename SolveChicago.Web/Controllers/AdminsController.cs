@@ -11,6 +11,7 @@ using SolveChicago.Common;
 using SolveChicago.Web.Models;
 using SolveChicago.Web.Models.Admin;
 using SolveChicago.Service;
+using SolveChicago.Common.Models.Profile.Member;
 
 namespace SolveChicago.Web.Controllers
 {
@@ -48,7 +49,8 @@ namespace SolveChicago.Web.Controllers
         // GET: Admins/Members
         public ActionResult Members()
         {
-            var members = db.Members.ToArray();
+            MemberService service = new MemberService(this.db);
+            FamilyEntity[] members = service.GetAll();
             return View(members.ToList());
         }
 
@@ -164,9 +166,11 @@ namespace SolveChicago.Web.Controllers
         public ActionResult Invite(AdminInviteModel model)
         {
             AdminService adminService = new AdminService(this.db);
-            string inviteCode = adminService.GenerateAdminInviteCode(GetUserId(User.Identity.Name));
-            EmailService emailService = new EmailService(this.db);
-            emailService.DeliverSmtpMessageAsync(model.EmailToInvite, "admin invite", string.Format("{0}/register/admin?invitecode={1}", Settings.Website.BaseUrl, HttpUtility.UrlEncode(inviteCode)),false).Wait();
+            Admin admin = db.Admins.Find(model.AdminId);
+            string inviteCode = adminService.GenerateAdminInviteCode(admin.UserId);
+            CommunicationService commService = new CommunicationService(this.db);
+            string inviteUrl = string.Format("{0}/register/admin?invitecode={1}", Settings.Website.BaseUrl, inviteCode);
+            commService.AdminInvite(model.EmailToInvite, string.Format("{0} {1}", admin.FirstName, admin.LastName), inviteUrl);
             
             return RedirectToAction("Index");
         }

@@ -37,6 +37,15 @@ namespace SolveChicago.Web.Controllers
             return Index(memberId);
         }
 
+        [Authorize(Roles = "Admin, CaseManager, Nonprofit")]
+        public ActionResult MemberOverview(int? memberId)
+        {
+            ImpersonateMember(memberId);
+            MemberService service = new MemberService(this.db);
+            MemberProfile model = service.Get(State.MemberId);
+            return View(model);
+        }
+
         [AllowAnonymous]
         public ActionResult CreateProfile(int? id)
         {

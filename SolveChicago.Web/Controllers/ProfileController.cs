@@ -418,33 +418,46 @@ namespace SolveChicago.Web.Controllers
 
         // GET: Profile/CaseManager
         [Authorize(Roles = "Admin, Nonprofit, CaseManager")]
-        public ActionResult CaseManager()
+        public ActionResult CaseManager(int? id)
         {
-            CaseManager model = State.CaseManager;
-            return View(model);
+            ImpersonateCaseManager(id);
+            CaseManagerService service = new CaseManagerService(this.db);
+            CaseManagerProfile model = service.Get(State.CaseManagerId);
+            CaseManagerProfileViewModel viewModel = FormatCaseManagerProfileViewModel(model);
+            return View(viewModel);
+        }
+
+        private CaseManagerProfileViewModel FormatCaseManagerProfileViewModel(CaseManagerProfile model)
+        {
+            CaseManagerProfileViewModel viewModel = new CaseManagerProfileViewModel
+            {
+                CaseManager = model,
+                GenderList = GetGenderList(),
+            };
+            return viewModel;
         }
 
         // POST: Profile/CaseManager
         [Authorize(Roles = "Admin, Nonprofit, CaseManager")]
         [HttpPost]
-        public ActionResult CaseManager(CaseManager model)
+        public ActionResult CaseManager(CaseManagerProfileViewModel model)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(model).State = EntityState.Modified;
-                db.SaveChanges();
+                CaseManagerService service = new CaseManagerService(this.db);
+                service.Post(model.CaseManager);
             }
             return RedirectToAction("Index", "CaseManagers");
         }
 
         // GET: Profile/Nonprofit
         [Authorize(Roles = "Admin, Nonprofit")]
-        public ActionResult Nonprofit()
+        public ActionResult Nonprofit(int? id)
         {
+            ImpersonateNonprofit(id);
             NonprofitService service = new NonprofitService(this.db);
-            
-                NonprofitProfile model = service.Get(State.NonprofitId);
-                return View(model);
+            NonprofitProfile model = service.Get(State.NonprofitId);
+            return View(model);
             
         }
 
@@ -514,18 +527,20 @@ namespace SolveChicago.Web.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Admin()
         {
-            Admin model = State.Admin;
+            AdminService service = new AdminService(this.db);
+            AdminProfile model = service.Get(State.AdminId);
             return View(model);
         }
 
         // POST: Profile/Admin
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public ActionResult Admin(Admin model)
+        public ActionResult Admin(AdminProfile model)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(model).State = EntityState.Modified;
+                AdminService service = new AdminService(this.db);
+                service.Post(model);
                 db.SaveChanges();
             }
             return RedirectToAction("Index", "Admins");

@@ -11,6 +11,7 @@ using SolveChicago.Service;
 using SolveChicago.Web.Models.Nonprofit;
 using SolveChicago.Web.Models.Member;
 using SolveChicago.Common;
+using SolveChicago.Common.Models.Profile.Member;
 
 namespace SolveChicago.Web.Controllers
 {
@@ -44,7 +45,7 @@ namespace SolveChicago.Web.Controllers
         {
             ImpersonateNonprofit(nonprofitId);
             NonprofitService service = new NonprofitService(this.db);
-            Member[] members = service.GetMembers(State.NonprofitId);
+            FamilyEntity[] members = service.GetMembers(State.NonprofitId);
             return View(members.ToList());
         }
 
@@ -82,7 +83,7 @@ namespace SolveChicago.Web.Controllers
                 db.SaveChanges();
 
                 CommunicationService service = new CommunicationService(this.db);
-                string inviteUrl = string.Format("{0}/Register/CaseManager?id={1}", Settings.Website.BaseUrl, caseManager.Id);
+                string inviteUrl = string.Format("{0}/Register/CaseManager?id={1}", Settings.Website.BaseUrl, model.NonprofitId);
                 service.NonprofitInviteCaseManager(caseManager, State.Nonprofit.Name, inviteUrl);
                 return NonprofitRedirect(State.NonprofitId);
             }

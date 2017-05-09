@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using SolveChicago.Service;
 using SolveChicago.Web.Models.Profile;
+using SolveChicago.Common.Models.Profile.Member;
 
 namespace SolveChicago.Tests.Services
 {
@@ -175,7 +176,7 @@ namespace SolveChicago.Tests.Services
         public void NonprofitService_GetMembers_ReturnsMemberArray()
         {
             NonprofitService service = new NonprofitService(context.Object);
-            Member[] members = service.GetMembers(1);
+            FamilyEntity[] members = service.GetMembers(1);
 
             Assert.Equal(3, members.Count());
         }
@@ -184,7 +185,7 @@ namespace SolveChicago.Tests.Services
         public void NonprofitService_GetMembers_ReturnsEmptyArray()
         {
             NonprofitService service = new NonprofitService(context.Object);
-            Member[] members = service.GetMembers(10);
+            FamilyEntity[] members = service.GetMembers(10);
 
             Assert.Equal(0, members.Count());
         }

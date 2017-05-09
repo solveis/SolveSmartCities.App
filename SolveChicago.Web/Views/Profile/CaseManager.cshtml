@@ -1,83 +1,57 @@
-﻿@model SolveChicago.Entities.CaseManager
+﻿@model SolveChicago.Web.Models.Profile.CaseManagerProfileViewModel
 
 @{
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
-
-
 @using (Html.BeginForm("CaseManager", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    @Html.AntiForgeryToken()
+    <header>
+        <h4><strong>Case Manager:</strong> Profile</h4>
+    </header>
+    <div class="row app-dashboard-form-container">
+        <div class="create-profile-form-holder">
+            @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>CaseManager</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
-        @Html.HiddenFor(m => m.UserId)
-        @Html.HiddenFor(m => m.NonprofitId)
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.CaseManager.Id)
+            @Html.HiddenFor(m => m.CaseManager.UserId)
+            @Html.HiddenFor(m => m.CaseManager.NonprofitId)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-            </div>
-        </div>
+            @Html.ValidationMessageFor(model => model.CaseManager.FirstName, "", new { @class = "text-danger" })
+            @Html.LabelFor(model => model.CaseManager.FirstName, htmlAttributes: new { })
+            @Html.EditorFor(model => model.CaseManager.FirstName, new { htmlAttributes = new { } })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ProfilePicturePath, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ProfilePicturePath, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ProfilePicturePath, "", new { @class = "text-danger" })
-            </div>
-        </div>
+            @Html.ValidationMessageFor(model => model.CaseManager.LastName, "", new { @class = "text-danger" })
+            @Html.LabelFor(model => model.CaseManager.LastName, htmlAttributes: new { })
+            @Html.EditorFor(model => model.CaseManager.LastName, new { htmlAttributes = new { } })
+            
+            @Html.LabelFor(model => model.CaseManager.ProfilePicture, htmlAttributes: new { })
+            @if (!string.IsNullOrEmpty(Model.CaseManager.ProfilePicturePath) && Model.CaseManager.ProfilePicturePath != "/img/side-nav-members-icon.svg")
+            {
+                <div>
+                    <img src="@Model.CaseManager.ProfilePicturePath" />
+                </div>
+            }
+            @Html.TextBoxFor(model => model.CaseManager.ProfilePicture, new { type = "file", @class = "file-input" })
+            @Html.ValidationMessageFor(model => model.CaseManager.ProfilePicture, "", new { @class = "text-danger" })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
-            </div>
-        </div>
+            @Html.ValidationMessageFor(model => model.CaseManager.Phone, "", new { @class = "text-danger" })
+            @Html.LabelFor(model => model.CaseManager.Phone, htmlAttributes: new { })
+            @Html.EditorFor(model => model.CaseManager.Phone, new { htmlAttributes = new { @type = "number", @min = "1111111111", @max = "9999999999" } })
+            
+            @Html.ValidationMessageFor(model => model.CaseManager.Birthday, "", new { @class = "text-danger" })
+            @Html.LabelFor(model => model.CaseManager.Birthday, htmlAttributes: new { })
+            @Html.EditorFor(model => model.CaseManager.Birthday, new { htmlAttributes = new { @class = "standard-datepicker" } })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CreatedDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CreatedDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CreatedDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
+            @Html.ValidationMessageFor(model => model.CaseManager.Gender, "", new { @class = "text-danger" })
+            @Html.LabelFor(model => model.CaseManager.Gender, htmlAttributes: new { })
+            @Html.DropDownListFor(model => model.CaseManager.Gender, Model.GenderList.Select(x => new SelectListItem { Value = x, Text = x, Selected = x == Model.CaseManager.Gender }), htmlAttributes: new { })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
+            <input class="submit-create-profile" type="submit" value="Submit">
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

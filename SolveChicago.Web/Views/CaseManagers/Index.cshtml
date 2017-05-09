@@ -1,58 +1,121 @@
 ﻿@model IEnumerable<SolveChicago.Common.Models.Profile.Member.FamilyEntity>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Dashboard";
 }
 
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Id)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FamilyName)
-        </th>
-        <th></th>
-    </tr>
+<header class="members-header">
+    <h2><strong>MEMBERS:</strong> OVERVIEW</h2>
 
-@foreach (var item in Model)
+    @*<div class="small-12 medium-12 large-3">
+        <input class="search-members" type="text" name="search" placeholder="Search..">
+    </div>*@
+</header>
+@if (Model.Count() > 0)
 {
-    foreach (var member in item.FamilyMembers.Where(x => x.IsHeadOfHousehold == true))
+    <div class="member-card member-card-header">
+        <div class="member-overview">
+            <div class="row large-unstack">
+                <span class="member-card-thumb"></span>
+                <div class="columns has-space">
+                    <strong>Name</strong>
+                </div>
+                <div class="columns has-space">
+
+                </div>
+                <div class="columns has-space">
+                    <strong>Status</strong>
+                </div>
+                <div class="columns has-space">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => member.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => member.FirstName)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "MemberOverview", "Profile", new { memberId = member.Id }, null) |
-                @Html.ActionLink("Details", "Details", "Members", new { memberId = member.Id }, null)
-            </td>
-        </tr>
-    }
-    foreach(var member in item.FamilyMembers.Where(x => x.IsHeadOfHousehold == false))
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => member.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => member.FirstName)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "MemberOverview", "Profile", new { memberId = member.Id }, null) |
-                @Html.ActionLink("Details", "Details", "Members", new { @memberId = member.Id }, null)
-            </td>
-        </tr>
+        <section class="member-card">
+            <div class="member-overview">
+                <div class="row large-unstack">
+                    <span class="member-card-thumb"><img src="@(item.HeadOfHouseholdProfilePicturePath)" /></span>
+                    <div class="columns centered has-space">
+                        <span class="member-name">@(item.FamilyName)</span>
+                    </div>
+                    <div class="columns has-space">
+                        <span></span>
+                    </div>
+                    <div class="columns">
+                        <div class="progress-bar-spacer purple progress" role="progressbar" tabindex="0" aria-valuenow="@item.AverageScore" aria-valuemin="0" aria-valuetext="@(item.AverageScore) percent" aria-valuemax="100">
+                            <!-- value added by tweaking inline-style-->
+                            <div class="progress-meter" style="width: @(item.AverageScore)%">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="columns">
+                        <a href="javascript:void(0)" class="show-family button">View</a>
+                    </div>
+                </div>
+            </div>
+            <div class="familyMemberWrapper" style="display:none;">
+                @foreach (var member in item.FamilyMembers)
+                {
+                    <div class="member-details">
+                        <div class="row large-unstack">
+                            <span class="member-detail-thumb"><img src="@(member.ProfilePicturePath)" /></span>
+                            <div class="columns has-small-space">
+                                <span>@member.Name</span>
+                            </div>
+                            <div class="columns has-small-space">
+                                <span>@(member.CurrentOccupation)</span>
+                            </div>
+                            <div class="columns">
+                                <div class="small-progress-bar-spacer lilac progress" role="progressbar" tabindex="0" aria-valuenow="@(member.MemberStage.Percent)" aria-valuemin="0" aria-valuetext="@(member.MemberStage.Percent) percent" aria-valuemax="100">
+                                    <!-- value added by tweaking inline-style-->
+                                    <div class="progress-meter" style="width: @(member.MemberStage.Percent)%">
+
+                                    </div>
+                                    <p class="small-progress-description">@(member.MemberStage.Stage)</p>
+                                </div>
+                            </div>
+                            <div class="columns">
+                                <ul class="member-details-menu">
+                                    <li>
+                                        <a href="/Members/Details?memberId=@(member.Id)">
+                                            <img class="sub-menu-icon" src="../img/icon-view.svg">
+                                            View
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/CaseManagers/AddCaseNote?memberId=@(member.Id)&caseManagerId=@(ViewBag.CaseManagerId)">
+                                            <img class="sub-menu-icon" src="../img/icon-add-note.svg">
+                                            Add Note
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/Profile/MemberOverview?memberId=@(member.Id)">
+                                            <img class="sub-menu-icon" src="../img/icon-edit.svg">
+                                            Edit
+                                        </a>
+                                    </li>
+                                    @*<li>
+                                            <a href="#">
+                                                <img class="sub-menu-icon" src="../assets/img/icon-delete.svg">
+                                                Delete
+                                            </a>
+                                        </li>*@
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </section>
     }
 
 }
-
-</table>
+else
+{
+    <p>No Members.</p>
+}

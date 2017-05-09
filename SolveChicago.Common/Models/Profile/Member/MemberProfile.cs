@@ -82,6 +82,13 @@ namespace SolveChicago.Common.Models.Profile.Member
         public JobEntity[] Jobs { get; set; }
         public GovernmentProgramEntity[] GovernmentPrograms { get; set; }
         public MemberStage MemberStage { get; set; }
+        public string CurrentOccupation
+        {
+            get
+            {
+                return this.MemberStage.Stage == Constants.Member.Stage.InTraining && this.Nonprofits.Any() ? this.Nonprofits.OrderByDescending(x => x.Start).FirstOrDefault().NonprofitName : this.MemberStage.Stage == Constants.Member.Stage.JobPlaced && this.Jobs.Any() ? this.Jobs.OrderByDescending(x => x.EmployeeStart).FirstOrDefault().Name : "-";
+            }
+        }
     }
 
     public class MemberStage

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="17px" height="16px" viewBox="0 0 17 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.2 (39069) - http://www.bohemiancoding.com/sketch -->
+    <title>icon-delete</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="ACTIONS-Copy" transform="translate(-54.000000, -2.000000)">
+            <g id="icon-delete" transform="translate(52.000000, 0.000000)">
+                <rect id="Rectangle" x="0" y="0" width="20" height="20"></rect>
+                <path d="M13,16 L14,16 L14,8 L13,8 L13,16 Z M7,16 L8,16 L8,8 L7,8 L7,16 Z M4,6 L17,6 L17,16.7731696 C17,17.4508804 16.4359622,18 15.7405536,18 L5.26016037,18 C4.56403779,18 4,17.4508804 4,16.7731696 L4,6 Z M2,5 L2,4 L19,4 L19,5 L2,5 Z M7.8,2 L13.2,2 L15,4 L13.2,4 L12.3,3 L8.7,3 L7.8,4 L6,4 L7.8,2 Z" id="DELETE" fill="#22A7F0"></path>
+            </g>
+        </g>
+    </g>
+</svg>

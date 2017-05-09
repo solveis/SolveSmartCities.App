@@ -1,0 +1,518 @@
+﻿@model SolveChicago.Common.Models.Profile.Member.MemberProfile
+
+@{
+    ViewBag.Title = "MemberOverview";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="app-dashboard-body-content">
+
+
+    <div class="row app-dashboard-form-container-space-around">
+
+
+        <section class="overview-card">
+
+            <header>
+                <h1 class="overview-card-header">Personal Info</h1>
+                <a href="/Profile/MemberPersonal?id=@Model.Id" class="button">Edit</a>
+            </header>
+
+            <div class="overview-image">
+                <img src="@Model.ProfilePicturePath">
+            </div>
+
+            <!-- THis is to wrap the info when theres an image on the right side of the form-->
+            <div class="overview-wrapper">
+
+                <!-- Row-->
+                <div class="row medium-unstack">
+
+                    <div class="columns has-space">
+                        <p>Name</p>
+                    </div>
+
+                    <div class="columns has-space">
+                        <span>@Model.FullName</span>
+                    </div>
+                    <hr class="overview-line-divider">
+                </div>
+                <!-- End of Row-->
+                <!-- Row-->
+                <div class="row medium-unstack">
+
+                    <div class="columns has-space">
+                        <p>Gender</p>
+                    </div>
+
+                    <div class="columns has-space">
+                        <span>@Model.Gender</span>
+                    </div>
+                    <hr class="overview-line-divider">
+                </div>
+                <!-- End of Row-->
+                <!-- Row-->
+                <div class="row medium-unstack">
+
+                    <div class="columns has-space">
+                        <p>Address</p>
+                    </div>
+
+                    <div class="columns has-space">
+                        <span>@Model.Address</span>
+                    </div>
+                    <hr class="overview-line-divider">
+                </div>
+                <!-- End of Row-->
+                <!-- Row-->
+                <div class="row medium-unstack">
+
+                    <div class="columns has-space">
+                        <p>Email</p>
+                    </div>
+
+                    <div class="columns has-space">
+                        <span>@Model.Email</span>
+                    </div>
+                    <hr class="overview-line-divider">
+                </div>
+                <!-- End of Row-->
+                <!-- Row-->
+                <div class="row medium-unstack">
+
+                    <div class="columns has-space">
+                        <p>Phone</p>
+                    </div>
+
+                    <div class="columns has-space">
+                        <span>@Model.Phone</span>
+                    </div>
+                    <hr class="overview-line-divider">
+                </div>
+                <!-- End of Row-->
+                <!-- Row-->
+                <div class="row medium-unstack">
+
+                    <div class="columns has-space">
+                        <p>Contact Preference</p>
+                    </div>
+
+                    <div class="columns has-space">
+                        <span>@Model.ContactPreference</span>
+                    </div>
+                    <hr class="overview-line-divider">
+                </div>
+                <!-- End of Row-->
+                <!-- Row-->
+                <div class="row medium-unstack">
+
+                    <div class="columns has-space">
+                        <p>Birthday</p>
+                    </div>
+
+                    <div class="columns has-space">
+                        <span>@(Model.Birthday.HasValue ? @Model.Birthday.Value.ToShortDateString() : "")</span>
+                    </div>
+                    <hr class="overview-line-divider">
+                </div>
+                <!-- End of Row-->
+                <!-- Row-->
+                <div class="row medium-unstack">
+
+                    <div class="columns has-space">
+                        <p>Personal Interests</p>
+                    </div>
+
+                    <div class="columns has-space">
+                        <span>@Model.Interests</span>
+                    </div>
+                    <hr class="overview-line-divider">
+                </div>
+                <!-- End of Row-->
+            </div>
+
+        </section>
+
+        <section class="overview-card">
+
+            <header>
+                <h1 class="overview-card-header">Family</h1>
+                <a href="/Profile/MemberFamily?id=@Model.Id" class="button">Edit</a>
+            </header>
+            @if (Model.Family != null && Model.Family.FamilyMembers.Count() > 0)
+            {
+                foreach (var fm in Model.Family.FamilyMembers)
+                {
+                <!-- THis is to wrap the info when theres an image on the right side of the form-->
+                    <div class="overview-wrapper">
+
+                        <!-- Row-->
+                        <div class="row medium-unstack">
+
+                            <div class="columns has-space">
+                                <p>Name</p>
+                            </div>
+
+                            <div class="columns has-space">
+                                <span>@fm.Name</span>
+                            </div>
+                            <hr class="overview-line-divider">
+                        </div>
+                        <!-- End of Row-->
+                        <!-- Row-->
+                        <div class="row medium-unstack">
+
+                            <div class="columns has-space">
+                                <p>Gender</p>
+                            </div>
+
+                            <div class="columns has-space">
+                                <span>@fm.Gender</span>
+                            </div>
+                            <hr class="overview-line-divider">
+                        </div>
+                        <!-- End of Row-->
+                        <!-- Row-->
+                        <div class="row medium-unstack">
+
+                            <div class="columns has-space">
+                                <p>Birthday</p>
+                            </div>
+
+                            <div class="columns has-space">
+                                <span>@(fm.Birthday.HasValue ? @fm.Birthday.Value.ToShortDateString() : "")</span>
+                            </div>
+                            <hr class="overview-line-divider">
+                        </div>
+                        <!-- End of Row-->
+                        <!-- Row-->
+                        <div class="row medium-unstack">
+
+                            <div class="columns has-space">
+                                <p>Occupation</p>
+                            </div>
+
+                            <div class="columns has-space">
+                                <span>@fm.CurrentOccupation</span>
+                            </div>
+                            <hr class="overview-line-divider">
+                        </div>
+                        <!-- End of Row-->
+                        <!-- Row-->
+                        <div class="row medium-unstack">
+
+                            <div class="columns has-space">
+                                <p>Relation</p>
+                            </div>
+
+                            <div class="columns has-space">
+                                <span>@fm.Relation</span>
+                            </div>
+                            <hr class="overview-line-divider">
+                        </div>
+                        <!-- End of Row-->
+                    </div>
+                }
+            }
+            else
+            {
+                <p>No Family Members</p>
+            }
+        </section>
+
+        <section class="overview-card">
+            <header>
+                <h1 class="overview-card-header">Education</h1>
+                <a href="/Profile/MemberSchools?id=@Model.Id" class="button">Edit</a>
+            </header>
+            @if (Model.Schools != null && Model.Schools.Count() > 0)
+            {
+                foreach (var school in Model.Schools)
+                {
+                <!-- THis is to wrap the info when theres an image on the right side of the form-->
+                    <div class="overview-wrapper">
+
+                        <!-- Row-->
+                        <div class="row medium-unstack">
+
+                            <div class="columns has-space">
+                                <p>Name</p>
+                            </div>
+
+                            <div class="columns has-space">
+                                <span>@school.Name</span>
+                            </div>
+                            <hr class="overview-line-divider">
+                        </div>
+                        <!-- End of Row-->
+                        <!-- Row-->
+                        <div class="row medium-unstack">
+
+                            <div class="columns has-space">
+                                <p>Type</p>
+                            </div>
+
+                            <div class="columns has-space">
+                                <span>@school.Type</span>
+                            </div>
+                            <hr class="overview-line-divider">
+                        </div>
+                        <!-- End of Row-->
+                        <!-- Row-->
+                        <div class="row medium-unstack">
+
+                            <div class="columns has-space">
+                                <p>Start</p>
+                            </div>
+
+                            <div class="columns has-space">
+                                <span>@(school.Start.HasValue ? school.Start.Value.ToShortDateString() : "")</span>
+                            </div>
+                            <hr class="overview-line-divider">
+                        </div>
+                        <!-- End of Row-->
+                        <!-- Row-->
+                        <div class="row medium-unstack">
+
+                            <div class="columns has-space">
+                                <p>End</p>
+                            </div>
+
+                            <div class="columns has-space">
+                                <span>@(school.End.HasValue ? school.End.Value.ToShortDateString() : "")</span>
+                            </div>
+                            <hr class="overview-line-divider">
+                        </div>
+                        <!-- End of Row-->
+                        <!-- Row-->
+                        <div class="row medium-unstack">
+
+                            <div class="columns has-space">
+                                <p>Degree</p>
+                            </div>
+
+                            <div class="columns has-space">
+                                <span>@school.Degree</span>
+                            </div>
+                            <hr class="overview-line-divider">
+                        </div>
+                        <!-- End of Row-->
+                    </div>
+                }
+            }
+            else
+            {
+                <p>No Schools</p>
+            }
+        </section>
+        <section class="overview-card">
+            <header>
+                <h1 class="overview-card-header">Professional</h1>
+                <a href="/Profile/MemberJobs?id=@Model.Id" class="button">Edit</a>
+            </header>
+            @if (Model.Jobs != null && Model.Jobs.Count() > 0)
+            {
+                foreach (var job in Model.Jobs)
+                {
+                <!-- THis is to wrap the info when theres an image on the right side of the form-->
+                    <div class="overview-wrapper">
+
+                        <!-- Row-->
+                        <div class="row medium-unstack">
+
+                            <div class="columns has-space">
+                                <p>Name</p>
+                            </div>
+
+                            <div class="columns has-space">
+                                <span>@job.Name</span>
+                            </div>
+                            <hr class="overview-line-divider">
+                        </div>
+                        <!-- End of Row-->
+                        <!-- Row-->
+                        <div class="row medium-unstack">
+
+                            <div class="columns has-space">
+                                <p>Start</p>
+                            </div>
+
+                            <div class="columns has-space">
+                                <span>@(job.EmployeeStart.HasValue ? job.EmployeeStart.Value.ToShortDateString() : "")</span>
+                            </div>
+                            <hr class="overview-line-divider">
+                        </div>
+                        <!-- End of Row-->
+                        <!-- Row-->
+                        <div class="row medium-unstack">
+
+                            <div class="columns has-space">
+                                <p>End</p>
+                            </div>
+
+                            <div class="columns has-space">
+                                <span>@(job.EmployeeEnd.HasValue ? job.EmployeeEnd.Value.ToShortDateString() : "")</span>
+                            </div>
+                            <hr class="overview-line-divider">
+                        </div>
+                        <!-- End of Row-->
+                        <!-- Row-->
+                        <div class="row medium-unstack">
+
+                            <div class="columns has-space">
+                                <p>Reason For Leaving</p>
+                            </div>
+
+                            <div class="columns has-space">
+                                <span>@job.EmployeeReasonForLeaving</span>
+                            </div>
+                            <hr class="overview-line-divider">
+                        </div>
+                        <!-- End of Row-->
+                        <!-- Row-->
+                        <div class="row medium-unstack">
+
+                            <div class="columns has-space">
+                                <p>Pay</p>
+                            </div>
+
+                            <div class="columns has-space">
+                                <span>@job.EmployeePay</span>
+                            </div>
+                            <hr class="overview-line-divider">
+                        </div>
+                        <!-- End of Row-->
+                    </div>
+                }
+            }
+            else
+            {
+                <p>No Jobs</p>
+            }
+        </section>
+        <section class="overview-card">
+            <header>
+                <h1 class="overview-card-header">Training</h1>
+                <a href="/Profile/MemberNonprofits?id=@Model.Id" class="button">Edit</a>
+            </header>
+            @if (Model.Nonprofits != null && Model.Nonprofits.Count() > 0)
+            {
+                foreach (var npo in Model.Nonprofits)
+                {
+                <!-- THis is to wrap the info when theres an image on the right side of the form-->
+                    <div class="overview-wrapper">
+
+                        <!-- Row-->
+                        <div class="row medium-unstack">
+
+                            <div class="columns has-space">
+                                <p>Name</p>
+                            </div>
+
+                            <div class="columns has-space">
+                                <span>@npo.NonprofitName</span>
+                            </div>
+                            <hr class="overview-line-divider">
+                        </div>
+                        <!-- End of Row-->
+                        <!-- Row-->
+                        <div class="row medium-unstack">
+
+                            <div class="columns has-space">
+                                <p>Start</p>
+                            </div>
+
+                            <div class="columns has-space">
+                                <span>@(npo.Start.HasValue ? npo.Start.Value.ToShortDateString() : "")</span>
+                            </div>
+                            <hr class="overview-line-divider">
+                        </div>
+                        <!-- End of Row-->
+                        <!-- Row-->
+                        <div class="row medium-unstack">
+
+                            <div class="columns has-space">
+                                <p>End</p>
+                            </div>
+
+                            <div class="columns has-space">
+                                <span>@(npo.End.HasValue ? npo.End.Value.ToShortDateString() : "")</span>
+                            </div>
+                            <hr class="overview-line-divider">
+                        </div>
+                        <!-- End of Row-->
+                        <!-- Row-->
+                        <div class="row medium-unstack">
+
+                            <div class="columns has-space">
+                                <p>Enjoyed</p>
+                            </div>
+
+                            <div class="columns has-space">
+                                <span>@npo.Enjoyed</span>
+                            </div>
+                            <hr class="overview-line-divider">
+                        </div>
+                        <!-- End of Row-->
+                        <!-- Row-->
+                        <div class="row medium-unstack">
+
+                            <div class="columns has-space">
+                                <p>Struggled</p>
+                            </div>
+
+                            <div class="columns has-space">
+                                <span>@npo.Struggled</span>
+                            </div>
+                            <hr class="overview-line-divider">
+                        </div>
+                        <!-- End of Row-->
+                    </div>
+                }
+            }
+            else
+            {
+                <p>No Nonprofits</p>
+            }
+        </section>
+        <section class="overview-card">
+            <header>
+                <h1 class="overview-card-header">Government Benefits</h1>
+                <a href="/Profile/MemberGovernmentPrograms?id=@Model.Id" class="button">Edit</a>
+            </header>
+            @if (Model.GovernmentPrograms != null && Model.GovernmentPrograms.Count() > 0)
+            {
+                foreach (var gp in Model.GovernmentPrograms)
+                {
+                <!-- THis is to wrap the info when theres an image on the right side of the form-->
+                    <div class="overview-wrapper">
+
+                        <!-- Row-->
+                        <div class="row medium-unstack">
+
+                            <div class="columns has-space">
+                                <p>Program Name</p>
+                            </div>
+
+                            <div class="columns has-space">
+                                <span>@gp.ProgramName</span>
+                            </div>
+                            <hr class="overview-line-divider">
+                        </div>
+                        <!-- End of Row-->
+                    </div>
+                }
+            }
+            else
+            {
+                <p>No Government Benefits</p>
+            }
+        </section>
+    </div>
+
+    <!-- <hr> -->
+    <!--       <div class="row align-center">
+            <input class="submit-create-profile" type="submit" value="Submit">
+          </div> -->
+
+</div>

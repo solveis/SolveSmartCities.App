@@ -17,6 +17,30 @@
         <h2>ANSWER THE FOLLOWING QUESTIONS</h2>
     </header>
 
+    <ol class="progress-indicator">
+        <li class="is-current" data-step="1">
+            <span>Personal</span>
+        </li>
+        <li data-step="2">
+            <span>Family</span>
+        </li>
+        <li class="" data-step="3">
+            <span>Education</span>
+        </li>
+        <li class="" data-step="4">
+            <span>Professional</span>
+        </li>
+        <li class="" data-step="5">
+            <span>Training</span>
+        </li>
+        <li class="" data-step="6">
+            <span>Gov. Benefits</span>
+        </li>
+        <li class="" data-step="7">
+            <span>Finish</span>
+        </li>
+    </ol>
+
     @using (Html.BeginForm("MemberPersonal", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
@@ -78,7 +102,7 @@
 
                 @Html.ValidationMessageFor(model => model.Member.Phone, "", new { @class = "text-danger" })
                 @Html.LabelFor(model => model.Member.Phone, "Phone Number")
-                @Html.EditorFor(model => model.Member.Phone, new { htmlAttributes = new { @type = "number" } })
+                @Html.EditorFor(model => model.Member.Phone, new { htmlAttributes = new { @type = "number", @min = "1111111111", @max = "9999999999" } })
 
                 @Html.ValidationMessageFor(model => model.Member.ContactPreference, "", new { @class = "text-danger" })
                 @Html.LabelFor(model => model.Member.ContactPreference, "How would you prefer to be contacted?")

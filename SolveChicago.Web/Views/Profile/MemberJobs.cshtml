@@ -15,24 +15,57 @@
         <h2>ANSWER THE FOLLOWING QUESTIONS</h2>
     </header>
 
+    <ol class="progress-indicator">
+        <li class="is-complete" data-step="1">
+            <span>Personal</span>
+        </li>
+        <li class="is-complete" data-step="2">
+            <span>Family</span>
+        </li>
+        <li class="is-complete" data-step="3">
+            <span>Education</span>
+        </li>
+        <li class="is-current" data-step="4">
+            <span>Professional</span>
+        </li>
+        <li class="" data-step="5">
+            <span>Training</span>
+        </li>
+        <li class="" data-step="6">
+            <span>Gov. Benefits</span>
+        </li>
+        <li class="" data-step="7">
+            <span>Finish</span>
+        </li>
+    </ol>
 
     @using (Html.BeginForm("MemberJobs", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
 
         <div>
-            @Html.ValidationMessageFor(model => model.Member.CurrentlyLooking, "", new { @class = "text-danger" })
-            @Html.LabelFor(model => model.Member.CurrentlyLooking, "Are you currently looking for a job?")
-            @Html.RadioButtonFor(model => model.Member.CurrentlyLooking, true)
-            <label for="Member_CurrentlyLooking">Yes</label>
-            @Html.RadioButtonFor(model => model.Member.CurrentlyLooking, false)
-            <label for="Member_CurrentlyLooking">No</label>
+            <div class="main-questions row align-center">
+                @Html.ValidationMessageFor(model => model.Member.CurrentlyLooking, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.Member.CurrentlyLooking, "Are you currently looking for a job?")
+                <div>
+                    @Html.RadioButtonFor(model => model.Member.CurrentlyLooking, true)
+                    <label for="Member_CurrentlyLooking">Yes</label>
+                    @Html.RadioButtonFor(model => model.Member.CurrentlyLooking, false)
+                    <label for="Member_CurrentlyLooking">No</label>
+                </div>
 
+                <div id="looking-for-job" class="row align-center hide">
+                    <p><strong>We’re here to help! Please tell us about your most recent job.</strong></p>
+                </div>
+                <div id="not-looking-for-job" class="row align-center hide">
+                    <p><strong>Okay! Please tell us about your current job.</strong></p>
+                </div>
+            </div>
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.Member.MemberId)
             @for (int i = 0; i < Model.Member.Jobs.Length; i++)
             {
-                <div class="Job" data-id="@(i)">
+                <div class="Job entry" data-id="@(i)">
                     <div class="row app-dashboard-form-container-space-around">
                         <div class="form-holder">
                             @Html.HiddenFor(model => Model.Member.Jobs[i].CorporationId)
@@ -68,11 +101,13 @@
                             </div>
                         </div>
                     </div>
+                    <hr />
                 </div>
             }
-            <a href="javascript:void(0)" id="AddJob" class="addEntry">Add Job</a>
+            <div class="row align-center has-border">
+                <a class="add-job addEntry" href="javascript:void(0)"> <img class="add-job-icon" src="../img/icon-add.svg"> Add Job</a>
+            </div>
         </div>
-        <hr />
         <div class="row align-center">
             <input type="submit" value="Submit" class="submit-create-profile" />
         </div>
@@ -97,9 +132,11 @@
                 leftArrow: '<<',
                 rightArrow: '>>',
             });
-
+            
             window.bindRadioContent(newEntry.find('.is-job-current'), "", newEntry.find('.job-endinfo'), "")
         }
+
+        window.bindRadioContent($('input[name=Member\\.CurrentlyLooking]'), $('#looking-for-job'), $('#not-looking-for-job'), "");
 
         window.addEntryCallback($('.Job'));
     </script>

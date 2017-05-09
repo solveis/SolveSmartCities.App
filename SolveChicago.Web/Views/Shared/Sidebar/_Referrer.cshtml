@@ -1,12 +1,12 @@
 ﻿<ul class="menu vertical">
-    <li class="menu-link">
-        <a href="/Referrers" class="is-active">
+    <li class="menu-link @(Request.Url.AbsolutePath == "/Referrers" ? "active" : "")">
+        <a href="/Referrers">
             <img class="menu-icon" src="../img/side-nav-members-icon.svg">
             <span class="app-dashboard-sidebar-text">Members</span>
         </a>
     </li>
-    <li>
-        <a href="/Referrers/AddMember" class="is-active">
+    <li class="menu-link @(Request.Url.AbsolutePath == "/Referrers/AddMember" ? "active" : "")">
+        <a href="/Referrers/AddMember">
             <img class="menu-icon" src="../img/side-nav-add-member-icon.svg">
             <span class="app-dashboard-sidebar-text">Add Member</span>
         </a>
@@ -19,7 +19,7 @@
             @(ViewBag.ReferrerName)
         </span>
     </li>
-    <li>
+    <li class="menu-link @(Request.Url.AbsolutePath == "/Account/Settings" ? "active" : "")">
         <a href="/Account/Settings">
             <img class="sub-menu-icon" src="../img/submenu-icon-settings.svg">
             <span class="app-dashboard-sidebar-text">Settings</span>

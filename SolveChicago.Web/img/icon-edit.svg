@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="16px" viewBox="0 0 20 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.2 (39069) - http://www.bohemiancoding.com/sketch -->
+    <title>icon-edit</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="ACTIONS-Copy" transform="translate(-52.000000, -2.000000)">
+            <g id="icon-edit" transform="translate(52.000000, 0.000000)">
+                <rect id="Rectangle" x="0" y="0" width="20" height="20"></rect>
+                <path d="M17.8743628,13.0369789 L17.9110256,13 L17.9313504,13 L19.4207773,16 L20,16 L20,18 L0,18 L0,16 L18.0888841,16 L16.1372451,15.0171191 L16.0659786,15.089 L16.0555684,15.099 L5.05985897,4.008 C4.98004701,3.9275 4.98004701,3.798 5.05985897,3.7175 L6.70319231,2.06 C6.78250855,1.98 6.91139744,1.98 6.99071368,2.06 L17.8743628,13.0369789 Z" id="EDIT" fill="#22A7F0"></path>
+            </g>
+        </g>
+    </g>
+</svg>
