@@ -52,3 +52,15 @@ input[type="radio"], input[type="checkbox"] {
 .member-card.prospects:nth-child(2n) {
     background:#ececec;
 }
+
+.validation-summary-errors, .input-validation-error {
+    background: #fee9e7;
+    color: #F22613;
+    padding: 20px 40px;
+    border-radius: 10px;
+    height: auto;
+}
+
+.validation-summary-errors ul {
+    margin:0;
+}
