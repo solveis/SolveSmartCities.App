@@ -22,4 +22,9 @@
             }
         });
     });
+
+    $('[data-toggle]').off('click').on('click', function (e) {
+        var id = $(this).attr('data-toggle');
+        $('#' + id).toggleClass('is-open');
+    });
 });

@@ -33,19 +33,13 @@ namespace SolveChicago.Web
                       "~/Scripts/profile_member.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/tokenfield").Include(
-                      "~/Scripts/bootstrap-tokenfield.js",
                         "~/Scripts/jquery-ui-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/semantic").Include(
                       "~/Scripts/semantic.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/foundation").Include(
-                      "~/dist/js/foundation.js",
-                      "~/Scripts/foundation-datepicker.js"));
-
 
             bundles.Add(new StyleBundle("~/Content/tokenfield").Include(
-                      "~/Content/bootstrap-tokenfield/bootstrap-tokenfield.css",
                       "~/Content/themes/base/jquery-ui.css"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
