@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace SolveChicago.Common.Models.Profile.Member
 {
@@ -27,6 +28,13 @@ namespace SolveChicago.Common.Models.Profile.Member
         public FamilyMember[] FamilyMembers { get; set; }
         public int AverageScore { get; set; }
         public string HeadOfHouseholdProfilePicturePath { get; set; }
+        public string Address
+        {
+            get
+            {
+                return this.Address1 + " " + this.Address2 + " " + this.City + ", " + this.Province + " " + this.ZipCode;
+            }
+        }
     }
 
     public class FamilyMember
@@ -44,6 +52,7 @@ namespace SolveChicago.Common.Models.Profile.Member
         public bool? RelationBiological { get; set; }
         public bool? IsMarriageCurrent { get; set; }
         public bool? IsHeadOfHousehold { get; set; }
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? Birthday { get; set; }
         public string Gender { get; set; }
         public int? Id { get; set; }

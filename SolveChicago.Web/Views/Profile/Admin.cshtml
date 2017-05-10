@@ -18,15 +18,15 @@
             @Html.HiddenFor(model => model.Id)
             @Html.HiddenFor(m => m.UserId)
 
-            @Html.LabelFor(model => model.FirstName, htmlAttributes: new { })
+            @Html.LabelFor(model => model.FirstName, "First Name", htmlAttributes: new { })
             @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { } })
             @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
 
-            @Html.LabelFor(model => model.LastName, htmlAttributes: new { })
+            @Html.LabelFor(model => model.LastName, "Last Name", htmlAttributes: new { })
             @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { } })
             @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
 
-            @Html.LabelFor(model => model.ProfilePicture, htmlAttributes: new { })
+            @Html.LabelFor(model => model.ProfilePicture, "Upload a Photo", htmlAttributes: new { })
             @if (!string.IsNullOrEmpty(Model.ProfilePicturePath) && Model.ProfilePicturePath != "/img/side-nav-members-icon.svg")
             {
                 <div>
@@ -37,7 +37,7 @@
             @Html.ValidationMessageFor(model => model.ProfilePicture, "", new { @class = "text-danger" })
 
             @Html.LabelFor(model => model.Phone, htmlAttributes: new { })
-            @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @type = "number", @min = "1111111111", @max = "9999999999" } })
+            @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "number-entry" } })
             @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
 
             <input class="submit-create-profile" type="submit" value="Submit">

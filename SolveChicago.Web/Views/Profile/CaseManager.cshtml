@@ -19,14 +19,14 @@
             @Html.HiddenFor(m => m.CaseManager.NonprofitId)
 
             @Html.ValidationMessageFor(model => model.CaseManager.FirstName, "", new { @class = "text-danger" })
-            @Html.LabelFor(model => model.CaseManager.FirstName, htmlAttributes: new { })
+            @Html.LabelFor(model => model.CaseManager.FirstName, "First Name", htmlAttributes: new { })
             @Html.EditorFor(model => model.CaseManager.FirstName, new { htmlAttributes = new { } })
 
             @Html.ValidationMessageFor(model => model.CaseManager.LastName, "", new { @class = "text-danger" })
-            @Html.LabelFor(model => model.CaseManager.LastName, htmlAttributes: new { })
+            @Html.LabelFor(model => model.CaseManager.LastName, "Last Name", htmlAttributes: new { })
             @Html.EditorFor(model => model.CaseManager.LastName, new { htmlAttributes = new { } })
             
-            @Html.LabelFor(model => model.CaseManager.ProfilePicture, htmlAttributes: new { })
+            @Html.LabelFor(model => model.CaseManager.ProfilePicture, "Upload a Photo", htmlAttributes: new { })
             @if (!string.IsNullOrEmpty(Model.CaseManager.ProfilePicturePath) && Model.CaseManager.ProfilePicturePath != "/img/side-nav-members-icon.svg")
             {
                 <div>
@@ -38,11 +38,11 @@
 
             @Html.ValidationMessageFor(model => model.CaseManager.Phone, "", new { @class = "text-danger" })
             @Html.LabelFor(model => model.CaseManager.Phone, htmlAttributes: new { })
-            @Html.EditorFor(model => model.CaseManager.Phone, new { htmlAttributes = new { @type = "number", @min = "1111111111", @max = "9999999999" } })
+            @Html.EditorFor(model => model.CaseManager.Phone, new { htmlAttributes = new { @class = "number-entry" } })
             
             @Html.ValidationMessageFor(model => model.CaseManager.Birthday, "", new { @class = "text-danger" })
             @Html.LabelFor(model => model.CaseManager.Birthday, htmlAttributes: new { })
-            @Html.EditorFor(model => model.CaseManager.Birthday, new { htmlAttributes = new { @class = "standard-datepicker" } })
+            @Html.EditorFor(model => model.CaseManager.Birthday, new { htmlAttributes = new { @placeholder = "mm/dd/yyyy" } })
 
             @Html.ValidationMessageFor(model => model.CaseManager.Gender, "", new { @class = "text-danger" })
             @Html.LabelFor(model => model.CaseManager.Gender, htmlAttributes: new { })

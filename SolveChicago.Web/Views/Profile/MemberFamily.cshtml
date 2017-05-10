@@ -50,11 +50,11 @@
                         @Html.HiddenFor(model => Model.Member.Family.FamilyMembers[i].Id)
 
                         @Html.ValidationMessageFor(model => Model.Member.Family.FamilyMembers[i].FirstName, "", new { @class = "text-danger" })
-                        @Html.LabelFor(model => Model.Member.Family.FamilyMembers[i].FirstName, htmlAttributes: new { })
+                        @Html.LabelFor(model => Model.Member.Family.FamilyMembers[i].FirstName, "First Name", htmlAttributes: new { })
                         @Html.EditorFor(model => Model.Member.Family.FamilyMembers[i].FirstName, new { htmlAttributes = new { } })
 
                         @Html.ValidationMessageFor(model => Model.Member.Family.FamilyMembers[i].LastName, "", new { @class = "text-danger" })
-                        @Html.LabelFor(model => Model.Member.Family.FamilyMembers[i].LastName, htmlAttributes: new { })
+                        @Html.LabelFor(model => Model.Member.Family.FamilyMembers[i].LastName, "Last Name", htmlAttributes: new { })
                         @Html.EditorFor(model => Model.Member.Family.FamilyMembers[i].LastName, new { htmlAttributes = new { } })
 
                         @Html.ValidationMessageFor(model => Model.Member.Family.FamilyMembers[i].Gender, "", new { @class = "text-danger" })
@@ -64,7 +64,7 @@
                     <div class="form-holder">
                         @Html.ValidationMessageFor(model => Model.Member.Family.FamilyMembers[i].Birthday, "", new { @class = "text-danger" })
                         @Html.LabelFor(model => Model.Member.Family.FamilyMembers[i].Birthday)
-                        @Html.EditorFor(model => Model.Member.Family.FamilyMembers[i].Birthday, new { htmlAttributes = new { @class = "fm-birthday" } })
+                        @Html.EditorFor(model => Model.Member.Family.FamilyMembers[i].Birthday, new { htmlAttributes = new { @placeholder = "mm/dd/yyyy", @class = "fm-birthday" } })
 
                         @Html.ValidationMessageFor(model => Model.Member.Family.FamilyMembers[i].Gender, "", new { @class = "text-danger" })
                         @Html.LabelFor(model => Model.Member.Family.FamilyMembers[i].Relation, htmlAttributes: new { })
@@ -72,7 +72,7 @@
                         @if (Model.Member.IsHeadOfHousehold == false)
                         {
                             @Html.ValidationMessageFor(model => model.Member.IsHeadOfHousehold, "", new { @class = "text-danger" })
-                            @Html.LabelFor(model => model.Member.IsHeadOfHousehold, htmlAttributes: new { })
+                            @Html.LabelFor(model => model.Member.IsHeadOfHousehold, "Are they the head of your household?", htmlAttributes: new { })
                             @Html.RadioButtonFor(model => model.Member.IsHeadOfHousehold, true, new { htmlAttributes = new { } })
                             <label for="Member_IsHeadOfHousehold">Yes</label>
                             @Html.RadioButtonFor(model => model.Member.IsHeadOfHousehold, false, new { htmlAttributes = new { } })
@@ -82,7 +82,7 @@
                         <div id="fm-contact-info" class="hide">
                             @Html.ValidationMessageFor(model => Model.Member.Family.FamilyMembers[i].Phone, "", new { @class = "text-danger" })
                             @Html.LabelFor(model => Model.Member.Family.FamilyMembers[i].Phone, htmlAttributes: new { })
-                            @Html.EditorFor(model => Model.Member.Family.FamilyMembers[i].Phone, new { htmlAttributes = new { @type = "number", min = "1111111111", max = "9999999999" } })
+                            @Html.EditorFor(model => Model.Member.Family.FamilyMembers[i].Phone, new { htmlAttributes = new { @class = "number-entry" } })
 
                             @Html.LabelFor(model => Model.Member.Family.FamilyMembers[i].Email, htmlAttributes: new { })
                             @Html.EditorFor(model => Model.Member.Family.FamilyMembers[i].Email, (Model.Member.Family.FamilyMembers[i].Id.HasValue) ? new {  @disabled = true } : null)
@@ -109,10 +109,7 @@
 
         <script>
             window.addEntryCallback = function (newEntry) {
-                $('.fm-birthday').fdatepicker({
-                    leftArrow: '<<',
-                    rightArrow: '>>',
-                }).on('changeDate', function () {
+                $('.fm-birthday').blur(function () {
                     var date = new Date($(this).val()),
                         sixteenYearsAgo = new Date(new Date(new Date().setFullYear(new Date().getFullYear() - 16)));
                     if (date < sixteenYearsAgo)

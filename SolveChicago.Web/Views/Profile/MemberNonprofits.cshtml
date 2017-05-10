@@ -75,11 +75,11 @@
 
                                 @Html.ValidationMessageFor(model => model.Member.Nonprofits[i].Start, "", new { @class = "text-danger" })
                                 @Html.LabelFor(model => model.Member.Nonprofits[i].Start, htmlAttributes: new { })
-                                @Html.EditorFor(model => model.Member.Nonprofits[i].Start, new { htmlAttributes = new { @class = "standard-datepicker" } })
+                                @Html.EditorFor(model => model.Member.Nonprofits[i].Start, new { htmlAttributes = new { @placeholder = "mm/dd/yyyy" } })
 
                                 @Html.ValidationMessageFor(model => model.Member.Nonprofits[i].End, "", new { @class = "text-danger" })
                                 @Html.LabelFor(model => model.Member.Nonprofits[i].End, htmlAttributes: new {  })
-                                @Html.EditorFor(model => model.Member.Nonprofits[i].End, new { htmlAttributes = new { @class = "standard-datepicker" } })
+                                @Html.EditorFor(model => model.Member.Nonprofits[i].End, new { htmlAttributes = new { @placeholder = "mm/dd/yyyy" } })
                             </div>
                             <div class="form-holder">
                                 @Html.ValidationMessageFor(model => model.Member.Nonprofits[i].SkillsAcquired, "", new { @class = "text-danger" })
@@ -129,11 +129,6 @@
                 @:skillsList.push("@skill");
             }
             window.bindAutocomplete(newEntry.find('.skills-list'), skillsList);
-
-            $('.standard-datepicker').fdatepicker({
-                leftArrow: '<<',
-                rightArrow: '>>',
-            });
 
             window.bindRadioContent($('input[name=Member\\.InterestedInWorkforceSkill]'), "", "", $('#npo-wrapper'));
         }

@@ -19,7 +19,7 @@
 
                 <div class="checkbox">
                     @Html.CheckBoxFor(m => m.RememberMe)
-                    @Html.LabelFor(m => m.RememberMe, new { @class = "back-to-website" })
+                    @Html.LabelFor(m => m.RememberMe, "Remember Me", new { @class = "back-to-website" })
                 </div>
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 

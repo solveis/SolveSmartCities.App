@@ -28,7 +28,7 @@ namespace SolveChicago.Tests.Controllers
                     Id = 1,
                     FirstName = "John",
                     LastName = " Doe",
-                    AspNetUser = 
+                    AspNetUser =
                         new AspNetUser
                         {
                             Id = ")(*Y&T^RDTXFGCHVUJI"
@@ -39,7 +39,7 @@ namespace SolveChicago.Tests.Controllers
                     Id = 2,
                     FirstName = "Sayid",
                     LastName = "Khan",
-                    AspNetUser = 
+                    AspNetUser =
                         new AspNetUser
                         {
                             Id = "BHVGYCRD%$^&*()O"
@@ -50,7 +50,7 @@ namespace SolveChicago.Tests.Controllers
                     Id = 3,
                     FirstName = "Jerry",
                     LastName = "Ellis",
-                    AspNetUser = 
+                    AspNetUser =
                         new AspNetUser
                         {
                             Id = "HGSE#%$^&G&IUBH"
@@ -66,7 +66,7 @@ namespace SolveChicago.Tests.Controllers
             context.Setup(c => c.AspNetUsers).Returns(userSet.Object);
 
         }
-        
+
 
         [Fact]
         public void Admin_Index()
@@ -159,37 +159,6 @@ namespace SolveChicago.Tests.Controllers
             var model = Assert.IsAssignableFrom<Admin>(
                 viewResult.ViewData.Model);
             Assert.Equal("Jerry Ellis", string.Format("{0} {1}", model.FirstName, model.LastName));
-        }
-
-        [Fact]
-        public void AdminsController_Create_GET_ReturnsViewResult()
-        {
-            SetupData();
-            AdminsController controller = new AdminsController(context.Object);
-            var result = (ViewResult)controller.Create();
-            var viewResult = Assert.IsType<ViewResult>(result);
-        }
-
-        [Fact]
-        public void AdminsController_Create_POST_ReturnsAdmin()
-        {
-            SetupData();
-            Admin admin = new Admin
-            {
-                CreatedDate = DateTime.UtcNow,
-                Email = "email@email.com",
-                FirstName = "Joe",
-                LastName = "Smith",
-                InvitedBy = "BHVGYCRD%$^&*()O",
-                Phone = "1234567890",
-                ProfilePicturePath = "../path.jpg"
-            };
-            AdminsController controller = new AdminsController(context.Object);
-            var result = (RedirectToRouteResult)controller.Create(admin);
-
-            Assert.Equal("Index", result.RouteValues["action"]);
-            Assert.Null(result.RouteValues["controller"]);
-
         }
     }
 }

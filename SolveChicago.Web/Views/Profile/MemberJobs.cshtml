@@ -71,17 +71,17 @@
                             @Html.HiddenFor(model => Model.Member.Jobs[i].CorporationId)
 
                             @Html.ValidationMessageFor(model => Model.Member.Jobs[i].Name, "", new { @class = "text-danger" })
-                            @Html.LabelFor(model => Model.Member.Jobs[i].Name, htmlAttributes: new { })
-                            @Html.EditorFor(model => Model.Member.Jobs[i].Name, "Company Name", new { htmlAttributes = new { @class = "corporation-list" } })
+                            @Html.LabelFor(model => Model.Member.Jobs[i].Name, "Company Name", htmlAttributes: new { })
+                            @Html.EditorFor(model => Model.Member.Jobs[i].Name, new { htmlAttributes = new { @class = "corporation-list" } })
 
                             @Html.ValidationMessageFor(model => Model.Member.Jobs[i].EmployeePay, "", new { @class = "text-danger" })
-                            @Html.LabelFor(model => Model.Member.Jobs[i].EmployeePay, htmlAttributes: new { })
-                            @Html.EditorFor(model => Model.Member.Jobs[i].EmployeePay, "What was your hourly pay?", new { htmlAttributes = new { } })
+                            @Html.LabelFor(model => Model.Member.Jobs[i].EmployeePay, "What was your hourly pay?", htmlAttributes: new { })
+                            @Html.EditorFor(model => Model.Member.Jobs[i].EmployeePay, new { htmlAttributes = new { } })
                         </div>
                         <div class="form-holder">
                             @Html.ValidationMessageFor(model => Model.Member.Jobs[i].EmployeeStart, "", new { @class = "text-danger" })
-                            @Html.LabelFor(model => Model.Member.Jobs[i].EmployeeStart, htmlAttributes: new { })
-                            @Html.EditorFor(model => Model.Member.Jobs[i].EmployeeStart, "When did you start?", new { htmlAttributes = new { @class = "standard-datepicker" } })
+                            @Html.LabelFor(model => Model.Member.Jobs[i].EmployeeStart, "When did you start?", htmlAttributes: new { })
+                            @Html.EditorFor(model => Model.Member.Jobs[i].EmployeeStart, new { htmlAttributes = new { @placeholder = "mm/dd/yyyy" } })
 
                             @Html.ValidationMessageFor(model => Model.Member.Jobs[i].IsCurrent, "", new { @class = "text-danger" })
                             @Html.LabelFor(model => Model.Member.Jobs[i].IsCurrent, "Do you still work here?", htmlAttributes: new { })
@@ -92,12 +92,12 @@
 
                             <div class="job-endinfo @(Model.Member.Jobs[i].IsCurrent ? "hide" : "")">
                                 @Html.ValidationMessageFor(model => Model.Member.Jobs[i].EmployeeEnd, "", new { @class = "text-danger" })
-                                @Html.LabelFor(model => Model.Member.Jobs[i].EmployeeEnd, htmlAttributes: new { })
-                                @Html.EditorFor(model => Model.Member.Jobs[i].EmployeeEnd, "When was your last day?", new { htmlAttributes = new { @class = "standard-datepicker" } })
+                                @Html.LabelFor(model => Model.Member.Jobs[i].EmployeeEnd, "When was your last day?", htmlAttributes: new { })
+                                @Html.EditorFor(model => Model.Member.Jobs[i].EmployeeEnd, new { htmlAttributes = new { @placeholder = "mm/dd/yyyy" } })
 
                                 @Html.ValidationMessageFor(model => Model.Member.Jobs[i].EmployeeReasonForLeaving, "", new { @class = "text-danger" })
-                                @Html.LabelFor(model => Model.Member.Jobs[i].EmployeeReasonForLeaving, htmlAttributes: new { })
-                                @Html.EditorFor(model => Model.Member.Jobs[i].EmployeeReasonForLeaving, "Why did you leave?", new { htmlAttributes = new { } })
+                                @Html.LabelFor(model => Model.Member.Jobs[i].EmployeeReasonForLeaving, "Why did you leave?", htmlAttributes: new { })
+                                @Html.EditorFor(model => Model.Member.Jobs[i].EmployeeReasonForLeaving, new { htmlAttributes = new { } })
                             </div>
                         </div>
                     </div>
@@ -127,11 +127,6 @@
                 @:corporationsList.push("@corporation");
             }
             newEntry.find('.corporation-list').autocomplete({ source: corporationsList });
-
-            $('.standard-datepicker').fdatepicker({
-                leftArrow: '<<',
-                rightArrow: '>>',
-            });
             
             window.bindRadioContent(newEntry.find('.is-job-current'), "", newEntry.find('.job-endinfo'), "")
         }

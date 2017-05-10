@@ -94,7 +94,7 @@
 
                 @Html.ValidationMessageFor(model => model.Member.Birthday, "", new { @class = "text-danger" })
                 @Html.LabelFor(model => model.Member.Birthday)
-                @Html.EditorFor(model => model.Member.Birthday)
+                @Html.EditorFor(model => model.Member.Birthday, new { htmlAttributes = new { @placeholder = "mm/dd/yyyy" } })
 
                 @Html.ValidationMessageFor(model => model.Member.Email, "", new { @class = "text-danger" })
                 @Html.LabelFor(model => model.Member.Email)
@@ -102,7 +102,7 @@
 
                 @Html.ValidationMessageFor(model => model.Member.Phone, "", new { @class = "text-danger" })
                 @Html.LabelFor(model => model.Member.Phone, "Phone Number")
-                @Html.EditorFor(model => model.Member.Phone, new { htmlAttributes = new { @type = "number", @min = "1111111111", @max = "9999999999" } })
+                @Html.EditorFor(model => model.Member.Phone, new { htmlAttributes = new { @class = "number-entry" } })
 
                 @Html.ValidationMessageFor(model => model.Member.ContactPreference, "", new { @class = "text-danger" })
                 @Html.LabelFor(model => model.Member.ContactPreference, "How would you prefer to be contacted?")
@@ -165,10 +165,6 @@
             }
             window.bindAutocomplete($('#Member_Interests'), interestsList);
             $(document).foundation();
-            $('#Member_Birthday').fdatepicker({
-                leftArrow: '<<',
-                rightArrow: '>>'
-            });
 
             window.bindRadioContent($('input[name=Member\\.IsMilitary]'), $("#Member_is_Military"), "", "");
         });

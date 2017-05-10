@@ -17,16 +17,7 @@
     function resetFormFields($entry) {
         $entry.find('input:not([type=hidden])').val('').attr('disabled', false);
         $entry.find('select').prop('selectedIndex', 0);
-        bindDatepicker();
     }
-
-    function bindDatepicker() {
-        $('.standard-datepicker').fdatepicker({
-            leftArrow: '<<',
-            rightArrow: '>>',
-        });
-    }
-    bindDatepicker();
 
     $('.ui.fluid.dropdown').dropdown();
 });

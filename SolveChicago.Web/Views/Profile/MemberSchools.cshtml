@@ -64,7 +64,7 @@
                         <div class="form-holder">
                             @Html.ValidationMessageFor(model => Model.Member.Schools[i].Start, "", new { @class = "text-danger" })
                             @Html.LabelFor(model => Model.Member.Schools[i].Start, "When did you start?", htmlAttributes: new { })
-                            @Html.EditorFor(model => Model.Member.Schools[i].Start, new { htmlAttributes = new { @class = "standard-datepicker" } })
+                            @Html.EditorFor(model => Model.Member.Schools[i].Start, new { htmlAttributes = new { @class = "" } })
 
                             @Html.ValidationMessageFor(model => Model.Member.Schools[i].IsCurrent, "", new { @class = "text-danger" })
                             @Html.LabelFor(model => Model.Member.Schools[i].IsCurrent, "Are you still attending?", htmlAttributes: new { })
@@ -76,7 +76,7 @@
                             <div class="school-endinfo">
                                 @Html.ValidationMessageFor(model => Model.Member.Schools[i].End, "", new { @class = "text-danger" })
                                 @Html.LabelFor(model => Model.Member.Schools[i].End, htmlAttributes: new {  })
-                                @Html.EditorFor(model => Model.Member.Schools[i].End, new { htmlAttributes = new { @class = "standard-datepicker" } })
+                                @Html.EditorFor(model => Model.Member.Schools[i].End, new { htmlAttributes = new { @placeholder = "mm/dd/yyyy" } })
 
                                 @Html.ValidationMessageFor(model => Model.Member.Schools[i].Degree, "", new { @class = "text-danger" })
                                 @Html.LabelFor(model => Model.Member.Schools[i].Degree, htmlAttributes: new { })
@@ -111,11 +111,6 @@
                 @:schoolsList.push("@school");
             }
             newEntry.find('.school-list').autocomplete({ source: schoolsList });
-
-            $('.standard-datepicker').fdatepicker({
-                leftArrow: '<<',
-                rightArrow: '>>',
-            });
             
             window.bindRadioContent(newEntry.find('.is-school-current'), "", newEntry.find('.school-endinfo'), "")
         }

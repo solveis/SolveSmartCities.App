@@ -20,7 +20,9 @@ namespace SolveChicago.Common.Models.Profile.Member
     {
         public int? CorporationId { get; set; }
         public string Name { get; set; }
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime? EmployeeStart { get; set; }
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime? EmployeeEnd { get; set; }
         public decimal? EmployeePay { get; set; }
         public string EmployeeReasonForLeaving { get; set; }

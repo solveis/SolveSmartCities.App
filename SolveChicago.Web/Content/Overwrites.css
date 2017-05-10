@@ -55,10 +55,12 @@ input[type="radio"], input[type="checkbox"] {
 
 .validation-summary-errors, .input-validation-error {
     background: #fee9e7;
-    color: #F22613;
+    color: #f22613;
     padding: 20px 40px;
     border-radius: 10px;
     height: auto;
+    width: 80%;
+    margin-bottom: 30px;
 }
 
 .validation-summary-errors ul {

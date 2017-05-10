@@ -1,63 +1,7 @@
-﻿@using SolveChicago.Common;
-@model IEnumerable<SolveChicago.Entities.Member>
+﻿@model IEnumerable<SolveChicago.Entities.Member>
 
 @{
     ViewBag.Title = "Prospects";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<header class="members-header">
-    <h2><strong>PROSPECTS:</strong> OVERVIEW</h2>
-
-    @*<div class="small-12 medium-12 large-3">
-            <input class="search-members" type="text" name="search" placeholder="Search..">
-        </div>*@
-</header>
-@if (Model.Count() > 0)
-{
-    <div class="member-card member-card-header">
-        <div class="member-overview">
-            <div class="row large-unstack">
-                <span class="member-card-thumb"></span>
-                <div class="columns has-space">
-                    <strong>Name</strong>
-                </div>
-                <div class="columns has-space">
-                    <strong>Interests</strong>
-                </div>
-                <div class="columns has-space">
-                    <strong>Contact</strong>
-                </div>
-                <div class="columns has-space">
-
-                </div>
-            </div>
-        </div>
-    </div>
-    foreach (var item in Model)
-    {
-        <section class="member-card prospects">
-            <div class="member-overview">
-                <div class="row large-unstack">
-                    <span class="member-card-thumb"><img src="@(item.ProfilePicturePath)" /></span>
-                    <div class="columns centered has-space">
-                        <span class="member-name">@(string.Format("{0} {1}", item.FirstName, item.LastName))</span>
-                    </div>
-                    <div class="columns has-space">
-                        <span>@(string.Join(", ", @item.Interests.Select(x => x.Name)))</span>
-                    </div>
-                    <div class="columns has-space">
-                        <span>@(item.ContactPreference == Constants.Member.ContactPreference.Phone ? string.Join(", ", item.PhoneNumbers.Select(x => x.Number)) : item.Email)</span>
-                    </div>
-                    <div class="columns">
-                        <a href="/Prospects/InviteMember?memberId=@item.Id&nonprofitId=@ViewBag.NonprofitId" class="show-family button">Invite</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-    }
-}
-else
-{
-    <p>No Prospects.</p>
-}
+@Html.Partial("Lists/_Prospects")

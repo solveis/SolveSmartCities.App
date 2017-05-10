@@ -693,32 +693,13 @@
     <Content Include="Views\Profile\Corporation.cshtml" />
     <Content Include="Views\Profile\MemberPersonal.cshtml" />
     <Content Include="Views\Profile\Nonprofit.cshtml" />
-    <Content Include="Views\Admins\Create.cshtml" />
-    <Content Include="Views\Admins\Delete.cshtml" />
     <Content Include="Views\Admins\Details.cshtml" />
-    <Content Include="Views\Admins\Edit.cshtml" />
     <Content Include="Views\Admins\Index.cshtml" />
-    <Content Include="Views\Nonprofits\Create.cshtml" />
-    <Content Include="Views\Nonprofits\Delete.cshtml" />
-    <Content Include="Views\Nonprofits\Details.cshtml" />
-    <Content Include="Views\Nonprofits\Edit.cshtml" />
     <Content Include="Views\Nonprofits\Index.cshtml" />
     <Content Include="Views\Admins\Invite.cshtml" />
-    <Content Include="Views\CaseManagers\Create.cshtml" />
-    <Content Include="Views\CaseManagers\Delete.cshtml" />
-    <Content Include="Views\CaseManagers\Details.cshtml" />
-    <Content Include="Views\CaseManagers\Edit.cshtml" />
     <Content Include="Views\CaseManagers\Index.cshtml" />
-    <Content Include="Views\Corporations\Create.cshtml" />
-    <Content Include="Views\Corporations\Delete.cshtml" />
-    <Content Include="Views\Corporations\Details.cshtml" />
-    <Content Include="Views\Corporations\Edit.cshtml" />
     <Content Include="Views\Corporations\Index.cshtml" />
     <Content Include="Views\Thanks\Index.cshtml" />
-    <Content Include="Views\Referrers\Create.cshtml" />
-    <Content Include="Views\Referrers\Delete.cshtml" />
-    <Content Include="Views\Referrers\Details.cshtml" />
-    <Content Include="Views\Referrers\Edit.cshtml" />
     <Content Include="Views\Referrers\Index.cshtml" />
     <Content Include="Views\Members\Index.cshtml" />
     <Content Include="Views\Nonprofits\Members.cshtml" />
@@ -829,6 +810,11 @@
     <Content Include="Views\Shared\Sidebar\_Member.cshtml" />
     <Content Include="Views\Shared\Sidebar\_Referrer.cshtml" />
     <Content Include="Views\Members\MemberOverview.cshtml" />
+    <Content Include="Views\Shared\Lists\_Members.cshtml" />
+    <Content Include="Views\Shared\Lists\_CaseManagers.cshtml" />
+    <Content Include="Views\Shared\Lists\_Nonprofits.cshtml" />
+    <Content Include="Views\Shared\Lists\_Referrers.cshtml" />
+    <Content Include="Views\Shared\Lists\_Prospects.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

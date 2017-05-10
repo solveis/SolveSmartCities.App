@@ -28,6 +28,7 @@ namespace SolveChicago.Common.Models.Profile.Member
         [Required]
         public string Gender { get; set; }
         [Required]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime? Birthday { get; set; }
         [Required]
         public string Address1 { get; set; }

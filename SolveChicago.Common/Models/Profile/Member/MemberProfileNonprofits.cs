@@ -24,7 +24,9 @@ namespace SolveChicago.Common.Models.Profile.Member
         public string SkillsAcquired { get; set; }
         public string Enjoyed { get; set; }
         public string Struggled { get; set; }
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime? Start { get; set; }
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime? End { get; set; }
     }
 }

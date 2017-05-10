@@ -18,13 +18,13 @@
             @Html.HiddenFor(model => model.Id)
             @Html.HiddenFor(m => m.Email)
 
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             @Html.LabelFor(model => model.Name, "Company Name", htmlAttributes: new { })
             @Html.EditorFor(model => model.Name, new { htmlAttributes = new { } })
-            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
 
-            @Html.LabelFor(model => model.Phone, "Company Phone", htmlAttributes: new { })
-            @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { type = "number" } })
             @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+            @Html.LabelFor(model => model.Phone, "Company Phone", htmlAttributes: new { })
+            @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "number-entry" } })
             <hr class="line-divider">
 
             <input class="submit-create-profile" type="submit" value="Submit">

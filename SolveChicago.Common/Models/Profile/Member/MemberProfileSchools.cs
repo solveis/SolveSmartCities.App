@@ -21,7 +21,9 @@ namespace SolveChicago.Common.Models.Profile.Member
         [Required]
         public string Type { get; set; }
         [Required]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime? Start { get; set; }
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime? End { get; set; }
         public bool IsCurrent { get; set; }
         public string Degree { get; set; }
