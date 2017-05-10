@@ -101,6 +101,20 @@
                         <strong>@Model.Interests</strong>
                     </p>
                 </div>
+
+                <div class="columns has-space">
+                    <p>
+                        Government Programs:
+
+                        @if (Model.GovernmentPrograms != null)
+                        {
+                            foreach (var gp in Model.GovernmentPrograms)
+                            {
+                                <strong>@(gp.ProgramName), </strong>
+                            }
+                        }
+                    </p>
+                </div>
             </div>
 
         </section>
@@ -149,20 +163,6 @@
             <div class="row large-unstack">
                 <div class="columns has-space">
                     <p>Career/Job: <strong>@(Model.Jobs != null && Model.Jobs.Count() > 0 ? string.Join(", ", Model.Jobs.Select(x => x.Name)) : "N/A")</strong></p>
-                </div>
-
-                <div class="columns has-space">
-                    <p>
-                        Government Programs:
-
-                        @if (Model.GovernmentPrograms != null)
-                        {
-                            foreach (var gp in Model.GovernmentPrograms)
-                            {
-                                <strong>@(gp.ProgramName), </strong>
-                            }
-                        }
-                    </p>
                 </div>
             </div>
         </section>
