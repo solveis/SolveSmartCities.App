@@ -95,6 +95,7 @@ namespace SolveChicago.Tests.Services
                     NonprofitId = 1,
                 }
             };
+            List<Skill> skills = new List<Skill>();
 
             var set = new Mock<DbSet<Nonprofit>>().SetupData(data);
             set.Setup(m => m.Find(It.IsAny<object[]>()))
@@ -105,6 +106,11 @@ namespace SolveChicago.Tests.Services
             NonprofitMemberset.Setup(m => m.Find(It.IsAny<object[]>()))
                 .Returns<object[]>(ids => NonprofitMembers.FirstOrDefault(d => d.NonprofitId == (int)ids[0]));
             context.Setup(c => c.NonprofitMembers).Returns(NonprofitMemberset.Object);
+
+            var skillSet = new Mock<DbSet<Skill>>().SetupData(skills);
+            skillSet.Setup(m => m.Find(It.IsAny<object[]>()))
+                .Returns<object[]>(ids => skills.FirstOrDefault(d => d.Id == (int)ids[0]));
+            context.Setup(c => c.Skills).Returns(skillSet.Object);
         }
 
         [Fact]

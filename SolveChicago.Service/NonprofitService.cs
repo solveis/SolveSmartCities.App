@@ -67,15 +67,16 @@ namespace SolveChicago.Service
                 nonprofit.Province = model.Province;
                 nonprofit.Name = model.Name;
 
-                UpdateNonprofitSkills(nonprofit, model.SkillsOffered.Split(','), model.TeachesSoftSkills);
+                UpdateNonprofitSkills(nonprofit, model, model.TeachesSoftSkills);
 
                 db.SaveChanges();
             }
         }
 
-        private void UpdateNonprofitSkills(Nonprofit nonprofit, string[] newSkills, bool? teachesSoftSkills = false)
+        private void UpdateNonprofitSkills(Nonprofit nonprofit, NonprofitProfile model, bool? teachesSoftSkills)
         {
             List<Skill> skills = db.Skills.ToList();
+            string[] newSkills = model.SkillsOffered != null ? model.SkillsOffered.Split(',') : new string[0];
             foreach (string skill in newSkills)
             {
                 string trimSkill = skill.Trim();
@@ -95,7 +96,7 @@ namespace SolveChicago.Service
                     }
                 }
             }
-            if(teachesSoftSkills.Value)
+            if(teachesSoftSkills ?? false)
             {
                 Skill existingSkill = skills.Single(x => x.Name.ToLower() == "soft skills");
                 nonprofit.Skills.Add(existingSkill);

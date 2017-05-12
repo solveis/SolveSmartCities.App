@@ -289,7 +289,7 @@ namespace SolveChicago.Tests.Services
             MemberService service = new MemberService(context.Object);
             MemberProfileNonprofits member = service.GetProfileNonprofits(1);
 
-            Assert.Equal(3, member.SkillsDesired.Count());
+            Assert.Equal(3, member.SkillsDesiredIds.Count());
         }
 
         [Fact]
@@ -311,7 +311,7 @@ namespace SolveChicago.Tests.Services
             MemberService service = new MemberService(context.Object);
             MemberProfileGovernmentPrograms member = service.GetProfileGovernmentPrograms(1);
 
-            Assert.Equal(1, member.GovernmentPrograms.First().ProgramId);
+            Assert.Equal(1, member.GovernmentProgramsIds.First());
         }
 
         [Fact]

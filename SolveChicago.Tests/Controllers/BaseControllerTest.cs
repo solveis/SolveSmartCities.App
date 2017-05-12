@@ -179,8 +179,8 @@ namespace SolveChicago.Tests.Controllers
             BaseController controller = new BaseController(context.Object);
             var result = (RedirectToRouteResult)controller.MemberRedirect(1);
 
-            Assert.Equal("Index", result.RouteValues["action"]);
-            Assert.Equal("Members", result.RouteValues["controller"]);
+            Assert.Equal("MemberOverview", result.RouteValues["action"]);
+            Assert.Equal("Profile", result.RouteValues["controller"]);
         }
 
         [Fact]

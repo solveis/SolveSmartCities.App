@@ -81,7 +81,10 @@ namespace SolveChicago.Service
 
         private string GetMemberSkills(Member member, bool isComplete)
         {
-            return string.Join(", ", member.MemberSkills.Where(x => x.IsComplete == isComplete).Select(x => x.Skill.Name));
+            if (member.MemberSchools.Count() > 0)
+                return string.Join(", ", member.MemberSkills.Where(x => x.IsComplete == isComplete).Select(x => x.Skill.Name));
+            else
+                return string.Empty;
         }
 
         private static MemberStage GetMemberStage(Member member)
@@ -584,7 +587,7 @@ namespace SolveChicago.Service
                 UpdateMemberPhone(model, member);
                 UpdateMemberInterests(model, member);
                 UpdateMemberMilitary(model, member);
-                UpdateMemberSkills(member, model.Skills.Split(','), true);
+                UpdateMemberSkills(model, member, true);
 
                 db.SaveChanges();
             }
@@ -671,7 +674,7 @@ namespace SolveChicago.Service
         private void UpdateMemberInterests(MemberProfilePersonal model, Member member)
         {
             List<Interest> interests = db.Interests.ToList();
-            string[] newInterests = model.Interests.Split(',');
+            string[] newInterests = model.Interests != null ? model.Interests.Split(',') : new string[0];
             foreach (string interest in newInterests)
             {
                 string trimInterest = interest.Trim();
@@ -708,9 +711,10 @@ namespace SolveChicago.Service
             db.SaveChanges();
         }
 
-        private void UpdateMemberSkills(Member member, string[] newSkills, bool isComplete = true)
+        private void UpdateMemberSkills(MemberProfilePersonal model, Member member, bool isComplete = true)
         {
             List<Skill> skills = db.Skills.ToList();
+            string[] newSkills = model.Skills != null ? model.Skills.Split(',').ToArray() : new string[0];
             foreach (string skill in newSkills)
             {
                 string trimSkill = skill.Trim();
