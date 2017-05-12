@@ -53,7 +53,10 @@ namespace SolveChicago.Common
                 public const string InviteSent = "Invite Sent";
                 public const string ProfileInProgress = "Profile In Progress";
                 public const string ProfileCompleted = "Profile Completed";
-                public const string InTraining = "In Training";
+                public const string InSoftSkillsTraining = "In Soft Skills Training";
+                public const string SoftSkillsAcquired = "Soft Skills Acquired";
+                public const string InWorkforceTraining = "In Workforce Training";
+                public const string RecruiterPlacing = "In Recruiter's Hands";
                 public const string JobPlaced = "Job Placed";
                 public const string OffTrack = "Off Track";
             }

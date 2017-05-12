@@ -300,7 +300,7 @@ namespace SolveChicago.Web.Controllers
         public ActionResult MemberRedirect(Member entity)
         {
             if(entity.SurveyStep == Common.Constants.Member.SurveyStep.Complete)
-                return RedirectToAction("Index", "Members");
+                return RedirectToAction("MemberOverview", "Profile");
             else
             {
                 switch(entity.SurveyStep)

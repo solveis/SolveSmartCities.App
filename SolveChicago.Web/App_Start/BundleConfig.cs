@@ -51,12 +51,8 @@ namespace SolveChicago.Web
                        "~/Content/bootstrap.css",
                        "~/Content/landing.css"));
 
-            bundles.Add(new StyleBundle("~/Content/semantic").Include(
+            bundles.Add(new StyleBundle("~/Content/semanticui").Include(
                        "~/Content/semantic/semantic.css"));
-
-            bundles.Add(new StyleBundle("~/Content/foundation").Include(
-                       "~/dist/css/foundation.css",
-                       "~/Content/foundation-datepicker.css"));
         }
     }
 }

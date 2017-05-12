@@ -4,14 +4,16 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SolveChicago.Common.Interfaces.Profile.Member;
 
 namespace SolveChicago.Common.Models.Profile.Member
 {
 
-    public class MemberProfileJobs
+    public class MemberProfileJobs : IMemberProfileJobs
     {
         public int MemberId { get; set; }
-        public bool CurrentlyLooking { get; set; }
+        [Required]
+        public bool? CurrentlyLooking { get; set; }
         public JobEntity[] Jobs { get; set; }
     }
 

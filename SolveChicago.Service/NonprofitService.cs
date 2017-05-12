@@ -20,7 +20,7 @@ namespace SolveChicago.Service
                 return null;
             else
             {
-                return new NonprofitProfile
+                NonprofitProfile npo = new NonprofitProfile
                 {
                     Id = nonprofit.Id,
                     Address1 = nonprofit.Address1,
@@ -31,8 +31,22 @@ namespace SolveChicago.Service
                     ProfilePicturePath = nonprofit.ProfilePicturePath,
                     Province = nonprofit.Province,
                     Name = nonprofit.Name,
+                    SkillsOffered = GetSkillsOffered(nonprofit),
+                    SkillsList = GetSkillsList()
                 };
+                npo.TeachesSoftSkills = npo.SkillsOffered.ToLower().Contains("soft skills");
+                return npo;
             }
+        }
+
+        private string[] GetSkillsList()
+        {
+            return db.Skills.Where(x => x.Name.ToLower() != "soft skills").Select(x => x.Name).ToArray();
+        }
+
+        private string GetSkillsOffered(Nonprofit nonprofit)
+        {
+            return string.Join(", ", nonprofit.Skills.Select(x => x.Name));
         }
 
         public void Post(NonprofitProfile model)
@@ -53,7 +67,38 @@ namespace SolveChicago.Service
                 nonprofit.Province = model.Province;
                 nonprofit.Name = model.Name;
 
+                UpdateNonprofitSkills(nonprofit, model.SkillsOffered.Split(','), model.TeachesSoftSkills);
+
                 db.SaveChanges();
+            }
+        }
+
+        private void UpdateNonprofitSkills(Nonprofit nonprofit, string[] newSkills, bool? teachesSoftSkills = false)
+        {
+            List<Skill> skills = db.Skills.ToList();
+            foreach (string skill in newSkills)
+            {
+                string trimSkill = skill.Trim();
+                if (!string.IsNullOrEmpty(skill))
+                {
+                    if (skills.Select(x => x.Name.ToLower()).Contains(trimSkill.ToLower()))
+                    {
+                        Skill existingSkill = skills.Single(x => x.Name.ToLower() == trimSkill.ToLower());
+                        if (!nonprofit.Skills.Select(x => x.Id).Contains(existingSkill.Id))
+                            nonprofit.Skills.Add(existingSkill);
+                    }
+                    else
+                    {
+                        Skill newSkill = new Skill { Name = trimSkill };
+                        db.Skills.Add(newSkill);
+                        nonprofit.Skills.Add(newSkill);
+                    }
+                }
+            }
+            if(teachesSoftSkills.Value)
+            {
+                Skill existingSkill = skills.Single(x => x.Name.ToLower() == "soft skills");
+                nonprofit.Skills.Add(existingSkill);
             }
         }
 

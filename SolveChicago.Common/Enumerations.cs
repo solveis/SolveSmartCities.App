@@ -8,12 +8,6 @@ namespace SolveChicago.Common
 {
     public class Enumerations
     {
-        public enum TripleBoolean
-        {
-            Yes,
-            No,
-            Other
-        }
 
         public enum Role
         {

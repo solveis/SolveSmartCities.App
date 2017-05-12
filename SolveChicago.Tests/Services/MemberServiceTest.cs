@@ -152,10 +152,13 @@ namespace SolveChicago.Tests.Services
                     },
                     MemberSkills = new List<MemberSkill>
                     {
-                            new MemberSkill { MemberId = 1, NonprofitId = 1, Skill = new Skill{ Id = 1, Name = "Powerpoint" } },
-                            new MemberSkill { MemberId = 1, NonprofitId = 1, Skill = new Skill{ Id = 2, Name = "Excel" } },
-                            new MemberSkill { MemberId = 1, NonprofitId = 1, Skill = new Skill{ Id = 3, Name = "Word" } },
-                            new MemberSkill { MemberId = 1, NonprofitId = 1, Skill = new Skill{ Id = 4, Name = "Interviewing" } },
+                            new MemberSkill { MemberId = 1, Skill = new Skill{ Id = 1, Name = "Powerpoint" }, IsComplete = false },
+                            new MemberSkill { MemberId = 1, NonprofitId = 1, Skill = new Skill{ Id = 2, Name = "Excel" }, IsComplete = false },
+                            new MemberSkill { MemberId = 1, NonprofitId = 1, Skill = new Skill{ Id = 3, Name = "Word" }, IsComplete = false },
+                            new MemberSkill { MemberId = 1, NonprofitId = 1, Skill = new Skill{ Id = 4, Name = "Interviewing" }, IsComplete = true },
+                            new MemberSkill { MemberId = 1, NonprofitId = 1, Skill = new Skill{ Id = 5, Name = "Reading" }, IsComplete = true },
+                            new MemberSkill { MemberId = 1, NonprofitId = 1, Skill = new Skill{ Id = 6, Name = "Bookkeeping" }, IsComplete = true },
+                            new MemberSkill { MemberId = 1, NonprofitId = 1, Skill = new Skill{ Id = 7, Name = "Manufacturing" }, IsComplete = true },
                     },
                     MemberSchools = new List<MemberSchool>
                     {
@@ -286,7 +289,7 @@ namespace SolveChicago.Tests.Services
             MemberService service = new MemberService(context.Object);
             MemberProfileNonprofits member = service.GetProfileNonprofits(1);
 
-            Assert.Equal("Nonprofit 1", member.Nonprofits.First().NonprofitName);
+            Assert.Equal(3, member.SkillsDesired.Count());
         }
 
         [Fact]
@@ -308,7 +311,7 @@ namespace SolveChicago.Tests.Services
             MemberService service = new MemberService(context.Object);
             MemberProfileGovernmentPrograms member = service.GetProfileGovernmentPrograms(1);
 
-            Assert.Equal(1, member.GovernmentPrograms.First());
+            Assert.Equal(1, member.GovernmentPrograms.First().ProgramId);
         }
 
         [Fact]
@@ -781,10 +784,7 @@ namespace SolveChicago.Tests.Services
             MemberProfileNonprofits model = new MemberProfileNonprofits
             {
                 MemberId = 1,
-                Nonprofits = new List<NonprofitEntity>
-                {
-                    new NonprofitEntity { Enjoyed = "reading, writing, singing", SkillsAcquired = "critical thinking, math", NonprofitName = "i.c. stars", Struggled = "leadership, brainstorming", Start = new DateTime(2014, 1, 1) }
-                }.ToArray(),
+                SkillsDesiredIds = new int[7] {1, 2, 3, 4, 5, 6, 7}
             };
             MemberService service = new MemberService(context.Object);
 
@@ -806,7 +806,7 @@ namespace SolveChicago.Tests.Services
             MemberProfileGovernmentPrograms model = new MemberProfileGovernmentPrograms
             {
                 MemberId = 1,
-                GovernmentPrograms = new List<int>
+                GovernmentProgramsIds = new List<int>
                 {
                     1
                 }.ToArray()

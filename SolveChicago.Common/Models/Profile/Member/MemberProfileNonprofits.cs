@@ -5,14 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static SolveChicago.Common.Enumerations;
+using SolveChicago.Common.Interfaces.Profile.Member;
 
 namespace SolveChicago.Common.Models.Profile.Member
 {
-    public class MemberProfileNonprofits
+    public class MemberProfileNonprofits : IMemberProfileNonprofits
     {
         public int MemberId { get; set; }
-        public string InterestedInWorkforceSkill { get; set; }
-        public NonprofitEntity[] Nonprofits { get; set; }
+        [Required]
+        public bool? InterestedInWorkforceSkill { get; set; }
+        public int[] SkillsDesiredIds { get; set; }
+        public string SkillsDesired { get; set; }
     }
 
     public class NonprofitEntity

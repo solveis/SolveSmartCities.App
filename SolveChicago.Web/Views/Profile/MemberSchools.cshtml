@@ -20,7 +20,7 @@
             <span>Personal</span>
         </li>
         <li class="is-complete" data-step="2">
-            <span>Family</span>
+            <span>Family in Household</span>
         </li>
         <li class="is-current" data-step="3">
             <span>Education</span>
@@ -64,7 +64,7 @@
                         <div class="form-holder">
                             @Html.ValidationMessageFor(model => Model.Member.Schools[i].Start, "", new { @class = "text-danger" })
                             @Html.LabelFor(model => Model.Member.Schools[i].Start, "When did you start?", htmlAttributes: new { })
-                            @Html.EditorFor(model => Model.Member.Schools[i].Start, new { htmlAttributes = new { @class = "" } })
+                            @Html.EditorFor(model => Model.Member.Schools[i].Start, new { htmlAttributes = new { @placeholder = "mm/dd/yyyy" } })
 
                             @Html.ValidationMessageFor(model => Model.Member.Schools[i].IsCurrent, "", new { @class = "text-danger" })
                             @Html.LabelFor(model => Model.Member.Schools[i].IsCurrent, "Are you still attending?", htmlAttributes: new { })
@@ -84,7 +84,6 @@
                             </div>
                         </div>
                     </div>
-                    <hr />
                 </div>
             }
             <div class="row align-center has-border">

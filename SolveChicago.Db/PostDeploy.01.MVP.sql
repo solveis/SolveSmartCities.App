@@ -121,3 +121,9 @@ INSERT INTO dbo.GovernmentPrograms ( Name , MinAge , MaxAge , MinIncome , MaxInc
               N'Federal' , -- Tier - nvarchar(128)
               N'USA'  -- Locality - nvarchar(128)
             )
+
+
+INSERT INTO dbo.Skills
+        ( Name )
+VALUES  ( N'Soft Skills'  -- Name - nvarchar(max)
+          )

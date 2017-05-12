@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using SolveChicago.Common.Interfaces.Profile.Member;
 
 namespace SolveChicago.Common.Models.Profile.Member
 {
     
-    public class MemberProfileFamily
+    public class MemberProfileFamily : IMemberProfileFamily
     {
         public int MemberId { get; set; }
         public bool IsHeadOfHousehold { get; set; }

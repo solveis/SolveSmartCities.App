@@ -27,14 +27,15 @@ namespace SolveChicago.Web.Controllers
         public ActionResult Index(int? memberId)
         {
             ImpersonateMember(memberId);
-            MemberService service = new MemberService(this.db);
-            MemberProfile model = service.Get(State.MemberId);
-            return View(model);
+            return MemberRedirect(State.MemberId);
         }
 
         public ActionResult Details(int? memberId)
         {
-            return Index(memberId);
+            ImpersonateMember(memberId);
+            MemberService service = new MemberService(this.db);
+            MemberProfile model = service.Get(State.MemberId);
+            return View(model);
         }
 
         [Authorize(Roles = "Admin, CaseManager, Nonprofit")]

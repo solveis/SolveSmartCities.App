@@ -67,12 +67,21 @@ namespace SolveChicago.Service
                     Province = member.Addresses.Any() ? member.Addresses.Last().Province : string.Empty,
                     Schools = GetSchools(member),
                     Income = member.Income,
-                    IsMilitary = member.IsMilitary,
+                    IsMilitary = member.IsMilitary ?? false,
                     Military = GetMilitary(member),
                     GovernmentPrograms = GetGovernmentPrograms(member),
                     MemberStage = GetMemberStage(member),
+                    Skills = GetMemberSkills(member, true),
+                    SkillsDesired = GetMemberSkills(member, false),
+                    InterestedInWorkforceSkill = member.IsWorkforceInterested ?? false,
+                    ZipCode = member.Addresses.Any() ? member.Addresses.Last().ZipCode : string.Empty,
                 };
             }
+        }
+
+        private string GetMemberSkills(Member member, bool isComplete)
+        {
+            return string.Join(", ", member.MemberSkills.Where(x => x.IsComplete == isComplete).Select(x => x.Skill.Name));
         }
 
         private static MemberStage GetMemberStage(Member member)
@@ -81,25 +90,44 @@ namespace SolveChicago.Service
             if (member.SurveyStep == Constants.Member.SurveyStep.Invited)
             {
                 model.Stage = Constants.Member.Stage.InviteSent;
-                model.Percent = 20;
+                model.Percent = (int)Math.Round(12.5);
                 return model;
             }
             if (member.SurveyStep != null && member.SurveyStep != Constants.Member.SurveyStep.Invited && member.SurveyStep != Constants.Member.SurveyStep.Complete)
             {
                 model.Stage = Constants.Member.Stage.ProfileInProgress;
-                model.Percent = 40;
+                model.Percent = (int)Math.Round(25.0);
                 return model;
             }
             if (member.SurveyStep == Constants.Member.SurveyStep.Complete && !member.NonprofitMembers.Any(x => !x.End.HasValue) && !member.MemberCorporations.Any(x => !x.End.HasValue))
             {
                 model.Stage = Constants.Member.Stage.ProfileCompleted;
-                model.Percent = 60;
+                model.Percent = (int)Math.Round(37.5);
                 return model;
             }
-            if (member.NonprofitMembers.Any(x => x.Start > member.CreatedDate && !x.End.HasValue))
+            if (member.NonprofitMembers.Any(x => x.Start > member.CreatedDate && !x.End.HasValue) && !member.MemberSkills.Any(x => x.IsComplete && x.Skill.Name.ToLower() == "soft skills"))
             {
-                model.Stage = Constants.Member.Stage.InTraining;
-                model.Percent = 80;
+                model.Stage = Constants.Member.Stage.InSoftSkillsTraining;
+                model.Percent = (int)Math.Round(50.0);
+                return model;
+            }
+            if (member.NonprofitMembers.Any(x => x.Start > member.CreatedDate && x.End.HasValue && x.End.Value < DateTime.UtcNow) && member.MemberSkills.Any(x => x.IsComplete && x.Skill.Name.ToLower() == "soft skills"))
+            {
+                model.Stage = Constants.Member.Stage.SoftSkillsAcquired;
+                model.Percent = (int)Math.Round(62.5);
+                return model;
+            }
+            if (member.NonprofitMembers.Any(x => x.Start > member.CreatedDate && !x.End.HasValue) && member.MemberSkills.Any(x => x.IsComplete && x.Skill.Name.ToLower() == "soft skills"))
+            {
+                model.Stage = Constants.Member.Stage.InWorkforceTraining;
+                model.Percent = (int)Math.Round(75.0);
+                return model;
+            }
+            // TODO: This logic is too broad. Should tie into the NPO associated with a desired skill. Make sure that when NPO claims a member, they also claim their desired skills.
+            if (member.NonprofitMembers.Any(x => x.Start > member.CreatedDate && x.End.HasValue && x.End.Value < DateTime.UtcNow) && member.MemberSkills.Any(x => x.IsComplete && x.Skill.Name.ToLower() == "soft skills") && member.MemberSkills.Any(x => x.IsComplete && x.Skill.Name.ToLower() != "soft skills"))
+            {
+                model.Stage = Constants.Member.Stage.RecruiterPlacing;
+                model.Percent = (int)Math.Round(87.5);
                 return model;
             }
             if (member.MemberCorporations.Any(x => x.Start > member.CreatedDate && !x.End.HasValue))
@@ -143,7 +171,8 @@ namespace SolveChicago.Service
                     Income = member.Income,
                     ZipCode = member.Addresses.Any() ? member.Addresses.Last().ZipCode : string.Empty,
                     ContactPreference = member.ContactPreference,
-                    IsMilitary = member.IsMilitary ?? false
+                    IsMilitary = member.IsMilitary ?? false,
+                    Skills = member.MemberSkills.Any() ? string.Join(", ", member.MemberSkills.Select(x => x.Skill.Name).ToArray()) : string.Empty,
                 };
             }
         }
@@ -189,8 +218,8 @@ namespace SolveChicago.Service
                 return new MemberProfileNonprofits
                 {
                     MemberId = member.Id,    
-                    InterestedInWorkforceSkill = (member.IsWorkforceInterested.HasValue && member.IsWorkforceInterested.Value == true) ? Enumerations.TripleBoolean.Yes.ToString() : (member.NonprofitMembers.Count() > 0 ? Enumerations.TripleBoolean.Other.ToString() : Enumerations.TripleBoolean.No.ToString()),
-                    Nonprofits = GetNonprofits(member),
+                    InterestedInWorkforceSkill = member.IsWorkforceInterested,
+                    SkillsDesiredIds = member.MemberSkills.Where(x => !x.IsComplete).Select(x => x.SkillId).ToArray(),
                 };
             }
         }
@@ -220,7 +249,7 @@ namespace SolveChicago.Service
                 return new MemberProfileGovernmentPrograms
                 {
                     MemberId = member.Id,
-                    GovernmentPrograms = GetGovernmentProgramIds(member)
+                    GovernmentProgramsIds = GetGovernmentProgramIds(member)
                 };
             }
         }
@@ -341,7 +370,19 @@ namespace SolveChicago.Service
             }
             else
             {
-                return null;
+                return new FamilyEntity
+                {
+                    Address1 = member.Addresses.Any() ? member.Addresses.Last().Address1 : string.Empty,
+                    Address2 = member.Addresses.Any() ? member.Addresses.Last().Address2 : string.Empty,
+                    City = member.Addresses.Any() ? member.Addresses.Last().City : string.Empty,
+                    Province = member.Addresses.Any() ? member.Addresses.Last().Province : string.Empty,
+                    Country = member.Addresses.Any() ? member.Addresses.Last().Country : string.Empty,
+                    FamilyName = member.LastName,
+                    Phone = member.PhoneNumbers.Any() ? member.PhoneNumbers.Last().Number : string.Empty,
+                    ZipCode = member.Addresses.Any() ? member.Addresses.Last().ZipCode : string.Empty,
+                    FamilyMembers = GetFamilyMembers(member, includeSelf),
+                    HeadOfHouseholdProfilePicturePath = member.ProfilePicturePath,
+                };
             }
         }
 
@@ -380,22 +421,25 @@ namespace SolveChicago.Service
 
         private static void GetUnknownRelationTree(List<FamilyMember> familyMembers, Member member)
         {
-            Member[] fm = member.Family.Members.ToArray();
-            foreach(Member m in fm)
+            if (member.Family != null && member.Family.Members.Count() > 0)
             {
-                FamilyMember f = new FamilyMember { FirstName = m.FirstName, Birthday = m.Birthday, Gender = m.Gender, Id = m.Id, IsHeadOfHousehold = m.IsHeadOfHousehold, LastName = m.LastName, Email = m.Email, Phone = m.PhoneNumbers.Any() ? string.Join(", ", m.PhoneNumbers.Select(x => x.Number).ToArray()) : string.Empty, ProfilePicturePath = string.IsNullOrEmpty(member.ProfilePicturePath) ? Constants.Member.NoPhotoUrl : member.ProfilePicturePath, MemberStage = GetMemberStage(member), CurrentOccupation = GetFamilyMemberOccupation(member) };
-                if (!familyMembers.Select(x => x.Id).Contains(f.Id) && f.Id != member.Id)
-                    familyMembers.Add(f);
-                    
+                Member[] fm = member.Family?.Members?.ToArray();
+                foreach (Member m in fm)
+                {
+                    FamilyMember f = new FamilyMember { FirstName = m.FirstName, Birthday = m.Birthday, Gender = m.Gender, Id = m.Id, IsHeadOfHousehold = m.IsHeadOfHousehold, LastName = m.LastName, Email = m.Email, Phone = m.PhoneNumbers.Any() ? string.Join(", ", m.PhoneNumbers.Select(x => x.Number).ToArray()) : string.Empty, ProfilePicturePath = string.IsNullOrEmpty(member.ProfilePicturePath) ? Constants.Member.NoPhotoUrl : member.ProfilePicturePath, MemberStage = GetMemberStage(member), CurrentOccupation = GetFamilyMemberOccupation(member) };
+                    if (!familyMembers.Select(x => x.Id).Contains(f.Id) && f.Id != member.Id)
+                        familyMembers.Add(f);
+
+                }
             }
         }
 
         private static void GetSpouseTree(List<FamilyMember> familyMembers, Member member)
         {
             if (member.MemberSpouses.Any(x => x.Member1 != null))
-                familyMembers.AddRange(member.MemberSpouses.Select(x => new FamilyMember { FirstName = x.Member1.FirstName, LastName = x.Member1.LastName, Relation = x.Member1.Gender.ToLowerInvariant() == "male" ? "Husband" : x.Member1.Gender.ToLowerInvariant() == "female" ? "Wife" : "Spouse", Id = x.Member1.Id, Email = x.Member1.Email, Phone = x.Member1.PhoneNumbers.Any() ? string.Join(", ", x.Member1.PhoneNumbers.Select(y => y.Number).ToArray()) : string.Empty, ProfilePicturePath = string.IsNullOrEmpty(member.ProfilePicturePath) ? Constants.Member.NoPhotoUrl : member.ProfilePicturePath, MemberStage = GetMemberStage(member), CurrentOccupation = GetFamilyMemberOccupation(member) }));
+                familyMembers.AddRange(member.MemberSpouses.Select(x => new FamilyMember { FirstName = x.Member1.FirstName, LastName = x.Member1.LastName, Relation = x.Member1.Gender.ToLower() == "male" ? "Husband" : x.Member1.Gender.ToLower() == "female" ? "Wife" : "Spouse", Id = x.Member1.Id, Email = x.Member1.Email, Phone = x.Member1.PhoneNumbers.Any() ? string.Join(", ", x.Member1.PhoneNumbers.Select(y => y.Number).ToArray()) : string.Empty, ProfilePicturePath = string.IsNullOrEmpty(member.ProfilePicturePath) ? Constants.Member.NoPhotoUrl : member.ProfilePicturePath, MemberStage = GetMemberStage(member), CurrentOccupation = GetFamilyMemberOccupation(member) }));
             else if (member.MemberSpouses1.Any(x => x.Member != null))
-                familyMembers.AddRange(member.MemberSpouses1.Select(x => new FamilyMember { FirstName = x.Member.FirstName, LastName = x.Member.LastName, Relation = x.Member.Gender.ToLowerInvariant() == "male" ? "Husband" : x.Member.Gender.ToLowerInvariant() == "female" ? "Wife" : "Spouse", Id = x.Member.Id, Email = x.Member.Email, Phone = x.Member.PhoneNumbers.Any() ? string.Join(", ", x.Member.PhoneNumbers.Select(y => y.Number).ToArray()) : string.Empty, ProfilePicturePath = string.IsNullOrEmpty(member.ProfilePicturePath) ? Constants.Member.NoPhotoUrl : member.ProfilePicturePath, MemberStage = GetMemberStage(member), CurrentOccupation = GetFamilyMemberOccupation(member) }));
+                familyMembers.AddRange(member.MemberSpouses1.Select(x => new FamilyMember { FirstName = x.Member.FirstName, LastName = x.Member.LastName, Relation = x.Member.Gender.ToLower() == "male" ? "Husband" : x.Member.Gender.ToLower() == "female" ? "Wife" : "Spouse", Id = x.Member.Id, Email = x.Member.Email, Phone = x.Member.PhoneNumbers.Any() ? string.Join(", ", x.Member.PhoneNumbers.Select(y => y.Number).ToArray()) : string.Empty, ProfilePicturePath = string.IsNullOrEmpty(member.ProfilePicturePath) ? Constants.Member.NoPhotoUrl : member.ProfilePicturePath, MemberStage = GetMemberStage(member), CurrentOccupation = GetFamilyMemberOccupation(member) }));
         }
 
         private static void GetSiblingTree(List<FamilyMember> familyMembers, Member member)
@@ -409,7 +453,7 @@ namespace SolveChicago.Service
                     Member[] siblings = parents.MemberParents1.Where(x => x.Member.Id != member.Id).Select(x => x.Member).ToArray();
                     foreach (Member sibling in siblings)
                     {
-                        FamilyMember fm = new FamilyMember { FirstName = sibling.FirstName, Birthday = sibling.Birthday, Gender = sibling.Gender, Id = sibling.Id, IsHeadOfHousehold = sibling.IsHeadOfHousehold, LastName = sibling.LastName, Relation = (sibling.Gender.ToLowerInvariant() == "male" ? "Brother" : sibling.Gender.ToLowerInvariant() == "female" ? "Sister" : "Sibling"), Email = sibling.Email, Phone = sibling.PhoneNumbers.Any() ? string.Join(", ", sibling.PhoneNumbers.Select(x => x.Number).ToArray()) : string.Empty, ProfilePicturePath = string.IsNullOrEmpty(member.ProfilePicturePath) ? Constants.Member.NoPhotoUrl : member.ProfilePicturePath, MemberStage = GetMemberStage(member), CurrentOccupation = GetFamilyMemberOccupation(member) };
+                        FamilyMember fm = new FamilyMember { FirstName = sibling.FirstName, Birthday = sibling.Birthday, Gender = sibling.Gender, Id = sibling.Id, IsHeadOfHousehold = sibling.IsHeadOfHousehold, LastName = sibling.LastName, Relation = (sibling.Gender.ToLower() == "male" ? "Brother" : sibling.Gender.ToLower() == "female" ? "Sister" : "Sibling"), Email = sibling.Email, Phone = sibling.PhoneNumbers.Any() ? string.Join(", ", sibling.PhoneNumbers.Select(x => x.Number).ToArray()) : string.Empty, ProfilePicturePath = string.IsNullOrEmpty(member.ProfilePicturePath) ? Constants.Member.NoPhotoUrl : member.ProfilePicturePath, MemberStage = GetMemberStage(member), CurrentOccupation = GetFamilyMemberOccupation(member) };
                         if (!familyMembers.Select(x => x.Id).Contains(fm.Id))
                             familyMembers.Add(fm);
                     }
@@ -425,17 +469,17 @@ namespace SolveChicago.Service
                 Member[] currentChildren = currentMember.MemberParents1.Select(x => x.Member).ToArray();
                 foreach (var child in currentChildren)
                 {
-                    string currentChildTitle = currentChildPrefix + (child.Gender.ToLowerInvariant() == "male" ? (string.IsNullOrEmpty(currentChildPrefix) ? "Son" : "son") : child.Gender.ToLowerInvariant() == "female" ? (string.IsNullOrEmpty(currentChildPrefix) ? "Daughter" : "daughter") : (string.IsNullOrEmpty(currentChildPrefix) ? "Child" : "child"));
+                    string currentChildTitle = currentChildPrefix + (child.Gender.ToLower() == "male" ? (string.IsNullOrEmpty(currentChildPrefix) ? "Son" : "son") : child.Gender.ToLower() == "female" ? (string.IsNullOrEmpty(currentChildPrefix) ? "Daughter" : "daughter") : (string.IsNullOrEmpty(currentChildPrefix) ? "Child" : "child"));
                     familyMembers.Add(new FamilyMember { FirstName = child.FirstName, LastName = child.LastName, IsHeadOfHousehold = (child.IsHeadOfHousehold ?? false), Relation = currentChildTitle, Gender = child.Gender, Birthday = child.Birthday, Id = child.Id, Email = child.Email, Phone = child.PhoneNumbers.Any() ? string.Join(", ", child.PhoneNumbers.Select(x => x.Number).ToArray()) : string.Empty, ProfilePicturePath = string.IsNullOrEmpty(member.ProfilePicturePath) ? Constants.Member.NoPhotoUrl : member.ProfilePicturePath, MemberStage = GetMemberStage(member), CurrentOccupation = GetFamilyMemberOccupation(member) });
 
                     //set prefix for recursive child generations
                     string futureChildPrefix = currentChildPrefix;
                     if (string.IsNullOrEmpty(futureChildPrefix))
                         futureChildPrefix = "Grand";
-                    else if (!string.IsNullOrEmpty(futureChildPrefix) && !futureChildPrefix.ToLowerInvariant().Contains("great") && futureChildPrefix.ToLowerInvariant().Contains("grand"))
+                    else if (!string.IsNullOrEmpty(futureChildPrefix) && !futureChildPrefix.ToLower().Contains("great") && futureChildPrefix.ToLower().Contains("grand"))
                         futureChildPrefix = "Great-grand";
                     else
-                        futureChildPrefix = "Great-" + futureChildPrefix.ToLowerInvariant();
+                        futureChildPrefix = "Great-" + futureChildPrefix.ToLower();
 
                     GetChildTree(familyMembers, child, futureChildPrefix);
                 }
@@ -450,17 +494,17 @@ namespace SolveChicago.Service
                 Member[] currentParents = currentMember.MemberParents.Select(x => x.Member1).ToArray();
                 foreach (var parent in currentParents)
                 {
-                    string currentParentTitle = currentParentPrefix + (parent.Gender.ToLowerInvariant() == "male" ? (string.IsNullOrEmpty(currentParentPrefix) ? "Father" : "father") : parent.Gender.ToLowerInvariant() == "female" ? (string.IsNullOrEmpty(currentParentPrefix) ? "Mother" : "mother") : (string.IsNullOrEmpty(currentParentPrefix) ? "Parent" : "parent"));
+                    string currentParentTitle = currentParentPrefix + (parent.Gender.ToLower() == "male" ? (string.IsNullOrEmpty(currentParentPrefix) ? "Father" : "father") : parent.Gender.ToLower() == "female" ? (string.IsNullOrEmpty(currentParentPrefix) ? "Mother" : "mother") : (string.IsNullOrEmpty(currentParentPrefix) ? "Parent" : "parent"));
                     familyMembers.Add(new FamilyMember { FirstName = parent.FirstName, LastName = parent.LastName, IsHeadOfHousehold = (parent.IsHeadOfHousehold ?? false), Relation = currentParentTitle, Gender = parent.Gender, Birthday = parent.Birthday, Id = parent.Id, Email = parent.Email, Phone = parent.PhoneNumbers.Any() ? string.Join(", ", parent.PhoneNumbers.Select(x => x.Number).ToArray()) : string.Empty, ProfilePicturePath = string.IsNullOrEmpty(member.ProfilePicturePath) ? Constants.Member.NoPhotoUrl : member.ProfilePicturePath, MemberStage = GetMemberStage(member), CurrentOccupation = GetFamilyMemberOccupation(member) });
 
                     //set prefix for recursive parent generations
                     string futureParentPrefix = currentParentPrefix;
                     if (string.IsNullOrEmpty(currentParentPrefix))
                         futureParentPrefix = "Grand";
-                    else if (!string.IsNullOrEmpty(currentParentPrefix) && !currentParentPrefix.ToLowerInvariant().Contains("great") && currentParentPrefix.ToLowerInvariant().Contains("grand"))
+                    else if (!string.IsNullOrEmpty(currentParentPrefix) && !currentParentPrefix.ToLower().Contains("great") && currentParentPrefix.ToLower().Contains("grand"))
                         futureParentPrefix = "Great-grand";
                     else
-                        futureParentPrefix = "Great-" + currentParentPrefix.ToLowerInvariant();
+                        futureParentPrefix = "Great-" + currentParentPrefix.ToLower();
 
                     GetParentTree(familyMembers, parent, futureParentPrefix);
                 }
@@ -469,31 +513,50 @@ namespace SolveChicago.Service
 
         private static string GetFamilyMemberOccupation(Member member)
         {
-            return GetMemberStage(member).Stage == Constants.Member.Stage.InTraining && member.NonprofitMembers.Any() ? member.NonprofitMembers.OrderByDescending(x => x.Start).FirstOrDefault().Nonprofit.Name : GetMemberStage(member).Stage == Constants.Member.Stage.JobPlaced && member.MemberCorporations.Any() ? member.MemberCorporations.OrderByDescending(x => x.Start).FirstOrDefault().Corporation.Name : "-";
+            string stage = GetMemberStage(member).Stage;
+            if (stage == Constants.Member.Stage.InSoftSkillsTraining || stage == Constants.Member.Stage.InWorkforceTraining)
+            {
+                if (member.NonprofitMembers.Any(x => x.Start > member.CreatedDate))
+                    return member.NonprofitMembers.OrderByDescending(x => x.Start).FirstOrDefault().Nonprofit.Name;
+                else
+                    return "In Training";
+            }
+            else if (stage == Constants.Member.Stage.JobPlaced)
+            {
+                if (member.MemberCorporations.Any(x => x.Start > member.CreatedDate))
+                    return member.MemberCorporations.OrderByDescending(x => x.Start).FirstOrDefault().Corporation.Name;
+                else
+                    return "Job Placed";
+            }
+            else
+                return string.Empty;
         }
 
         public void UpdateMemberGovernmentPrograms(MemberProfileGovernmentPrograms model)
         {
-            Member member = db.Members.Find(model.MemberId);
-            if (member == null)
-                throw new Exception($"Member with an id of {model.MemberId} not found");
-            else
+            if (model.GovernmentPrograms != null)
             {
-                foreach (var program in model.GovernmentPrograms)
+                Member member = db.Members.Find(model.MemberId);
+                if (member == null)
+                    throw new Exception($"Member with an id of {model.MemberId} not found");
+                else
                 {
-                    MemberGovernmentProgram mgp = member.MemberGovernmentPrograms.Where(x => x.GovernmentProgramId == program).FirstOrDefault();
-                    if (mgp == null)
-                    {
-                        mgp = new MemberGovernmentProgram
+                        foreach (var program in model.GovernmentPrograms)
                         {
-                            MemberId = member.Id,
-                            GovernmentProgramId = program,
-                        };
-                        member.MemberGovernmentPrograms.Add(mgp);
-                    }
+                            MemberGovernmentProgram mgp = member.MemberGovernmentPrograms.Where(x => x.GovernmentProgramId == program.ProgramId).FirstOrDefault();
+                            if (mgp == null)
+                            {
+                                mgp = new MemberGovernmentProgram
+                                {
+                                    MemberId = member.Id,
+                                    GovernmentProgramId = program.ProgramId,
+                                };
+                                member.MemberGovernmentPrograms.Add(mgp);
+                            }
+                        }
                 }
+                db.SaveChanges();
             }
-            db.SaveChanges();
         }
 
         public void UpdateMemberPersonal(MemberProfilePersonal model)
@@ -521,6 +584,7 @@ namespace SolveChicago.Service
                 UpdateMemberPhone(model, member);
                 UpdateMemberInterests(model, member);
                 UpdateMemberMilitary(model, member);
+                UpdateMemberSkills(member, model.Skills.Split(','), true);
 
                 db.SaveChanges();
             }
@@ -611,15 +675,15 @@ namespace SolveChicago.Service
             foreach (string interest in newInterests)
             {
                 string trimInterest = interest.Trim();
-                if (interests.Select(x => x.Name).Contains(trimInterest))
+                if (interests.Select(x => x.Name.ToLower()).Contains(trimInterest.ToLower()))
                 {
-                    Interest existingInterest = interests.Single(x => x.Name == trimInterest);
+                    Interest existingInterest = interests.Single(x => x.Name.ToLower() == trimInterest.ToLower());
                     if (!member.Interests.Contains(existingInterest))
                         member.Interests.Add(existingInterest);
                 }   
                 else
                 {
-                    member.Interests.Add(new Interest { Name = interest });
+                    member.Interests.Add(new Interest { Name = trimInterest });
                 }
             }
 
@@ -633,62 +697,36 @@ namespace SolveChicago.Service
                 throw new Exception($"Member with an id of {model.MemberId} not found");
             else
             {
-                member.IsWorkforceInterested = model.InterestedInWorkforceSkill == Enumerations.TripleBoolean.Yes.ToString();
-
-                foreach (var nonprofit in model.Nonprofits)
+                member.IsWorkforceInterested = model.InterestedInWorkforceSkill;
+                foreach (int skillId in model.SkillsDesiredIds)
                 {
-                    if (!string.IsNullOrEmpty(nonprofit.NonprofitName) || nonprofit.NonprofitId.HasValue) // not the best way to do this, but the default value for IsCurrent makes the model bind an empty object to itself on POST. Should refactor this later.
-                    {
-                        Nonprofit npo = db.Nonprofits.Where(x => (x.Id == nonprofit.NonprofitId || x.Name == nonprofit.NonprofitName)).FirstOrDefault();
-                        if (npo == null)
-                        {
-                            npo = new Nonprofit
-                            {
-                                Name = nonprofit.NonprofitName,
-                                CreatedDate = DateTime.UtcNow,
-                            };
-                            db.Nonprofits.Add(npo);
-                        }
-                        if (!member.NonprofitMembers.Select(x => x.NonprofitId).Contains(nonprofit.NonprofitId ?? 0))
-                        {
-                            member.NonprofitMembers.Add(new NonprofitMember
-                            {
-                                MemberEnjoyed = nonprofit.Enjoyed,
-                                MemberStruggled = nonprofit.Struggled,
-                                MemberId = member.Id,
-                                NonprofitId = npo.Id,
-                                Start = nonprofit.Start.Value,
-                                End = nonprofit.End,
-                            });
-                        }
-                        UpdateMemberSkills(nonprofit, member);
-                    }
+                    if (!member.MemberSkills.Select(x => x.SkillId).Contains(skillId))
+                        member.MemberSkills.Add(new MemberSkill { MemberId = member.Id, SkillId = skillId, IsComplete = false });
                 }
             }                
 
             db.SaveChanges();
         }
 
-        private void UpdateMemberSkills(NonprofitEntity nonprofit, Member member)
+        private void UpdateMemberSkills(Member member, string[] newSkills, bool isComplete = true)
         {
             List<Skill> skills = db.Skills.ToList();
-            string[] newSkills = nonprofit.SkillsAcquired.Split(',').ToArray();
             foreach (string skill in newSkills)
             {
                 string trimSkill = skill.Trim();
                 if(!string.IsNullOrEmpty(skill))
                 {
-                    if (skills.Select(x => x.Name).Contains(trimSkill))
+                    if (skills.Select(x => x.Name.ToLower()).Contains(trimSkill.ToLower()))
                     {
-                        Skill existingSkill = skills.Single(x => x.Name == trimSkill);
+                        Skill existingSkill = skills.Single(x => x.Name.ToLower() == trimSkill.ToLower());
                         if (!member.MemberSkills.Select(x => x.SkillId).Contains(existingSkill.Id))
-                            member.MemberSkills.Add(new MemberSkill { MemberId = member.Id, SkillId = existingSkill.Id, NonprofitId = nonprofit.NonprofitId });
+                            member.MemberSkills.Add(new MemberSkill { MemberId = member.Id, SkillId = existingSkill.Id, IsComplete = isComplete });
                     }
                     else
                     {
                         Skill newSkill = new Skill { Name = trimSkill };
                         db.Skills.Add(newSkill);
-                        member.MemberSkills.Add(new MemberSkill { Skill = newSkill, NonprofitId = nonprofit.NonprofitId });
+                        member.MemberSkills.Add(new MemberSkill { Skill = newSkill, IsComplete = isComplete });
                     }
                 }
             }

@@ -39,7 +39,7 @@
                         <span class="member-name">@(string.Format("{0} {1}", item.FirstName, item.LastName))</span>
                     </div>
                     <div class="columns has-space">
-                        <span>@(string.Join(", ", @item.Interests.Select(x => x.Name)))</span>
+                        <span>@(string.Join(", ", @item.MemberSkills.Where(x => !x.IsComplete).Select(x => x.Skill.Name)))</span>
                     </div>
                     <div class="columns has-space">
                         <span>@(item.ContactPreference == Constants.Member.ContactPreference.Phone ? string.Join(", ", item.PhoneNumbers.Select(x => x.Number)) : item.Email)</span>

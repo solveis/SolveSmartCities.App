@@ -4,10 +4,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SolveChicago.Common.Interfaces.Profile.Member;
 
 namespace SolveChicago.Common.Models.Profile.Member
 {
-    public class MemberProfileSchools
+    public class MemberProfileSchools : IMemberProfileSchools
     {
         public int MemberId { get; set; }
         public SchoolEntity[] Schools { get; set; }

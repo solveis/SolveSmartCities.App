@@ -24,5 +24,9 @@ namespace SolveChicago.Web.Models.Profile
         public string Country { get; set; }
         public string ProfilePicturePath { get; set; }
         public HttpPostedFileBase ProfilePicture { get; set; }
+        public string SkillsOffered { get; set; }
+        public string[] SkillsList { get; set; }
+        [Required]
+        public bool? TeachesSoftSkills { get; set; }
     }
 }

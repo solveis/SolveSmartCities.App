@@ -16,7 +16,7 @@
             <span>Personal</span>
         </li>
         <li class="is-complete" data-step="2">
-            <span>Family</span>
+            <span>Family in Household</span>
         </li>
         <li class="is-complete" data-step="3">
             <span>Education</span>
@@ -46,7 +46,7 @@
                     @Html.RadioButtonFor(m => m.IsUtilizingGovernmentPrograms, true)
                     <label for="Member_UtilizingGovernmentPrograms">Yes</label>
                     @Html.RadioButtonFor(m => m.IsUtilizingGovernmentPrograms, false)
-                    <label for="Member_UtilizingGovernmentProgramsMember_UtilizingGovernmentPrograms">No</label>
+                    <label for="Member_UtilizingGovernmentProgramsMember">No</label>
                 </div>
             </div>
 
@@ -54,12 +54,11 @@
             @Html.HiddenFor(model => model.Member.MemberId)
             <div id="GovernmentProgram" class="@(Model.IsUtilizingGovernmentPrograms ? "" : "hide")">
                 <div class="row app-dashboard-form-container-space-around">
-                    @Html.ValidationMessageFor(model => Model.Member.GovernmentPrograms, "", new { @class = "text-danger" })
-                    @Html.LabelFor(model => Model.Member.GovernmentPrograms, "", htmlAttributes: new {  })
-                    @Html.DropDownListFor(model => Model.Member.GovernmentPrograms, Model.GovernmentProgramList.Select(x => new SelectListItem { Value = x.Key.ToString(), Text = x.Value }), "Please select the programs you are currently utilizing", new { @multiple = "", @class = "ui fluid dropdown" })
+                    @Html.ValidationMessageFor(model => Model.Member.GovernmentProgramsIds, "", new { @class = "text-danger" })
+                    @Html.LabelFor(model => Model.Member.GovernmentProgramsIds, "", htmlAttributes: new {  })
+                    @Html.DropDownListFor(model => Model.Member.GovernmentProgramsIds, Model.GovernmentProgramList.Select(x => new SelectListItem { Value = x.Key.ToString(), Text = x.Value }), "Please select the programs you are currently utilizing", new { @multiple = "", @class = "ui fluid dropdown" })
                 </div>
             </div>
-            <hr />
             <div class="row align-center">
                 <input type="submit" value="Submit" class="submit-create-profile" />
             </div>
@@ -71,13 +70,16 @@
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/profile_member")
     @Scripts.Render("~/bundles/semantic")
-    @Styles.Render("~/Content/semantic")
+    @Styles.Render("~/Content/semanticui")
 
     <script>
         window.bindRadioContent($('input[name=IsUtilizingGovernmentPrograms]'), $('#GovernmentProgram'), "", "");
-        @foreach(var a in Model.Member.GovernmentPrograms)
+        @if(Model.Member.GovernmentPrograms != null)
         {
-            @:$('#Member_GovernmentPrograms').dropdown('set selected', @(a));
+            foreach(var a in Model.Member.GovernmentPrograms)
+            {
+                @:$('#Member_GovernmentPrograms').dropdown('set selected', @(a));
+            }
         }
     </script>
 }

@@ -33,8 +33,7 @@ namespace SolveChicago.Web.Models.Profile
     public class MemberProfileNonprofitViewModel
     {
         public MemberProfileNonprofits Member { get; set; }
-        public string[] NonprofitsList { get; set; }
-        public string[] SkillsList { get; set; }
+        public Dictionary<int, string> SkillsList { get; set; }
     }
 
     public class MemberProfileJobViewModel

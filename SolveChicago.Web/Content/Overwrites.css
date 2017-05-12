@@ -66,3 +66,28 @@ input[type="radio"], input[type="checkbox"] {
 .validation-summary-errors ul {
     margin:0;
 }
+
+.entry:not(:nth-last-child(2)) {
+    border-bottom:1px solid #888;
+}
+
+.entry {
+    padding:30px 0;
+}
+
+#npo-wrapper, #GovernmentProgram {
+    width: 80%;
+    margin: 50px auto;
+}
+
+.form-registration-group .form-registration-input {
+    min-height:50px;
+}
+
+.form-registration-group .form-registration-submit-button {
+    min-height:40px;
+}
+
+.app-dashboard-sidebar .app-dashboard-sidebar-inner .sub-menu li .case-manager-profile-picture {
+    min-height:50px;
+}

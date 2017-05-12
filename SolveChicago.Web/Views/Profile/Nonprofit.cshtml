@@ -4,6 +4,10 @@
     ViewBag.Title = "Profile";
 }
 
+@section Styles {
+    @Styles.Render("~/Content/tokenfield")
+}
+
 @using (Html.BeginForm("Nonprofit", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
@@ -54,7 +58,15 @@
             @Html.LabelFor(model => model.Country, htmlAttributes: new { })
             @Html.EditorFor(model => model.Country, new { htmlAttributes = new { } })
 
-            <hr class="line-divider">
+            @Html.LabelFor(m => m.TeachesSoftSkills, "Do you provide training for Soft Skills?")
+            @Html.RadioButtonFor(m => m.TeachesSoftSkills, true)
+            <label for="Nonprofit_TeachesSoftSkills">Yes</label>
+            @Html.RadioButtonFor(m => m.TeachesSoftSkills, false)
+            <label for="Nonprofit_TeachesSoftSkills">No</label>
+
+            @Html.ValidationMessageFor(model => model.SkillsOffered, "", new { @class = "text-danger" })
+            @Html.LabelFor(model => model.SkillsOffered, "What workforce skills do you teach? (i.e. construction, manufacturing, coding)")
+            @Html.EditorFor(model => model.SkillsOffered, new { htmlAttributes = new { type = "text" } })
 
             <input class="submit-create-profile" type="submit" value="Submit">
         </div>
@@ -62,5 +74,17 @@
 }
 
 @section Scripts {
+    @Scripts.Render("~/bundles/tokenfield")
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/profile_member")
+    <script>
+            $(document).ready(function () {
+                var skillsList = [];
+                @foreach(var skill in Model.SkillsList)
+                {
+                    @:skillsList.push("@skill");
+                }
+                window.bindAutocomplete($('#SkillsOffered'), skillsList);
+            });
+    </script>
 }

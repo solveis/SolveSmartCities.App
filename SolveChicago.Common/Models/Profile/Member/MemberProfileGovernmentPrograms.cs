@@ -4,14 +4,16 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SolveChicago.Common.Interfaces.Profile.Member;
 
 namespace SolveChicago.Common.Models.Profile.Member
 {
 
-    public class MemberProfileGovernmentPrograms
+    public class MemberProfileGovernmentPrograms : IMemberProfileGovernmentPrograms
     {
         public int MemberId { get; set; }
-        public int[] GovernmentPrograms { get; set; }
+        public int[] GovernmentProgramsIds { get; set; }
+        public GovernmentProgramEntity[] GovernmentPrograms { get; set; }
     }
 
     public class GovernmentProgramEntity

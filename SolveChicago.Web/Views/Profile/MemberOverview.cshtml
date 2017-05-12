@@ -156,6 +156,19 @@
                     <hr class="overview-line-divider">
                 </div>
                 <!-- End of Row-->
+                <!-- Row-->
+                <div class="row medium-unstack">
+
+                    <div class="columns has-space">
+                        <p>Workforce Skills</p>
+                    </div>
+
+                    <div class="columns has-space">
+                        <span>@Model.Skills</span>
+                    </div>
+                    <hr class="overview-line-divider">
+                </div>
+                <!-- End of Row-->
             </div>
 
         </section>
@@ -422,84 +435,35 @@
                 <h1 class="overview-card-header">Training</h1>
                 <a href="/Profile/MemberNonprofits?id=@Model.Id" class="button">Edit</a>
             </header>
-            @if (Model.Nonprofits != null && Model.Nonprofits.Count() > 0)
+            @if (Model.InterestedInWorkforceSkill.HasValue)
             {
-                foreach (var npo in Model.Nonprofits)
-                {
-                <!-- THis is to wrap the info when theres an image on the right side of the form-->
-                    <div class="overview-wrapper">
-
-                        <!-- Row-->
-                        <div class="row medium-unstack">
-
-                            <div class="columns has-space">
-                                <p>Name</p>
-                            </div>
-
-                            <div class="columns has-space">
-                                <span>@npo.NonprofitName</span>
-                            </div>
-                            <hr class="overview-line-divider">
-                        </div>
-                        <!-- End of Row-->
-                        <!-- Row-->
-                        <div class="row medium-unstack">
-
-                            <div class="columns has-space">
-                                <p>Start</p>
-                            </div>
-
-                            <div class="columns has-space">
-                                <span>@(npo.Start.HasValue ? npo.Start.Value.ToShortDateString() : "")</span>
-                            </div>
-                            <hr class="overview-line-divider">
-                        </div>
-                        <!-- End of Row-->
-                        <!-- Row-->
-                        <div class="row medium-unstack">
-
-                            <div class="columns has-space">
-                                <p>End</p>
-                            </div>
-
-                            <div class="columns has-space">
-                                <span>@(npo.End.HasValue ? npo.End.Value.ToShortDateString() : "")</span>
-                            </div>
-                            <hr class="overview-line-divider">
-                        </div>
-                        <!-- End of Row-->
-                        <!-- Row-->
-                        <div class="row medium-unstack">
-
-                            <div class="columns has-space">
-                                <p>Enjoyed</p>
-                            </div>
-
-                            <div class="columns has-space">
-                                <span>@npo.Enjoyed</span>
-                            </div>
-                            <hr class="overview-line-divider">
-                        </div>
-                        <!-- End of Row-->
-                        <!-- Row-->
-                        <div class="row medium-unstack">
-
-                            <div class="columns has-space">
-                                <p>Struggled</p>
-                            </div>
-
-                            <div class="columns has-space">
-                                <span>@npo.Struggled</span>
-                            </div>
-                            <hr class="overview-line-divider">
-                        </div>
-                        <!-- End of Row-->
+                <!-- Row-->
+                <div class="row medium-unstack">
+                    <div class="columns has-space">
+                        <p>Is interested in workforce training?</p>
                     </div>
+
+                    <div class="columns has-space">
+                        <span>@(Model.InterestedInWorkforceSkill.Value == true ? "Yes" : "No")</span>
+                    </div>
+                    <hr class="overview-line-divider">
+                </div>
+                <!-- End of Row-->
+                if (!string.IsNullOrEmpty(Model.SkillsDesired))
+                {
+                <!-- Row-->
+                    <div class="row medium-unstack">
+                        <div class="columns has-space">
+                            <p>Skills Desired</p>
+                        </div>
+
+                        <div class="columns has-space">
+                            <span>@Model.SkillsDesired</span>
+                        </div>
+                        <hr class="overview-line-divider">
+                    </div>
+                <!-- End of Row-->
                 }
-            }
-            else
-            {
-                <p>No Nonprofits</p>
             }
         </section>
         <section class="overview-card">

@@ -20,7 +20,7 @@
             <span>Personal</span>
         </li>
         <li class="is-complete" data-step="2">
-            <span>Family</span>
+            <span>Family in Household</span>
         </li>
         <li class="is-complete" data-step="3">
             <span>Education</span>
@@ -54,58 +54,59 @@
                     <label for="Member_CurrentlyLooking">No</label>
                 </div>
 
+            </div>
+            <div id="Jobs" class="hide">
                 <div id="looking-for-job" class="row align-center hide">
                     <p><strong>We’re here to help! Please tell us about your most recent job.</strong></p>
                 </div>
                 <div id="not-looking-for-job" class="row align-center hide">
                     <p><strong>Okay! Please tell us about your current job.</strong></p>
                 </div>
-            </div>
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.Member.MemberId)
-            @for (int i = 0; i < Model.Member.Jobs.Length; i++)
-            {
-                <div class="Job entry" data-id="@(i)">
-                    <div class="row app-dashboard-form-container-space-around">
-                        <div class="form-holder">
-                            @Html.HiddenFor(model => Model.Member.Jobs[i].CorporationId)
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.Member.MemberId)
+                @for (int i = 0; i < Model.Member.Jobs.Length; i++)
+                {
+                    <div class="Job entry" data-id="@(i)">
+                        <div class="row app-dashboard-form-container-space-around">
+                            <div class="form-holder">
+                                @Html.HiddenFor(model => Model.Member.Jobs[i].CorporationId)
 
-                            @Html.ValidationMessageFor(model => Model.Member.Jobs[i].Name, "", new { @class = "text-danger" })
-                            @Html.LabelFor(model => Model.Member.Jobs[i].Name, "Company Name", htmlAttributes: new { })
-                            @Html.EditorFor(model => Model.Member.Jobs[i].Name, new { htmlAttributes = new { @class = "corporation-list" } })
+                                @Html.ValidationMessageFor(model => Model.Member.Jobs[i].Name, "", new { @class = "text-danger" })
+                                @Html.LabelFor(model => Model.Member.Jobs[i].Name, "Company Name", htmlAttributes: new { })
+                                @Html.EditorFor(model => Model.Member.Jobs[i].Name, new { htmlAttributes = new { @class = "corporation-list" } })
 
-                            @Html.ValidationMessageFor(model => Model.Member.Jobs[i].EmployeePay, "", new { @class = "text-danger" })
-                            @Html.LabelFor(model => Model.Member.Jobs[i].EmployeePay, "What was your hourly pay?", htmlAttributes: new { })
-                            @Html.EditorFor(model => Model.Member.Jobs[i].EmployeePay, new { htmlAttributes = new { } })
-                        </div>
-                        <div class="form-holder">
-                            @Html.ValidationMessageFor(model => Model.Member.Jobs[i].EmployeeStart, "", new { @class = "text-danger" })
-                            @Html.LabelFor(model => Model.Member.Jobs[i].EmployeeStart, "When did you start?", htmlAttributes: new { })
-                            @Html.EditorFor(model => Model.Member.Jobs[i].EmployeeStart, new { htmlAttributes = new { @placeholder = "mm/dd/yyyy" } })
+                                @Html.ValidationMessageFor(model => Model.Member.Jobs[i].EmployeePay, "", new { @class = "text-danger" })
+                                @Html.LabelFor(model => Model.Member.Jobs[i].EmployeePay, "What was your hourly pay?", htmlAttributes: new { })
+                                @Html.EditorFor(model => Model.Member.Jobs[i].EmployeePay, new { htmlAttributes = new { @class = "number-entry" } })
+                            </div>
+                            <div class="form-holder">
+                                @Html.ValidationMessageFor(model => Model.Member.Jobs[i].EmployeeStart, "", new { @class = "text-danger" })
+                                @Html.LabelFor(model => Model.Member.Jobs[i].EmployeeStart, "When did you start?", htmlAttributes: new { })
+                                @Html.EditorFor(model => Model.Member.Jobs[i].EmployeeStart, new { htmlAttributes = new { @placeholder = "mm/dd/yyyy" } })
 
-                            @Html.ValidationMessageFor(model => Model.Member.Jobs[i].IsCurrent, "", new { @class = "text-danger" })
-                            @Html.LabelFor(model => Model.Member.Jobs[i].IsCurrent, "Do you still work here?", htmlAttributes: new { })
-                            @Html.RadioButtonFor(model => model.Member.Jobs[i].IsCurrent, true, new { @class = "is-job-current" })
-                            <label for="Member_Jobs_[i]__IsCurrent">Yes</label>
-                            @Html.RadioButtonFor(model => model.Member.Jobs[i].IsCurrent, false, new { @class = "is-job-current" })
-                            <label for="Member_Jobs_[i]__IsCurrent">No</label>
+                                @Html.ValidationMessageFor(model => Model.Member.Jobs[i].IsCurrent, "", new { @class = "text-danger" })
+                                @Html.LabelFor(model => Model.Member.Jobs[i].IsCurrent, "Do you still work here?", htmlAttributes: new { })
+                                @Html.RadioButtonFor(model => model.Member.Jobs[i].IsCurrent, true, new { @class = "is-job-current" })
+                                <label for="Member_Jobs_[i]__IsCurrent">Yes</label>
+                                @Html.RadioButtonFor(model => model.Member.Jobs[i].IsCurrent, false, new { @class = "is-job-current" })
+                                <label for="Member_Jobs_[i]__IsCurrent">No</label>
 
-                            <div class="job-endinfo @(Model.Member.Jobs[i].IsCurrent ? "hide" : "")">
-                                @Html.ValidationMessageFor(model => Model.Member.Jobs[i].EmployeeEnd, "", new { @class = "text-danger" })
-                                @Html.LabelFor(model => Model.Member.Jobs[i].EmployeeEnd, "When was your last day?", htmlAttributes: new { })
-                                @Html.EditorFor(model => Model.Member.Jobs[i].EmployeeEnd, new { htmlAttributes = new { @placeholder = "mm/dd/yyyy" } })
+                                <div class="job-endinfo @(Model.Member.Jobs[i].IsCurrent ? "hide" : "")">
+                                    @Html.ValidationMessageFor(model => Model.Member.Jobs[i].EmployeeEnd, "", new { @class = "text-danger" })
+                                    @Html.LabelFor(model => Model.Member.Jobs[i].EmployeeEnd, "When was your last day?", htmlAttributes: new { })
+                                    @Html.EditorFor(model => Model.Member.Jobs[i].EmployeeEnd, new { htmlAttributes = new { @placeholder = "mm/dd/yyyy" } })
 
-                                @Html.ValidationMessageFor(model => Model.Member.Jobs[i].EmployeeReasonForLeaving, "", new { @class = "text-danger" })
-                                @Html.LabelFor(model => Model.Member.Jobs[i].EmployeeReasonForLeaving, "Why did you leave?", htmlAttributes: new { })
-                                @Html.EditorFor(model => Model.Member.Jobs[i].EmployeeReasonForLeaving, new { htmlAttributes = new { } })
+                                    @Html.ValidationMessageFor(model => Model.Member.Jobs[i].EmployeeReasonForLeaving, "", new { @class = "text-danger" })
+                                    @Html.LabelFor(model => Model.Member.Jobs[i].EmployeeReasonForLeaving, "Why did you leave?", htmlAttributes: new { })
+                                    @Html.EditorFor(model => Model.Member.Jobs[i].EmployeeReasonForLeaving, new { htmlAttributes = new { } })
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <hr />
+                }
+                <div class="row align-center has-border">
+                    <a class="add-job addEntry" href="javascript:void(0)"> <img class="add-job-icon" src="../img/icon-add.svg"> Add Job</a>
                 </div>
-            }
-            <div class="row align-center has-border">
-                <a class="add-job addEntry" href="javascript:void(0)"> <img class="add-job-icon" src="../img/icon-add.svg"> Add Job</a>
             </div>
         </div>
         <div class="row align-center">
@@ -131,7 +132,7 @@
             window.bindRadioContent(newEntry.find('.is-job-current'), "", newEntry.find('.job-endinfo'), "")
         }
 
-        window.bindRadioContent($('input[name=Member\\.CurrentlyLooking]'), $('#looking-for-job'), $('#not-looking-for-job'), "");
+        window.bindRadioContent($('input[name=Member\\.CurrentlyLooking]'), $('#looking-for-job, #Jobs'), $('#not-looking-for-job, #Jobs'), "");
 
         window.addEntryCallback($('.Job'));
     </script>

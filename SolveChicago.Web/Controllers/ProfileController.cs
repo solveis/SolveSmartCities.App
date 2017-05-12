@@ -284,15 +284,19 @@ namespace SolveChicago.Web.Controllers
             MemberProfileNonprofitViewModel model = new MemberProfileNonprofitViewModel
             {
                 Member = PopulateNonprofitEmptyFields(member),
-                NonprofitsList = GetNonprofitsList(),
-                SkillsList = GetSkillsList(),
+                SkillsList = GetAvailableSkillsList(),
             };
             return model;
         }
 
-        private string[] GetSkillsList()
+        private Dictionary<int, string> GetAvailableSkillsList()
         {
-            return db.Skills.Select(x => x.Name).ToArray();
+            Dictionary<int, string> availableSkills = db.Skills.Where(x => x.Nonprofits.Count() > 0).ToDictionary(x => x.Id, x => x.Name);
+            Skill softSkills = db.Skills.SingleOrDefault(x => x.Name.ToLower() == "soft skills");
+            if(!availableSkills.Select(x => x.Key).Contains(softSkills.Id))
+                availableSkills.Add(softSkills.Id, softSkills.Name);
+
+            return availableSkills;
         }
 
         private string[] GetNonprofitsList()
@@ -323,7 +327,7 @@ namespace SolveChicago.Web.Controllers
             MemberProfileGovernmentProgramViewModel model = new MemberProfileGovernmentProgramViewModel
             {
                 Member = PopulateGovernmentProgramEmptyFields(member),
-                IsUtilizingGovernmentPrograms = member.GovernmentPrograms.Count() > 0,
+                IsUtilizingGovernmentPrograms = member.GovernmentPrograms != null && member.GovernmentPrograms.Count() > 0,
                 GovernmentProgramList = gService.Get().ToDictionary(x => x.Id, x => x.Name),
             };
             return model;
@@ -349,9 +353,6 @@ namespace SolveChicago.Web.Controllers
 
         private MemberProfileNonprofits PopulateNonprofitEmptyFields(MemberProfileNonprofits model)
         {
-            if (model.Nonprofits == null)
-                model.Nonprofits = new NonprofitEntity[1] { new NonprofitEntity() };
-
             return model;
         }
 
@@ -366,7 +367,7 @@ namespace SolveChicago.Web.Controllers
         private MemberProfileGovernmentPrograms PopulateGovernmentProgramEmptyFields(MemberProfileGovernmentPrograms model)
         {
             if (model.GovernmentPrograms == null)
-                model.GovernmentPrograms = new int[0];
+                model.GovernmentProgramsIds = new int[0];
 
             return model;
         }

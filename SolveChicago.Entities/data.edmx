@@ -319,6 +319,7 @@
           <Property Name="MemberId" Type="int" Nullable="false" />
           <Property Name="SkillId" Type="int" Nullable="false" />
           <Property Name="NonprofitId" Type="int" />
+          <Property Name="IsComplete" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="MemberSpouses">
           <Key>
@@ -366,6 +367,14 @@
           <Property Name="ZipCode" Type="nvarchar" MaxLength="10" />
           <Property Name="CreatedDate" Type="datetime2" Precision="7" />
           <Property Name="ProfilePicturePath" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="NonprofitSkills">
+          <Key>
+            <PropertyRef Name="NonprofitId" />
+            <PropertyRef Name="SkillId" />
+          </Key>
+          <Property Name="NonprofitId" Type="int" Nullable="false" />
+          <Property Name="SkillId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Outcomes">
           <Key>
@@ -1019,6 +1028,34 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_NonprofitSkills_Nonprofit">
+          <End Role="Nonprofits" Type="Self.Nonprofits" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="NonprofitSkills" Type="Self.NonprofitSkills" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nonprofits">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NonprofitSkills">
+              <PropertyRef Name="NonprofitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NonprofitSkills_Skill">
+          <End Role="Skills" Type="Self.Skills" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="NonprofitSkills" Type="Self.NonprofitSkills" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Skills">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NonprofitSkills">
+              <PropertyRef Name="SkillId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Outcomes_Members">
           <End Role="Members" Type="Self.Members" Multiplicity="1" />
           <End Role="Outcomes" Type="Self.Outcomes" Multiplicity="*" />
@@ -1199,6 +1236,7 @@
           <EntitySet Name="MilitaryBranches" EntityType="Self.MilitaryBranches" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NonprofitMembers" EntityType="Self.NonprofitMembers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Nonprofits" EntityType="Self.Nonprofits" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NonprofitSkills" EntityType="Self.NonprofitSkills" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Outcomes" EntityType="Self.Outcomes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PhoneNumbers" EntityType="Self.PhoneNumbers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReferrerMembers" EntityType="Self.ReferrerMembers" Schema="dbo" store:Type="Tables" />
@@ -1379,6 +1417,14 @@
           <AssociationSet Name="FK_NonprofitMembers_Nonprofits" Association="Self.FK_NonprofitMembers_Nonprofits">
             <End Role="Nonprofits" EntitySet="Nonprofits" />
             <End Role="NonprofitMembers" EntitySet="NonprofitMembers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NonprofitSkills_Nonprofit" Association="Self.FK_NonprofitSkills_Nonprofit">
+            <End Role="Nonprofits" EntitySet="Nonprofits" />
+            <End Role="NonprofitSkills" EntitySet="NonprofitSkills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NonprofitSkills_Skill" Association="Self.FK_NonprofitSkills_Skill">
+            <End Role="Skills" EntitySet="Skills" />
+            <End Role="NonprofitSkills" EntitySet="NonprofitSkills" />
           </AssociationSet>
           <AssociationSet Name="FK_Outcomes_Members" Association="Self.FK_Outcomes_Members">
             <End Role="Members" EntitySet="Members" />
@@ -1707,6 +1753,7 @@
           <NavigationProperty Name="Member" Relationship="Self.FK_MemberSkills_Members" FromRole="MemberSkills" ToRole="Members" />
           <NavigationProperty Name="Nonprofit" Relationship="Self.FK_MemberSkills_Nonprofits" FromRole="MemberSkills" ToRole="Nonprofits" />
           <NavigationProperty Name="Skill" Relationship="Self.FK_MemberSkills_Skills" FromRole="MemberSkills" ToRole="Skills" />
+          <Property Name="IsComplete" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="MemberSpous">
           <Key>
@@ -1764,6 +1811,7 @@
           <NavigationProperty Name="NonprofitMembers" Relationship="Self.FK_NonprofitMembers_Nonprofits" FromRole="Nonprofits" ToRole="NonprofitMembers" />
           <NavigationProperty Name="AspNetUsers" Relationship="Self.UserProfileNonprofits" FromRole="Nonprofits" ToRole="AspNetUsers" />
           <NavigationProperty Name="CaseManagers" Relationship="SolveChicagoDevModel.FK_CaseManagers_Nonprofit" FromRole="Nonprofit" ToRole="CaseManager" />
+          <NavigationProperty Name="Skills" Relationship="SolveChicagoDevModel.NonprofitSkills" FromRole="Nonprofit" ToRole="Skill" />
         </EntityType>
         <EntityType Name="Outcome">
           <Key>
@@ -1812,6 +1860,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="MemberSkills" Relationship="Self.FK_MemberSkills_Skills" FromRole="Skills" ToRole="MemberSkills" />
+          <NavigationProperty Name="Nonprofits" Relationship="SolveChicagoDevModel.NonprofitSkills" FromRole="Skill" ToRole="Nonprofit" />
         </EntityType>
         <Association Name="FK_AdminInviteCodes_Admin">
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
@@ -2421,6 +2470,10 @@
             <End Role="CaseManager" EntitySet="CaseManagers" />
             <End Role="NonprofitMember" EntitySet="NonprofitMembers" />
           </AssociationSet>
+          <AssociationSet Name="NonprofitSkills" Association="SolveChicagoDevModel.NonprofitSkills">
+            <End Role="Nonprofit" EntitySet="Nonprofits" />
+            <End Role="Skill" EntitySet="Skills" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="ELMAH_Error">
           <Key>
@@ -2507,6 +2560,10 @@
               <PropertyRef Name="CaseManagerId" />
             </Dependent>
           </ReferentialConstraint>
+        </Association>
+        <Association Name="NonprofitSkills">
+          <End Type="SolveChicagoDevModel.Nonprofit" Role="Nonprofit" Multiplicity="*" />
+          <End Type="SolveChicagoDevModel.Skill" Role="Skill" Multiplicity="*" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -2749,6 +2806,7 @@
           <EntitySetMapping Name="MemberSkills">
             <EntityTypeMapping TypeName="SolveChicagoDevModel.MemberSkill">
               <MappingFragment StoreEntitySet="MemberSkills">
+                <ScalarProperty Name="IsComplete" ColumnName="IsComplete" />
                 <ScalarProperty Name="MemberId" ColumnName="MemberId" />
                 <ScalarProperty Name="SkillId" ColumnName="SkillId" />
                 <ScalarProperty Name="NonprofitId" ColumnName="NonprofitId" />
@@ -2974,6 +3032,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <AssociationSetMapping Name="NonprofitSkills" TypeName="SolveChicagoDevModel.NonprofitSkills" StoreEntitySet="NonprofitSkills">
+            <EndProperty Name="Skill">
+              <ScalarProperty Name="Id" ColumnName="SkillId" />
+            </EndProperty>
+            <EndProperty Name="Nonprofit">
+              <ScalarProperty Name="Id" ColumnName="NonprofitId" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

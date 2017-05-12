@@ -18,6 +18,7 @@ namespace SolveChicago.Entities
         public Skill()
         {
             this.MemberSkills = new HashSet<MemberSkill>();
+            this.Nonprofits = new HashSet<Nonprofit>();
         }
     
         public int Id { get; set; }
@@ -25,5 +26,7 @@ namespace SolveChicago.Entities
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MemberSkill> MemberSkills { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Nonprofit> Nonprofits { get; set; }
     }
 }

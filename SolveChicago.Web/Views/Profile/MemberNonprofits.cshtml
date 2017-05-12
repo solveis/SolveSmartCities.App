@@ -21,7 +21,7 @@
             <span>Personal</span>
         </li>
         <li class="is-complete" data-step="2">
-            <span>Family</span>
+            <span>Family in Household</span>
         </li>
         <li class="is-complete" data-step="3">
             <span>Education</span>
@@ -43,64 +43,22 @@
     @using (Html.BeginForm("MemberNonprofits", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
-
+        @Html.HiddenFor(model => model.Member.MemberId)
         <div>
-
             <div class="main-questions row align-center">
                 <label for="Member_InterestedInWorkforceSkill">Are you interested in acquiring a new workforce skill</label>
                 <div>
-                    @Html.RadioButtonFor(m => m.Member.InterestedInWorkforceSkill, Enumerations.TripleBoolean.Yes.ToString())
+                    @Html.RadioButtonFor(m => m.Member.InterestedInWorkforceSkill, true)
                     <label for="Member_InterestedInWorkforceSkill">Yes</label>
-                    @Html.RadioButtonFor(m => m.Member.InterestedInWorkforceSkill, Enumerations.TripleBoolean.No.ToString())
+                    @Html.RadioButtonFor(m => m.Member.InterestedInWorkforceSkill, false)
                     <label for="Member_InterestedInWorkforceSkill">No</label>
-                    @Html.RadioButtonFor(m => m.Member.InterestedInWorkforceSkill, Enumerations.TripleBoolean.Other.ToString())
-                    <label for="Member_InterestedInWorkforceSkill">I already have</label>
                 </div>
             </div>
-
-
-            <div id="npo-wrapper" class="@(Model.Member.InterestedInWorkforceSkill == Enumerations.TripleBoolean.Other.ToString() ? "" : "hide")">
+            <div id="npo-wrapper" class="@(Model.Member.InterestedInWorkforceSkill == true ? "" : "hide")">
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                @Html.HiddenFor(model => model.Member.MemberId)
-                @for (int i = 0; i < Model.Member.Nonprofits.Length; i++)
-                {
-                    <div class="Nonprofit entry" data-id="@(i)">
-                        <div class="row app-dashboard-form-container-space-around">
-                            <div class="form-holder">
-                                @Html.HiddenFor(m => Model.Member.Nonprofits[i].NonprofitId)
-
-                                @Html.ValidationMessageFor(model => model.Member.Nonprofits[i].NonprofitName, "", new { @class = "text-danger" })
-                                @Html.LabelFor(model => model.Member.Nonprofits[i].NonprofitName, htmlAttributes: new { })
-                                @Html.EditorFor(model => model.Member.Nonprofits[i].NonprofitName, new { htmlAttributes = new { @class = "nonprofit-list" } })
-
-                                @Html.ValidationMessageFor(model => model.Member.Nonprofits[i].Start, "", new { @class = "text-danger" })
-                                @Html.LabelFor(model => model.Member.Nonprofits[i].Start, htmlAttributes: new { })
-                                @Html.EditorFor(model => model.Member.Nonprofits[i].Start, new { htmlAttributes = new { @placeholder = "mm/dd/yyyy" } })
-
-                                @Html.ValidationMessageFor(model => model.Member.Nonprofits[i].End, "", new { @class = "text-danger" })
-                                @Html.LabelFor(model => model.Member.Nonprofits[i].End, htmlAttributes: new {  })
-                                @Html.EditorFor(model => model.Member.Nonprofits[i].End, new { htmlAttributes = new { @placeholder = "mm/dd/yyyy" } })
-                            </div>
-                            <div class="form-holder">
-                                @Html.ValidationMessageFor(model => model.Member.Nonprofits[i].SkillsAcquired, "", new { @class = "text-danger" })
-                                @Html.LabelFor(model => model.Member.Nonprofits[i].SkillsAcquired, "What skills did you acquire here?", htmlAttributes: new {  })
-                                @Html.EditorFor(model => model.Member.Nonprofits[i].SkillsAcquired, new { htmlAttributes = new { @class = "skills-list" } })
-
-                                @Html.ValidationMessageFor(model => model.Member.Nonprofits[i].Enjoyed, "", new { @class = "text-danger" })
-                                @Html.LabelFor(model => model.Member.Nonprofits[i].Enjoyed, "What did you enjoy?", htmlAttributes: new {})
-                                @Html.EditorFor(model => model.Member.Nonprofits[i].Enjoyed, new { htmlAttributes = new {  } })
-
-                                @Html.ValidationMessageFor(model => model.Member.Nonprofits[i].Struggled, "", new { @class = "text-danger" })
-                                @Html.LabelFor(model => model.Member.Nonprofits[i].Struggled, "What did you struggle with?", htmlAttributes: new { })
-                                @Html.EditorFor(model => model.Member.Nonprofits[i].Struggled, new { htmlAttributes = new { } })
-                            </div>
-                        </div>
-                        <hr />
-                    </div>
-                }
-                <div class="row align-center has-border">
-                    <a class="add-job addEntry" href="javascript:void(0)"> <img class="add-job-icon" src="../img/icon-add.svg"> Add Nonprofit</a>
-                </div>
+                @Html.ValidationMessageFor(model => Model.Member.SkillsDesiredIds, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => Model.Member.SkillsDesiredIds, "", htmlAttributes: new { })
+                @Html.DropDownListFor(model => Model.Member.SkillsDesiredIds, Model.SkillsList.Select(x => new SelectListItem { Value = x.Key.ToString(), Text = x.Value }), "Please select the skills you would like to obtain", new { @multiple = "", @class = "ui fluid dropdown" })
             </div>
         </div>
         <div class="row align-center">
@@ -110,29 +68,19 @@
 </div>
 
 @section Scripts {
-    @Scripts.Render("~/bundles/tokenfield")
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/profile_member")
+    @Scripts.Render("~/bundles/semantic")
+    @Styles.Render("~/Content/semanticui")
 
     <script>
-        window.addEntryCallback = function (newEntry) {
-            var nonprofitsList = [];
-            @foreach(var nonprofit in Model.NonprofitsList)
+        @if(Model.Member.SkillsDesired != null)
+        {
+            foreach(var a in Model.Member.SkillsDesired)
             {
-                @:nonprofitsList.push("@nonprofit");
+                @:$('#Member_SkillsDesired').dropdown('set selected', @(a));
             }
-            newEntry.find('.nonprofit-list').autocomplete({ source: nonprofitsList });
-
-            var skillsList = [];
-            @foreach(var skill in Model.SkillsList)
-            {
-                @:skillsList.push("@skill");
-            }
-            window.bindAutocomplete(newEntry.find('.skills-list'), skillsList);
-
-            window.bindRadioContent($('input[name=Member\\.InterestedInWorkforceSkill]'), "", "", $('#npo-wrapper'));
         }
-
-        window.addEntryCallback($('.Nonprofit'));
+        window.bindRadioContent($('input[name=Member\\.InterestedInWorkforceSkill]'), $('#npo-wrapper'), "", "");
     </script>
 }

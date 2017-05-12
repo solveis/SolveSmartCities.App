@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SolveChicago.Common.Interfaces.Profile.Member;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -7,9 +8,10 @@ namespace SolveChicago.Common.Models.Profile.Member
 {
     
 
-    public class MemberProfile
+    public class MemberProfile : IMemberProfilePersonal, IMemberProfileFamily, IMemberProfileSchools, IMemberProfileJobs, IMemberProfileNonprofits, IMemberProfileGovernmentPrograms
     {
         public int Id { get; set; }
+        public int MemberId { get; set; }
         [Required]
         public string FirstName { get; set; }
         [Required]
@@ -54,7 +56,7 @@ namespace SolveChicago.Common.Models.Profile.Member
         [Required]
         public string Interests { get; set; }
         public decimal? Income { get; set; }
-        public bool? IsMilitary { get; set; }
+        public bool IsMilitary { get; set; }
         public string ContactPreference { get; set; }
         public string HighestEducation
         {
@@ -81,15 +83,17 @@ namespace SolveChicago.Common.Models.Profile.Member
         public SchoolEntity[] Schools { get; set; }
         public NonprofitEntity[] Nonprofits { get; set; }
         public JobEntity[] Jobs { get; set; }
+        public int[] GovernmentProgramsIds { get; set; }
         public GovernmentProgramEntity[] GovernmentPrograms { get; set; }
         public MemberStage MemberStage { get; set; }
-        public string CurrentOccupation
-        {
-            get
-            {
-                return this.MemberStage.Stage == Constants.Member.Stage.InTraining && this.Nonprofits.Any() ? this.Nonprofits.OrderByDescending(x => x.Start).FirstOrDefault().NonprofitName : this.MemberStage.Stage == Constants.Member.Stage.JobPlaced && this.Jobs.Any() ? this.Jobs.OrderByDescending(x => x.EmployeeStart).FirstOrDefault().Name : "-";
-            }
-        }
+        public string CurrentOccupation { get; }     
+        public int? MilitaryId { get; set; }
+        public string Skills { get; set; }
+        public int[] SkillsIds { get; set; }
+        public string SkillsDesired { get; set; }
+        public int[] SkillsDesiredIds { get; set; }
+        public bool? CurrentlyLooking { get; set; }
+        public bool? InterestedInWorkforceSkill { get; set; }
     }
 
     public class MemberStage

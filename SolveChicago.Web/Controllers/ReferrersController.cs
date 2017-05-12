@@ -41,7 +41,7 @@ namespace SolveChicago.Web.Controllers
                 return HttpNotFound();
 
             ReferrerService service = new ReferrerService(this.db);
-            MemberProfile[] members = service.GetMembers(State.ReferrerId);
+            FamilyEntity[] members = service.GetMembers(State.ReferrerId);
             return View(members);
         }
 

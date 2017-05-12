@@ -71,6 +71,12 @@
     <Compile Include="Crypto.cs" />
     <Compile Include="Enumerations.cs" />
     <Compile Include="Helpers.cs" />
+    <Compile Include="Interfaces\Profile\Member\IMemberProfileFamily.cs" />
+    <Compile Include="Interfaces\Profile\Member\IMemberProfileGovernmentPrograms.cs" />
+    <Compile Include="Interfaces\Profile\Member\IMemberProfileJobs.cs" />
+    <Compile Include="Interfaces\Profile\Member\IMemberProfileNonprofits.cs" />
+    <Compile Include="Interfaces\Profile\Member\IMemberProfilePersonal.cs" />
+    <Compile Include="Interfaces\Profile\Member\IMemberProfileSchools.cs" />
     <Compile Include="Models\ContactModel.cs" />
     <Compile Include="Models\Profile\CaseManagerProfile.cs" />
     <Compile Include="Models\Profile\Member\MemberProfile.cs" />

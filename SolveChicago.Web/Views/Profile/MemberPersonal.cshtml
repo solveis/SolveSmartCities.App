@@ -22,7 +22,7 @@
             <span>Personal</span>
         </li>
         <li data-step="2">
-            <span>Family</span>
+            <span>Family in Household</span>
         </li>
         <li class="" data-step="3">
             <span>Education</span>
@@ -125,6 +125,10 @@
                 @Html.LabelFor(model => model.Member.Interests, "Personal Interests (i.e. sports, fashion, movies)")
                 @Html.EditorFor(model => model.Member.Interests, new { htmlAttributes = new { type = "text" } })
 
+                @Html.ValidationMessageFor(model => model.Member.Skills, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.Member.Skills, "Professional Skills (i.e. soft skills, manufacturing, coding)")
+                @Html.EditorFor(model => model.Member.Skills, new { htmlAttributes = new { type = "text" } })
+
                 @Html.ValidationMessageFor(model => model.Member.IsHeadOfHousehold, "", new { @class = "text-danger" })
                 @Html.LabelFor(model => model.Member.IsHeadOfHousehold, "Are you the head of your household?")
                 @Html.RadioButtonFor(model => model.Member.IsHeadOfHousehold, true)
@@ -146,7 +150,6 @@
                 </div>
             </div>
         </div>
-        <hr />
         <div class="row align-center">
             <input type="submit" value="Submit" class="submit-create-profile" />
         </div>
@@ -164,7 +167,6 @@
                 @:interestsList.push("@interest");
             }
             window.bindAutocomplete($('#Member_Interests'), interestsList);
-            $(document).foundation();
 
             window.bindRadioContent($('input[name=Member\\.IsMilitary]'), $("#Member_is_Military"), "", "");
         });

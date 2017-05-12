@@ -14,19 +14,19 @@ namespace SolveChicago.Service
         public ReferrerService(SolveChicagoEntities db) : base(db) { }
 
         
-        public MemberProfile[] GetMembers(int id)
+        public FamilyEntity[] GetMembers(int id)
         {
-            List<MemberProfile> members = new List<MemberProfile>();
+            List<FamilyEntity> families = new List<FamilyEntity>();
             Referrer referrer = db.Referrers.Find(id);
             MemberService service = new MemberService(this.db);
             if(referrer != null)
             {
                 foreach(var m in referrer.Members)
                 {
-                    members.Add(service.Get(m.Id));
+                    families.Add(service.GetFamily(m, true));
                 }
             }
-            return members.ToArray();
+            return families.ToArray();
                 
         }
     }

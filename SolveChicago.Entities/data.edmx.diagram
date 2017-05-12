@@ -77,6 +77,7 @@
         <AssociationConnector Association="SolveChicagoDevModel.FK_CaseManagers_Nonprofit" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_CaseNotes_CaseManagers" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_NonprofitMembers_CaseManagers" />
+        <AssociationConnector Association="SolveChicagoDevModel.NonprofitSkills" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

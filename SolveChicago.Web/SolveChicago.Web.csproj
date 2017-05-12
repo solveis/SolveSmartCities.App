@@ -250,7 +250,6 @@
     <Content Include="apple-icon-76x76.png" />
     <Content Include="apple-icon-precomposed.png" />
     <Content Include="apple-icon.png" />
-    <Content Include="App_Readme\Elmah.txt" />
     <Content Include="browserconfig.xml" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -431,6 +430,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="manifest.json" />
+    <Content Include="bower.json" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
