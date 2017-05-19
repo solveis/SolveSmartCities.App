@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using SolveChicago.Common;
+using System.Diagnostics.CodeAnalysis;
 using System.Web;
 using System.Web.Optimization;
 
@@ -10,7 +11,11 @@ namespace SolveChicago.Web
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
+            bundles.UseCdn = Settings.Website.UseCdn;
+            BundleTable.EnableOptimizations = Settings.Website.UseCdn;
+
+
+            bundles.Add(new ScriptBundle("~/bundles/jquery", "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js").Include(
                         "~/Scripts/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -32,26 +37,28 @@ namespace SolveChicago.Web
             bundles.Add(new ScriptBundle("~/bundles/profile_member").Include(
                       "~/Scripts/profile_member.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/tokenfield").Include(
+            bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
                         "~/Scripts/jquery-ui-{version}.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/semantic").Include(
+            bundles.Add(new ScriptBundle("~/bundles/semantic", "https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/components/dropdown.min.js").Include(
                       "~/Scripts/semantic.js"));
 
 
-            bundles.Add(new StyleBundle("~/Content/tokenfield").Include(
+            bundles.Add(new StyleBundle("~/Content/jqueryui", "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js").Include(
                       "~/Content/themes/base/jquery-ui.css"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
                       "~/Content/overwrites.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new StyleBundle("~/Content/bootstrap", "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css").Include(
+                        "~/Content/bootstrap.css"));
 
             bundles.Add(new StyleBundle("~/Content/landing").Include(
                        "~/Content/bootstrap.css",
                        "~/Content/landing.css"));
 
-            bundles.Add(new StyleBundle("~/Content/semanticui").Include(
+            bundles.Add(new StyleBundle("~/Content/semanticui", "https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/components/dropdown.min.css").Include(
                        "~/Content/semantic/semantic.css"));
         }
     }

@@ -11,6 +11,7 @@ namespace SolveChicago.Common
 {
     public class Helpers
     {
+
         public static byte[] ConvertImageToPng(byte[] image, int maxWidth, int maxHeight)
         {
             using (var originalFormatStream = new System.IO.MemoryStream(image))

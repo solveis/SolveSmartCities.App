@@ -24,6 +24,12 @@ namespace SolveChicago.Web.Controllers
         }
         public MembersController() : base() { }
 
+        public new void Dispose()
+        {
+            base.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
         public ActionResult Index(int? memberId)
         {
             ImpersonateMember(memberId);

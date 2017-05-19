@@ -23,7 +23,8 @@ namespace SolveChicago.Web.Controllers
 
         public new void Dispose()
         {
-            base.Dispose();
+            base.Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         // GET: Corporations

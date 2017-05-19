@@ -28,7 +28,8 @@ namespace SolveChicago.Web.Controllers
 
         public new void Dispose()
         {
-            base.Dispose();
+            base.Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         // GET: Referrers
@@ -64,20 +65,25 @@ namespace SolveChicago.Web.Controllers
             ImpersonateReferrer(model.ReferringPartyId);
             if (ModelState.IsValid)
             {
-
-                Member member = new Member
-                {
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    Email = model.Email,
-                    SurveyStep = Constants.Member.SurveyStep.Invited,
-                    CreatedDate = DateTime.UtcNow,
-                };
-                Referrer referrer = db.Referrers.Find(State.ReferrerId);
-                if (referrer != null)
-                    referrer.Members.Add(member);
+                Member member = db.Members.Find(model.Email);
+                if (member != null)
+                    throw new ApplicationException("That email already associated with an account.");
                 else
-                    db.Members.Add(member);
+                {
+                    member = new Member
+                    {
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        Email = model.Email,
+                        SurveyStep = Constants.Member.SurveyStep.Invited,
+                        CreatedDate = DateTime.UtcNow,
+                    };
+                    Referrer referrer = db.Referrers.Find(State.ReferrerId);
+                    if (referrer != null)
+                        referrer.Members.Add(member);
+                    else
+                        db.Members.Add(member);
+                }
                 try
                 {
                     db.SaveChanges();

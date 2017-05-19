@@ -35,6 +35,14 @@ namespace SolveChicago.Common
                     return GetSetting<string>("Website.FromAddress", "dev+no-reply@solvechicago.com");
                 }
             }
+
+            public static bool UseCdn
+            {
+                get
+                {
+                    return GetSetting<bool>("Website.UseCdn", false);
+                }
+            }
         }
 
         public class Crypto

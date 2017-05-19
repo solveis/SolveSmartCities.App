@@ -29,6 +29,11 @@ footer, header, hgroup, menu, nav, section {
     display: block;
 }
 
+a:hover {
+    text-decoration:underline;
+    cursor:pointer;
+}
+
 body {
     line-height: 1;
 }
@@ -158,16 +163,27 @@ h3 {
 }
 
 #login-register {
-    background: #000;
-    height: 20px;
+    background: #22313F;
+    height: 25px;
     font-size: 12px;
     text-align: right;
     width: 100%;
     padding: 4px;
-    font-weight: 100;
+    font-weight: 200;
     color: #fff;
     position: fixed;
     z-index: 1031;
+}
+
+.arrow-up {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid black;
+    position: absolute;
+    top: -10px;
+    right: 15px;
 }
 
 #login-register a {
@@ -183,19 +199,21 @@ h3 {
     cursor:pointer;
 }
 
-#login-register:hover .register-submenu {
-    display:block;
-}
-
 .register-submenu {
-    background: #000;
+    background: #22313F;
     padding: 10px 15px;
     position: absolute;
-    top: 18px;
-    right: -88px;
+    top: 32px;
+    right: 0;
     display: none;
     width: 150px;
     text-align: left;
+    border-left: 7px solid #22A7F0;
+    border-radius: 7px;
+}
+
+.register-submenu .arrow-up {
+    border-bottom-color:#22313F;
 }
 
 .register-submenu:hover {

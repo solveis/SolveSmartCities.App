@@ -3,6 +3,11 @@
 <header class="members-header">
     <h2><strong>PROSPECTS:</strong> OVERVIEW</h2>
 
+    @if (ViewBag.AdminId != null)
+    {
+        <span style="text-align:right"><a href="/Admins/AddMember">Add Member</a></span>
+    }
+
     @*<div class="small-12 medium-12 large-3">
             <input class="search-members" type="text" name="search" placeholder="Search..">
         </div>*@

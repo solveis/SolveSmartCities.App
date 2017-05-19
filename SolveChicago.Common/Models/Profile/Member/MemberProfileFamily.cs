@@ -33,7 +33,10 @@ namespace SolveChicago.Common.Models.Profile.Member
         {
             get
             {
-                return this.Address1 + " " + this.Address2 + " " + this.City + ", " + this.Province + " " + this.ZipCode;
+                if(!string.IsNullOrEmpty(this.City))
+                    return this.Address1 + " " + this.Address2 + " " + this.City + ", " + this.Province + " " + this.ZipCode;
+                else
+                    return this.Address1 + " " + this.Address2 + " " + this.City + " " + this.Province + " " + this.ZipCode;
             }
         }
     }
@@ -62,5 +65,6 @@ namespace SolveChicago.Common.Models.Profile.Member
         public string ProfilePicturePath { get; set; }
         public MemberStage MemberStage { get; set; }
         public string CurrentOccupation { get; set; }
+        public bool IsEditable { get; set; }
     }
 }

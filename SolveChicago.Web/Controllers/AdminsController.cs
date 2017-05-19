@@ -12,6 +12,7 @@ using SolveChicago.Web.Models;
 using SolveChicago.Web.Models.Admin;
 using SolveChicago.Service;
 using SolveChicago.Common.Models.Profile.Member;
+using SolveChicago.Web.Models.Member;
 
 namespace SolveChicago.Web.Controllers
 {
@@ -29,7 +30,8 @@ namespace SolveChicago.Web.Controllers
 
         public new void Dispose()
         {
-            base.Dispose();
+            base.Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         // GET: Admins - Nonprofit List
@@ -44,6 +46,13 @@ namespace SolveChicago.Web.Controllers
         {
             var caseManagers = db.CaseManagers.ToArray();
             return View(caseManagers.ToList());
+        }
+
+        // GET: Admins/Referrers
+        public ActionResult Referrers()
+        {
+            var referrers = db.Referrers.ToArray();
+            return View(referrers.ToList());
         }
 
         // GET: Admins/Members

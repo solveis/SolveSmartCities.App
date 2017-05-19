@@ -28,7 +28,8 @@ namespace SolveChicago.Web.Controllers
 
         public new void Dispose()
         {
-            base.Dispose();
+            base.Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         // GET: Nonprofits
@@ -36,20 +37,73 @@ namespace SolveChicago.Web.Controllers
         {
             ImpersonateNonprofit(nonprofitId);
             NonprofitService service = new NonprofitService(this.db);
-            CaseManager[] caseManagers = service.GetCaseManagers(State.NonprofitId);
-            return View(caseManagers.ToList());
-        }
-
-        // GET : Nonprofits/Members
-        public ActionResult Members(int? nonprofitId)
-        {
-            ImpersonateNonprofit(nonprofitId);
-            NonprofitService service = new NonprofitService(this.db);
             FamilyEntity[] members = service.GetMembers(State.NonprofitId);
             return View(members.ToList());
         }
 
+        // GET : Nonprofits/CaseManagers
+        public ActionResult CaseManagers(int? nonprofitId)
+        {
+            ImpersonateNonprofit(nonprofitId);
+            NonprofitService service = new NonprofitService(this.db);
+            CaseManager[] caseManagers = service.GetCaseManagers(State.Nonprofit);
+            return View(caseManagers.ToList());
+        }
 
+        //GET: Nonprofits/AddMember
+        [HttpGet]
+        public ActionResult AddMember(int? nonprofitId)
+        {
+            ImpersonateNonprofit(nonprofitId);
+            AddMemberViewModel model = new AddMemberViewModel
+            {
+                ReferringPartyId = State.NonprofitId
+            };
+            return View(model);
+        }
+
+        // POST: Nonprofits/AddMember
+        [HttpPost]
+        public ActionResult AddMember(AddMemberViewModel model)
+        {
+            ImpersonateNonprofit(model.ReferringPartyId);
+            if (ModelState.IsValid)
+            {
+                Member member = db.Members.Find(model.Email);
+                if (member != null)
+                    throw new ApplicationException("That email already associated with an account.");
+                else
+                {
+                    member = new Member
+                    {
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        Email = model.Email,
+                        SurveyStep = Constants.Member.SurveyStep.Invited,
+                        CreatedDate = DateTime.UtcNow,
+                    };
+                    Nonprofit nonprofit = db.Nonprofits.Find(State.NonprofitId);
+                    if (nonprofit != null)
+                        nonprofit.NonprofitMembers.Add(new NonprofitMember { Member = member, Start = DateTime.UtcNow });
+                    else
+                        db.Members.Add(member);
+                }
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine(exception.Message);
+                }
+
+                CommunicationService service = new CommunicationService(this.db);
+                string surveyUrl = string.Format("{0}/Members/CreateProfile?id={1}", Settings.Website.BaseUrl, member.Id);
+                service.SendSurveyToMember(member, State.Nonprofit.Name, surveyUrl);
+                return NonprofitRedirect(State.NonprofitId);
+            }
+            return View(model);
+        }
 
         //GET: Nonprofits/AddCaseManager
         [HttpGet]
@@ -102,7 +156,7 @@ namespace SolveChicago.Web.Controllers
                 NonprofitName = State.Nonprofit.Name,
                 MemberId = memberId,
                 MemberName = string.Format("{0} {1}", member.FirstName, member.LastName),
-                CaseManagers = service.GetCaseManagers(State.NonprofitId)
+                CaseManagers = service.GetCaseManagers(State.Nonprofit)
             };
             return View(model);
         }

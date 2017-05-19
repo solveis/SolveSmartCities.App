@@ -1,7 +1,11 @@
 ﻿@model IEnumerable<SolveChicago.Entities.CaseManager>
 
 <header class="members-header">
-    <h2><strong>CASE MANAGERS:</strong> OVERVIEW</h2>
+    <h2><strong>CASE MANAGERS:</strong> OVERVIEW </h2>
+    @if (ViewBag.NonprofitId != null)
+    {
+        <span style="text-align:right"><a href="/Nonprofits/AddCaseManager?nonprofitId=@ViewBag.NonprofitId">Add Case Manager</a></span>
+    }
 
     @*<div class="small-12 medium-12 large-3">
             <input class="search-members" type="text" name="search" placeholder="Search..">
@@ -44,7 +48,7 @@
 
                     </div>
                     <div class="columns">
-                        <a href="/CaseManagers?caseManagerId=@item.Id" class="show-family button">View Clients</a>
+                        <a href="/CaseManagers?caseManagerId=@item.Id" class="show-family button">View Members</a>
                     </div>
                 </div>
             </div>

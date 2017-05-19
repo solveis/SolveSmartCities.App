@@ -58,7 +58,7 @@ namespace SolveChicago.Common
                 public const string InWorkforceTraining = "In Workforce Training";
                 public const string RecruiterPlacing = "In Recruiter's Hands";
                 public const string JobPlaced = "Job Placed";
-                public const string OffTrack = "Off Track";
+                public const string OffTrack = "Untracked";
             }
 
             public const string NoPhotoUrl = "/img/side-nav-members-icon.svg";

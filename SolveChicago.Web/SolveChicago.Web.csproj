@@ -255,8 +255,6 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\foundation-datepicker.css" />
-    <Content Include="Content\foundation-datepicker.min.css" />
     <Content Include="Content\Landing.css" />
     <Content Include="Content\Overwrites.css" />
     <Content Include="Content\semantic\semantic.css" />
@@ -330,6 +328,12 @@
     <Content Include="img\error-icon%403x.png" />
     <Content Include="img\error-icon.png" />
     <Content Include="img\error-icon.svg" />
+    <Content Include="img\icon-add-note.svg" />
+    <Content Include="img\icon-add.svg" />
+    <Content Include="img\icon-delete.svg" />
+    <Content Include="img\icon-edit.svg" />
+    <Content Include="img\icon-notification.svg" />
+    <Content Include="img\icon-view.svg" />
     <Content Include="img\landing\1_One%402x.jpg" />
     <Content Include="img\landing\1_One.jpg" />
     <Content Include="img\landing\2_Two%402x.jpg" />
@@ -383,6 +387,7 @@
     <Content Include="img\landing\ReWork_logo.png" />
     <Content Include="img\landing\Twitter%402x.png" />
     <Content Include="img\landing\Twitter.png" />
+    <Content Include="img\left-arrow.svg" />
     <Content Include="img\login-bg-image%402x.png" />
     <Content Include="img\login-bg-image%403x.png" />
     <Content Include="img\login-bg-image.png" />
@@ -394,9 +399,21 @@
     <Content Include="img\password-icon%403x.png" />
     <Content Include="img\password-icon.png" />
     <Content Include="img\password-icon.svg" />
-    <Content Include="img\profile-thumb-example%402x.png" />
-    <Content Include="img\profile-thumb-example%403x.png" />
-    <Content Include="img\profile-thumb-example.png" />
+    <Content Include="img\profile-background%402x.png" />
+    <Content Include="img\profile-background%403x.png" />
+    <Content Include="img\profile-background.png" />
+    <Content Include="img\profile-icon-email%402x.png" />
+    <Content Include="img\profile-icon-email%403x.png" />
+    <Content Include="img\profile-icon-email.png" />
+    <Content Include="img\profile-icon-email.svg" />
+    <Content Include="img\profile-icon-location%402x.png" />
+    <Content Include="img\profile-icon-location%403x.png" />
+    <Content Include="img\profile-icon-location.png" />
+    <Content Include="img\profile-icon-location.svg" />
+    <Content Include="img\profile-icon-phone%402x.png" />
+    <Content Include="img\profile-icon-phone%403x.png" />
+    <Content Include="img\profile-icon-phone.png" />
+    <Content Include="img\profile-icon-phone.svg" />
     <Content Include="img\side-nav-add-member-icon%402x.png" />
     <Content Include="img\side-nav-add-member-icon%403x.png" />
     <Content Include="img\side-nav-add-member-icon.png" />
@@ -453,9 +470,7 @@
     <Content Include="Content\semantic\themes\material\assets\fonts\icons.eot" />
     <Content Include="Content\semantic\themes\material\assets\fonts\icons.ttf" />
     <Content Include="Content\semantic\themes\material\assets\fonts\icons.woff" />
-    <Content Include="Scripts\foundation-datepicker.js" />
-    <Content Include="Scripts\foundation-datepicker.min.js" />
-    <Content Include="Content\foundation-datepicker.css.map" />
+    <Content Include="img\icon-view.sketch" />
     <None Include="Properties\PublishProfiles\SolveSmartCities-Staging - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
@@ -490,10 +505,11 @@
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\500.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
@@ -536,7 +552,7 @@
     <Content Include="Views\Thanks\Index.cshtml" />
     <Content Include="Views\Referrers\Index.cshtml" />
     <Content Include="Views\Members\Index.cshtml" />
-    <Content Include="Views\Nonprofits\Members.cshtml" />
+    <Content Include="Views\Nonprofits\CaseManagers.cshtml" />
     <Content Include="Views\Profile\MemberFamily.cshtml" />
     <Content Include="Views\Profile\MemberSchools.cshtml" />
     <Content Include="Views\Profile\MemberNonprofits.cshtml" />
@@ -574,6 +590,11 @@
     <Content Include="Views\Shared\Lists\_Nonprofits.cshtml" />
     <Content Include="Views\Shared\Lists\_Referrers.cshtml" />
     <Content Include="Views\Shared\Lists\_Prospects.cshtml" />
+    <Content Include="Views\Nonprofits\AddMember.cshtml" />
+    <Content Include="Views\Admins\Referrers.cshtml" />
+    <Content Include="Views\Shared\404.cshtml" />
+    <Content Include="Views\Shared\500.html" />
+    <Content Include="Views\Shared\404.html" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -103,13 +103,18 @@ namespace SolveChicago.Service
             }
         }
 
-        public CaseManager[] GetCaseManagers(int id)
+        public CaseManager[] GetCaseManagers(int nonprofitId)
         {
-            Nonprofit npo = db.Nonprofits.Find(id);
+            Nonprofit npo = db.Nonprofits.Find(nonprofitId);
             if (npo == null)
                 return new CaseManager[0];
             else
-                return npo.CaseManagers.ToArray();
+                return GetCaseManagers(npo);
+        }
+
+        public CaseManager[] GetCaseManagers(Nonprofit npo)
+        {
+            return npo.CaseManagers.ToArray();
         }
 
         public FamilyEntity[] GetMembers(int id)

@@ -14,6 +14,10 @@
         {
             <p>@Html.ActionLink("Invite Admin", "Invite", "Admins")</p>
         }
+        @if (User.IsInRole("Nonprofit"))
+        {
+            <p>@Html.ActionLink("Manager Case Managers", "CaseManagers", "Nonprofits", new { nonprofitId = ViewBag.NonprofitId }, null)</p>
+        }
 
     </div>
 </div>

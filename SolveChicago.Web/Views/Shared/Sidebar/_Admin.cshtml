@@ -7,25 +7,32 @@
             <span class="app-dashboard-sidebar-text">Nonprofits</span>
         </a>
     </li>
-    <li class="menu-link @(Request.Url.AbsolutePath == "/Admins/CaseManagers" ? "active" : "")">
+    @*<li class="menu-link @(Request.Url.AbsolutePath == "/Admins/CaseManagers" ? "active" : "")">
         <a href="/Admins/CaseManagers">
             <img class="menu-icon" src="../img/side-nav-members-icon.svg">
             <span class="app-dashboard-sidebar-text">CaseManagers</span>
         </a>
-    </li>
-    <li class="menu-link @(Request.Url.AbsolutePath == "/Admins/Members" ? "active" : "")">
+    </li>*@
+    @*<li class="menu-link @(Request.Url.AbsolutePath == "/Admins/Members" ? "active" : "")">
         <a href="/Admins/Members">
             <img class="menu-icon" src="../img/side-nav-members-icon.svg">
             <span class="app-dashboard-sidebar-text">Members</span>
         </a>
+    </li>*@
+    <li class="menu-link @(Request.Url.AbsolutePath == "/Referrers" ? "active" : "")">
+        <a href="/Admins/Referrers">
+
+            <img class="menu-icon" src="../img/side-nav-members-icon.svg">
+            <span class="app-dashboard-sidebar-text">Referrers</span>
+        </a>
     </li>
-    @*<li class="menu-link @(Request.Url.AbsolutePath == "/Prospects" ? "active" : "")">
+    <li class="menu-link @(Request.Url.AbsolutePath == "/Prospects" ? "active" : "")">
         <a href="/Prospects">
 
             <img class="menu-icon" src="../img/side-nav-prospect-icon.svg">
             <span class="app-dashboard-sidebar-text">Prospects</span>
         </a>
-    </li>*@
+    </li>
 </ul>
 
 <ul class="sub-menu">

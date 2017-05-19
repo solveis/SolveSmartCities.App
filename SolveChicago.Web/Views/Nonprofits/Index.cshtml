@@ -1,6 +1,7 @@
-﻿@model IEnumerable<SolveChicago.Entities.CaseManager>
-
+﻿@model IEnumerable<SolveChicago.Common.Models.Profile.Member.FamilyEntity>
 @{
-    ViewBag.Title = "Dashboard";
+    ViewBag.Title = "Members";
 }
-@Html.Partial("Lists/_CaseManagers", Model)
+
+@Html.Partial("Lists/_Members", Model)
+

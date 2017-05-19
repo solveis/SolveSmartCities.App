@@ -25,7 +25,8 @@ namespace SolveChicago.Web.Controllers
         public CaseManagersController() : base() { }
         public new void Dispose()
         {
-            base.Dispose();
+            base.Dispose(true);
+            GC.SuppressFinalize(this);
         }
         
         // GET: CaseManagers

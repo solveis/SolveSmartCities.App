@@ -373,7 +373,7 @@ namespace SolveChicago.Service
             }
             else
             {
-                return new FamilyEntity
+                FamilyEntity family = new FamilyEntity
                 {
                     Address1 = member.Addresses.Any() ? member.Addresses.Last().Address1 : string.Empty,
                     Address2 = member.Addresses.Any() ? member.Addresses.Last().Address2 : string.Empty,
@@ -386,6 +386,8 @@ namespace SolveChicago.Service
                     FamilyMembers = GetFamilyMembers(member, includeSelf),
                     HeadOfHouseholdProfilePicturePath = member.ProfilePicturePath,
                 };
+                family.AverageScore = GetMemberStage(member).Percent;
+                return family;
             }
         }
 
@@ -417,7 +419,7 @@ namespace SolveChicago.Service
             List<FamilyMember> familyMembers = new List<FamilyMember>();
 
             if (includeSelf)
-                familyMembers.Add(new FamilyMember { Birthday = member.Birthday, FirstName = member.FirstName, Gender = member.Gender, Id = member.Id, IsHeadOfHousehold = member.IsHeadOfHousehold, LastName = member.LastName, ProfilePicturePath = string.IsNullOrEmpty(member.ProfilePicturePath) ? Constants.Member.NoPhotoUrl : member.ProfilePicturePath, MemberStage = GetMemberStage(member), CurrentOccupation = GetFamilyMemberOccupation(member) });
+                familyMembers.Add(new FamilyMember { Birthday = member.Birthday, FirstName = member.FirstName, Gender = member.Gender, Id = member.Id, IsHeadOfHousehold = member.IsHeadOfHousehold, LastName = member.LastName, ProfilePicturePath = string.IsNullOrEmpty(member.ProfilePicturePath) ? Constants.Member.NoPhotoUrl : member.ProfilePicturePath, MemberStage = GetMemberStage(member), CurrentOccupation = GetFamilyMemberOccupation(member), IsEditable = true });
             
             return BuildFamilyTree(member, familyMembers);
         }
@@ -429,7 +431,7 @@ namespace SolveChicago.Service
                 Member[] fm = member.Family?.Members?.ToArray();
                 foreach (Member m in fm)
                 {
-                    FamilyMember f = new FamilyMember { FirstName = m.FirstName, Birthday = m.Birthday, Gender = m.Gender, Id = m.Id, IsHeadOfHousehold = m.IsHeadOfHousehold, LastName = m.LastName, Email = m.Email, Phone = m.PhoneNumbers.Any() ? string.Join(", ", m.PhoneNumbers.Select(x => x.Number).ToArray()) : string.Empty, ProfilePicturePath = string.IsNullOrEmpty(member.ProfilePicturePath) ? Constants.Member.NoPhotoUrl : member.ProfilePicturePath, MemberStage = GetMemberStage(member), CurrentOccupation = GetFamilyMemberOccupation(member) };
+                    FamilyMember f = new FamilyMember { FirstName = m.FirstName, Birthday = m.Birthday, Gender = m.Gender, Id = m.Id, IsHeadOfHousehold = m.IsHeadOfHousehold, LastName = m.LastName, Email = m.Email, Phone = m.PhoneNumbers.Any() ? string.Join(", ", m.PhoneNumbers.Select(x => x.Number).ToArray()) : string.Empty, ProfilePicturePath = string.IsNullOrEmpty(m.ProfilePicturePath) ? Constants.Member.NoPhotoUrl : m.ProfilePicturePath, MemberStage = GetMemberStage(m), CurrentOccupation = GetFamilyMemberOccupation(m) };
                     if (!familyMembers.Select(x => x.Id).Contains(f.Id) && f.Id != member.Id)
                         familyMembers.Add(f);
 
@@ -440,9 +442,9 @@ namespace SolveChicago.Service
         private static void GetSpouseTree(List<FamilyMember> familyMembers, Member member)
         {
             if (member.MemberSpouses.Any(x => x.Member1 != null))
-                familyMembers.AddRange(member.MemberSpouses.Select(x => new FamilyMember { FirstName = x.Member1.FirstName, LastName = x.Member1.LastName, Relation = x.Member1.Gender.ToLower() == "male" ? "Husband" : x.Member1.Gender.ToLower() == "female" ? "Wife" : "Spouse", Id = x.Member1.Id, Email = x.Member1.Email, Phone = x.Member1.PhoneNumbers.Any() ? string.Join(", ", x.Member1.PhoneNumbers.Select(y => y.Number).ToArray()) : string.Empty, ProfilePicturePath = string.IsNullOrEmpty(member.ProfilePicturePath) ? Constants.Member.NoPhotoUrl : member.ProfilePicturePath, MemberStage = GetMemberStage(member), CurrentOccupation = GetFamilyMemberOccupation(member) }));
+                familyMembers.AddRange(member.MemberSpouses.Select(x => new FamilyMember { FirstName = x.Member1.FirstName, LastName = x.Member1.LastName, Relation = x.Member1.Gender.ToLower() == "male" ? "Husband" : x.Member1.Gender.ToLower() == "female" ? "Wife" : "Spouse", Id = x.Member1.Id, Email = x.Member1.Email, Phone = x.Member1.PhoneNumbers.Any() ? string.Join(", ", x.Member1.PhoneNumbers.Select(y => y.Number).ToArray()) : string.Empty, ProfilePicturePath = string.IsNullOrEmpty(x.Member1.ProfilePicturePath) ? Constants.Member.NoPhotoUrl : x.Member1.ProfilePicturePath, MemberStage = GetMemberStage(x.Member1), CurrentOccupation = GetFamilyMemberOccupation(x.Member1) }));
             else if (member.MemberSpouses1.Any(x => x.Member != null))
-                familyMembers.AddRange(member.MemberSpouses1.Select(x => new FamilyMember { FirstName = x.Member.FirstName, LastName = x.Member.LastName, Relation = x.Member.Gender.ToLower() == "male" ? "Husband" : x.Member.Gender.ToLower() == "female" ? "Wife" : "Spouse", Id = x.Member.Id, Email = x.Member.Email, Phone = x.Member.PhoneNumbers.Any() ? string.Join(", ", x.Member.PhoneNumbers.Select(y => y.Number).ToArray()) : string.Empty, ProfilePicturePath = string.IsNullOrEmpty(member.ProfilePicturePath) ? Constants.Member.NoPhotoUrl : member.ProfilePicturePath, MemberStage = GetMemberStage(member), CurrentOccupation = GetFamilyMemberOccupation(member) }));
+                familyMembers.AddRange(member.MemberSpouses1.Select(x => new FamilyMember { FirstName = x.Member.FirstName, LastName = x.Member.LastName, Relation = x.Member.Gender.ToLower() == "male" ? "Husband" : x.Member.Gender.ToLower() == "female" ? "Wife" : "Spouse", Id = x.Member.Id, Email = x.Member.Email, Phone = x.Member.PhoneNumbers.Any() ? string.Join(", ", x.Member.PhoneNumbers.Select(y => y.Number).ToArray()) : string.Empty, ProfilePicturePath = string.IsNullOrEmpty(x.Member.ProfilePicturePath) ? Constants.Member.NoPhotoUrl : x.Member.ProfilePicturePath, MemberStage = GetMemberStage(x.Member), CurrentOccupation = GetFamilyMemberOccupation(x.Member) }));
         }
 
         private static void GetSiblingTree(List<FamilyMember> familyMembers, Member member)
@@ -456,7 +458,7 @@ namespace SolveChicago.Service
                     Member[] siblings = parents.MemberParents1.Where(x => x.Member.Id != member.Id).Select(x => x.Member).ToArray();
                     foreach (Member sibling in siblings)
                     {
-                        FamilyMember fm = new FamilyMember { FirstName = sibling.FirstName, Birthday = sibling.Birthday, Gender = sibling.Gender, Id = sibling.Id, IsHeadOfHousehold = sibling.IsHeadOfHousehold, LastName = sibling.LastName, Relation = (sibling.Gender.ToLower() == "male" ? "Brother" : sibling.Gender.ToLower() == "female" ? "Sister" : "Sibling"), Email = sibling.Email, Phone = sibling.PhoneNumbers.Any() ? string.Join(", ", sibling.PhoneNumbers.Select(x => x.Number).ToArray()) : string.Empty, ProfilePicturePath = string.IsNullOrEmpty(member.ProfilePicturePath) ? Constants.Member.NoPhotoUrl : member.ProfilePicturePath, MemberStage = GetMemberStage(member), CurrentOccupation = GetFamilyMemberOccupation(member) };
+                        FamilyMember fm = new FamilyMember { FirstName = sibling.FirstName, Birthday = sibling.Birthday, Gender = sibling.Gender, Id = sibling.Id, IsHeadOfHousehold = sibling.IsHeadOfHousehold, LastName = sibling.LastName, Relation = (sibling.Gender.ToLower() == "male" ? "Brother" : sibling.Gender.ToLower() == "female" ? "Sister" : "Sibling"), Email = sibling.Email, Phone = sibling.PhoneNumbers.Any() ? string.Join(", ", sibling.PhoneNumbers.Select(x => x.Number).ToArray()) : string.Empty, ProfilePicturePath = string.IsNullOrEmpty(sibling.ProfilePicturePath) ? Constants.Member.NoPhotoUrl : sibling.ProfilePicturePath, MemberStage = GetMemberStage(sibling), CurrentOccupation = GetFamilyMemberOccupation(sibling) };
                         if (!familyMembers.Select(x => x.Id).Contains(fm.Id))
                             familyMembers.Add(fm);
                     }
@@ -473,7 +475,7 @@ namespace SolveChicago.Service
                 foreach (var child in currentChildren)
                 {
                     string currentChildTitle = currentChildPrefix + (child.Gender.ToLower() == "male" ? (string.IsNullOrEmpty(currentChildPrefix) ? "Son" : "son") : child.Gender.ToLower() == "female" ? (string.IsNullOrEmpty(currentChildPrefix) ? "Daughter" : "daughter") : (string.IsNullOrEmpty(currentChildPrefix) ? "Child" : "child"));
-                    familyMembers.Add(new FamilyMember { FirstName = child.FirstName, LastName = child.LastName, IsHeadOfHousehold = (child.IsHeadOfHousehold ?? false), Relation = currentChildTitle, Gender = child.Gender, Birthday = child.Birthday, Id = child.Id, Email = child.Email, Phone = child.PhoneNumbers.Any() ? string.Join(", ", child.PhoneNumbers.Select(x => x.Number).ToArray()) : string.Empty, ProfilePicturePath = string.IsNullOrEmpty(member.ProfilePicturePath) ? Constants.Member.NoPhotoUrl : member.ProfilePicturePath, MemberStage = GetMemberStage(member), CurrentOccupation = GetFamilyMemberOccupation(member) });
+                    familyMembers.Add(new FamilyMember { FirstName = child.FirstName, LastName = child.LastName, IsHeadOfHousehold = (child.IsHeadOfHousehold ?? false), Relation = currentChildTitle, Gender = child.Gender, Birthday = child.Birthday, Id = child.Id, Email = child.Email, Phone = child.PhoneNumbers.Any() ? string.Join(", ", child.PhoneNumbers.Select(x => x.Number).ToArray()) : string.Empty, ProfilePicturePath = string.IsNullOrEmpty(child.ProfilePicturePath) ? Constants.Member.NoPhotoUrl : child.ProfilePicturePath, MemberStage = GetMemberStage(child), CurrentOccupation = GetFamilyMemberOccupation(child) });
 
                     //set prefix for recursive child generations
                     string futureChildPrefix = currentChildPrefix;
@@ -498,7 +500,7 @@ namespace SolveChicago.Service
                 foreach (var parent in currentParents)
                 {
                     string currentParentTitle = currentParentPrefix + (parent.Gender.ToLower() == "male" ? (string.IsNullOrEmpty(currentParentPrefix) ? "Father" : "father") : parent.Gender.ToLower() == "female" ? (string.IsNullOrEmpty(currentParentPrefix) ? "Mother" : "mother") : (string.IsNullOrEmpty(currentParentPrefix) ? "Parent" : "parent"));
-                    familyMembers.Add(new FamilyMember { FirstName = parent.FirstName, LastName = parent.LastName, IsHeadOfHousehold = (parent.IsHeadOfHousehold ?? false), Relation = currentParentTitle, Gender = parent.Gender, Birthday = parent.Birthday, Id = parent.Id, Email = parent.Email, Phone = parent.PhoneNumbers.Any() ? string.Join(", ", parent.PhoneNumbers.Select(x => x.Number).ToArray()) : string.Empty, ProfilePicturePath = string.IsNullOrEmpty(member.ProfilePicturePath) ? Constants.Member.NoPhotoUrl : member.ProfilePicturePath, MemberStage = GetMemberStage(member), CurrentOccupation = GetFamilyMemberOccupation(member) });
+                    familyMembers.Add(new FamilyMember { FirstName = parent.FirstName, LastName = parent.LastName, IsHeadOfHousehold = (parent.IsHeadOfHousehold ?? false), Relation = currentParentTitle, Gender = parent.Gender, Birthday = parent.Birthday, Id = parent.Id, Email = parent.Email, Phone = parent.PhoneNumbers.Any() ? string.Join(", ", parent.PhoneNumbers.Select(x => x.Number).ToArray()) : string.Empty, ProfilePicturePath = string.IsNullOrEmpty(parent.ProfilePicturePath) ? Constants.Member.NoPhotoUrl : parent.ProfilePicturePath, MemberStage = GetMemberStage(parent), CurrentOccupation = GetFamilyMemberOccupation(parent) });
 
                     //set prefix for recursive parent generations
                     string futureParentPrefix = currentParentPrefix;

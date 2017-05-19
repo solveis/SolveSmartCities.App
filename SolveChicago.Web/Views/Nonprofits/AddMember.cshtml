@@ -1,0 +1,34 @@
+﻿@model SolveChicago.Web.Models.Member.AddMemberViewModel
+
+@{
+    ViewBag.Title = "Add Member";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(m => m.ReferringPartyId)
+    @Html.AntiForgeryToken()
+
+    <div class="row app-dashboard-form-container">
+        <div class="create-profile-form-holder">
+            <h4><strong>ADD: </strong>New Member</h4>
+            <hr />
+
+
+            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+            @Html.LabelFor(model => model.FirstName, "First Name", htmlAttributes: new { })
+            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { } })
+            
+            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+            @Html.LabelFor(model => model.LastName, "Last Name", htmlAttributes: new { })
+            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { } })
+
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { })
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { } })
+
+            <hr class="line-divider">
+            <input class="submit-create-profile" type="submit" value="Submit">
+        </div>
+    </div>
+}

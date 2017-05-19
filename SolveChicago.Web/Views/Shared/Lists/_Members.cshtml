@@ -2,6 +2,14 @@
 
 <header class="members-header">
     <h2><strong>MEMBERS:</strong> OVERVIEW</h2>
+    @if (ViewBag.ReferrerId != null)
+    {
+        <span style="text-align:right"><a href="/Referrers/AddMember?referrerId=@ViewBag.ReferrerId">Add Member</a></span>
+    }
+    else if (ViewBag.NonprofitId != null)
+    {
+        <span style="text-align:right"><a href="/Nonprofits/AddMember?nonprofitId=@ViewBag.NonprofitId">Add Member</a></span>
+    }
 
     @*<div class="small-12 medium-12 large-3">
             <input class="search-members" type="text" name="search" placeholder="Search..">
@@ -65,7 +73,7 @@
                         <div class="row large-unstack">
                             <span class="member-detail-thumb"><img src="@(member.ProfilePicturePath)" /></span>
                             <div class="columns has-small-space">
-                                <span>@member.Name</span>
+                                <span>@member.Name @(!string.IsNullOrEmpty(member.Relation) ? $"({member.Relation})" : "")</span>
                             </div>
                             <div class="columns has-small-space">
                                 <span></span>
@@ -83,34 +91,40 @@
                                 </div>
                             </div>
                             <div class="columns">
-                                @if(User.IsInRole("Admin") || User.IsInRole("CaseManager") || User.IsInRole("Nonprofit"))
+                                @if (member.IsEditable && (User.IsInRole("Admin") || User.IsInRole("CaseManager") || User.IsInRole("Nonprofit")))
                                 {
-                                    <ul class="member-details-menu">
-                                        <li>
-                                            <a href="/Members/Details?memberId=@(member.Id)">
-                                                <img class="sub-menu-icon" src="../img/icon-view.svg">
-                                                View
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="/CaseManagers/AddCaseNote?memberId=@(member.Id)&caseManagerId=@(ViewBag.CaseManagerId)">
-                                                <img class="sub-menu-icon" src="../img/icon-add-note.svg">
-                                                Add Note
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="/Profile/MemberOverview?memberId=@(member.Id)">
-                                                <img class="sub-menu-icon" src="../img/icon-edit.svg">
-                                                Edit
-                                            </a>
-                                        </li>
-                                        @*<li>
-                                            <a href="#">
-                                                <img class="sub-menu-icon" src="../assets/img/icon-delete.svg">
-                                                Delete
-                                            </a>
-                                        </li>*@
-                                    </ul>
+                                    <a href="javascript:void(0)" class="show-member-action-menu">...</a>
+                                    <div class="member-details-menu-wrapper hide">
+                                        <span class="arrow-right"></span>
+                                        <ul class="member-details-menu">
+                                            <li>
+                                                <a href="/Members/Details?memberId=@(member.Id)">
+                                                    View Profile
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="/Members/MemberOverview?memberId=@(member.Id)">
+                                                    Edit Profile
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="/CaseManagers/AddCaseNote?memberId=@(member.Id)&caseManagerId=@(ViewBag.CaseManagerId)">
+                                                    Add Note
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="/Members/Details?memberId=@(member.Id)">
+                                                    Mark as Graduated
+                                                </a>
+                                            </li>
+                                            @*<li>
+                                                    <a href="#">
+                                                        <img class="sub-menu-icon" src="../assets/img/icon-delete.svg">
+                                                        Delete
+                                                    </a>
+                                                </li>*@
+                                        </ul>
+                                    </div>
                                 }
                             </div>
                         </div>

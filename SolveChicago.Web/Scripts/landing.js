@@ -10,10 +10,13 @@
         }, 1000);
     });
 
-    $('#monitor').html($(window).width());
-    $(window).resize(function () {
-        var viewportWidth = $(window).width();
-        $('#monitor').html(viewportWidth);
+    $('.register, .register-submenu').hover(function (e) {
+        $('.register-submenu').show();
+    }, function () {
+        setTimeout(function () {
+            if (!$('.register-submenu').is(':hover') && !$('.register').is(':hover'))
+                $('.register-submenu').hide()
+        }, 1000);
     });
 
 });

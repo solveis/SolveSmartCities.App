@@ -27,4 +27,13 @@
         var id = $(this).attr('data-toggle');
         $('#' + id).toggleClass('is-open');
     });
+
+    $('.show-member-action-menu').hover(function (e) {
+        $(this).siblings('.member-details-menu-wrapper').removeClass('hide');
+    }, function (e) {
+        setTimeout(function (e) {
+            if (!$(e.target).siblings('.member-details-menu-wrapper').is(':hover') && !$(e.target).is(':hover'))
+                $(e.target).siblings('.member-details-menu-wrapper').addClass('hide');
+        }, 500, e);
+    });
 });

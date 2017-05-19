@@ -1,18 +1,12 @@
 ﻿<ul class="menu vertical">
-    <li class="menu-link @(Request.Url.AbsolutePath == "/Nonprofits" ? "active" : "")">
-        <a href="/Nonprofits">
-            <img class="menu-icon" src="../img/side-nav-members-icon.svg">
-            <span class="app-dashboard-sidebar-text">Case Managers</span>
-        </a>
-    </li>
-    <li class="menu-link @(Request.Url.AbsolutePath == "/Nonprofits/AddCaseManager" ? "active" : "")">
+    @*<li class="menu-link @(Request.Url.AbsolutePath == "/Nonprofits/AddCaseManager" ? "active" : "")">
         <a href="/Nonprofits/AddCaseManager">
             <img class="menu-icon" src="../img/side-nav-add-member-icon.svg">
             <span class="app-dashboard-sidebar-text">Add Case Manager</span>
         </a>
-    </li>
-    <li class="menu-link @(Request.Url.AbsolutePath == "/Nonprofits/Members" ? "active" : "")">
-        <a href="/Nonprofits/Members">
+    </li>*@
+    <li class="menu-link @(Request.Url.AbsolutePath == "/Nonprofits" ? "active" : "")">
+        <a href="/Nonprofits">
             <img class="menu-icon" src="../img/side-nav-members-icon.svg">
             <span class="app-dashboard-sidebar-text">Members</span>
         </a>
