@@ -1,14 +1,15 @@
 ﻿@model IEnumerable<SolveChicago.Common.Models.Profile.Member.FamilyEntity>
+@{ string memberTransformedName = (ViewBag.ReferrerId != null ? "Tenant" : ViewBag.NonprofitId != null ? "Client" : "Member"); }
 
 <header class="members-header">
-    <h2><strong>MEMBERS:</strong> OVERVIEW</h2>
+    <h2><strong>@(memberTransformedName)s:</strong> OVERVIEW</h2>
     @if (ViewBag.ReferrerId != null)
     {
-        <span style="text-align:right"><a href="/Referrers/AddMember?referrerId=@ViewBag.ReferrerId">Add Member</a></span>
+        <span style="text-align:right"><a href="/Referrers/AddMember?referrerId=@ViewBag.ReferrerId">Add @memberTransformedName</a></span>
     }
     else if (ViewBag.NonprofitId != null)
     {
-        <span style="text-align:right"><a href="/Nonprofits/AddMember?nonprofitId=@ViewBag.NonprofitId">Add Member</a></span>
+        <span style="text-align:right"><a href="/Nonprofits/AddMember?nonprofitId=@ViewBag.NonprofitId">Add @memberTransformedName</a></span>
     }
 
     @*<div class="small-12 medium-12 large-3">
@@ -107,15 +108,21 @@
                                                     Edit Profile
                                                 </a>
                                             </li>
+                                            @if (User.IsInRole("CaseManager"))
+                                            {
+                                                <li>
+                                                    <a href="/CaseManagers/AddCaseNote?memberId=@(member.Id)&caseManagerId=@(ViewBag.CaseManagerId)">
+                                                        Add Note
+                                                    </a>
+                                                </li>
+                                            }
                                             <li>
-                                                <a href="/CaseManagers/AddCaseNote?memberId=@(member.Id)&caseManagerId=@(ViewBag.CaseManagerId)">
-                                                    Add Note
+                                                <a href="/Nonprofits/AssignCaseManager?memberId=@(member.Id)&nonprofitId=@(ViewBag.NonprofitId)">
+                                                    Assign Case Manager
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="/Members/Details?memberId=@(member.Id)">
-                                                    Mark as Graduated
-                                                </a>
+                                                    <a href="/Nonprofits/GraduateMember?memberId=@(member.Id)&nonprofitId=@(ViewBag.NonprofitId)">Mark as Graduated</a>
                                             </li>
                                             @*<li>
                                                     <a href="#">
@@ -137,5 +144,5 @@
 }
 else
 {
-    <p>No Members.</p>
+    <p>No @(memberTransformedName)s.</p>
 }

@@ -1,0 +1,49 @@
+﻿@model SolveChicago.Web.Models.Nonprofit.GraduateMemberViewModel
+
+@{
+    ViewBag.Title = "Graduate Member";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("GraduateMember", "Nonprofits", FormMethod.Post))
+{
+    @Html.HiddenFor(m => m.NonprofitId)
+    @Html.HiddenFor(m => m.MemberId)
+    @Html.AntiForgeryToken()
+
+    <div class="row app-dashboard-form-container">
+        <div class="create-profile-form-holder">
+            <h4><strong>GRADUATE: </strong>Member</h4>
+            <hr />
+
+            @if (Model.Skills.Length > 0)
+            {
+                <p><strong>Which skills were acquired during training?</strong></p>
+                for (int i = 0; i < Model.Skills.Length; i++)
+                {
+                    <p>
+                        @Html.HiddenFor(x => Model.Skills[i].Id)
+                        @Html.CheckBoxFor(x => Model.Skills[i].IsComplete)
+                        <span>@Model.Skills[i].Name</span>
+                    </p>
+                }
+            }
+
+            <p><strong>Where is your client now working?</strong></p>
+            @Html.ValidationMessageFor(model => model.JobName, "", new { @class = "text-danger" })
+            @Html.LabelFor(model => model.JobName, "Company Name", htmlAttributes: new { })
+            @Html.EditorFor(model => model.JobName, new { htmlAttributes = new { } })
+
+            @Html.ValidationMessageFor(model => model.JobPay, "", new { @class = "text-danger" })
+            @Html.LabelFor(model => model.JobPay, "Hourly Pay", htmlAttributes: new { })
+            @Html.EditorFor(model => model.JobPay, new { htmlAttributes = new { } })
+
+            @Html.ValidationMessageFor(model => model.Start, "", new { @class = "text-danger" })
+            @Html.LabelFor(model => model.Start, htmlAttributes: new {  })
+            @Html.EditorFor(model => model.Start, new { htmlAttributes = new { @placeholder = "mm/dd/yyyy" } })
+
+            <hr class="line-divider">
+            <input class="submit-create-profile" type="submit" value="Submit">
+        </div>
+    </div>
+}

@@ -35,5 +35,9 @@
             if (!$(e.target).siblings('.member-details-menu-wrapper').is(':hover') && !$(e.target).is(':hover'))
                 $(e.target).siblings('.member-details-menu-wrapper').addClass('hide');
         }, 500, e);
+        });
+
+    $('.graduateMember-btn').off('click').on('click', function () {
+        $(this).closest('.graduateMember').submit();
     });
 });

@@ -746,7 +746,7 @@ namespace SolveChicago.Tests.Services
 
             MemberProfileFamily updatedMember = service.GetProfileFamily(model.MemberId);
             
-            Assert.Equal("Isaac", updatedMember.Family.FamilyMembers.Where(x => x.Relation == "Father").First().FirstName);
+            Assert.Equal("Isaac", updatedMember.Family.FamilyMembers.Where(x => x.FriendlyRelationName == "Father").First().FirstName);
         }
 
         [Fact]

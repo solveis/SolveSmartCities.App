@@ -251,6 +251,8 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="manifest.json" />
+    <None Include="Properties\PublishProfiles\solvechicago - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\solvechicago - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\SolveChicagoMarketing - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="ms-icon-144x144.png" />

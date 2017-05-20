@@ -24,7 +24,7 @@ namespace SolveChicago.Web
             // Configure the sign in cookie
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
-                ExpireTimeSpan = TimeSpan.FromMinutes(15),
+                ExpireTimeSpan = TimeSpan.FromMinutes(30),
                 CookieSecure = CookieSecureOption.Always,
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/Account/Login"),

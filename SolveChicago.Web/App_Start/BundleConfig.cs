@@ -37,14 +37,14 @@ namespace SolveChicago.Web
             bundles.Add(new ScriptBundle("~/bundles/profile_member").Include(
                       "~/Scripts/profile_member.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
+            bundles.Add(new ScriptBundle("~/bundles/jqueryui", "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js").Include(
                         "~/Scripts/jquery-ui-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/semantic", "https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/components/dropdown.min.js").Include(
                       "~/Scripts/semantic.js"));
 
 
-            bundles.Add(new StyleBundle("~/Content/jqueryui", "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js").Include(
+            bundles.Add(new StyleBundle("~/Content/jqueryui", "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css").Include(
                       "~/Content/themes/base/jquery-ui.css"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(

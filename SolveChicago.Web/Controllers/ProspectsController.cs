@@ -24,7 +24,7 @@ namespace SolveChicago.Web.Controllers
         public ActionResult Index(int? nonprofitId)
         {
             ImpersonateNonprofit(nonprofitId);
-            Member[] model = db.Members.Where(x => x.SurveyStep == Constants.Member.SurveyStep.Complete && !x.NonprofitMembers.Any(y => !y.End.HasValue) && (x.IsWorkforceInterested ?? true)).ToArray(); // TODO restrict it to interested
+            Member[] model = db.Members.Where(x => x.SurveyStep == Constants.Member.SurveyStep.Complete && !x.NonprofitMembers.Any(y => !y.End.HasValue || y.NonprofitId == State.NonprofitId) && (x.IsWorkforceInterested ?? true)).ToArray(); // TODO restrict it to interested
             ViewBag.NonprofitId = State.NonprofitId;
             return View(model);
         }
@@ -39,6 +39,11 @@ namespace SolveChicago.Web.Controllers
             if (member != null && npo != null)
             {
                 npo.NonprofitMembers.Add(new NonprofitMember { Member = member, Start = DateTime.UtcNow, });
+                MemberSkill[] skills = member.MemberSkills.Where(x => !x.IsComplete && x.Skill.Nonprofits.Any(y => y.Id == npo.Id)).ToArray();
+                foreach(MemberSkill skill in skills)
+                {
+                    skill.NonprofitId = npo.Id;
+                }
                 db.SaveChanges();
             }   
             else

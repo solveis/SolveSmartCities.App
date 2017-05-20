@@ -598,8 +598,7 @@ namespace SolveChicago.Web.Controllers
                 {
                     Member member = db.Members.Find(memberId.Value);
                     if (State.Roles.Contains(Enumerations.Role.Admin) || 
-                        (State.Roles.Contains(Enumerations.Role.Nonprofit) && member.NonprofitMembers.Any(x => x.NonprofitId == State.NonprofitId)) ||
-                        (State.Roles.Contains(Enumerations.Role.CaseManager) && member.NonprofitMembers.Any(x => x.CaseManager.Id == State.CaseManagerId)))
+                        (State.Roles.Contains(Enumerations.Role.Nonprofit) || State.Roles.Contains(Enumerations.Role.CaseManager)) && member.NonprofitMembers.Any(x => x.NonprofitId == State.NonprofitId))
                     {
                         State.Member = member;
                         State.MemberId = member.Id;

@@ -15,6 +15,7 @@ using SolveChicago.Common.Models.Profile.Member;
 
 namespace SolveChicago.Web.Controllers
 {
+    [Authorize(Roles = "Admin, Nonprofit, CaseManager")]
     public class NonprofitsController : BaseController, IDisposable
     {
         public NonprofitsController(SolveChicagoEntities entities = null)
@@ -69,7 +70,7 @@ namespace SolveChicago.Web.Controllers
             ImpersonateNonprofit(model.ReferringPartyId);
             if (ModelState.IsValid)
             {
-                Member member = db.Members.Find(model.Email);
+                Member member = db.Members.SingleOrDefault(x => x.Email == model.Email);
                 if (member != null)
                     throw new ApplicationException("That email already associated with an account.");
                 else
@@ -144,7 +145,7 @@ namespace SolveChicago.Web.Controllers
             return View(model);
         }
 
-        // POST : Nonprofits/AssignCaseManager
+        // GET : Nonprofits/AssignCaseManager
         public ActionResult AssignCaseManager(int? nonprofitId, int memberId)
         {
             ImpersonateNonprofit(nonprofitId);
@@ -174,7 +175,59 @@ namespace SolveChicago.Web.Controllers
             }
             return View(model);
         }
-        
+
+
+
+        // GET : Nonprofits/GraduateMember
+        public ActionResult GraduateMember(int? nonprofitId, int memberId)
+        {
+            ImpersonateNonprofit(nonprofitId);
+            MemberSkill[] memberSkills = db.MemberSkills.Where(x => x.MemberId == memberId && x.NonprofitId == State.NonprofitId).ToArray();
+            GraduateMemberViewModel model = new GraduateMemberViewModel
+            {
+                MemberId = memberId,
+                NonprofitId = State.NonprofitId,
+                Skills = memberSkills.Select(x => new GraduateMemberCheckbox { Id = x.SkillId, Name = x.Skill.Name, IsComplete = x.IsComplete }).ToArray(),
+            };
+            return View(model);
+        }
+
+        // POST : Nonprofits/GraduateMember
+        [HttpPost]
+        public ActionResult GraduateMember(GraduateMemberViewModel model)
+        {
+            ImpersonateNonprofit(model.NonprofitId);
+            Member member = db.Members.Single(x => x.Id == model.MemberId);
+            NonprofitMember nonprofitMember = member.NonprofitMembers.Single(x => x.NonprofitId == State.NonprofitId);
+            nonprofitMember.End = DateTime.UtcNow;
+            foreach (var ms in model.Skills)
+            {
+                MemberSkill memberSkill = member.MemberSkills.Where(x => x.NonprofitId == State.NonprofitId && x.SkillId == ms.Id).FirstOrDefault();
+                if (memberSkill != null)
+                    memberSkill.IsComplete = ms.IsComplete;
+            }
+            if(!string.IsNullOrEmpty(model.JobName))
+            {
+                Corporation corporation = db.Corporations.Where(x => x.Name == model.JobName).FirstOrDefault();
+                if(corporation == null)
+                {
+                    corporation = new Corporation
+                    {
+                        Name = model.JobName,
+                    };
+                }
+                member.MemberCorporations.Add(new MemberCorporation
+                {
+                    Corporation = corporation,
+                    Pay = model.JobPay,
+                    Start = model.Start ?? DateTime.UtcNow
+                });
+            }
+            db.SaveChanges();
+
+            return NonprofitRedirect(State.NonprofitId);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -124,7 +124,7 @@ namespace SolveChicago.Service
             if(npo != null)
             {
                 MemberService service = new MemberService(this.db);
-                foreach(var member in npo.NonprofitMembers)
+                foreach(var member in npo.NonprofitMembers.Where(x => !x.End.HasValue))
                 {
                     families.Add(service.GetFamily(member.Member, true));
                 }

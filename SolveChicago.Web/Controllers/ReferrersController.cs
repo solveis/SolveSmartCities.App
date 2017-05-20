@@ -65,7 +65,7 @@ namespace SolveChicago.Web.Controllers
             ImpersonateReferrer(model.ReferringPartyId);
             if (ModelState.IsValid)
             {
-                Member member = db.Members.Find(model.Email);
+                Member member = db.Members.SingleOrDefault(x => x.Email == model.Email);
                 if (member != null)
                     throw new ApplicationException("That email already associated with an account.");
                 else

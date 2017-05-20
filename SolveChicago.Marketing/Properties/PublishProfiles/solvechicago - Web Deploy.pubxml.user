@@ -6,7 +6,11 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAApF0+MY9lj0O2HVZWptMnvgAAAAACAAAAAAAQZgAAAAEAACAAAAAdDhVlaiBoG43+DxQPasOmlD1s3razUKOooq1l9JB6YgAAAAAOgAAAAAIAACAAAAD6PN+6I0vYj+HEDeZDr9EblmoOjJ2vZkLzK/fpyVXiUIAAAACsqRWVR06NrfD1Ghzc7RU/Sgo4UB2IMMsq+E5xEnKjOcZpmADOoIMV8wpjdSLS2qUbv7XWIsd9b4tV5nXnjzzcxdMKMghgQtUcAWUAmey5utLq9rNFucN3Nua3P2SULYG2HIcg4K15/vsKpAe+1M6d/0P8dr7y6MwHSKPthzWBNkAAAADsh4rVk7a5dxiLOOjCOb4ZFhfzEatwJ4aFLkqE1qdA28SpZFrMbVrbli/qj4DfNSu+o2KrUSaEyJ4SNMkJsFGF</EncryptedPassword>
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAMV71n/YJhEqUPKEJM0motwAAAAACAAAAAAAQZgAAAAEAACAAAAAf/AacQWSUhOXokNpBfvst6qq4aeVBdgrIyamdhCLtBQAAAAAOgAAAAAIAACAAAAD4YCdA+Rm7dVHC93jP6j3jHoLEwBDUWTl9uFRyU0NVW4AAAACYkVmaECAMeHAWkVwuz5kg94jnx8Er1A4StAYBWcc1cPpIUIHCf40k7gCsEL81WhUIsdHGaNNS1ldBkb8yV+QvbovOiRiUDgizNkWBMo3YcDvnn7518BR5FoiXDRyQxyMNu7z+K6+iGy9KsROEDD1enATfYLhpx0EV7vY157wrL0AAAACh/ueEm+Amiz313h4kM8X+rp5O0EjIX5L83fL0jcX6tncX5QV9DMaVf7UOASTkBQZs5MAbodPFmCFOzbDD9UPZ</EncryptedPassword>
     <_NewBackgroundProfile>True</_NewBackgroundProfile>
   </PropertyGroup>
+  <ItemGroup>
+    <AzureDBConnectionStrings Include="metadata=res://*/data.csdl|res://*/data.ssdl|res://*/data.msl;provider=System.Data.SqlClient;provider connection string=&amp;quot;data source=tcp:solvesmartcities.database.windows.net;initial catalog=SSC-Staging;integrated security=True;multipleactiveresultsets=True;user id=sscadminuser@solvesmartcities;password=JKHVGC%^&amp;*()iuyutyfctvuyiho;App=EntityFramework&amp;quot" />
+    <AzureDBConnectionStrings Include="Server=tcp:solvesmartcities.database.windows.net,1433;Database=SSC-Staging;User ID=sscadminuser@solvesmartcities;Password=JKHVGC%^&amp;*()iuyutyfctvuyiho;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;MultipleActiveResultSets=true" />
+  </ItemGroup>
 </Project>

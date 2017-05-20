@@ -43,7 +43,10 @@ namespace SolveChicago.Web.Controllers
         public ActionResult AddCaseNote(int? caseManagerId, int memberId)
         {
             ImpersonateCaseManager(caseManagerId);
-            CaseNote model = new CaseNote() { CaseManagerId = State.CaseManagerId, MemberId = memberId };
+            Member member = db.Members.Find(memberId);
+            if (member == null)
+                throw new ApplicationException($"No Member with id of {memberId}");
+            CaseNote model = new CaseNote() { CaseManagerId = State.CaseManagerId, MemberId = member.Id, Member = member };
             return View(model);
         }
 

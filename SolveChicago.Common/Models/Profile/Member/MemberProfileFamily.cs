@@ -53,6 +53,7 @@ namespace SolveChicago.Common.Models.Profile.Member
             }
         }
         public string Relation { get; set; }
+        public string FriendlyRelationName { get; set; }
         public bool? RelationBiological { get; set; }
         public bool? IsMarriageCurrent { get; set; }
         public bool? IsHeadOfHousehold { get; set; }
