@@ -20,8 +20,10 @@ namespace SolveChicago.Entities
         public Nullable<System.DateTime> End { get; set; }
         public string ReasonForLeaving { get; set; }
         public Nullable<decimal> Pay { get; set; }
+        public Nullable<int> NonprofitId { get; set; }
     
         public virtual Corporation Corporation { get; set; }
         public virtual Member Member { get; set; }
+        public virtual Nonprofit Nonprofit { get; set; }
     }
 }

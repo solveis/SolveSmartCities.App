@@ -220,7 +220,8 @@ namespace SolveChicago.Web.Controllers
                 {
                     Corporation = corporation,
                     Pay = model.JobPay,
-                    Start = model.Start ?? DateTime.UtcNow
+                    Start = model.Start ?? DateTime.UtcNow,
+                    NonprofitId = model.NonprofitId
                 });
             }
             db.SaveChanges();

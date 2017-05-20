@@ -126,13 +126,6 @@ namespace SolveChicago.Service
                 model.Percent = (int)Math.Round(75.0);
                 return model;
             }
-            // TODO: This logic is too broad. Should tie into the NPO associated with a desired skill. Make sure that when NPO claims a member, they also claim their desired skills.
-            if (member.NonprofitMembers.Any(x => x.Start > member.CreatedDate && x.End.HasValue && x.End.Value < DateTime.UtcNow) && member.MemberSkills.Any(x => x.IsComplete && x.Skill.Name.ToLower() == "soft skills") && member.MemberSkills.Any(x => x.IsComplete && x.Skill.Name.ToLower() != "soft skills"))
-            {
-                model.Stage = Constants.Member.Stage.RecruiterPlacing;
-                model.Percent = (int)Math.Round(87.5);
-                return model;
-            }
             if (member.MemberCorporations.Any(x => x.Start > member.CreatedDate && !x.End.HasValue))
             {
                 model.Stage = Constants.Member.Stage.JobPlaced;

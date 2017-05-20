@@ -223,6 +223,7 @@
           <Property Name="End" Type="datetime2" Precision="7" />
           <Property Name="ReasonForLeaving" Type="nvarchar(max)" />
           <Property Name="Pay" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="NonprofitId" Type="int" />
         </EntityType>
         <EntityType Name="MemberEmergencyContacts">
           <Key>
@@ -741,6 +742,18 @@
             </Principal>
             <Dependent Role="MemberCorporations">
               <PropertyRef Name="MemberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MemberCorporations_Nonprofits">
+          <End Role="Nonprofits" Type="Self.Nonprofits" Multiplicity="0..1" />
+          <End Role="MemberCorporations" Type="Self.MemberCorporations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nonprofits">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MemberCorporations">
+              <PropertyRef Name="NonprofitId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1334,6 +1347,10 @@
             <End Role="Members" EntitySet="Members" />
             <End Role="MemberCorporations" EntitySet="MemberCorporations" />
           </AssociationSet>
+          <AssociationSet Name="FK_MemberCorporations_Nonprofits" Association="Self.FK_MemberCorporations_Nonprofits">
+            <End Role="Nonprofits" EntitySet="Nonprofits" />
+            <End Role="MemberCorporations" EntitySet="MemberCorporations" />
+          </AssociationSet>
           <AssociationSet Name="FK_MemberEmergencyContacts_Members" Association="Self.FK_MemberEmergencyContacts_Members">
             <End Role="Members" EntitySet="Members" />
             <End Role="MemberEmergencyContacts" EntitySet="MemberEmergencyContacts" />
@@ -1652,6 +1669,8 @@
           <Property Name="Pay" Type="Decimal" Precision="18" Scale="2" />
           <NavigationProperty Name="Corporation" Relationship="Self.FK_MemberCorporations_Corporations" FromRole="MemberCorporations" ToRole="Corporations" />
           <NavigationProperty Name="Member" Relationship="Self.FK_MemberCorporations_Members" FromRole="MemberCorporations" ToRole="Members" />
+          <Property Name="NonprofitId" Type="Int32" />
+          <NavigationProperty Name="Nonprofit" Relationship="SolveChicagoDevModel.FK_MemberCorporations_Nonprofits" FromRole="MemberCorporation" ToRole="Nonprofit" />
         </EntityType>
         <EntityType Name="MemberEmergencyContact">
           <Key>
@@ -1812,6 +1831,7 @@
           <NavigationProperty Name="AspNetUsers" Relationship="Self.UserProfileNonprofits" FromRole="Nonprofits" ToRole="AspNetUsers" />
           <NavigationProperty Name="CaseManagers" Relationship="SolveChicagoDevModel.FK_CaseManagers_Nonprofit" FromRole="Nonprofit" ToRole="CaseManager" />
           <NavigationProperty Name="Skills" Relationship="SolveChicagoDevModel.NonprofitSkills" FromRole="Nonprofit" ToRole="Skill" />
+          <NavigationProperty Name="MemberCorporations" Relationship="SolveChicagoDevModel.FK_MemberCorporations_Nonprofits" FromRole="Nonprofit" ToRole="MemberCorporation" />
         </EntityType>
         <EntityType Name="Outcome">
           <Key>
@@ -2474,6 +2494,10 @@
             <End Role="Nonprofit" EntitySet="Nonprofits" />
             <End Role="Skill" EntitySet="Skills" />
           </AssociationSet>
+          <AssociationSet Name="FK_MemberCorporations_Nonprofits" Association="SolveChicagoDevModel.FK_MemberCorporations_Nonprofits">
+            <End Role="Nonprofit" EntitySet="Nonprofits" />
+            <End Role="MemberCorporation" EntitySet="MemberCorporations" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="ELMAH_Error">
           <Key>
@@ -2564,6 +2588,18 @@
         <Association Name="NonprofitSkills">
           <End Type="SolveChicagoDevModel.Nonprofit" Role="Nonprofit" Multiplicity="*" />
           <End Type="SolveChicagoDevModel.Skill" Role="Skill" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_MemberCorporations_Nonprofits">
+          <End Type="SolveChicagoDevModel.Nonprofit" Role="Nonprofit" Multiplicity="0..1" />
+          <End Type="SolveChicagoDevModel.MemberCorporation" Role="MemberCorporation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nonprofit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MemberCorporation">
+              <PropertyRef Name="NonprofitId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -2728,6 +2764,7 @@
           <EntitySetMapping Name="MemberCorporations">
             <EntityTypeMapping TypeName="SolveChicagoDevModel.MemberCorporation">
               <MappingFragment StoreEntitySet="MemberCorporations">
+                <ScalarProperty Name="NonprofitId" ColumnName="NonprofitId" />
                 <ScalarProperty Name="MemberId" ColumnName="MemberId" />
                 <ScalarProperty Name="CorporationId" ColumnName="CorporationId" />
                 <ScalarProperty Name="Start" ColumnName="Start" />

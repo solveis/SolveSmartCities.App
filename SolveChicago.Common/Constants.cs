@@ -56,7 +56,6 @@ namespace SolveChicago.Common
                 public const string InSoftSkillsTraining = "In Soft Skills Training";
                 public const string SoftSkillsAcquired = "Soft Skills Acquired";
                 public const string InWorkforceTraining = "In Workforce Training";
-                public const string RecruiterPlacing = "In Recruiter's Hands";
                 public const string JobPlaced = "Job Placed";
                 public const string OffTrack = "Untracked";
             }
