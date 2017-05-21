@@ -73,7 +73,7 @@
     @Styles.Render("~/Content/semanticui")
 
     <script>
-        window.bindRadioContent($('input[name=IsUtilizingGovernmentPrograms]'), $('#GovernmentProgram'), "", "");
+        window.bindRadioContent($('input[name=IsUtilizingGovernmentPrograms]'), $('#GovernmentProgram'), "", "", true);
         @if(Model.Member.GovernmentPrograms != null)
         {
             foreach(var a in Model.Member.GovernmentPrograms)

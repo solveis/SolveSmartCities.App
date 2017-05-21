@@ -230,6 +230,7 @@ namespace SolveChicago.Service
                 return new MemberProfileJobs
                 {
                     MemberId = member.Id,
+                    CurrentlyLooking = member.IsJobSearching,
                     Jobs = GetJobs(member),
                 };
             }
@@ -328,7 +329,7 @@ namespace SolveChicago.Service
         {
             MemberCorporation[] memberCorporations = member.MemberCorporations.OrderByDescending(x => x.Start).ToArray();
             if (memberCorporations.Count() > 0)
-                return memberCorporations.Select(x => new JobEntity { CorporationId = x.CorporationId, EmployeeEnd = x.End, EmployeePay = x.Pay, EmployeeStart = x.Start, Name = x.Corporation.Name, IsCurrent = !x.End.HasValue }).ToArray();
+                return memberCorporations.Select(x => new JobEntity { CorporationId = x.CorporationId, EmployeeEnd = x.End, EmployeePay = x.Pay, EmployeeStart = x.Start, Name = x.Corporation.Name, IsCurrent = !x.End.HasValue, EmployeeReasonForLeaving = x.ReasonForLeaving }).ToArray();
             else
                 return null;
         }
@@ -622,7 +623,7 @@ namespace SolveChicago.Service
                              existingFamilyMember = db.Members.Find(familyMember.Id);
                         if (existingFamilyMember == null)
                         {
-                            existingFamilyMember = new Member { FirstName = familyMember.FirstName, LastName = familyMember.LastName, IsHeadOfHousehold = familyMember.IsHeadOfHousehold, Birthday = familyMember.Birthday, Gender = familyMember.Gender, FamilyId = member.FamilyId };
+                            existingFamilyMember = new Member { FirstName = familyMember.FirstName, LastName = familyMember.LastName, IsHeadOfHousehold = familyMember.IsHeadOfHousehold, Birthday = familyMember.Birthday, Gender = familyMember.Gender, FamilyId = member.FamilyId, Email = familyMember.Email, CreatedDate = DateTime.UtcNow };
                             db.Members.Add(existingFamilyMember);
                             db.SaveChanges();
                         }
@@ -696,10 +697,13 @@ namespace SolveChicago.Service
             else
             {
                 member.IsWorkforceInterested = model.InterestedInWorkforceSkill;
-                foreach (int skillId in model.SkillsDesiredIds)
+                if(model.SkillsDesiredIds != null)
                 {
-                    if (!member.MemberSkills.Select(x => x.SkillId).Contains(skillId))
-                        member.MemberSkills.Add(new MemberSkill { MemberId = member.Id, SkillId = skillId, IsComplete = false });
+                    foreach (int skillId in model.SkillsDesiredIds)
+                    {
+                        if (!member.MemberSkills.Select(x => x.SkillId).Contains(skillId))
+                            member.MemberSkills.Add(new MemberSkill { MemberId = member.Id, SkillId = skillId, IsComplete = false });
+                    }
                 }
             }                
 
@@ -738,6 +742,7 @@ namespace SolveChicago.Service
                 throw new Exception($"Member with an id of {model.MemberId} not found");
             else
             {
+                member.IsJobSearching = model.CurrentlyLooking;
                 foreach (var job in model.Jobs)
                 {
                     if(!string.IsNullOrEmpty(job.Name) || job.CorporationId.HasValue) // not the best way to do this, but the default value for IsCurrent makes the model bind an empty object to itself on POST. Should refactor this later.
@@ -752,7 +757,7 @@ namespace SolveChicago.Service
                             };
                             db.Corporations.Add(corporation);
                         }
-                        if (!member.MemberCorporations.Select(x => x.CorporationId).Contains(job.CorporationId ?? 0))
+                        if (!member.MemberCorporations.Select(x => x.CorporationId).Contains(corporation.Id))
                         {
                             member.MemberCorporations.Add(new MemberCorporation
                             {
@@ -799,7 +804,7 @@ namespace SolveChicago.Service
                         };
                         db.Schools.Add(school);
                     }
-                    if (!member.MemberSchools.Select(x => x.SchoolId).Contains(s.Id))
+                    if (!member.MemberSchools.Select(x => x.SchoolId).Contains(school.Id))
                     {
                         member.MemberSchools.Add(new MemberSchool
                         {

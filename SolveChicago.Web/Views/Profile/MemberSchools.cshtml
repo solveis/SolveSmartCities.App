@@ -64,7 +64,7 @@
                         <div class="form-holder">
                             @Html.ValidationMessageFor(model => Model.Member.Schools[i].Start, "", new { @class = "text-danger" })
                             @Html.LabelFor(model => Model.Member.Schools[i].Start, "When did you start?", htmlAttributes: new { })
-                            @Html.EditorFor(model => Model.Member.Schools[i].Start, new { htmlAttributes = new { @placeholder = "mm/dd/yyyy" } })
+                            @Html.EditorFor(model => Model.Member.Schools[i].Start, new { htmlAttributes = new { @placeholder = "mm/yyyy" } })
 
                             @Html.ValidationMessageFor(model => Model.Member.Schools[i].IsCurrent, "", new { @class = "text-danger" })
                             @Html.LabelFor(model => Model.Member.Schools[i].IsCurrent, "Are you still attending?", htmlAttributes: new { })
@@ -76,7 +76,7 @@
                             <div class="school-endinfo">
                                 @Html.ValidationMessageFor(model => Model.Member.Schools[i].End, "", new { @class = "text-danger" })
                                 @Html.LabelFor(model => Model.Member.Schools[i].End, htmlAttributes: new {  })
-                                @Html.EditorFor(model => Model.Member.Schools[i].End, new { htmlAttributes = new { @placeholder = "mm/dd/yyyy" } })
+                                @Html.EditorFor(model => Model.Member.Schools[i].End, new { htmlAttributes = new { @placeholder = "mm/yyyy" } })
 
                                 @Html.ValidationMessageFor(model => Model.Member.Schools[i].Degree, "", new { @class = "text-danger" })
                                 @Html.LabelFor(model => Model.Member.Schools[i].Degree, htmlAttributes: new { })
@@ -103,7 +103,7 @@
     @Scripts.Render("~/bundles/profile_member")
 
     <script>
-        window.addEntryCallback = function (newEntry) {
+        window.addEntryCallback = function (newEntry, isPageLoad) {
             var schoolsList = [];
             @foreach(var school in Model.SchoolsList)
             {
@@ -111,9 +111,9 @@
             }
             newEntry.find('.school-list').autocomplete({ source: schoolsList });
             
-            window.bindRadioContent(newEntry.find('.is-school-current'), "", newEntry.find('.school-endinfo'), "")
+            window.bindRadioContent(newEntry.find('.is-school-current'), "", newEntry.find('.school-endinfo'), "", isPageLoad);
         }
 
-        window.addEntryCallback($('.School'));
+        window.addEntryCallback($('.School'), true);
     </script>
 }

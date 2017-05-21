@@ -79,7 +79,7 @@
                             <label for="Member_IsHeadOfHousehold">No</label>
                         }
 
-                        <div id="fm-contact-info" class="hide">
+                        <div class="fm-contact-info hide">
                             @Html.ValidationMessageFor(model => Model.Member.Family.FamilyMembers[i].Phone, "", new { @class = "text-danger" })
                             @Html.LabelFor(model => Model.Member.Family.FamilyMembers[i].Phone, htmlAttributes: new { })
                             @Html.EditorFor(model => Model.Member.Family.FamilyMembers[i].Phone, new { htmlAttributes = new { @class = "number-entry" } })
@@ -112,9 +112,9 @@
                     var date = new Date($(this).val()),
                         sixteenYearsAgo = new Date(new Date(new Date().setFullYear(new Date().getFullYear() - 16)));
                     if (date < sixteenYearsAgo)
-                        $('#fm-contact-info').removeClass('hide');
+                        $(this).parent().find('.fm-contact-info').removeClass('hide');
                     else
-                        $('#fm-contact-info').addClass('hide');
+                        $(this).parent().find('.fm-contact-info').addClass('hide');
                 });
             }
             window.addEntryCallback($('.FamilyMember'));

@@ -299,6 +299,7 @@
           <Property Name="ContactPreference" Type="nvarchar" MaxLength="50" />
           <Property Name="UserId" Type="nvarchar" MaxLength="128" />
           <Property Name="IsWorkforceInterested" Type="bit" />
+          <Property Name="IsJobSearching" Type="bit" />
         </EntityType>
         <EntityType Name="MemberSchools">
           <Key>
@@ -1746,6 +1747,7 @@
           <NavigationProperty Name="PhoneNumbers" Relationship="Self.MemberPhoneNumbers" FromRole="Members" ToRole="PhoneNumbers" />
           <NavigationProperty Name="Referrers" Relationship="Self.ReferrerMembers" FromRole="Members" ToRole="Referrers" />
           <Property Name="IsWorkforceInterested" Type="Boolean" />
+          <Property Name="IsJobSearching" Type="Boolean" />
         </EntityType>
         <EntityType Name="MemberSchool">
           <Key>
@@ -2809,6 +2811,7 @@
           <EntitySetMapping Name="Members">
             <EntityTypeMapping TypeName="SolveChicagoDevModel.Member">
               <MappingFragment StoreEntitySet="Members">
+                <ScalarProperty Name="IsJobSearching" ColumnName="IsJobSearching" />
                 <ScalarProperty Name="IsWorkforceInterested" ColumnName="IsWorkforceInterested" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Email" ColumnName="Email" />

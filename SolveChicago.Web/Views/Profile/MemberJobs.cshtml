@@ -82,7 +82,7 @@
                             <div class="form-holder">
                                 @Html.ValidationMessageFor(model => Model.Member.Jobs[i].EmployeeStart, "", new { @class = "text-danger" })
                                 @Html.LabelFor(model => Model.Member.Jobs[i].EmployeeStart, "When did you start?", htmlAttributes: new { })
-                                @Html.EditorFor(model => Model.Member.Jobs[i].EmployeeStart, new { htmlAttributes = new { @placeholder = "mm/dd/yyyy" } })
+                                @Html.EditorFor(model => Model.Member.Jobs[i].EmployeeStart, new { htmlAttributes = new { @placeholder = "mm/yyyy" } })
 
                                 @Html.ValidationMessageFor(model => Model.Member.Jobs[i].IsCurrent, "", new { @class = "text-danger" })
                                 @Html.LabelFor(model => Model.Member.Jobs[i].IsCurrent, "Do you still work here?", htmlAttributes: new { })
@@ -94,7 +94,7 @@
                                 <div class="job-endinfo @(Model.Member.Jobs[i].IsCurrent ? "hide" : "")">
                                     @Html.ValidationMessageFor(model => Model.Member.Jobs[i].EmployeeEnd, "", new { @class = "text-danger" })
                                     @Html.LabelFor(model => Model.Member.Jobs[i].EmployeeEnd, "When was your last day?", htmlAttributes: new { })
-                                    @Html.EditorFor(model => Model.Member.Jobs[i].EmployeeEnd, new { htmlAttributes = new { @placeholder = "mm/dd/yyyy" } })
+                                    @Html.EditorFor(model => Model.Member.Jobs[i].EmployeeEnd, new { htmlAttributes = new { @placeholder = "mm/yyyy" } })
 
                                     @Html.ValidationMessageFor(model => Model.Member.Jobs[i].EmployeeReasonForLeaving, "", new { @class = "text-danger" })
                                     @Html.LabelFor(model => Model.Member.Jobs[i].EmployeeReasonForLeaving, "Why did you leave?", htmlAttributes: new { })
@@ -121,7 +121,7 @@
     @Scripts.Render("~/bundles/profile_member")
 
     <script>
-        window.addEntryCallback = function (newEntry) {
+        window.addEntryCallback = function (newEntry, isPageLoad) {
             var corporationsList = [];
             @foreach(var corporation in Model.CorporationList)
             {
@@ -129,11 +129,12 @@
             }
             newEntry.find('.corporation-list').autocomplete({ source: corporationsList });
             
-            window.bindRadioContent(newEntry.find('.is-job-current'), "", newEntry.find('.job-endinfo'), "")
+            window.bindRadioContent(newEntry.find('.is-job-current'), "", newEntry.find('.job-endinfo'), "", isPageLoad);
         }
 
-        window.bindRadioContent($('input[name=Member\\.CurrentlyLooking]'), $('#looking-for-job, #Jobs'), $('#not-looking-for-job, #Jobs'), "");
+        window.bindRadioContent($('input[name=Member\\.CurrentlyLooking]'), $('#looking-for-job, #Jobs'), $('#not-looking-for-job, #Jobs'), "", true);
 
-        window.addEntryCallback($('.Job'));
+        $('.Job').each(function () { window.addEntryCallback($(this), true) });
+
     </script>
 }

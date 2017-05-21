@@ -15,32 +15,68 @@
     });
     
     function resetFormFields($entry) {
-        $entry.find('input:not([type=hidden])').val('').attr('disabled', false);
+        $entry.find('input:not([type=radio])').val('').attr('disabled', false);
         $entry.find('select').prop('selectedIndex', 0);
     }
 
     $('.ui.fluid.dropdown').dropdown();
+
+    // make date validation more flexible for month/year
+
+    jQuery(function ($) {
+        $.validator.addMethod('date',
+            function (value, element) {
+                if (this.optional(element)) {
+                    return true;
+                }
+
+                var ok = true;
+                try {
+                    $.datepicker.parseDate('mm/dd/yy', value);
+                }
+                catch (err) {
+                    try {
+                        vals = value.split('/');
+                        $.datepicker.parseDate('m/dd/yy', vals[0] + '/01/' + vals[1]);
+                    }
+                    catch (err) {
+                        ok = false;
+                    }
+                }
+                return ok;
+            });
+    });
 });
 
 // flexibly bind radio buttons to control content flow
-window.bindRadioContent = function ($boundElement, $trueElement, $falseElement, $otherElement) {
+window.bindRadioContent = function ($boundElement, $trueElement, $falseElement, $otherElement, isPageLoad) {
+    if (isPageLoad)
+        showHideContent($boundElement);
     $boundElement.on('change', function (e) {
-        if ($(this).val().toLowerCase() == "true") {
-            $falseElement.length > 0 ? $falseElement.addClass('hide') : "";
-            $otherElement.length > 0 ? $otherElement.addClass('hide') : "";
-            $trueElement.length > 0 ? $trueElement.removeClass('hide') : "";
-        }
-        else if ($(this).val().toLowerCase() == "false") {
-            $trueElement.length > 0 ? $trueElement.addClass('hide') : "";
-            $otherElement.length > 0 ? $otherElement.addClass('hide') : "";
-            $falseElement.length > 0 ? $falseElement.removeClass('hide') : "";
-        }
-        else {
-            $trueElement.length > 0 ? $trueElement.addClass('hide') : "";
-            $falseElement.length > 0 ? $falseElement.addClass('hide') : "";
-            $otherElement.length > 0 ? $otherElement.removeClass('hide') : "";
-        }
+        showHideContent(this);
     });
+    function showHideContent(item) {
+        var val = $(item).filter(':checked');
+        if (val.length > 0)
+        {
+            if (val.val().toLowerCase() == "true") {
+                $falseElement.length > 0 ? $falseElement.addClass('hide') : "";
+                $otherElement.length > 0 ? $otherElement.addClass('hide') : "";
+                $trueElement.length > 0 ? $trueElement.removeClass('hide') : "";
+            }
+            else if (val.val().toLowerCase() == "false") {
+                $trueElement.length > 0 ? $trueElement.addClass('hide') : "";
+                $otherElement.length > 0 ? $otherElement.addClass('hide') : "";
+                $falseElement.length > 0 ? $falseElement.removeClass('hide') : "";
+            }
+            else {
+                $trueElement.length > 0 ? $trueElement.addClass('hide') : "";
+                $falseElement.length > 0 ? $falseElement.addClass('hide') : "";
+                $otherElement.length > 0 ? $otherElement.removeClass('hide') : "";
+            }
+        }
+        
+    }
 }
 
 window.bindAutocomplete = function ($element, list) {

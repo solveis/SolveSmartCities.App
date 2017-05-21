@@ -183,9 +183,6 @@
             {
                 foreach (var fm in Model.Family.FamilyMembers)
                 {
-                <!-- THis is to wrap the info when theres an image on the right side of the form-->
-                    <div class="overview-wrapper">
-
                         <!-- Row-->
                         <div class="row medium-unstack">
 
@@ -229,19 +226,6 @@
                         <div class="row medium-unstack">
 
                             <div class="columns has-space">
-                                <p>Occupation</p>
-                            </div>
-
-                            <div class="columns has-space">
-                                <span>@fm.CurrentOccupation</span>
-                            </div>
-                            <hr class="overview-line-divider">
-                        </div>
-                        <!-- End of Row-->
-                        <!-- Row-->
-                        <div class="row medium-unstack">
-
-                            <div class="columns has-space">
                                 <p>Relation</p>
                             </div>
 
@@ -251,7 +235,6 @@
                             <hr class="overview-line-divider">
                         </div>
                         <!-- End of Row-->
-                    </div>
                 }
             }
             else
@@ -269,10 +252,7 @@
             {
                 foreach (var school in Model.Schools)
                 {
-                <!-- THis is to wrap the info when theres an image on the right side of the form-->
-                    <div class="overview-wrapper">
-
-                        <!-- Row-->
+                    <!-- Row-->
                         <div class="row medium-unstack">
 
                             <div class="columns has-space">
@@ -337,7 +317,6 @@
                             <hr class="overview-line-divider">
                         </div>
                         <!-- End of Row-->
-                    </div>
                 }
             }
             else
@@ -354,9 +333,6 @@
             {
                 foreach (var job in Model.Jobs)
                 {
-                <!-- THis is to wrap the info when theres an image on the right side of the form-->
-                    <div class="overview-wrapper">
-
                         <!-- Row-->
                         <div class="row medium-unstack">
 
@@ -422,7 +398,6 @@
                             <hr class="overview-line-divider">
                         </div>
                         <!-- End of Row-->
-                    </div>
                 }
             }
             else
@@ -496,7 +471,11 @@
             }
             else
             {
-                <p>No Government Benefits</p>
+                <div class="row medium-unstack">
+                    <div class="columns has-space">
+                        <p>No Government Benefits</p>
+                    </div>
+                </div>
             }
         </section>
     </div>

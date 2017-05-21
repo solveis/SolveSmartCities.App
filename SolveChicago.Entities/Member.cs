@@ -52,6 +52,7 @@ namespace SolveChicago.Entities
         public string ContactPreference { get; set; }
         public string UserId { get; set; }
         public Nullable<bool> IsWorkforceInterested { get; set; }
+        public Nullable<bool> IsJobSearching { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
