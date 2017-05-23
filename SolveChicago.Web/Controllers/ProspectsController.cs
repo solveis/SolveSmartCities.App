@@ -24,12 +24,11 @@ namespace SolveChicago.Web.Controllers
         public ActionResult Index(int? nonprofitId)
         {
             ImpersonateNonprofit(nonprofitId);
-            bool npoOffersSoftSkills = State.Nonprofit.Skills.Select(x => x.Name).Contains(Constants.Skills.SoftSkills);
             Member[] model = new Member[0];
-            if(npoOffersSoftSkills)
-                model = db.Members.Where(x => x.SurveyStep == Constants.Member.SurveyStep.Complete && !x.NonprofitMembers.Any(y => !y.End.HasValue || y.NonprofitId == State.NonprofitId) && (x.IsWorkforceInterested ?? true)).ToArray();
+            if (User.IsInRole("Nonprofit") && State.Nonprofit.Skills.Select(x => x.Name).Contains(Constants.Skills.SoftSkills))
+                model = db.Members.Where(x => x.SurveyStep == Constants.Member.SurveyStep.Complete && !x.NonprofitMembers.Any(y => !y.End.HasValue || y.NonprofitId == State.NonprofitId) && !x.MemberCorporations.Any(y => y.Start > x.CreatedDate) && (x.IsWorkforceInterested ?? true) && x.MemberSkills.Any(y => y.Skill.Name == Constants.Skills.SoftSkills && y.IsComplete == true)).ToArray();
             else
-                model = db.Members.Where(x => x.SurveyStep == Constants.Member.SurveyStep.Complete && !x.NonprofitMembers.Any(y => !y.End.HasValue || y.NonprofitId == State.NonprofitId) && (x.IsWorkforceInterested ?? true) && x.MemberSkills.Any(y => y.Skill.Name == Constants.Skills.SoftSkills && y.IsComplete == true)).ToArray();
+                model = db.Members.Where(x => x.SurveyStep == Constants.Member.SurveyStep.Complete && !x.NonprofitMembers.Any(y => !y.End.HasValue || y.NonprofitId == State.NonprofitId) && !x.MemberCorporations.Any(y => y.Start > x.CreatedDate) && (x.IsWorkforceInterested ?? true)).ToArray();
             ViewBag.NonprofitId = State.NonprofitId;
             return View(model);
         }
