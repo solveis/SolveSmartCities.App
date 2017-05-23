@@ -32,6 +32,7 @@ namespace SolveChicago.Common
             public const string MemberSurveyInvite = "MemberSurveyInvite_{0}";
             public const string CaseManagerInvite = "CaseManagerInvite_{0}";
             public const string AdminInvite = "AdminInvite";
+            public const string PasswordReset = "PasswordReset";
         }
 
         public class Member
