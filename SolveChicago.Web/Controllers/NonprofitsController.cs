@@ -88,6 +88,13 @@ namespace SolveChicago.Web.Controllers
                         nonprofit.NonprofitMembers.Add(new NonprofitMember { Member = member, Start = DateTime.UtcNow });
                     else
                         db.Members.Add(member);
+                    
+                    // add soft skills as a desired skill for pipeline
+                    // TODO refactor this into a stored proc
+                    Skill softSkills = db.Skills.SingleOrDefault(x => x.Name == Common.Constants.Skills.SoftSkills);
+                    if (softSkills == null)
+                        softSkills = new Skill { Name = Common.Constants.Skills.SoftSkills };
+                    member.MemberSkills.Add(new MemberSkill { IsComplete = false, Skill = softSkills, NonprofitId = State.NonprofitId });
                 }
                 try
                 {
@@ -178,8 +185,8 @@ namespace SolveChicago.Web.Controllers
 
 
 
-        // GET : Nonprofits/GraduateMember
-        public ActionResult GraduateMember(int? nonprofitId, int memberId)
+        // GET : Nonprofits/JobPlaced
+        public ActionResult JobPlaced(int? nonprofitId, int memberId)
         {
             ImpersonateNonprofit(nonprofitId);
             MemberSkill[] memberSkills = db.MemberSkills.Where(x => x.MemberId == memberId && x.NonprofitId == State.NonprofitId).ToArray();
@@ -192,21 +199,29 @@ namespace SolveChicago.Web.Controllers
             return View(model);
         }
 
-        // POST : Nonprofits/GraduateMember
+        // POST : Nonprofits/JobPlaced
         [HttpPost]
-        public ActionResult GraduateMember(GraduateMemberViewModel model)
+        public ActionResult JobPlaced(GraduateMemberViewModel model)
         {
             ImpersonateNonprofit(model.NonprofitId);
             Member member = db.Members.Single(x => x.Id == model.MemberId);
             NonprofitMember nonprofitMember = member.NonprofitMembers.Single(x => x.NonprofitId == State.NonprofitId);
             nonprofitMember.End = DateTime.UtcNow;
-            foreach (var ms in model.Skills)
+            if (model.Skills != null)
             {
-                MemberSkill memberSkill = member.MemberSkills.Where(x => x.NonprofitId == State.NonprofitId && x.SkillId == ms.Id).FirstOrDefault();
-                if (memberSkill != null)
-                    memberSkill.IsComplete = ms.IsComplete;
+                foreach (var ms in model.Skills)
+                {
+                    MemberSkill memberSkill = member.MemberSkills.Where(x => x.NonprofitId == State.NonprofitId && x.SkillId == ms.Id).FirstOrDefault();
+                    if (memberSkill != null)
+                        memberSkill.IsComplete = ms.IsComplete;
+                }
             }
-            if(!string.IsNullOrEmpty(model.JobName))
+            if (!string.IsNullOrEmpty(model.OtherSkills))
+            {
+                MemberService service = new MemberService(this.db);
+                service.UpdateMemberSkills(model.OtherSkills, member, true, model.NonprofitId);
+            }
+            if (!string.IsNullOrEmpty(model.JobName))
             {
                 Corporation corporation = db.Corporations.Where(x => x.Name == model.JobName).FirstOrDefault();
                 if(corporation == null)
@@ -223,6 +238,47 @@ namespace SolveChicago.Web.Controllers
                     Start = model.Start ?? DateTime.UtcNow,
                     NonprofitId = model.NonprofitId
                 });
+            }
+            db.SaveChanges();
+
+            return NonprofitRedirect(State.NonprofitId);
+        }
+
+        // GET : Nonprofits/NonprofitReferral
+        public ActionResult NonprofitReferral(int? nonprofitId, int memberId)
+        {
+            ImpersonateNonprofit(nonprofitId);
+            MemberSkill[] memberSkills = db.MemberSkills.Where(x => x.MemberId == memberId && x.NonprofitId == State.NonprofitId).ToArray();
+            GraduateMemberViewModel model = new GraduateMemberViewModel
+            {
+                MemberId = memberId,
+                NonprofitId = State.NonprofitId,
+                Skills = memberSkills.Select(x => new GraduateMemberCheckbox { Id = x.SkillId, Name = x.Skill.Name, IsComplete = x.IsComplete }).ToArray(),
+            };
+            return View(model);
+        }
+
+        // POST : Nonprofits/NonprofitReferral
+        [HttpPost]
+        public ActionResult NonprofitReferral(GraduateMemberViewModel model)
+        {
+            ImpersonateNonprofit(model.NonprofitId);
+            Member member = db.Members.Single(x => x.Id == model.MemberId);
+            NonprofitMember nonprofitMember = member.NonprofitMembers.Single(x => x.NonprofitId == State.NonprofitId);
+            nonprofitMember.End = DateTime.UtcNow;
+            if (model.Skills != null)
+            {
+                foreach (var ms in model.Skills)
+                {
+                    MemberSkill memberSkill = member.MemberSkills.Where(x => x.NonprofitId == State.NonprofitId && x.SkillId == ms.Id).FirstOrDefault();
+                    if (memberSkill != null)
+                        memberSkill.IsComplete = ms.IsComplete;
+                }
+            }
+            if(!string.IsNullOrEmpty(model.OtherSkills))
+            {
+                MemberService service = new MemberService(this.db);
+                service.UpdateMemberSkills(model.OtherSkills, member, true, model.NonprofitId);
             }
             db.SaveChanges();
 

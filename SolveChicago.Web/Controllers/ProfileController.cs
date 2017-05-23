@@ -292,10 +292,7 @@ namespace SolveChicago.Web.Controllers
 
         private Dictionary<int, string> GetAvailableSkillsList()
         {
-            Dictionary<int, string> availableSkills = db.Skills.Where(x => x.Nonprofits.Count() > 0).ToDictionary(x => x.Id, x => x.Name);
-            Skill softSkills = db.Skills.SingleOrDefault(x => x.Name.ToLower() == "soft skills");
-            if(!availableSkills.Select(x => x.Key).Contains(softSkills.Id))
-                availableSkills.Add(softSkills.Id, softSkills.Name);
+            Dictionary<int, string> availableSkills = db.Skills.Where(x => x.Nonprofits.Count() > 0 && x.Name != Constants.Skills.SoftSkills).ToDictionary(x => x.Id, x => x.Name);
 
             return availableSkills;
         }

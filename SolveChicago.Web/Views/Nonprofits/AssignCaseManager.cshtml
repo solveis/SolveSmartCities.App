@@ -19,7 +19,7 @@
             <p>Member: @Model.MemberName</p>
             <p>Nonprofit: @Model.NonprofitName</p>
 
-            @Html.LabelFor(model => model.CaseManagerId, htmlAttributes: new { })
+            @Html.LabelFor(model => model.CaseManagerId, "Case Managers", htmlAttributes: new { })
             @Html.DropDownListFor(model => model.CaseManagerId, Model.CaseManagers.Select(x => new SelectListItem { Text = string.Format("{0} {1}", x.FirstName, x.LastName), Value = x.Id.ToString() }), new { htmlAttributes = new { } })
             @Html.ValidationMessageFor(model => model.CaseManagerId, "", new { @class = "text-danger" })
 

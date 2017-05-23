@@ -59,7 +59,7 @@ namespace SolveChicago.Service
         {
             int? nonprofitId = db.CaseManagers.Single(x => x.Id == caseManagerId).NonprofitId;
             if (nonprofitId.HasValue)
-                return db.CaseManagers.Single(x => x.Id == caseManagerId).Nonprofit.NonprofitMembers.Select(x => x.Member).ToArray();
+                return db.CaseManagers.Single(x => x.Id == caseManagerId).Nonprofit.NonprofitMembers.Where(x => !x.End.HasValue).Select(x => x.Member).ToArray();
             else
                 return new Member[0];
         }

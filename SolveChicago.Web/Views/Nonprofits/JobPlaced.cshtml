@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@using (Html.BeginForm("GraduateMember", "Nonprofits", FormMethod.Post))
+@using (Html.BeginForm("JobPlaced", "Nonprofits", FormMethod.Post))
 {
     @Html.HiddenFor(m => m.NonprofitId)
     @Html.HiddenFor(m => m.MemberId)
@@ -13,7 +13,7 @@
 
     <div class="row app-dashboard-form-container">
         <div class="create-profile-form-holder">
-            <h4><strong>GRADUATE: </strong>Member</h4>
+            <h4><strong>MEMBER: </strong>Job Placed!</h4>
             <hr />
 
             @if (Model.Skills.Length > 0)
@@ -28,6 +28,10 @@
                     </p>
                 }
             }
+            
+            @Html.LabelFor(x => x.OtherSkills, "Did they acquire any other skills?")
+            @Html.TextBoxFor(x => x.OtherSkills)
+            @Html.ValidationMessageFor(x => x.OtherSkills)
 
             <p><strong>Where is your client now working?</strong></p>
             @Html.ValidationMessageFor(model => model.JobName, "", new { @class = "text-danger" })

@@ -15,6 +15,7 @@
             @Html.TextBoxFor(m => m.Email, new { @class = "form-registration-input form-registration-input--has-email-icon", type = "email", @placeholder = "Email" })
             @Html.PasswordFor(m => m.Password, new { @class = "form-registration-input form-registration-input--has-password-icon", type = "password", @placeholder = "Password" })
             @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-registration-input form-registration-input--has-password-icon", type = "password", @placeholder = "Confirm Password" })
+            <p class="login-helper"><small>By registering, you agree to the <a href="@(string.Format("{0}/{1}", @SolveChicago.Common.Settings.Website.BaseUrl, "Files/PrivacyPolicy.html"))">Privacy Policy</a> and <a href="@(string.Format("{0}/{1}", @SolveChicago.Common.Settings.Website.BaseUrl, "Files/TermsAndConditions.html"))">Terms &amp; Conditions</a>.</small></p>
             <input class="form-registration-submit-button" type="submit" value="Register">
             <p class="form-registration-member-forgot-password">
                 Already registered?

@@ -23,6 +23,9 @@
     }
 }
 
+body.register {
+    background: #1779ba;
+}
 
 body, h1, h2, h3, h4, h5, h6 {
     font-family: 'Montserrat', sans-serif !important;
@@ -127,6 +130,18 @@ input[type="radio"], input[type="checkbox"] {
 .login-helper {
     font-size: 14px;
     color: #fff;
+    text-align:center;
+    max-width:80%;
+}
+
+.login-helper a {
+    color:#fff;
+    text-decoration:underline;
+}
+
+.login-helper a:hover, 
+.login-helper a:active {
+    color:#eee;
 }
 
 .app-dashboard-sidebar .app-dashboard-sidebar-inner .menu-link.double-stack a {
@@ -233,4 +248,16 @@ input[type="radio"], input[type="checkbox"] {
 
 .overview-card .row {
     padding:0 30px;
+}
+
+.app-dashboard-logo img {
+    height:auto !important;
+}
+
+.app-dashboard-body-content .form-holder:first-child {
+    margin-right:auto !important;
+}
+
+.form-registration-group .form-registration-submit-button {
+    margin-top:20px !important;
 }

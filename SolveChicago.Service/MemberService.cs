@@ -89,55 +89,47 @@ namespace SolveChicago.Service
 
         private static MemberStage GetMemberStage(Member member)
         {
-            MemberStage model = new MemberStage();
+            MemberStage model = new MemberStage
+            {
+                Stage = Constants.Member.Stage.OffTrack,
+                Percent = 0,
+            };
             if (member.SurveyStep == Constants.Member.SurveyStep.Invited)
             {
                 model.Stage = Constants.Member.Stage.InviteSent;
                 model.Percent = (int)Math.Round(12.5);
-                return model;
             }
             if (member.SurveyStep != null && member.SurveyStep != Constants.Member.SurveyStep.Invited && member.SurveyStep != Constants.Member.SurveyStep.Complete)
             {
                 model.Stage = Constants.Member.Stage.ProfileInProgress;
                 model.Percent = (int)Math.Round(25.0);
-                return model;
             }
             if (member.SurveyStep == Constants.Member.SurveyStep.Complete && !member.NonprofitMembers.Any(x => !x.End.HasValue) && !member.MemberCorporations.Any(x => !x.End.HasValue))
             {
                 model.Stage = Constants.Member.Stage.ProfileCompleted;
                 model.Percent = (int)Math.Round(37.5);
-                return model;
             }
             if (member.NonprofitMembers.Any(x => x.Start > member.CreatedDate && !x.End.HasValue) && !member.MemberSkills.Any(x => x.IsComplete && x.Skill.Name.ToLower() == "soft skills"))
             {
                 model.Stage = Constants.Member.Stage.InSoftSkillsTraining;
                 model.Percent = (int)Math.Round(50.0);
-                return model;
             }
             if (member.NonprofitMembers.Any(x => x.Start > member.CreatedDate && x.End.HasValue && x.End.Value < DateTime.UtcNow) && member.MemberSkills.Any(x => x.IsComplete && x.Skill.Name.ToLower() == "soft skills"))
             {
                 model.Stage = Constants.Member.Stage.SoftSkillsAcquired;
                 model.Percent = (int)Math.Round(62.5);
-                return model;
             }
             if (member.NonprofitMembers.Any(x => x.Start > member.CreatedDate && !x.End.HasValue) && member.MemberSkills.Any(x => x.IsComplete && x.Skill.Name.ToLower() == "soft skills"))
             {
                 model.Stage = Constants.Member.Stage.InWorkforceTraining;
                 model.Percent = (int)Math.Round(75.0);
-                return model;
             }
             if (member.MemberCorporations.Any(x => x.Start > member.CreatedDate && !x.End.HasValue))
             {
                 model.Stage = Constants.Member.Stage.JobPlaced;
                 model.Percent = 100;
-                return model;
             }
-            else
-            {
-                model.Stage = Constants.Member.Stage.OffTrack;
-                model.Percent = 0;
-                return model;
-            }
+            return model;
         }
 
         public MemberProfilePersonal GetProfilePersonal(int id)
@@ -168,7 +160,7 @@ namespace SolveChicago.Service
                     ZipCode = member.Addresses.Any() ? member.Addresses.Last().ZipCode : string.Empty,
                     ContactPreference = member.ContactPreference,
                     IsMilitary = member.IsMilitary ?? false,
-                    Skills = member.MemberSkills.Any() ? string.Join(", ", member.MemberSkills.Select(x => x.Skill.Name).ToArray()) : string.Empty,
+                    Skills = member.MemberSkills.Any(x => x.IsComplete) ? string.Join(", ", member.MemberSkills.Where(x => x.IsComplete).Select(x => x.Skill.Name).ToArray()) : string.Empty,
                 };
             }
         }
@@ -360,7 +352,7 @@ namespace SolveChicago.Service
                     ZipCode = memberFamily.Addresses.Any() ? memberFamily.Addresses.Last().ZipCode : string.Empty,
                     FamilyMembers = GetFamilyMembers(member, includeSelf),
                 };
-                family.AverageScore = (int)(family.FamilyMembers.Count() > 0 ? family.FamilyMembers.Average(x => x.MemberStage.Percent) : 0);
+                family.AverageScore = (int)(family.FamilyMembers.Where(x => x.IsEditable).Count() > 0 ? family.FamilyMembers.Where(x => x.IsEditable).Average(x => x.MemberStage.Percent) : 0);
                 family.HeadOfHouseholdProfilePicturePath = family.FamilyMembers.Any(x => (x.IsHeadOfHousehold ?? false)) ? family.FamilyMembers.FirstOrDefault(x => (x.IsHeadOfHousehold.Value)).ProfilePicturePath : Constants.Member.NoPhotoUrl;
                 
                 return family;
@@ -583,7 +575,7 @@ namespace SolveChicago.Service
                 UpdateMemberPhone(model, member);
                 UpdateMemberInterests(model, member);
                 UpdateMemberMilitary(model, member);
-                UpdateMemberSkills(model, member, true);
+                UpdateMemberSkills(!string.IsNullOrEmpty(model.Skills) ? model.Skills : "", member, true);
 
                 db.SaveChanges();
             }
@@ -674,15 +666,18 @@ namespace SolveChicago.Service
             foreach (string interest in newInterests)
             {
                 string trimInterest = interest.Trim();
-                if (interests.Select(x => x.Name.ToLower()).Contains(trimInterest.ToLower()))
+                if(!string.IsNullOrEmpty(trimInterest))
                 {
-                    Interest existingInterest = interests.Single(x => x.Name.ToLower() == trimInterest.ToLower());
-                    if (!member.Interests.Contains(existingInterest))
-                        member.Interests.Add(existingInterest);
-                }   
-                else
-                {
-                    member.Interests.Add(new Interest { Name = trimInterest });
+                    if (interests.Select(x => x.Name.ToLower()).Contains(trimInterest.ToLower()))
+                    {
+                        Interest existingInterest = interests.Single(x => x.Name.ToLower() == trimInterest.ToLower());
+                        if (!member.Interests.Contains(existingInterest))
+                            member.Interests.Add(existingInterest);
+                    }
+                    else
+                    {
+                        member.Interests.Add(new Interest { Name = trimInterest });
+                    }
                 }
             }
 
@@ -710,26 +705,26 @@ namespace SolveChicago.Service
             db.SaveChanges();
         }
 
-        private void UpdateMemberSkills(MemberProfilePersonal model, Member member, bool isComplete = true)
+        public void UpdateMemberSkills(string newSkillsString, Member member, bool isComplete = true, int? nonprofitId = null)
         {
             List<Skill> skills = db.Skills.ToList();
-            string[] newSkills = model.Skills != null ? model.Skills.Split(',').ToArray() : new string[0];
+            string[] newSkills = newSkillsString.Split(',').ToArray();
             foreach (string skill in newSkills)
             {
                 string trimSkill = skill.Trim();
-                if(!string.IsNullOrEmpty(skill))
+                if(!string.IsNullOrEmpty(trimSkill))
                 {
                     if (skills.Select(x => x.Name.ToLower()).Contains(trimSkill.ToLower()))
                     {
                         Skill existingSkill = skills.Single(x => x.Name.ToLower() == trimSkill.ToLower());
                         if (!member.MemberSkills.Select(x => x.SkillId).Contains(existingSkill.Id))
-                            member.MemberSkills.Add(new MemberSkill { MemberId = member.Id, SkillId = existingSkill.Id, IsComplete = isComplete });
+                            member.MemberSkills.Add(new MemberSkill { MemberId = member.Id, SkillId = existingSkill.Id, IsComplete = isComplete, NonprofitId = nonprofitId });
                     }
                     else
                     {
                         Skill newSkill = new Skill { Name = trimSkill };
                         db.Skills.Add(newSkill);
-                        member.MemberSkills.Add(new MemberSkill { Skill = newSkill, IsComplete = isComplete });
+                        member.MemberSkills.Add(new MemberSkill { Skill = newSkill, IsComplete = isComplete, NonprofitId = nonprofitId });
                     }
                 }
             }
@@ -747,7 +742,7 @@ namespace SolveChicago.Service
                 {
                     if(!string.IsNullOrEmpty(job.Name) || job.CorporationId.HasValue) // not the best way to do this, but the default value for IsCurrent makes the model bind an empty object to itself on POST. Should refactor this later.
                     {
-                        Corporation corporation = db.Corporations.Where(x => (x.Id == job.CorporationId || x.Name == job.Name)).FirstOrDefault();
+                        Corporation corporation = db.Corporations.Where(x => (x.Name == job.Name)).FirstOrDefault();
                         if (corporation == null)
                         {
                             corporation = new Corporation
@@ -794,7 +789,7 @@ namespace SolveChicago.Service
             {
                 foreach (var s in model.Schools)
                 {
-                    School school = db.Schools.Where(x => (x.Id == s.Id || x.SchoolName == s.Name)).FirstOrDefault();
+                    School school = db.Schools.Where(x => (x.SchoolName == s.Name)).FirstOrDefault();
                     if (school == null)
                     {
                         school = new School

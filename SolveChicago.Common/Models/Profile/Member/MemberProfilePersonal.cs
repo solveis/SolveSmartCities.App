@@ -43,7 +43,6 @@ namespace SolveChicago.Common.Models.Profile.Member
         public HttpPostedFileBase ProfilePicture { get; set; }
         [Required]
         public string Interests { get; set; }
-        [Required]
         public string Skills { get; set; }
         public int[] SkillsIds { get; set; }
         [Required]

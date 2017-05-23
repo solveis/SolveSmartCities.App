@@ -1,0 +1,40 @@
+﻿@model SolveChicago.Web.Models.Nonprofit.GraduateMemberViewModel
+
+@{
+    ViewBag.Title = "Graduate Member";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("NonprofitReferral", "Nonprofits", FormMethod.Post))
+{
+    @Html.HiddenFor(m => m.NonprofitId)
+    @Html.HiddenFor(m => m.MemberId)
+    @Html.AntiForgeryToken()
+
+    <div class="row app-dashboard-form-container">
+        <div class="create-profile-form-holder">
+            <h4><strong>MEMBER: </strong>Referral for Training</h4>
+            <hr />
+
+            <p><strong>Which skills were acquired during training?</strong></p>
+            @if (Model.Skills.Length > 0)
+            {
+                for (int i = 0; i < Model.Skills.Length; i++)
+                {
+                    <p>
+                        @Html.HiddenFor(x => Model.Skills[i].Id)
+                        @Html.CheckBoxFor(x => Model.Skills[i].IsComplete)
+                        <span>@Model.Skills[i].Name</span>
+                    </p>
+                }
+            }
+
+            @Html.LabelFor(x => x.OtherSkills, "Did they acquire any other skills?")
+            @Html.TextBoxFor(x => x.OtherSkills)
+            @Html.ValidationMessageFor(x => x.OtherSkills)
+
+            <hr class="line-divider">
+            <input class="submit-create-profile" type="submit" value="Submit">
+        </div>
+    </div>
+}

@@ -40,7 +40,7 @@ namespace SolveChicago.Web
             bundles.Add(new ScriptBundle("~/bundles/jqueryui", "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js").Include(
                         "~/Scripts/jquery-ui-{version}.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/semantic", "https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/components/dropdown.min.js").Include(
+            bundles.Add(new ScriptBundle("~/bundles/semantic", "https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.js").Include(
                       "~/Scripts/semantic.js"));
 
 
@@ -58,7 +58,7 @@ namespace SolveChicago.Web
                        "~/Content/bootstrap.css",
                        "~/Content/landing.css"));
 
-            bundles.Add(new StyleBundle("~/Content/semanticui", "https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/components/dropdown.min.css").Include(
+            bundles.Add(new StyleBundle("~/Content/semanticui", "https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css").Include(
                        "~/Content/semantic/semantic.css"));
         }
     }

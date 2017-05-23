@@ -16,6 +16,7 @@
     
     function resetFormFields($entry) {
         $entry.find('input:not([type=radio])').val('').attr('disabled', false);
+        $entry.find('input[type=hidden]').val(0).attr('disabled', false);
         $entry.find('select').prop('selectedIndex', 0);
     }
 
@@ -32,7 +33,7 @@
 
                 var ok = true;
                 try {
-                    $.datepicker.parseDate('mm/dd/yy', value);
+                    $.datepicker.parseDate('m/d/yy', value);
                 }
                 catch (err) {
                     try {

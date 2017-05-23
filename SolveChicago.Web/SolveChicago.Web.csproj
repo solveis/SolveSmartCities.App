@@ -207,6 +207,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CaseManagersController.cs" />
     <Compile Include="Controllers\CorporationsController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\GovernmentProgramsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -310,6 +311,9 @@
     <Content Include="favicon-32x32.png" />
     <Content Include="favicon-96x96.png" />
     <Content Include="favicon.ico" />
+    <Content Include="Files\Contract.html" />
+    <Content Include="Files\PrivacyPolicy.html" />
+    <Content Include="Files\TermsAndConditions.html" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -472,6 +476,8 @@
     <Content Include="Content\semantic\themes\material\assets\fonts\icons.ttf" />
     <Content Include="Content\semantic\themes\material\assets\fonts\icons.woff" />
     <Content Include="img\icon-view.sketch" />
+    <None Include="Properties\PublishProfiles\solvechicago - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\solvesmartcities - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\SolveSmartCities-Staging - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
@@ -596,7 +602,10 @@
     <Content Include="Views\Shared\404.cshtml" />
     <Content Include="Views\Shared\500.html" />
     <Content Include="Views\Shared\404.html" />
-    <Content Include="Views\Nonprofits\GraduateMember.cshtml" />
+    <Content Include="Views\Nonprofits\JobPlaced.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Nonprofits\NonprofitReferral.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

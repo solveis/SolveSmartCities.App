@@ -80,7 +80,7 @@ namespace SolveChicago.Service
             foreach (string skill in newSkills)
             {
                 string trimSkill = skill.Trim();
-                if (!string.IsNullOrEmpty(skill))
+                if (!string.IsNullOrEmpty(trimSkill))
                 {
                     if (skills.Select(x => x.Name.ToLower()).Contains(trimSkill.ToLower()))
                     {

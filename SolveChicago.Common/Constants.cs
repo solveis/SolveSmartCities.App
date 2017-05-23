@@ -8,6 +8,11 @@ namespace SolveChicago.Common
 {
     public class Constants
     {
+        public class Skills
+        {
+            public const string SoftSkills = "Soft Skills";
+        }
+
         public class Regex
         {
             public static string UrlPattern = @"(mailto\:|(news|(ht|f)tp(s?))\://)(([^[:space:]]+)|([^[:space:]]+)( #([^#]+)#)?)";

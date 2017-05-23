@@ -7,7 +7,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
     <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAMV71n/YJhEqUPKEJM0motwAAAAACAAAAAAAQZgAAAAEAACAAAAAf/AacQWSUhOXokNpBfvst6qq4aeVBdgrIyamdhCLtBQAAAAAOgAAAAAIAACAAAAD4YCdA+Rm7dVHC93jP6j3jHoLEwBDUWTl9uFRyU0NVW4AAAACYkVmaECAMeHAWkVwuz5kg94jnx8Er1A4StAYBWcc1cPpIUIHCf40k7gCsEL81WhUIsdHGaNNS1ldBkb8yV+QvbovOiRiUDgizNkWBMo3YcDvnn7518BR5FoiXDRyQxyMNu7z+K6+iGy9KsROEDD1enATfYLhpx0EV7vY157wrL0AAAACh/ueEm+Amiz313h4kM8X+rp5O0EjIX5L83fL0jcX6tncX5QV9DMaVf7UOASTkBQZs5MAbodPFmCFOzbDD9UPZ</EncryptedPassword>
-    <_NewBackgroundProfile>True</_NewBackgroundProfile>
+    <_NewBackgroundProfile>False</_NewBackgroundProfile>
   </PropertyGroup>
   <ItemGroup>
     <AzureDBConnectionStrings Include="metadata=res://*/data.csdl|res://*/data.ssdl|res://*/data.msl;provider=System.Data.SqlClient;provider connection string=&amp;quot;data source=tcp:solvesmartcities.database.windows.net;initial catalog=SSC-Staging;integrated security=True;multipleactiveresultsets=True;user id=sscadminuser@solvesmartcities;password=JKHVGC%^&amp;*()iuyutyfctvuyiho;App=EntityFramework&amp;quot" />

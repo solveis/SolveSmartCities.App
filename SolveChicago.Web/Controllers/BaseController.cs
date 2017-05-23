@@ -495,6 +495,14 @@ namespace SolveChicago.Web.Controllers
                             }
                             else
                                 model.AspNetUser = aspnetUser;
+
+                            // add soft skills as a desired skill for pipeline
+                            // TODO refactor this into a stored proc
+                            Skill softSkills = db.Skills.SingleOrDefault(x => x.Name == Common.Constants.Skills.SoftSkills);
+                            if (softSkills == null)
+                                softSkills = new Skill { Name = Common.Constants.Skills.SoftSkills };
+                            model.MemberSkills.Add(new MemberSkill { IsComplete = false, Skill = softSkills });
+
                             db.SaveChanges();
                             return UpdateSurveyStatus(model, Common.Constants.Member.SurveyStep.Personal);
                         }
