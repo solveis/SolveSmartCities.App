@@ -28,10 +28,6 @@
                     </p>
                 }
             }
-            
-            @Html.LabelFor(x => x.OtherSkills, "Did they acquire any other skills?")
-            @Html.TextBoxFor(x => x.OtherSkills)
-            @Html.ValidationMessageFor(x => x.OtherSkills)
 
             <p><strong>Where is your client now working?</strong></p>
             @Html.ValidationMessageFor(model => model.JobName, "", new { @class = "text-danger" })
