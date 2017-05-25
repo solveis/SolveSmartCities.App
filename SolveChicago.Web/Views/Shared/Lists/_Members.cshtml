@@ -56,7 +56,7 @@
                         <span></span>
                     </div>
                     <div class="columns">
-                        <div class="progress-bar-spacer purple progress" role="progressbar" tabindex="0" aria-valuenow="@item.AverageScore" aria-valuemin="0" aria-valuetext="@(item.AverageScore) percent" aria-valuemax="100">
+                        <div class="progress-bar-spacer progress @(item.AverageScore == 100 ? "dark-green" : "purple")" role="progressbar" tabindex="0" aria-valuenow="@item.AverageScore" aria-valuemin="0" aria-valuetext="@(item.AverageScore) percent" aria-valuemax="100">
                             <!-- value added by tweaking inline-style-->
                             <div class="progress-meter" style="width: @(item.AverageScore)%">
                             </div>
@@ -83,7 +83,7 @@
                                 <span>@(member.CurrentOccupation)</span>
                             </div>
                             <div class="columns">
-                                <div class="small-progress-bar-spacer lilac progress" role="progressbar" tabindex="0" aria-valuenow="@(member.MemberStage.Percent)" aria-valuemin="0" aria-valuetext="@(member.MemberStage.Percent) percent" aria-valuemax="100">
+                                <div class="small-progress-bar-spacer progress @(item.AverageScore == 100 ? "green" : "lilac")" role="progressbar" tabindex="0" aria-valuenow="@(member.MemberStage.Percent)" aria-valuemin="0" aria-valuetext="@(member.MemberStage.Percent) percent" aria-valuemax="100">
                                     <!-- value added by tweaking inline-style-->
                                     <div class="progress-meter" style="width: @(member.MemberStage.Percent)%">
 

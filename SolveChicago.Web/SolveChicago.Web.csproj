@@ -333,6 +333,7 @@
     <Content Include="img\error-icon%403x.png" />
     <Content Include="img\error-icon.png" />
     <Content Include="img\error-icon.svg" />
+    <Content Include="img\Facebook%402x.png" />
     <Content Include="img\icon-add-note.svg" />
     <Content Include="img\icon-add.svg" />
     <Content Include="img\icon-delete.svg" />
@@ -393,9 +394,11 @@
     <Content Include="img\landing\Twitter%402x.png" />
     <Content Include="img\landing\Twitter.png" />
     <Content Include="img\left-arrow.svg" />
+    <Content Include="img\LinkedIn%402x.png" />
     <Content Include="img\login-bg-image%402x.png" />
     <Content Include="img\login-bg-image%403x.png" />
     <Content Include="img\login-bg-image.png" />
+    <Content Include="img\logo%402x.png" />
     <Content Include="img\members-icon%402x.png" />
     <Content Include="img\members-icon%403x.png" />
     <Content Include="img\members-icon.png" />
@@ -445,6 +448,7 @@
     <Content Include="img\submenu-icon-settings%403x.png" />
     <Content Include="img\submenu-icon-settings.png" />
     <Content Include="img\submenu-icon-settings.svg" />
+    <Content Include="img\Twitter%402x.png" />
     <Content Include="ms-icon-144x144.png" />
     <Content Include="ms-icon-150x150.png" />
     <Content Include="ms-icon-310x310.png" />

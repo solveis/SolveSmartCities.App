@@ -189,12 +189,12 @@ namespace SolveChicago.Web.Controllers
         public ActionResult JobPlaced(int? nonprofitId, int memberId)
         {
             ImpersonateNonprofit(nonprofitId);
-            MemberSkill[] memberSkills = db.MemberSkills.Where(x => x.MemberId == memberId && x.NonprofitId == State.NonprofitId).ToArray();
+            Skill[] npoSkills = State.Nonprofit.Skills.ToArray();
             GraduateMemberViewModel model = new GraduateMemberViewModel
             {
                 MemberId = memberId,
                 NonprofitId = State.NonprofitId,
-                Skills = memberSkills.Select(x => new GraduateMemberCheckbox { Id = x.SkillId, Name = x.Skill.Name, IsComplete = x.IsComplete }).ToArray(),
+                Skills = npoSkills.Select(x => new GraduateMemberCheckbox { Id = x.Id, Name = x.Name, IsComplete = false }).ToArray(),
             };
             return View(model);
         }
@@ -214,12 +214,12 @@ namespace SolveChicago.Web.Controllers
                     MemberSkill memberSkill = member.MemberSkills.Where(x => x.NonprofitId == State.NonprofitId && x.SkillId == ms.Id).FirstOrDefault();
                     if (memberSkill != null)
                         memberSkill.IsComplete = ms.IsComplete;
+                    else
+                    {
+                        if(ms.IsComplete)
+                            member.MemberSkills.Add(new MemberSkill { IsComplete = ms.IsComplete, MemberId = member.Id, NonprofitId = State.NonprofitId, SkillId = ms.Id });
+                    }   
                 }
-            }
-            if (!string.IsNullOrEmpty(model.OtherSkills))
-            {
-                MemberService service = new MemberService(this.db);
-                service.UpdateMemberSkills(model.OtherSkills, member, true, model.NonprofitId);
             }
             if (!string.IsNullOrEmpty(model.JobName))
             {
@@ -248,12 +248,12 @@ namespace SolveChicago.Web.Controllers
         public ActionResult NonprofitReferral(int? nonprofitId, int memberId)
         {
             ImpersonateNonprofit(nonprofitId);
-            MemberSkill[] memberSkills = db.MemberSkills.Where(x => x.MemberId == memberId && x.NonprofitId == State.NonprofitId).ToArray();
+            Skill[] npoSkills = State.Nonprofit.Skills.ToArray();
             GraduateMemberViewModel model = new GraduateMemberViewModel
             {
                 MemberId = memberId,
                 NonprofitId = State.NonprofitId,
-                Skills = memberSkills.Select(x => new GraduateMemberCheckbox { Id = x.SkillId, Name = x.Skill.Name, IsComplete = x.IsComplete }).ToArray(),
+                Skills = npoSkills.Select(x => new GraduateMemberCheckbox { Id = x.Id, Name = x.Name, IsComplete = false }).ToArray(),
             };
             return View(model);
         }
@@ -273,12 +273,12 @@ namespace SolveChicago.Web.Controllers
                     MemberSkill memberSkill = member.MemberSkills.Where(x => x.NonprofitId == State.NonprofitId && x.SkillId == ms.Id).FirstOrDefault();
                     if (memberSkill != null)
                         memberSkill.IsComplete = ms.IsComplete;
+                    else
+                    {
+                        if (ms.IsComplete)
+                            member.MemberSkills.Add(new MemberSkill { IsComplete = ms.IsComplete, MemberId = member.Id, NonprofitId = State.NonprofitId, SkillId = ms.Id });
+                    }
                 }
-            }
-            if(!string.IsNullOrEmpty(model.OtherSkills))
-            {
-                MemberService service = new MemberService(this.db);
-                service.UpdateMemberSkills(model.OtherSkills, member, true, model.NonprofitId);
             }
             db.SaveChanges();
 

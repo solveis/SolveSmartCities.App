@@ -10,7 +10,6 @@ namespace SolveChicago.Web.Models.Nonprofit
         public int NonprofitId { get; set; }
         public int MemberId { get; set; }
         public GraduateMemberCheckbox[] Skills { get; set; }
-        public string OtherSkills { get; set; }
         public string JobName { get;set; }
         public decimal JobPay { get; set; }
         public DateTime? Start { get; set; }
