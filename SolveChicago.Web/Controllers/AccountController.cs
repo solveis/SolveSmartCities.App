@@ -14,6 +14,7 @@ using SolveChicago.Web.Controllers;
 using System.Diagnostics.CodeAnalysis;
 using SolveChicago.Web;
 using SolveChicago.Entities;
+using SolveChicago.Service;
 
 namespace SolveChicago.Web.Controllers
 {
@@ -154,7 +155,7 @@ namespace SolveChicago.Web.Controllers
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+                if (user == null) // not confirming email yet || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
                     return View("ForgotPasswordConfirmation");
@@ -162,10 +163,12 @@ namespace SolveChicago.Web.Controllers
 
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
+                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                 // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                CommunicationService service = new CommunicationService(this.db);
+                service.ResetPassword(model.Email, user.Id, callbackUrl);
+                return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
             // If we got this far, something failed, redisplay form

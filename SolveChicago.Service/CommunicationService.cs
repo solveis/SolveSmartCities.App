@@ -46,6 +46,27 @@ namespace SolveChicago.Service
             ).Wait();
         }
 
+        public void ResetPassword(string email, string userId, string resetUrl)
+        {
+            string communicationType = string.Format(Constants.Communication.PasswordReset);
+            EmailService service = new EmailService(db);
+            service.DeliverSendGridMessage(
+                email,
+                Constants.Global.Admin,
+                " ",
+                "5575522e-75d3-49c7-948b-cb1af07fc24f",
+                new Dictionary<string, string>
+                {
+                    { "-resetUrl-", resetUrl },
+                    { "-year-", DateTime.UtcNow.Year.ToString() },
+                },
+                Settings.Website.FromAddress,
+                communicationType,
+                userId,
+                null
+            ).Wait();
+        }
+
         public void NonprofitInviteCaseManager(CaseManager caseManager, string inviter, string inviteUrl)
         {
             string communicationType = string.Format(Constants.Communication.CaseManagerInvite, caseManager.Id);

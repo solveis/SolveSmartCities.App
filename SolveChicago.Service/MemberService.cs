@@ -95,37 +95,42 @@ namespace SolveChicago.Service
                 Percent = 0,
             };
             if (member.SurveyStep == Constants.Member.SurveyStep.Invited)
-            {
+            { // survey sent
                 model.Stage = Constants.Member.Stage.InviteSent;
                 model.Percent = (int)Math.Round(12.5);
             }
             if (member.SurveyStep != null && member.SurveyStep != Constants.Member.SurveyStep.Invited && member.SurveyStep != Constants.Member.SurveyStep.Complete)
-            {
+            { // survey is in progress
                 model.Stage = Constants.Member.Stage.ProfileInProgress;
                 model.Percent = (int)Math.Round(25.0);
             }
-            if (member.SurveyStep == Constants.Member.SurveyStep.Complete && !member.NonprofitMembers.Any(x => !x.End.HasValue) && !member.MemberCorporations.Any(x => !x.End.HasValue))
-            {
+            if (member.SurveyStep == Constants.Member.SurveyStep.Complete && !member.NonprofitMembers.Any(x => x.Start > member.CreatedDate && !x.End.HasValue) && !member.MemberCorporations.Any(x => x.Start > member.CreatedDate && !x.End.HasValue))
+            { // survey is complete, and they are not currently in a NPO or Job
                 model.Stage = Constants.Member.Stage.ProfileCompleted;
                 model.Percent = (int)Math.Round(37.5);
             }
-            if (member.NonprofitMembers.Any(x => x.Start > member.CreatedDate && !x.End.HasValue) && !member.MemberSkills.Any(x => x.IsComplete && x.Skill.Name.ToLower() == "soft skills"))
-            {
+            if (member.NonprofitMembers.Any(x => x.Start > member.CreatedDate && !x.End.HasValue && x.Nonprofit.Skills.Any(y => y.Name == Constants.Skills.SoftSkills)))
+            { // they are in a soft skills NPO
                 model.Stage = Constants.Member.Stage.InSoftSkillsTraining;
                 model.Percent = (int)Math.Round(50.0);
             }
-            if (member.NonprofitMembers.Any(x => x.Start > member.CreatedDate && x.End.HasValue && x.End.Value < DateTime.UtcNow) && member.MemberSkills.Any(x => x.IsComplete && x.Skill.Name.ToLower() == "soft skills"))
-            {
+            if (member.NonprofitMembers.Any(x => x.Start > member.CreatedDate && x.End.HasValue && x.End.Value <= DateTime.UtcNow && x.Nonprofit.Skills.Any(y => y.Name == Constants.Skills.SoftSkills)) && member.MemberSkills.Any(x => x.IsComplete && x.Skill.Name == Constants.Skills.SoftSkills))
+            { // they have completed a soft skills NPO, and have gained soft skills
                 model.Stage = Constants.Member.Stage.SoftSkillsAcquired;
                 model.Percent = (int)Math.Round(62.5);
             }
-            if (member.NonprofitMembers.Any(x => x.Start > member.CreatedDate && !x.End.HasValue) && member.MemberSkills.Any(x => x.IsComplete && x.Skill.Name.ToLower() == "soft skills"))
-            {
+            if (member.NonprofitMembers.Any(x => x.Start > member.CreatedDate && !x.End.HasValue && x.Nonprofit.Skills.Any(y => y.Name != Constants.Skills.SoftSkills)))
+            { // they are in a workforce NPO
                 model.Stage = Constants.Member.Stage.InWorkforceTraining;
                 model.Percent = (int)Math.Round(75.0);
             }
+            if (member.NonprofitMembers.Any(x => x.Start > member.CreatedDate && x.End.HasValue && x.End.Value <= DateTime.UtcNow && x.Nonprofit.Skills.Any(y => y.Name != Constants.Skills.SoftSkills)) && !member.NonprofitMembers.Any(x => x.Start > member.CreatedDate && !x.End.HasValue) && member.MemberSkills.Any(x => x.IsComplete && x.Skill.Name != Constants.Skills.SoftSkills))
+            { // they have completed a workforce NPO, and have a workforce skill
+                model.Stage = Constants.Member.Stage.WorkforceSkillsAcquired;
+                model.Percent = (int)Math.Round(87.5);
+            }
             if (member.MemberCorporations.Any(x => x.Start > member.CreatedDate && !x.End.HasValue))
-            {
+            { // they have a job
                 model.Stage = Constants.Member.Stage.JobPlaced;
                 model.Percent = 100;
             }
@@ -428,9 +433,9 @@ namespace SolveChicago.Service
         private static void GetSpouseTree(List<FamilyMember> familyMembers, Member member)
         {
             if (member.MemberSpouses.Any(x => x.Member1 != null))
-                familyMembers.AddRange(member.MemberSpouses.Select(x => new FamilyMember { FirstName = x.Member1.FirstName, LastName = x.Member1.LastName, Relation = "Spouse", FriendlyRelationName = x.Member1.Gender.ToLower() == "male" ? "Husband" : x.Member1.Gender.ToLower() == "female" ? "Wife" : "Spouse", Id = x.Member1.Id, Email = x.Member1.Email, Phone = x.Member1.PhoneNumbers.Any() ? string.Join(", ", x.Member1.PhoneNumbers.Select(y => y.Number).ToArray()) : string.Empty, ProfilePicturePath = string.IsNullOrEmpty(x.Member1.ProfilePicturePath) ? Constants.Member.NoPhotoUrl : x.Member1.ProfilePicturePath, MemberStage = GetMemberStage(x.Member1), CurrentOccupation = GetFamilyMemberOccupation(x.Member1) }));
+                familyMembers.AddRange(member.MemberSpouses.Select(x => new FamilyMember { FirstName = x.Member1.FirstName, LastName = x.Member1.LastName, Relation = "Spouse", FriendlyRelationName = x.Member1.Gender.ToLower() == "male" ? "Husband" : x.Member1.Gender.ToLower() == "female" ? "Wife" : "Spouse", Id = x.Member1.Id, Email = x.Member1.Email, Phone = x.Member1.PhoneNumbers.Any() ? string.Join(", ", x.Member1.PhoneNumbers.Select(y => y.Number).ToArray()) : string.Empty, ProfilePicturePath = string.IsNullOrEmpty(x.Member1.ProfilePicturePath) ? Constants.Member.NoPhotoUrl : x.Member1.ProfilePicturePath, MemberStage = GetMemberStage(x.Member1), CurrentOccupation = GetFamilyMemberOccupation(x.Member1), Birthday = x.Member1.Birthday, Gender = x.Member1.Gender }));
             else if (member.MemberSpouses1.Any(x => x.Member != null))
-                familyMembers.AddRange(member.MemberSpouses1.Select(x => new FamilyMember { FirstName = x.Member.FirstName, LastName = x.Member.LastName, Relation = "Spouse", FriendlyRelationName = x.Member.Gender.ToLower() == "male" ? "Husband" : x.Member.Gender.ToLower() == "female" ? "Wife" : "Spouse", Id = x.Member.Id, Email = x.Member.Email, Phone = x.Member.PhoneNumbers.Any() ? string.Join(", ", x.Member.PhoneNumbers.Select(y => y.Number).ToArray()) : string.Empty, ProfilePicturePath = string.IsNullOrEmpty(x.Member.ProfilePicturePath) ? Constants.Member.NoPhotoUrl : x.Member.ProfilePicturePath, MemberStage = GetMemberStage(x.Member), CurrentOccupation = GetFamilyMemberOccupation(x.Member) }));
+                familyMembers.AddRange(member.MemberSpouses1.Select(x => new FamilyMember { FirstName = x.Member.FirstName, LastName = x.Member.LastName, Relation = "Spouse", FriendlyRelationName = x.Member.Gender.ToLower() == "male" ? "Husband" : x.Member.Gender.ToLower() == "female" ? "Wife" : "Spouse", Id = x.Member.Id, Email = x.Member.Email, Phone = x.Member.PhoneNumbers.Any() ? string.Join(", ", x.Member.PhoneNumbers.Select(y => y.Number).ToArray()) : string.Empty, ProfilePicturePath = string.IsNullOrEmpty(x.Member.ProfilePicturePath) ? Constants.Member.NoPhotoUrl : x.Member.ProfilePicturePath, MemberStage = GetMemberStage(x.Member), CurrentOccupation = GetFamilyMemberOccupation(x.Member), Birthday = x.Member.Birthday, Gender = x.Member.Gender }));
         }
 
         private static void GetSiblingTree(List<FamilyMember> familyMembers, Member member)

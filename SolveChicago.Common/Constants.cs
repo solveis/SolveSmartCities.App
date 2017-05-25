@@ -32,6 +32,7 @@ namespace SolveChicago.Common
             public const string MemberSurveyInvite = "MemberSurveyInvite_{0}";
             public const string CaseManagerInvite = "CaseManagerInvite_{0}";
             public const string AdminInvite = "AdminInvite";
+            public const string PasswordReset = "PasswordReset";
         }
 
         public class Member
@@ -61,6 +62,7 @@ namespace SolveChicago.Common
                 public const string InSoftSkillsTraining = "In Soft Skills Training";
                 public const string SoftSkillsAcquired = "Soft Skills Acquired";
                 public const string InWorkforceTraining = "In Workforce Training";
+                public const string WorkforceSkillsAcquired = "Workforce Skills Acquired";
                 public const string JobPlaced = "Job Placed";
                 public const string OffTrack = "Untracked";
             }
