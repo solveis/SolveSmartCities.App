@@ -111,6 +111,8 @@
     <Build Include="dbo\Stored Procedures\ELMAH_GetErrorXml.sql" />
     <Build Include="dbo\Stored Procedures\ELMAH_LogError.sql" />
     <Build Include="dbo\Tables\NonprofitSkills.sql" />
+    <Build Include="dbo\Tables\NonprofitAddresses.sql" />
+    <Build Include="dbo\Tables\NonprofitPhoneNumbers.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SolveChicago.Db.dbmdl" />
