@@ -22,11 +22,13 @@ namespace SolveChicago.Web.Models.Profile
         public string Province { get; set; }
         [Required]
         public string Country { get; set; }
+        public string ZipCode { get; set; }
         public string ProfilePicturePath { get; set; }
         public HttpPostedFileBase ProfilePicture { get; set; }
         public string SkillsOffered { get; set; }
         public string[] SkillsList { get; set; }
         [Required]
         public bool? TeachesSoftSkills { get; set; }
+        public string[] CountryList { get; set; }
     }
 }

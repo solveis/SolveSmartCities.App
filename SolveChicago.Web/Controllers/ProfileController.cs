@@ -11,6 +11,7 @@ using SolveChicago.Entities;
 using SolveChicago.Web.Models.Profile;
 using SolveChicago.Service;
 using SolveChicago.Common.Models.Profile.Member;
+using SolveChicago.Common.Models.Profile;
 
 namespace SolveChicago.Web.Controllers
 {
@@ -456,6 +457,7 @@ namespace SolveChicago.Web.Controllers
             ImpersonateNonprofit(id);
             NonprofitService service = new NonprofitService(this.db);
             NonprofitProfile model = service.Get(State.NonprofitId);
+            model.CountryList = GetCountryList();
             return View(model);
             
         }
@@ -496,28 +498,23 @@ namespace SolveChicago.Web.Controllers
 
         // GET: Profile/Referrer
         [Authorize(Roles = "Admin, Referrer")]
-        public ActionResult Referrer()
+        public ActionResult Referrer(int? id)
         {
-            Referrer model = State.Referrer;
+            ImpersonateReferrer(id);
+            ReferrerService service = new ReferrerService(this.db);
+            ReferrerProfile model = service.Get(State.ReferrerId);
             return View(model);
         }
 
         // POST: Profile/Referrer
         [Authorize(Roles = "Admin, Referrer")]
         [HttpPost]
-        public ActionResult Referrer(Referrer model)
+        public ActionResult Referrer(ReferrerProfile model)
         {
             if (ModelState.IsValid)
             {
-                try
-                {
-                    db.Entry(model).State = EntityState.Modified;
-                    db.SaveChanges();
-                }
-                catch(Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
+                ReferrerService service = new ReferrerService(this.db);
+                service.Post(model);
             }
             return RedirectToAction("Index", "Referrers");
         }

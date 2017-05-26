@@ -14,16 +14,23 @@ namespace SolveChicago.Entities
     
     public partial class Admin
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Admin()
+        {
+            this.PhoneNumbers = new HashSet<PhoneNumber>();
+        }
+    
         public int Id { get; set; }
         public string Email { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string ProfilePicturePath { get; set; }
-        public string Phone { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string InvitedBy { get; set; }
         public string UserId { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PhoneNumber> PhoneNumbers { get; set; }
     }
 }

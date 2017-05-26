@@ -44,6 +44,20 @@ namespace SolveChicago.Web.Controllers
             return View(model);
         }
 
+        [AllowAnonymous]
+        public ActionResult ConfirmJob(int memberId, int nonprofitId, int corporationId)
+        {
+            MemberCorporation job = db.MemberCorporations.SingleOrDefault(x => x.MemberId == memberId && x.NonprofitId == nonprofitId && x.CorporationId == corporationId);
+            if (job == null)
+                return HttpNotFound();
+            else
+            {
+                job.IsMemberConfirmed = true;
+                db.SaveChanges();
+                return RedirectToAction("Index", "Thanks");
+            }   
+        }
+
         [Authorize(Roles = "Admin, CaseManager, Nonprofit")]
         public ActionResult MemberOverview(int? memberId)
         {

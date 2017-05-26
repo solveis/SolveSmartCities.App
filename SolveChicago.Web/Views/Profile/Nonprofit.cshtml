@@ -54,9 +54,13 @@
             @Html.LabelFor(model => model.Province, "State", htmlAttributes: new { })
             @Html.EditorFor(model => model.Province, new { htmlAttributes = new { } })
 
+            @Html.ValidationMessageFor(model => model.ZipCode, "", new { @class = "text-danger" })
+            @Html.LabelFor(model => model.ZipCode, "Zip Code", htmlAttributes: new { })
+            @Html.EditorFor(model => model.ZipCode, new { htmlAttributes = new { } })
+
             @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
             @Html.LabelFor(model => model.Country, htmlAttributes: new { })
-            @Html.EditorFor(model => model.Country, new { htmlAttributes = new { } })
+            @Html.DropDownListFor(model => model.Country, Model.CountryList.Select(x => new SelectListItem { Text = x, Value = x, Selected = x == Model.Country }), new { htmlAttributes = new { } })
 
             @Html.LabelFor(m => m.TeachesSoftSkills, "Do you provide training for Soft Skills?")
             @Html.RadioButtonFor(m => m.TeachesSoftSkills, true)

@@ -23,7 +23,7 @@ namespace SolveChicago.Service
                 return new CaseManagerProfile
                 {
                     Id = caseManager.Id,
-                    Phone = caseManager.Phone,
+                    Phone = caseManager.PhoneNumbers.Any() ? caseManager.PhoneNumbers.Last().Number : string.Empty,
                     ProfilePicturePath = caseManager.ProfilePicturePath,
                     FirstName = caseManager.FirstName,
                     LastName = caseManager.LastName,
@@ -45,14 +45,25 @@ namespace SolveChicago.Service
                 if (model.ProfilePicture != null)
                     caseManager.ProfilePicturePath = UploadPhoto(Constants.Upload.CaseManagerPhotos, model.ProfilePicture, model.Id);
                 
-                caseManager.Phone = model.Phone;
                 caseManager.FirstName = model.FirstName;
                 caseManager.LastName = model.LastName;
                 caseManager.Gender = model.Gender;
                 caseManager.Birthday = model.Birthday;
 
+                UpdateCaseManagerPhone(model, caseManager);
+
                 db.SaveChanges();
             }
+        }
+
+        private void UpdateCaseManagerPhone(CaseManagerProfile model, CaseManager caseManager)
+        {
+            PhoneNumber phone = model.Phone != null ? db.PhoneNumbers.Where(x => x.Number == model.Phone).FirstOrDefault() : null;
+            if (phone == null)
+            {
+                phone = new PhoneNumber { Number = model.Phone };
+            }
+            caseManager.PhoneNumbers.Add(phone);
         }
 
         public Member[] GetMembersForCaseManager(int caseManagerId)

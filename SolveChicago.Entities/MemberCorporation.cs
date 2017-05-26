@@ -21,6 +21,7 @@ namespace SolveChicago.Entities
         public string ReasonForLeaving { get; set; }
         public Nullable<decimal> Pay { get; set; }
         public Nullable<int> NonprofitId { get; set; }
+        public Nullable<bool> IsMemberConfirmed { get; set; }
     
         public virtual Corporation Corporation { get; set; }
         public virtual Member Member { get; set; }

@@ -8,6 +8,7 @@
     [Pay] DECIMAL(18, 2) NULL, 
 
     [NonprofitId] INT NULL, 
+    [IsMemberConfirmed] BIT NULL , 
     PRIMARY KEY([MemberId], [CorporationId]),
     CONSTRAINT [FK_MemberCorporations_Members] FOREIGN KEY (MemberId) REFERENCES [Members](Id) ON DELETE CASCADE, 
     CONSTRAINT [FK_MemberCorporations_Corporations] FOREIGN KEY (CorporationId) REFERENCES [Corporations]([Id]) ON DELETE CASCADE,

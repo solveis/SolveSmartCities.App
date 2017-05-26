@@ -20,7 +20,7 @@ namespace SolveChicago.Entities
         public bool IsComplete { get; set; }
     
         public virtual Member Member { get; set; }
-        public virtual Nonprofit Nonprofit { get; set; }
         public virtual Skill Skill { get; set; }
+        public virtual Nonprofit Nonprofit { get; set; }
     }
 }

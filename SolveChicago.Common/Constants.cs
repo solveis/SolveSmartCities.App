@@ -33,6 +33,7 @@ namespace SolveChicago.Common
             public const string CaseManagerInvite = "CaseManagerInvite_{0}";
             public const string AdminInvite = "AdminInvite";
             public const string PasswordReset = "PasswordReset";
+            public const string JobPlacedVerification = "JobPlacedVerification";
         }
 
         public class Member

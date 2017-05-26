@@ -19,6 +19,7 @@ namespace SolveChicago.Entities
         {
             this.CaseNotes = new HashSet<CaseNote>();
             this.NonprofitMembers = new HashSet<NonprofitMember>();
+            this.PhoneNumbers = new HashSet<PhoneNumber>();
         }
     
         public int Id { get; set; }
@@ -28,7 +29,6 @@ namespace SolveChicago.Entities
         public string Gender { get; set; }
         public Nullable<System.DateTime> Birthday { get; set; }
         public string ProfilePicturePath { get; set; }
-        public string Phone { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> NonprofitId { get; set; }
         public string UserId { get; set; }
@@ -39,5 +39,7 @@ namespace SolveChicago.Entities
         public virtual ICollection<CaseNote> CaseNotes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NonprofitMember> NonprofitMembers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PhoneNumber> PhoneNumbers { get; set; }
     }
 }

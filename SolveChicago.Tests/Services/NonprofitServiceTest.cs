@@ -21,13 +21,26 @@ namespace SolveChicago.Tests.Services
                 new Nonprofit
                 {
                     Id = 1,
-                    Address1 = "123 Main Stree",
-                    Address2 = null,
-                    City = "Chicago",
-                    Country = "USA",
-                    Phone = "1234567890",
+                    Addresses = new List<Address>
+                    {
+                        new Address
+                        {
+                            Address1 = "123 Main Stree",
+                            Address2 = null,
+                            City = "Chicago",
+                            Country = "USA",
+                            Province = "Illinois",
+                            ZipCode = "60245"
+                        }
+                    },
+                    PhoneNumbers = new List<PhoneNumber>
+                    {
+                        new PhoneNumber
+                        {
+                            Number = "1234567890",
+                        }
+                    },
                     ProfilePicturePath = "../path.jpg",
-                    Province = "Illinois",
                     Name = "Test Nonprofit",
                     CaseManagers = new List<CaseManager>
                     {
@@ -96,6 +109,7 @@ namespace SolveChicago.Tests.Services
                 }
             };
             List<Skill> skills = new List<Skill>();
+            List<Address> addresses = new List<Address>();
 
             var set = new Mock<DbSet<Nonprofit>>().SetupData(data);
             set.Setup(m => m.Find(It.IsAny<object[]>()))
@@ -111,6 +125,11 @@ namespace SolveChicago.Tests.Services
             skillSet.Setup(m => m.Find(It.IsAny<object[]>()))
                 .Returns<object[]>(ids => skills.FirstOrDefault(d => d.Id == (int)ids[0]));
             context.Setup(c => c.Skills).Returns(skillSet.Object);
+
+            var addressSet = new Mock<DbSet<Address>>().SetupData(addresses);
+            addressSet.Setup(m => m.Find(It.IsAny<object[]>()))
+                .Returns<object[]>(ids => addresses.FirstOrDefault(d => d.Id == (int)ids[0]));
+            context.Setup(c => c.Addresses).Returns(addressSet.Object);
         }
 
         [Fact]

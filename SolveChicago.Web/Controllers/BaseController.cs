@@ -341,7 +341,7 @@ namespace SolveChicago.Web.Controllers
 
         public ActionResult CaseManagerRedirect(CaseManager entity)
         {
-            if (string.IsNullOrEmpty(entity.FirstName) || string.IsNullOrEmpty(entity.LastName) || string.IsNullOrEmpty(entity.Phone) || string.IsNullOrEmpty(entity.ProfilePicturePath))
+            if (string.IsNullOrEmpty(entity.FirstName) || string.IsNullOrEmpty(entity.LastName) || !entity.PhoneNumbers.Any() || string.IsNullOrEmpty(entity.ProfilePicturePath))
             {
                 return RedirectToAction("CaseManager", "Profile", new { caseManagerId = entity.Id });
             }
@@ -395,8 +395,7 @@ namespace SolveChicago.Web.Controllers
 
         public ActionResult NonprofitRedirect(Nonprofit entity)
         {
-            if (string.IsNullOrEmpty(entity.Address1) || string.IsNullOrEmpty(entity.City) || string.IsNullOrEmpty(entity.Country)
-                       || string.IsNullOrEmpty(entity.Name) || string.IsNullOrEmpty(entity.Phone) || string.IsNullOrEmpty(entity.Province))
+            if (!entity.Addresses.Any() || !entity.PhoneNumbers.Any())
             {
                 return RedirectToAction("Nonprofit", "Profile", new { nonprofitId = entity.Id });
             }
@@ -414,7 +413,7 @@ namespace SolveChicago.Web.Controllers
 
         public ActionResult AdminRedirect(Admin entity)
         {
-            if (string.IsNullOrEmpty(entity.FirstName) || string.IsNullOrEmpty(entity.LastName) || string.IsNullOrEmpty(entity.Phone) || string.IsNullOrEmpty(entity.ProfilePicturePath))
+            if (string.IsNullOrEmpty(entity.FirstName) || string.IsNullOrEmpty(entity.LastName) || !entity.PhoneNumbers.Any() || string.IsNullOrEmpty(entity.ProfilePicturePath))
             {
                 return RedirectToAction("Admin", "Profile");
             }
