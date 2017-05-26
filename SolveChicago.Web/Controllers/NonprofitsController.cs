@@ -206,14 +206,18 @@ namespace SolveChicago.Web.Controllers
             ImpersonateNonprofit(model.NonprofitId);
             Member member = db.Members.Single(x => x.Id == model.MemberId);
             NonprofitMember nonprofitMember = member.NonprofitMembers.Single(x => x.NonprofitId == State.NonprofitId);
+            Corporation corporation = null; // predefine so we can grab the Id later.
             nonprofitMember.End = DateTime.UtcNow;
             if (model.Skills != null)
             {
                 foreach (var ms in model.Skills)
                 {
-                    MemberSkill memberSkill = member.MemberSkills.Where(x => x.NonprofitId == State.NonprofitId && x.SkillId == ms.Id).FirstOrDefault();
+                    MemberSkill memberSkill = member.MemberSkills.Where(x => x.SkillId == ms.Id).FirstOrDefault();
                     if (memberSkill != null)
+                    {
                         memberSkill.IsComplete = ms.IsComplete;
+                        memberSkill.NonprofitId = memberSkill.NonprofitId ?? State.NonprofitId; // only set this if it's null, lest npos overwrite previous npos skills
+                    }   
                     else
                     {
                         if(ms.IsComplete)
@@ -223,12 +227,13 @@ namespace SolveChicago.Web.Controllers
             }
             if (!string.IsNullOrEmpty(model.JobName))
             {
-                Corporation corporation = db.Corporations.Where(x => x.Name == model.JobName).FirstOrDefault();
+                corporation = db.Corporations.Where(x => x.Name == model.JobName).FirstOrDefault();
                 if(corporation == null)
                 {
                     corporation = new Corporation
                     {
                         Name = model.JobName,
+                        CreatedDate = DateTime.UtcNow,
                     };
                 }
                 member.MemberCorporations.Add(new MemberCorporation
@@ -239,7 +244,15 @@ namespace SolveChicago.Web.Controllers
                     NonprofitId = model.NonprofitId
                 });
             }
+
             db.SaveChanges();
+
+            if (corporation != null)
+            {
+                CommunicationService service = new CommunicationService(this.db);
+                string confirmUrl = $"{Settings.Website.BaseUrl}/Members/ConfirmJob?memberId={member.Id}&nonprofitId={State.NonprofitId}&corporationId={corporation.Id}";
+                service.JobPlacedVerification(model.JobName, member, State.Nonprofit.Name, confirmUrl);
+            }
 
             return NonprofitRedirect(State.NonprofitId);
         }

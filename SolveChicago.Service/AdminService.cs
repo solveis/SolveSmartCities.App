@@ -22,7 +22,7 @@ namespace SolveChicago.Service
                 return new AdminProfile
                 {
                     Id = admin.Id,
-                    Phone = admin.Phone,
+                    Phone = admin.PhoneNumbers.Any() ? admin.PhoneNumbers.Last().Number : string.Empty,
                     ProfilePicturePath = admin.ProfilePicturePath,
                     FirstName = admin.FirstName,
                     LastName = admin.LastName,
@@ -40,13 +40,24 @@ namespace SolveChicago.Service
             {
                 if (model.ProfilePicture != null)
                     admin.ProfilePicturePath = UploadPhoto(Constants.Upload.AdminPhotos, model.ProfilePicture, model.Id);
-
-                admin.Phone = model.Phone;
+                
                 admin.FirstName = model.FirstName;
                 admin.LastName = model.LastName;
 
+                UpdateAdminPhone(model, admin);
+
                 db.SaveChanges();
             }
+        }
+
+        private void UpdateAdminPhone(AdminProfile model, Admin admin)
+        {
+            PhoneNumber phone = model.Phone != null ? db.PhoneNumbers.Where(x => x.Number == model.Phone).FirstOrDefault() : null;
+            if (phone == null)
+            {
+                phone = new PhoneNumber { Number = model.Phone };
+            }
+            admin.PhoneNumbers.Add(phone);
         }
 
 

@@ -7,7 +7,6 @@
       <Diagram DiagramId="c452ba6984264b7fbb9e9f449a6087d9" Name="Diagram1" ZoomLevel="78">
         <EntityTypeShape EntityType="SolveChicagoDevModel.Address" Width="1.5" PointX="0.75" PointY="20.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SolveChicagoDevModel.AdminInviteCode" Width="1.5" PointX="5.25" PointY="12" IsExpanded="true" />
-        <EntityTypeShape EntityType="SolveChicagoDevModel.Admin" Width="1.5" PointX="5.25" PointY="2.875" IsExpanded="true" />
         <EntityTypeShape EntityType="SolveChicagoDevModel.AspNetRole" Width="1.5" PointX="0.75" PointY="15.125" IsExpanded="true" />
         <EntityTypeShape EntityType="SolveChicagoDevModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="27.625" IsExpanded="true" />
         <EntityTypeShape EntityType="SolveChicagoDevModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="30.25" IsExpanded="true" />
@@ -33,7 +32,6 @@
         <EntityTypeShape EntityType="SolveChicagoDevModel.School" Width="1.5" PointX="8.25" PointY="11.25" IsExpanded="true" />
         <EntityTypeShape EntityType="SolveChicagoDevModel.Skill" Width="1.5" PointX="8.25" PointY="43.375" IsExpanded="true" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_AdminInviteCodes_Admin" ManuallyRouted="false" />
-        <AssociationConnector Association="SolveChicagoDevModel.FK_Admin_AspNetUser" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_dbo_AspNetUserClaims_dbo_AspNetUser_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_dbo_AspNetUserLogins_dbo_AspNetUser_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_Communications_AspNetUsers" ManuallyRouted="false" />
@@ -83,6 +81,9 @@
         <AssociationConnector Association="SolveChicagoDevModel.ReferrerMembers" />
         <AssociationConnector Association="SolveChicagoDevModel.ReferrerPhoneNumbers" />
         <AssociationConnector Association="SolveChicagoDevModel.UserProfileReferrers" />
+        <EntityTypeShape EntityType="SolveChicagoDevModel.Admin" Width="1.5" PointX="5.25" PointY="7.5" />
+        <AssociationConnector Association="SolveChicagoDevModel.FK_Admin_AspNetUser" />
+        <AssociationConnector Association="SolveChicagoDevModel.AdminPhoneNumbers" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

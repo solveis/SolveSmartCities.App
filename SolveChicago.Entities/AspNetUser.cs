@@ -18,7 +18,6 @@ namespace SolveChicago.Entities
         public AspNetUser()
         {
             this.AdminInviteCodes = new HashSet<AdminInviteCode>();
-            this.Admins = new HashSet<Admin>();
             this.AspNetUserClaims = new HashSet<AspNetUserClaim>();
             this.AspNetUserLogins = new HashSet<AspNetUserLogin>();
             this.Communications = new HashSet<Communication>();
@@ -28,6 +27,7 @@ namespace SolveChicago.Entities
             this.Nonprofits = new HashSet<Nonprofit>();
             this.CaseManagers = new HashSet<CaseManager>();
             this.Referrers = new HashSet<Referrer>();
+            this.Admins = new HashSet<Admin>();
         }
     
         public string Id { get; set; }
@@ -50,8 +50,6 @@ namespace SolveChicago.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AdminInviteCode> AdminInviteCodes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Admin> Admins { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetUserClaim> AspNetUserClaims { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetUserLogin> AspNetUserLogins { get; set; }
@@ -69,5 +67,7 @@ namespace SolveChicago.Entities
         public virtual ICollection<CaseManager> CaseManagers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Referrer> Referrers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Admin> Admins { get; set; }
     }
 }

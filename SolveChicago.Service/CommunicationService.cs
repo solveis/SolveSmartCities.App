@@ -112,5 +112,28 @@ namespace SolveChicago.Service
                 null
             ).Wait();
         }
+
+        public void JobPlacedVerification(string jobName, Member member, string nonprofitName, string confirmUrl)
+        {
+            string communicationType = string.Format(Constants.Communication.JobPlacedVerification, member.Id);
+            EmailService service = new EmailService(db);
+            service.DeliverSendGridMessage(
+                member.Email,
+                Constants.Global.SolveSmartCities,
+                "",
+                "9ad1ac25-a038-45de-b82e-54e81a169d2d",
+                new Dictionary<string, string>
+                {
+                    { "-name-", member.FirstName },
+                    { "-nonprofitName-", nonprofitName },
+                    { "-confirmUrl-", confirmUrl },
+                    { "-year-", DateTime.UtcNow.Year.ToString() },
+                },
+                Settings.Website.FromAddress,
+                communicationType,
+                "",
+                null
+            ).Wait();
+        }        
     }
 }

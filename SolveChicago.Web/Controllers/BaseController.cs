@@ -413,7 +413,7 @@ namespace SolveChicago.Web.Controllers
 
         public ActionResult AdminRedirect(Admin entity)
         {
-            if (string.IsNullOrEmpty(entity.FirstName) || string.IsNullOrEmpty(entity.LastName) || string.IsNullOrEmpty(entity.Phone) || string.IsNullOrEmpty(entity.ProfilePicturePath))
+            if (string.IsNullOrEmpty(entity.FirstName) || string.IsNullOrEmpty(entity.LastName) || !entity.PhoneNumbers.Any() || string.IsNullOrEmpty(entity.ProfilePicturePath))
             {
                 return RedirectToAction("Admin", "Profile");
             }

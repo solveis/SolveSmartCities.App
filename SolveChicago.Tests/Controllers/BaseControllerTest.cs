@@ -431,8 +431,14 @@ namespace SolveChicago.Tests.Controllers
                     Id = 1,
                     FirstName = "Tom",
                     LastName = "Elliot",
-                    Phone = "1234567890",
                     ProfilePicturePath = "../image.jpg",
+                    PhoneNumbers = new List<PhoneNumber>
+                    {
+                        new PhoneNumber
+                        {
+                            Number = "1234567890"
+                        }
+                    }
                 }
             };
 
