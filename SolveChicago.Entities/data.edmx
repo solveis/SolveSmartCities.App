@@ -96,6 +96,14 @@
           <Property Name="Name" Type="nvarchar" MaxLength="128" />
           <Property Name="CreatedDate" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
+        <EntityType Name="CaseManagerPhoneNumbers">
+          <Key>
+            <PropertyRef Name="CaseManagerId" />
+            <PropertyRef Name="PhoneNumberId" />
+          </Key>
+          <Property Name="CaseManagerId" Type="int" Nullable="false" />
+          <Property Name="PhoneNumberId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="CaseManagers">
           <Key>
             <PropertyRef Name="Id" />
@@ -107,7 +115,6 @@
           <Property Name="Gender" Type="nvarchar" MaxLength="50" />
           <Property Name="Birthday" Type="datetime2" Precision="7" />
           <Property Name="ProfilePicturePath" Type="nvarchar(max)" />
-          <Property Name="Phone" Type="nvarchar" MaxLength="128" />
           <Property Name="CreatedDate" Type="datetime2" Precision="7" />
           <Property Name="NonprofitId" Type="int" />
           <Property Name="UserId" Type="nvarchar" MaxLength="128" />
@@ -340,6 +347,14 @@
           <Property Name="Country" Type="nvarchar" MaxLength="50" />
           <Property Name="BranchName" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="NonprofitAddresses">
+          <Key>
+            <PropertyRef Name="AddressId" />
+            <PropertyRef Name="NonprofitId" />
+          </Key>
+          <Property Name="AddressId" Type="int" Nullable="false" />
+          <Property Name="NonprofitId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="NonprofitMembers">
           <Key>
             <PropertyRef Name="MemberId" />
@@ -353,6 +368,14 @@
           <Property Name="Start" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="End" Type="datetime2" Precision="7" />
         </EntityType>
+        <EntityType Name="NonprofitPhoneNumbers">
+          <Key>
+            <PropertyRef Name="NonprofitId" />
+            <PropertyRef Name="PhoneNumberId" />
+          </Key>
+          <Property Name="NonprofitId" Type="int" Nullable="false" />
+          <Property Name="PhoneNumberId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Nonprofits">
           <Key>
             <PropertyRef Name="Id" />
@@ -360,13 +383,6 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="128" />
           <Property Name="Name" Type="nvarchar" MaxLength="128" />
-          <Property Name="Phone" Type="nvarchar" MaxLength="128" />
-          <Property Name="Address1" Type="nvarchar" MaxLength="128" />
-          <Property Name="Address2" Type="nvarchar" MaxLength="50" />
-          <Property Name="City" Type="nvarchar" MaxLength="50" />
-          <Property Name="Province" Type="nvarchar" MaxLength="50" />
-          <Property Name="Country" Type="nvarchar" MaxLength="50" />
-          <Property Name="ZipCode" Type="nvarchar" MaxLength="10" />
           <Property Name="CreatedDate" Type="datetime2" Precision="7" />
           <Property Name="ProfilePicturePath" Type="nvarchar(max)" />
         </EntityType>
@@ -401,6 +417,14 @@
           <Property Name="MemberId" Type="int" Nullable="false" />
           <Property Name="ReferrerId" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="ReferrerPhoneNumbers">
+          <Key>
+            <PropertyRef Name="ReferrerId" />
+            <PropertyRef Name="PhoneNumberId" />
+          </Key>
+          <Property Name="ReferrerId" Type="int" Nullable="false" />
+          <Property Name="PhoneNumberId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Referrers">
           <Key>
             <PropertyRef Name="Id" />
@@ -408,7 +432,6 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="128" />
-          <Property Name="Phone" Type="nvarchar" MaxLength="128" />
           <Property Name="CreatedDate" Type="datetime2" Precision="7" />
         </EntityType>
         <EntityType Name="Schools">
@@ -475,6 +498,34 @@
             </Principal>
             <Dependent Role="AdminInviteCodes">
               <PropertyRef Name="InvitingAdminUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CaseManagerPhoneNumbers_CaseManager">
+          <End Role="CaseManagers" Type="Self.CaseManagers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CaseManagerPhoneNumbers" Type="Self.CaseManagerPhoneNumbers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CaseManagers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CaseManagerPhoneNumbers">
+              <PropertyRef Name="CaseManagerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CaseManagerPhoneNumbers_PhoneNumber">
+          <End Role="PhoneNumbers" Type="Self.PhoneNumbers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CaseManagerPhoneNumbers" Type="Self.CaseManagerPhoneNumbers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PhoneNumbers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CaseManagerPhoneNumbers">
+              <PropertyRef Name="PhoneNumberId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1000,6 +1051,34 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_NonprofitAddresses_Addresses">
+          <End Role="Addresses" Type="Self.Addresses" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="NonprofitAddresses" Type="Self.NonprofitAddresses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Addresses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NonprofitAddresses">
+              <PropertyRef Name="AddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NonprofitAddresses_Nonprofits">
+          <End Role="Nonprofits" Type="Self.Nonprofits" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="NonprofitAddresses" Type="Self.NonprofitAddresses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nonprofits">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NonprofitAddresses">
+              <PropertyRef Name="NonprofitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_NonprofitMembers_CaseManagers">
           <End Role="CaseManagers" Type="Self.CaseManagers" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -1039,6 +1118,34 @@
             </Principal>
             <Dependent Role="NonprofitMembers">
               <PropertyRef Name="NonprofitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NonprofitPhoneNumbers_Nonprofits">
+          <End Role="Nonprofits" Type="Self.Nonprofits" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="NonprofitPhoneNumbers" Type="Self.NonprofitPhoneNumbers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nonprofits">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NonprofitPhoneNumbers">
+              <PropertyRef Name="NonprofitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NonprofitPhoneNumbers_PhoneNumber">
+          <End Role="PhoneNumbers" Type="Self.PhoneNumbers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="NonprofitPhoneNumbers" Type="Self.NonprofitPhoneNumbers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PhoneNumbers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NonprofitPhoneNumbers">
+              <PropertyRef Name="PhoneNumberId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1106,6 +1213,34 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="ReferrerMembers">
+              <PropertyRef Name="ReferrerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReferrerPhoneNumbers_PhoneNumber">
+          <End Role="PhoneNumbers" Type="Self.PhoneNumbers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ReferrerPhoneNumbers" Type="Self.ReferrerPhoneNumbers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PhoneNumbers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ReferrerPhoneNumbers">
+              <PropertyRef Name="PhoneNumberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReferrerPhoneNumbers_Referrer">
+          <End Role="Referrers" Type="Self.Referrers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ReferrerPhoneNumbers" Type="Self.ReferrerPhoneNumbers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Referrers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ReferrerPhoneNumbers">
               <PropertyRef Name="ReferrerId" />
             </Dependent>
           </ReferentialConstraint>
@@ -1225,6 +1360,7 @@
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CaseManagerPhoneNumbers" EntityType="Self.CaseManagerPhoneNumbers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CaseManagers" EntityType="Self.CaseManagers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CaseNotes" EntityType="Self.CaseNotes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Communications" EntityType="Self.Communications" Schema="dbo" store:Type="Tables" />
@@ -1248,12 +1384,15 @@
           <EntitySet Name="MemberSkills" EntityType="Self.MemberSkills" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MemberSpouses" EntityType="Self.MemberSpouses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MilitaryBranches" EntityType="Self.MilitaryBranches" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NonprofitAddresses" EntityType="Self.NonprofitAddresses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NonprofitMembers" EntityType="Self.NonprofitMembers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NonprofitPhoneNumbers" EntityType="Self.NonprofitPhoneNumbers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Nonprofits" EntityType="Self.Nonprofits" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NonprofitSkills" EntityType="Self.NonprofitSkills" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Outcomes" EntityType="Self.Outcomes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PhoneNumbers" EntityType="Self.PhoneNumbers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReferrerMembers" EntityType="Self.ReferrerMembers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReferrerPhoneNumbers" EntityType="Self.ReferrerPhoneNumbers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Referrers" EntityType="Self.Referrers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Schools" EntityType="Self.Schools" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Skills" EntityType="Self.Skills" Schema="dbo" store:Type="Tables" />
@@ -1267,6 +1406,14 @@
           <AssociationSet Name="FK_AdminInviteCodes_Admin" Association="Self.FK_AdminInviteCodes_Admin">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AdminInviteCodes" EntitySet="AdminInviteCodes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CaseManagerPhoneNumbers_CaseManager" Association="Self.FK_CaseManagerPhoneNumbers_CaseManager">
+            <End Role="CaseManagers" EntitySet="CaseManagers" />
+            <End Role="CaseManagerPhoneNumbers" EntitySet="CaseManagerPhoneNumbers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CaseManagerPhoneNumbers_PhoneNumber" Association="Self.FK_CaseManagerPhoneNumbers_PhoneNumber">
+            <End Role="PhoneNumbers" EntitySet="PhoneNumbers" />
+            <End Role="CaseManagerPhoneNumbers" EntitySet="CaseManagerPhoneNumbers" />
           </AssociationSet>
           <AssociationSet Name="FK_CaseManagers_AspNetUser" Association="Self.FK_CaseManagers_AspNetUser">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -1424,6 +1571,14 @@
             <End Role="Members" EntitySet="Members" />
             <End Role="MemberSpouses" EntitySet="MemberSpouses" />
           </AssociationSet>
+          <AssociationSet Name="FK_NonprofitAddresses_Addresses" Association="Self.FK_NonprofitAddresses_Addresses">
+            <End Role="Addresses" EntitySet="Addresses" />
+            <End Role="NonprofitAddresses" EntitySet="NonprofitAddresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NonprofitAddresses_Nonprofits" Association="Self.FK_NonprofitAddresses_Nonprofits">
+            <End Role="Nonprofits" EntitySet="Nonprofits" />
+            <End Role="NonprofitAddresses" EntitySet="NonprofitAddresses" />
+          </AssociationSet>
           <AssociationSet Name="FK_NonprofitMembers_CaseManagers" Association="Self.FK_NonprofitMembers_CaseManagers">
             <End Role="CaseManagers" EntitySet="CaseManagers" />
             <End Role="NonprofitMembers" EntitySet="NonprofitMembers" />
@@ -1435,6 +1590,14 @@
           <AssociationSet Name="FK_NonprofitMembers_Nonprofits" Association="Self.FK_NonprofitMembers_Nonprofits">
             <End Role="Nonprofits" EntitySet="Nonprofits" />
             <End Role="NonprofitMembers" EntitySet="NonprofitMembers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NonprofitPhoneNumbers_Nonprofits" Association="Self.FK_NonprofitPhoneNumbers_Nonprofits">
+            <End Role="Nonprofits" EntitySet="Nonprofits" />
+            <End Role="NonprofitPhoneNumbers" EntitySet="NonprofitPhoneNumbers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NonprofitPhoneNumbers_PhoneNumber" Association="Self.FK_NonprofitPhoneNumbers_PhoneNumber">
+            <End Role="PhoneNumbers" EntitySet="PhoneNumbers" />
+            <End Role="NonprofitPhoneNumbers" EntitySet="NonprofitPhoneNumbers" />
           </AssociationSet>
           <AssociationSet Name="FK_NonprofitSkills_Nonprofit" Association="Self.FK_NonprofitSkills_Nonprofit">
             <End Role="Nonprofits" EntitySet="Nonprofits" />
@@ -1455,6 +1618,14 @@
           <AssociationSet Name="FK_ReferrerMembers_Referrer" Association="Self.FK_ReferrerMembers_Referrer">
             <End Role="Referrers" EntitySet="Referrers" />
             <End Role="ReferrerMembers" EntitySet="ReferrerMembers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReferrerPhoneNumbers_PhoneNumber" Association="Self.FK_ReferrerPhoneNumbers_PhoneNumber">
+            <End Role="PhoneNumbers" EntitySet="PhoneNumbers" />
+            <End Role="ReferrerPhoneNumbers" EntitySet="ReferrerPhoneNumbers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReferrerPhoneNumbers_Referrer" Association="Self.FK_ReferrerPhoneNumbers_Referrer">
+            <End Role="Referrers" EntitySet="Referrers" />
+            <End Role="ReferrerPhoneNumbers" EntitySet="ReferrerPhoneNumbers" />
           </AssociationSet>
           <AssociationSet Name="FK_UserProfileCorporations_AspNetUser" Association="Self.FK_UserProfileCorporations_AspNetUser">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -1498,6 +1669,7 @@
           <Property Name="ZipCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Families" Relationship="Self.FamilyAddresses" FromRole="Addresses" ToRole="Families" />
           <NavigationProperty Name="Members" Relationship="Self.MemberAddresses" FromRole="Addresses" ToRole="Members" />
+          <NavigationProperty Name="Nonprofits" Relationship="SolveChicagoDevModel.NonprofitAddresses" FromRole="Address" ToRole="Nonprofit" />
         </EntityType>
         <EntityType Name="AdminInviteCode">
           <Key>
@@ -1582,9 +1754,9 @@
           <NavigationProperty Name="Members" Relationship="Self.FK_Member_AspNetUser" FromRole="AspNetUsers" ToRole="Members" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
           <NavigationProperty Name="Corporations" Relationship="Self.UserProfileCorporations" FromRole="AspNetUsers" ToRole="Corporations" />
-          <NavigationProperty Name="Nonprofits" Relationship="Self.UserProfileNonprofits" FromRole="AspNetUsers" ToRole="Nonprofits" />
-          <NavigationProperty Name="Referrers" Relationship="Self.UserProfileReferrers" FromRole="AspNetUsers" ToRole="Referrers" />
+          <NavigationProperty Name="Nonprofits" Relationship="SolveChicagoDevModel.UserProfileNonprofits" FromRole="AspNetUser" ToRole="Nonprofit" />
           <NavigationProperty Name="CaseManagers" Relationship="SolveChicagoDevModel.FK_CaseManagers_AspNetUser" FromRole="AspNetUser" ToRole="CaseManager" />
+          <NavigationProperty Name="Referrers" Relationship="SolveChicagoDevModel.UserProfileReferrers" FromRole="AspNetUser" ToRole="Referrer" />
         </EntityType>
         <EntityType Name="CaseNote">
           <Key>
@@ -1745,9 +1917,9 @@
           <NavigationProperty Name="Interests" Relationship="Self.MemberInterests" FromRole="Members" ToRole="Interests" />
           <NavigationProperty Name="MilitaryBranches" Relationship="Self.MemberMilitary" FromRole="Members" ToRole="MilitaryBranches" />
           <NavigationProperty Name="PhoneNumbers" Relationship="Self.MemberPhoneNumbers" FromRole="Members" ToRole="PhoneNumbers" />
-          <NavigationProperty Name="Referrers" Relationship="Self.ReferrerMembers" FromRole="Members" ToRole="Referrers" />
           <Property Name="IsWorkforceInterested" Type="Boolean" />
           <Property Name="IsJobSearching" Type="Boolean" />
+          <NavigationProperty Name="Referrers" Relationship="SolveChicagoDevModel.ReferrerMembers" FromRole="Member" ToRole="Referrer" />
         </EntityType>
         <EntityType Name="MemberSchool">
           <Key>
@@ -1772,9 +1944,9 @@
           <Property Name="SkillId" Type="Int32" Nullable="false" />
           <Property Name="NonprofitId" Type="Int32" />
           <NavigationProperty Name="Member" Relationship="Self.FK_MemberSkills_Members" FromRole="MemberSkills" ToRole="Members" />
-          <NavigationProperty Name="Nonprofit" Relationship="Self.FK_MemberSkills_Nonprofits" FromRole="MemberSkills" ToRole="Nonprofits" />
           <NavigationProperty Name="Skill" Relationship="Self.FK_MemberSkills_Skills" FromRole="MemberSkills" ToRole="Skills" />
           <Property Name="IsComplete" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Nonprofit" Relationship="SolveChicagoDevModel.FK_MemberSkills_Nonprofits" FromRole="MemberSkill" ToRole="Nonprofit" />
         </EntityType>
         <EntityType Name="MemberSpous">
           <Key>
@@ -1809,31 +1981,8 @@
           <Property Name="Start" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="End" Type="DateTime" Precision="7" />
           <NavigationProperty Name="Member" Relationship="Self.FK_NonprofitMembers_Members" FromRole="NonprofitMembers" ToRole="Members" />
-          <NavigationProperty Name="Nonprofit" Relationship="Self.FK_NonprofitMembers_Nonprofits" FromRole="NonprofitMembers" ToRole="Nonprofits" />
+          <NavigationProperty Name="Nonprofit" Relationship="SolveChicagoDevModel.FK_NonprofitMembers_Nonprofits" FromRole="NonprofitMember" ToRole="Nonprofit" />
           <NavigationProperty Name="CaseManager" Relationship="SolveChicagoDevModel.FK_NonprofitMembers_CaseManagers" FromRole="NonprofitMember" ToRole="CaseManager" />
-        </EntityType>
-        <EntityType Name="Nonprofit">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Email" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="Phone" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="Address1" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="Address2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Province" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ZipCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="7" />
-          <Property Name="ProfilePicturePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="MemberSkills" Relationship="Self.FK_MemberSkills_Nonprofits" FromRole="Nonprofits" ToRole="MemberSkills" />
-          <NavigationProperty Name="NonprofitMembers" Relationship="Self.FK_NonprofitMembers_Nonprofits" FromRole="Nonprofits" ToRole="NonprofitMembers" />
-          <NavigationProperty Name="AspNetUsers" Relationship="Self.UserProfileNonprofits" FromRole="Nonprofits" ToRole="AspNetUsers" />
-          <NavigationProperty Name="CaseManagers" Relationship="SolveChicagoDevModel.FK_CaseManagers_Nonprofit" FromRole="Nonprofit" ToRole="CaseManager" />
-          <NavigationProperty Name="Skills" Relationship="SolveChicagoDevModel.NonprofitSkills" FromRole="Nonprofit" ToRole="Skill" />
-          <NavigationProperty Name="MemberCorporations" Relationship="SolveChicagoDevModel.FK_MemberCorporations_Nonprofits" FromRole="Nonprofit" ToRole="MemberCorporation" />
         </EntityType>
         <EntityType Name="Outcome">
           <Key>
@@ -1853,18 +2002,9 @@
           <Property Name="Number" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Families" Relationship="Self.FamilyPhoneNumbers" FromRole="PhoneNumbers" ToRole="Families" />
           <NavigationProperty Name="Members" Relationship="Self.MemberPhoneNumbers" FromRole="PhoneNumbers" ToRole="Members" />
-        </EntityType>
-        <EntityType Name="Referrer">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Email" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="Phone" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="7" />
-          <NavigationProperty Name="Members" Relationship="Self.ReferrerMembers" FromRole="Referrers" ToRole="Members" />
-          <NavigationProperty Name="AspNetUsers" Relationship="Self.UserProfileReferrers" FromRole="Referrers" ToRole="AspNetUsers" />
+          <NavigationProperty Name="Nonprofits" Relationship="SolveChicagoDevModel.NonprofitPhoneNumbers" FromRole="PhoneNumber" ToRole="Nonprofit" />
+          <NavigationProperty Name="CaseManagers" Relationship="SolveChicagoDevModel.CaseManagerPhoneNumbers" FromRole="PhoneNumber" ToRole="CaseManager" />
+          <NavigationProperty Name="Referrers" Relationship="SolveChicagoDevModel.ReferrerPhoneNumbers" FromRole="PhoneNumber" ToRole="Referrer" />
         </EntityType>
         <EntityType Name="School">
           <Key>
@@ -2190,18 +2330,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_MemberSkills_Nonprofits">
-          <End Role="Nonprofits" Type="Self.Nonprofit" Multiplicity="0..1" />
-          <End Role="MemberSkills" Type="Self.MemberSkill" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Nonprofits">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="MemberSkills">
-              <PropertyRef Name="NonprofitId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_MemberSkills_Skills">
           <End Role="Skills" Type="Self.Skill" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -2213,20 +2341,6 @@
             </Principal>
             <Dependent Role="MemberSkills">
               <PropertyRef Name="SkillId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_NonprofitMembers_Nonprofits">
-          <End Role="Nonprofits" Type="Self.Nonprofit" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="NonprofitMembers" Type="Self.NonprofitMember" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Nonprofits">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="NonprofitMembers">
-              <PropertyRef Name="NonprofitId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2258,21 +2372,9 @@
           <End Role="Members" Type="Self.Member" Multiplicity="*" />
           <End Role="PhoneNumbers" Type="Self.PhoneNumber" Multiplicity="*" />
         </Association>
-        <Association Name="ReferrerMembers">
-          <End Role="Members" Type="Self.Member" Multiplicity="*" />
-          <End Role="Referrers" Type="Self.Referrer" Multiplicity="*" />
-        </Association>
         <Association Name="UserProfileCorporations">
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
           <End Role="Corporations" Type="Self.Corporation" Multiplicity="*" />
-        </Association>
-        <Association Name="UserProfileNonprofits">
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
-          <End Role="Nonprofits" Type="Self.Nonprofit" Multiplicity="*" />
-        </Association>
-        <Association Name="UserProfileReferrers">
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
-          <End Role="Referrers" Type="Self.Referrer" Multiplicity="*" />
         </Association>
         <EntityContainer Name="SolveChicagoEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Addresses" EntityType="Self.Address" />
@@ -2298,10 +2400,8 @@
           <EntitySet Name="MemberSpouses" EntityType="Self.MemberSpous" />
           <EntitySet Name="MilitaryBranches" EntityType="Self.MilitaryBranch" />
           <EntitySet Name="NonprofitMembers" EntityType="Self.NonprofitMember" />
-          <EntitySet Name="Nonprofits" EntityType="Self.Nonprofit" />
           <EntitySet Name="Outcomes" EntityType="Self.Outcome" />
           <EntitySet Name="PhoneNumbers" EntityType="Self.PhoneNumber" />
-          <EntitySet Name="Referrers" EntityType="Self.Referrer" />
           <EntitySet Name="Schools" EntityType="Self.School" />
           <EntitySet Name="Skills" EntityType="Self.Skill" />
           <AssociationSet Name="FK_AdminInviteCodes_Admin" Association="Self.FK_AdminInviteCodes_Admin">
@@ -2396,17 +2496,9 @@
             <End Role="Schools" EntitySet="Schools" />
             <End Role="MemberSchools" EntitySet="MemberSchools" />
           </AssociationSet>
-          <AssociationSet Name="FK_MemberSkills_Nonprofits" Association="Self.FK_MemberSkills_Nonprofits">
-            <End Role="Nonprofits" EntitySet="Nonprofits" />
-            <End Role="MemberSkills" EntitySet="MemberSkills" />
-          </AssociationSet>
           <AssociationSet Name="FK_MemberSkills_Skills" Association="Self.FK_MemberSkills_Skills">
             <End Role="Skills" EntitySet="Skills" />
             <End Role="MemberSkills" EntitySet="MemberSkills" />
-          </AssociationSet>
-          <AssociationSet Name="FK_NonprofitMembers_Nonprofits" Association="Self.FK_NonprofitMembers_Nonprofits">
-            <End Role="Nonprofits" EntitySet="Nonprofits" />
-            <End Role="NonprofitMembers" EntitySet="NonprofitMembers" />
           </AssociationSet>
           <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
@@ -2436,21 +2528,9 @@
             <End Role="Members" EntitySet="Members" />
             <End Role="PhoneNumbers" EntitySet="PhoneNumbers" />
           </AssociationSet>
-          <AssociationSet Name="ReferrerMembers" Association="Self.ReferrerMembers">
-            <End Role="Members" EntitySet="Members" />
-            <End Role="Referrers" EntitySet="Referrers" />
-          </AssociationSet>
           <AssociationSet Name="UserProfileCorporations" Association="Self.UserProfileCorporations">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Corporations" EntitySet="Corporations" />
-          </AssociationSet>
-          <AssociationSet Name="UserProfileNonprofits" Association="Self.UserProfileNonprofits">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Nonprofits" EntitySet="Nonprofits" />
-          </AssociationSet>
-          <AssociationSet Name="UserProfileReferrers" Association="Self.UserProfileReferrers">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Referrers" EntitySet="Referrers" />
           </AssociationSet>
           <EntitySet Name="ELMAH_Error" EntityType="SolveChicagoDevModel.ELMAH_Error" />
           <FunctionImport Name="ELMAH_GetErrorsXml" ReturnType="Collection(String)">
@@ -2475,7 +2555,37 @@
             <Parameter Name="StatusCode" Mode="In" Type="Int32" />
             <Parameter Name="TimeUtc" Mode="In" Type="DateTime" />
           </FunctionImport>
+          <EntitySet Name="Nonprofits" EntityType="SolveChicagoDevModel.Nonprofit" />
+          <AssociationSet Name="FK_MemberCorporations_Nonprofits" Association="SolveChicagoDevModel.FK_MemberCorporations_Nonprofits">
+            <End Role="Nonprofit" EntitySet="Nonprofits" />
+            <End Role="MemberCorporation" EntitySet="MemberCorporations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MemberSkills_Nonprofits" Association="SolveChicagoDevModel.FK_MemberSkills_Nonprofits">
+            <End Role="Nonprofit" EntitySet="Nonprofits" />
+            <End Role="MemberSkill" EntitySet="MemberSkills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NonprofitMembers_Nonprofits" Association="SolveChicagoDevModel.FK_NonprofitMembers_Nonprofits">
+            <End Role="Nonprofit" EntitySet="Nonprofits" />
+            <End Role="NonprofitMember" EntitySet="NonprofitMembers" />
+          </AssociationSet>
+          <AssociationSet Name="NonprofitAddresses" Association="SolveChicagoDevModel.NonprofitAddresses">
+            <End Role="Address" EntitySet="Addresses" />
+            <End Role="Nonprofit" EntitySet="Nonprofits" />
+          </AssociationSet>
+          <AssociationSet Name="NonprofitPhoneNumbers" Association="SolveChicagoDevModel.NonprofitPhoneNumbers">
+            <End Role="Nonprofit" EntitySet="Nonprofits" />
+            <End Role="PhoneNumber" EntitySet="PhoneNumbers" />
+          </AssociationSet>
+          <AssociationSet Name="NonprofitSkills" Association="SolveChicagoDevModel.NonprofitSkills">
+            <End Role="Nonprofit" EntitySet="Nonprofits" />
+            <End Role="Skill" EntitySet="Skills" />
+          </AssociationSet>
+          <AssociationSet Name="UserProfileNonprofits" Association="SolveChicagoDevModel.UserProfileNonprofits">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Nonprofit" EntitySet="Nonprofits" />
+          </AssociationSet>
           <EntitySet Name="CaseManagers" EntityType="SolveChicagoDevModel.CaseManager" />
+          <EntitySet Name="Referrers" EntityType="SolveChicagoDevModel.Referrer" />
           <AssociationSet Name="FK_CaseManagers_AspNetUser" Association="SolveChicagoDevModel.FK_CaseManagers_AspNetUser">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="CaseManager" EntitySet="CaseManagers" />
@@ -2492,15 +2602,23 @@
             <End Role="CaseManager" EntitySet="CaseManagers" />
             <End Role="NonprofitMember" EntitySet="NonprofitMembers" />
           </AssociationSet>
-          <AssociationSet Name="NonprofitSkills" Association="SolveChicagoDevModel.NonprofitSkills">
-            <End Role="Nonprofit" EntitySet="Nonprofits" />
-            <End Role="Skill" EntitySet="Skills" />
+          <AssociationSet Name="CaseManagerPhoneNumbers" Association="SolveChicagoDevModel.CaseManagerPhoneNumbers">
+            <End Role="CaseManager" EntitySet="CaseManagers" />
+            <End Role="PhoneNumber" EntitySet="PhoneNumbers" />
           </AssociationSet>
-          <AssociationSet Name="FK_MemberCorporations_Nonprofits" Association="SolveChicagoDevModel.FK_MemberCorporations_Nonprofits">
-            <End Role="Nonprofit" EntitySet="Nonprofits" />
-            <End Role="MemberCorporation" EntitySet="MemberCorporations" />
+          <AssociationSet Name="ReferrerMembers" Association="SolveChicagoDevModel.ReferrerMembers">
+            <End Role="Member" EntitySet="Members" />
+            <End Role="Referrer" EntitySet="Referrers" />
           </AssociationSet>
-        </EntityContainer>
+          <AssociationSet Name="ReferrerPhoneNumbers" Association="SolveChicagoDevModel.ReferrerPhoneNumbers">
+            <End Role="PhoneNumber" EntitySet="PhoneNumbers" />
+            <End Role="Referrer" EntitySet="Referrers" />
+          </AssociationSet>
+          <AssociationSet Name="UserProfileReferrers" Association="SolveChicagoDevModel.UserProfileReferrers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Referrer" EntitySet="Referrers" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="ELMAH_Error">
           <Key>
             <PropertyRef Name="ErrorId" />
@@ -2517,6 +2635,78 @@
           <Property Name="Sequence" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="AllXml" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="Nonprofit">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="7" />
+          <Property Name="ProfilePicturePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MemberCorporations" Relationship="SolveChicagoDevModel.FK_MemberCorporations_Nonprofits" FromRole="Nonprofit" ToRole="MemberCorporation" />
+          <NavigationProperty Name="MemberSkills" Relationship="SolveChicagoDevModel.FK_MemberSkills_Nonprofits" FromRole="Nonprofit" ToRole="MemberSkill" />
+          <NavigationProperty Name="NonprofitMembers" Relationship="SolveChicagoDevModel.FK_NonprofitMembers_Nonprofits" FromRole="Nonprofit" ToRole="NonprofitMember" />
+          <NavigationProperty Name="Addresses" Relationship="SolveChicagoDevModel.NonprofitAddresses" FromRole="Nonprofit" ToRole="Address" />
+          <NavigationProperty Name="PhoneNumbers" Relationship="SolveChicagoDevModel.NonprofitPhoneNumbers" FromRole="Nonprofit" ToRole="PhoneNumber" />
+          <NavigationProperty Name="Skills" Relationship="SolveChicagoDevModel.NonprofitSkills" FromRole="Nonprofit" ToRole="Skill" />
+          <NavigationProperty Name="AspNetUsers" Relationship="SolveChicagoDevModel.UserProfileNonprofits" FromRole="Nonprofit" ToRole="AspNetUser" />
+          <NavigationProperty Name="CaseManagers" Relationship="SolveChicagoDevModel.FK_CaseManagers_Nonprofit" FromRole="Nonprofit" ToRole="CaseManager" />
+        </EntityType>
+        <Association Name="FK_MemberCorporations_Nonprofits">
+          <End Type="SolveChicagoDevModel.Nonprofit" Role="Nonprofit" Multiplicity="0..1" />
+          <End Type="SolveChicagoDevModel.MemberCorporation" Role="MemberCorporation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nonprofit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MemberCorporation">
+              <PropertyRef Name="NonprofitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MemberSkills_Nonprofits">
+          <End Type="SolveChicagoDevModel.Nonprofit" Role="Nonprofit" Multiplicity="0..1" />
+          <End Type="SolveChicagoDevModel.MemberSkill" Role="MemberSkill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nonprofit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MemberSkill">
+              <PropertyRef Name="NonprofitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NonprofitMembers_Nonprofits">
+          <End Type="SolveChicagoDevModel.Nonprofit" Role="Nonprofit" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="SolveChicagoDevModel.NonprofitMember" Role="NonprofitMember" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nonprofit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NonprofitMember">
+              <PropertyRef Name="NonprofitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="NonprofitAddresses">
+          <End Type="SolveChicagoDevModel.Address" Role="Address" Multiplicity="*" />
+          <End Type="SolveChicagoDevModel.Nonprofit" Role="Nonprofit" Multiplicity="*" />
+        </Association>
+        <Association Name="NonprofitPhoneNumbers">
+          <End Type="SolveChicagoDevModel.Nonprofit" Role="Nonprofit" Multiplicity="*" />
+          <End Type="SolveChicagoDevModel.PhoneNumber" Role="PhoneNumber" Multiplicity="*" />
+        </Association>
+        <Association Name="NonprofitSkills">
+          <End Type="SolveChicagoDevModel.Nonprofit" Role="Nonprofit" Multiplicity="*" />
+          <End Type="SolveChicagoDevModel.Skill" Role="Skill" Multiplicity="*" />
+        </Association>
+        <Association Name="UserProfileNonprofits">
+          <End Type="SolveChicagoDevModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+          <End Type="SolveChicagoDevModel.Nonprofit" Role="Nonprofit" Multiplicity="*" />
+        </Association>
         <EntityType Name="CaseManager">
           <Key>
             <PropertyRef Name="Id" />
@@ -2528,7 +2718,6 @@
           <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Birthday" Type="DateTime" Precision="7" />
           <Property Name="ProfilePicturePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Phone" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Precision="7" />
           <Property Name="NonprofitId" Type="Int32" />
           <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
@@ -2536,6 +2725,19 @@
           <NavigationProperty Name="Nonprofit" Relationship="SolveChicagoDevModel.FK_CaseManagers_Nonprofit" FromRole="CaseManager" ToRole="Nonprofit" />
           <NavigationProperty Name="CaseNotes" Relationship="SolveChicagoDevModel.FK_CaseNotes_CaseManagers" FromRole="CaseManager" ToRole="CaseNote" />
           <NavigationProperty Name="NonprofitMembers" Relationship="SolveChicagoDevModel.FK_NonprofitMembers_CaseManagers" FromRole="CaseManager" ToRole="NonprofitMember" />
+          <NavigationProperty Name="PhoneNumbers" Relationship="SolveChicagoDevModel.CaseManagerPhoneNumbers" FromRole="CaseManager" ToRole="PhoneNumber" />
+        </EntityType>
+        <EntityType Name="Referrer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Members" Relationship="SolveChicagoDevModel.ReferrerMembers" FromRole="Referrer" ToRole="Member" />
+          <NavigationProperty Name="PhoneNumbers" Relationship="SolveChicagoDevModel.ReferrerPhoneNumbers" FromRole="Referrer" ToRole="PhoneNumber" />
+          <NavigationProperty Name="AspNetUsers" Relationship="SolveChicagoDevModel.UserProfileReferrers" FromRole="Referrer" ToRole="AspNetUser" />
         </EntityType>
         <Association Name="FK_CaseManagers_AspNetUser">
           <End Type="SolveChicagoDevModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
@@ -2587,23 +2789,23 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="NonprofitSkills">
-          <End Type="SolveChicagoDevModel.Nonprofit" Role="Nonprofit" Multiplicity="*" />
-          <End Type="SolveChicagoDevModel.Skill" Role="Skill" Multiplicity="*" />
+        <Association Name="CaseManagerPhoneNumbers">
+          <End Type="SolveChicagoDevModel.CaseManager" Role="CaseManager" Multiplicity="*" />
+          <End Type="SolveChicagoDevModel.PhoneNumber" Role="PhoneNumber" Multiplicity="*" />
         </Association>
-        <Association Name="FK_MemberCorporations_Nonprofits">
-          <End Type="SolveChicagoDevModel.Nonprofit" Role="Nonprofit" Multiplicity="0..1" />
-          <End Type="SolveChicagoDevModel.MemberCorporation" Role="MemberCorporation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Nonprofit">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="MemberCorporation">
-              <PropertyRef Name="NonprofitId" />
-            </Dependent>
-          </ReferentialConstraint>
+        <Association Name="ReferrerMembers">
+          <End Type="SolveChicagoDevModel.Member" Role="Member" Multiplicity="*" />
+          <End Type="SolveChicagoDevModel.Referrer" Role="Referrer" Multiplicity="*" />
         </Association>
-      </Schema>
+        <Association Name="ReferrerPhoneNumbers">
+          <End Type="SolveChicagoDevModel.PhoneNumber" Role="PhoneNumber" Multiplicity="*" />
+          <End Type="SolveChicagoDevModel.Referrer" Role="Referrer" Multiplicity="*" />
+        </Association>
+        <Association Name="UserProfileReferrers">
+          <End Type="SolveChicagoDevModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+          <End Type="SolveChicagoDevModel.Referrer" Role="Referrer" Multiplicity="*" />
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -2884,24 +3086,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Nonprofits">
-            <EntityTypeMapping TypeName="SolveChicagoDevModel.Nonprofit">
-              <MappingFragment StoreEntitySet="Nonprofits">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="Address1" ColumnName="Address1" />
-                <ScalarProperty Name="Address2" ColumnName="Address2" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="Province" ColumnName="Province" />
-                <ScalarProperty Name="Country" ColumnName="Country" />
-                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="ProfilePicturePath" ColumnName="ProfilePicturePath" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Outcomes">
             <EntityTypeMapping TypeName="SolveChicagoDevModel.Outcome">
               <MappingFragment StoreEntitySet="Outcomes">
@@ -2916,17 +3100,6 @@
               <MappingFragment StoreEntitySet="PhoneNumbers">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Number" ColumnName="Number" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Referrers">
-            <EntityTypeMapping TypeName="SolveChicagoDevModel.Referrer">
-              <MappingFragment StoreEntitySet="Referrers">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3003,36 +3176,12 @@
               <ScalarProperty Name="Id" ColumnName="PhoneNumberId" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="ReferrerMembers" TypeName="SolveChicagoDevModel.ReferrerMembers" StoreEntitySet="ReferrerMembers">
-            <EndProperty Name="Members">
-              <ScalarProperty Name="Id" ColumnName="MemberId" />
-            </EndProperty>
-            <EndProperty Name="Referrers">
-              <ScalarProperty Name="Id" ColumnName="ReferrerId" />
-            </EndProperty>
-          </AssociationSetMapping>
           <AssociationSetMapping Name="UserProfileCorporations" TypeName="SolveChicagoDevModel.UserProfileCorporations" StoreEntitySet="UserProfileCorporations">
             <EndProperty Name="AspNetUsers">
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
             <EndProperty Name="Corporations">
               <ScalarProperty Name="Id" ColumnName="CorporationId" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="UserProfileNonprofits" TypeName="SolveChicagoDevModel.UserProfileNonprofits" StoreEntitySet="UserProfileNonprofits">
-            <EndProperty Name="AspNetUsers">
-              <ScalarProperty Name="Id" ColumnName="UserId" />
-            </EndProperty>
-            <EndProperty Name="Nonprofits">
-              <ScalarProperty Name="Id" ColumnName="NonprofitId" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="UserProfileReferrers" TypeName="SolveChicagoDevModel.UserProfileReferrers" StoreEntitySet="UserProfileReferrers">
-            <EndProperty Name="AspNetUsers">
-              <ScalarProperty Name="Id" ColumnName="UserId" />
-            </EndProperty>
-            <EndProperty Name="Referrers">
-              <ScalarProperty Name="Id" ColumnName="ReferrerId" />
             </EndProperty>
           </AssociationSetMapping>
           <EntitySetMapping Name="ELMAH_Error">
@@ -3055,13 +3204,55 @@
           <FunctionImportMapping FunctionImportName="ELMAH_GetErrorsXml" FunctionName="SolveChicagoDevModel.Store.ELMAH_GetErrorsXml" />
           <FunctionImportMapping FunctionImportName="ELMAH_GetErrorXml" FunctionName="SolveChicagoDevModel.Store.ELMAH_GetErrorXml" />
           <FunctionImportMapping FunctionImportName="ELMAH_LogError" FunctionName="SolveChicagoDevModel.Store.ELMAH_LogError" />
+          <EntitySetMapping Name="Nonprofits">
+            <EntityTypeMapping TypeName="SolveChicagoDevModel.Nonprofit">
+              <MappingFragment StoreEntitySet="Nonprofits">
+                <ScalarProperty Name="ProfilePicturePath" ColumnName="ProfilePicturePath" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="NonprofitAddresses" TypeName="SolveChicagoDevModel.NonprofitAddresses" StoreEntitySet="NonprofitAddresses">
+            <EndProperty Name="Nonprofit">
+              <ScalarProperty Name="Id" ColumnName="NonprofitId" />
+            </EndProperty>
+            <EndProperty Name="Address">
+              <ScalarProperty Name="Id" ColumnName="AddressId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="NonprofitPhoneNumbers" TypeName="SolveChicagoDevModel.NonprofitPhoneNumbers" StoreEntitySet="NonprofitPhoneNumbers">
+            <EndProperty Name="PhoneNumber">
+              <ScalarProperty Name="Id" ColumnName="PhoneNumberId" />
+            </EndProperty>
+            <EndProperty Name="Nonprofit">
+              <ScalarProperty Name="Id" ColumnName="NonprofitId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="NonprofitSkills" TypeName="SolveChicagoDevModel.NonprofitSkills" StoreEntitySet="NonprofitSkills">
+            <EndProperty Name="Skill">
+              <ScalarProperty Name="Id" ColumnName="SkillId" />
+            </EndProperty>
+            <EndProperty Name="Nonprofit">
+              <ScalarProperty Name="Id" ColumnName="NonprofitId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="UserProfileNonprofits" TypeName="SolveChicagoDevModel.UserProfileNonprofits" StoreEntitySet="UserProfileNonprofits">
+            <EndProperty Name="Nonprofit">
+              <ScalarProperty Name="Id" ColumnName="NonprofitId" />
+            </EndProperty>
+            <EndProperty Name="AspNetUser">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+          </AssociationSetMapping>
           <EntitySetMapping Name="CaseManagers">
             <EntityTypeMapping TypeName="SolveChicagoDevModel.CaseManager">
               <MappingFragment StoreEntitySet="CaseManagers">
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="NonprofitId" ColumnName="NonprofitId" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="ProfilePicturePath" ColumnName="ProfilePicturePath" />
                 <ScalarProperty Name="Birthday" ColumnName="Birthday" />
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
@@ -3072,12 +3263,46 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="NonprofitSkills" TypeName="SolveChicagoDevModel.NonprofitSkills" StoreEntitySet="NonprofitSkills">
-            <EndProperty Name="Skill">
-              <ScalarProperty Name="Id" ColumnName="SkillId" />
+          <EntitySetMapping Name="Referrers">
+            <EntityTypeMapping TypeName="SolveChicagoDevModel.Referrer">
+              <MappingFragment StoreEntitySet="Referrers">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="CaseManagerPhoneNumbers" TypeName="SolveChicagoDevModel.CaseManagerPhoneNumbers" StoreEntitySet="CaseManagerPhoneNumbers">
+            <EndProperty Name="PhoneNumber">
+              <ScalarProperty Name="Id" ColumnName="PhoneNumberId" />
             </EndProperty>
-            <EndProperty Name="Nonprofit">
-              <ScalarProperty Name="Id" ColumnName="NonprofitId" />
+            <EndProperty Name="CaseManager">
+              <ScalarProperty Name="Id" ColumnName="CaseManagerId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="ReferrerMembers" TypeName="SolveChicagoDevModel.ReferrerMembers" StoreEntitySet="ReferrerMembers">
+            <EndProperty Name="Referrer">
+              <ScalarProperty Name="Id" ColumnName="ReferrerId" />
+            </EndProperty>
+            <EndProperty Name="Member">
+              <ScalarProperty Name="Id" ColumnName="MemberId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="ReferrerPhoneNumbers" TypeName="SolveChicagoDevModel.ReferrerPhoneNumbers" StoreEntitySet="ReferrerPhoneNumbers">
+            <EndProperty Name="Referrer">
+              <ScalarProperty Name="Id" ColumnName="ReferrerId" />
+            </EndProperty>
+            <EndProperty Name="PhoneNumber">
+              <ScalarProperty Name="Id" ColumnName="PhoneNumberId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="UserProfileReferrers" TypeName="SolveChicagoDevModel.UserProfileReferrers" StoreEntitySet="UserProfileReferrers">
+            <EndProperty Name="Referrer">
+              <ScalarProperty Name="Id" ColumnName="ReferrerId" />
+            </EndProperty>
+            <EndProperty Name="AspNetUser">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>

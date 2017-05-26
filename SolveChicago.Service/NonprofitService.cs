@@ -20,21 +20,23 @@ namespace SolveChicago.Service
                 return null;
             else
             {
+                Address address = nonprofit.Addresses.LastOrDefault();
                 NonprofitProfile npo = new NonprofitProfile
                 {
                     Id = nonprofit.Id,
-                    Address1 = nonprofit.Address1,
-                    Address2 = nonprofit.Address2,
-                    City = nonprofit.City,
-                    Country = nonprofit.Country,
-                    Phone = nonprofit.Phone,
+                    Address1 = address != null ? address.Address1 : string.Empty,
+                    Address2 = address != null ? address.Address2 : string.Empty,
+                    City = address != null ? address.City : string.Empty,
+                    Country = address != null ? address.Country : string.Empty,
+                    Phone = nonprofit.PhoneNumbers.Any() ? nonprofit.PhoneNumbers.Last().Number : string.Empty,
                     ProfilePicturePath = nonprofit.ProfilePicturePath,
-                    Province = nonprofit.Province,
+                    Province = address != null ? address.Province : string.Empty,
+                    ZipCode = address != null ? address.ZipCode : string.Empty,
                     Name = nonprofit.Name,
                     SkillsOffered = GetSkillsOffered(nonprofit),
                     SkillsList = GetSkillsList()
                 };
-                npo.TeachesSoftSkills = npo.SkillsOffered.ToLower().Contains("soft skills");
+                npo.TeachesSoftSkills = npo.SkillsOffered.Contains(Constants.Skills.SoftSkills);
                 return npo;
             }
         }
@@ -58,19 +60,43 @@ namespace SolveChicago.Service
             {
                 if (model.ProfilePicture != null)
                     nonprofit.ProfilePicturePath = UploadPhoto(Constants.Upload.NonprofitPhotos, model.ProfilePicture, model.Id);
-
-                nonprofit.Address1 = model.Address1;
-                nonprofit.Address2 = model.Address2;
-                nonprofit.City = model.City;
-                nonprofit.Country = model.Country;
-                nonprofit.Phone = model.Phone;
-                nonprofit.Province = model.Province;
+                
                 nonprofit.Name = model.Name;
-
+                UpdateNonprofitPhone(model, nonprofit);
+                UpdateNonprofitAddress(model, nonprofit);
                 UpdateNonprofitSkills(nonprofit, model, model.TeachesSoftSkills);
 
                 db.SaveChanges();
             }
+        }
+
+        private void UpdateNonprofitPhone(NonprofitProfile model, Nonprofit nonprofit)
+        {
+            PhoneNumber phone = model.Phone != null ? db.PhoneNumbers.Where(x => x.Number == model.Phone).FirstOrDefault() : null;
+            if (phone == null)
+            {
+                phone = new PhoneNumber { Number = model.Phone };
+            }
+            nonprofit.PhoneNumbers.Add(phone);
+        }
+
+        private void UpdateNonprofitAddress(NonprofitProfile model, Nonprofit nonprofit)
+        {
+            Address address = db.Addresses.SingleOrDefault(x => x.Address1 == model.Address1 && x.Address2 == model.Address2 && x.City == model.City && x.Country == model.Country && x.Province == model.Province && x.ZipCode == model.ZipCode);
+            if (address == null)
+            {
+                address = new Address
+                {
+                    Address1 = model.Address1,
+                    Address2 = model.Address2,
+                    City = model.City,
+                    Country = "USA",
+                    ZipCode = model.ZipCode,
+                    Province = model.Province,
+                };
+                db.Addresses.Add(address);
+            }
+            nonprofit.Addresses.Add(address);
         }
 
         private void UpdateNonprofitSkills(Nonprofit nonprofit, NonprofitProfile model, bool? teachesSoftSkills)

@@ -19,6 +19,9 @@ namespace SolveChicago.Entities
         {
             this.Families = new HashSet<Family>();
             this.Members = new HashSet<Member>();
+            this.Nonprofits = new HashSet<Nonprofit>();
+            this.CaseManagers = new HashSet<CaseManager>();
+            this.Referrers = new HashSet<Referrer>();
         }
     
         public int Id { get; set; }
@@ -28,5 +31,11 @@ namespace SolveChicago.Entities
         public virtual ICollection<Family> Families { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Member> Members { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Nonprofit> Nonprofits { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CaseManager> CaseManagers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Referrer> Referrers { get; set; }
     }
 }

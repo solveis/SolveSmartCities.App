@@ -215,15 +215,24 @@ namespace SolveChicago.Tests.Controllers
                     Id = 1,
                     FirstName = "Tom",
                     LastName = "Elliot",
-                    Phone = "1234567890",
                     ProfilePicturePath = "../image.jpg",
+                    PhoneNumbers = new List<PhoneNumber>
+                    {
+                        new PhoneNumber
+                        {
+                            Number = "1234567890",
+                        }
+                    }
                 }
             };
+            List<PhoneNumber> phones = new List<PhoneNumber>();
 
             var set = new Mock<DbSet<CaseManager>>().SetupData(data);
+            var phoneSet = new Mock<DbSet<PhoneNumber>>().SetupData(phones);
 
             var context = new Mock<SolveChicagoEntities>();
             context.Setup(c => c.CaseManagers).Returns(set.Object);
+            context.Setup(c => c.PhoneNumbers).Returns(phoneSet.Object);
 
             BaseController controller = new BaseController(context.Object);
             var result = (RedirectToRouteResult)controller.CaseManagerRedirect(1);
@@ -351,16 +360,30 @@ namespace SolveChicago.Tests.Controllers
             {
                 new Nonprofit()
                 {
-                    Address1 = "123 Main Street",
-                    Address2 = "Apt 2",
-                    City = "Chicago",
-                    Province = "IL",
-                    Country = "USA",
+                    Addresses = new List<Address>
+                    {
+                        new Address
+                        {
+                            Address1 = "123 Main Street",
+                            Address2 = "Apt 2",
+                            City = "Chicago",
+                            Province = "IL",
+                            Country = "USA",
+                            ZipCode = "60254"
+                        }
+                    },
+                    
                     Email = "nonprofit@solvechicago.com",
                     CreatedDate = DateTime.UtcNow.AddDays(-10),
                     Id = 1,
                     Name = "Tom Elliot",
-                    Phone = "1234567890",
+                    PhoneNumbers = new List<PhoneNumber>
+                    {
+                        new PhoneNumber
+                        {
+                            Number = "1234567890",
+                        }
+                    }
                 }
             };
 

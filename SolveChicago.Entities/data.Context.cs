@@ -50,14 +50,14 @@ namespace SolveChicago.Entities
         public virtual DbSet<MemberSpous> MemberSpouses { get; set; }
         public virtual DbSet<MilitaryBranch> MilitaryBranches { get; set; }
         public virtual DbSet<NonprofitMember> NonprofitMembers { get; set; }
-        public virtual DbSet<Nonprofit> Nonprofits { get; set; }
         public virtual DbSet<Outcome> Outcomes { get; set; }
         public virtual DbSet<PhoneNumber> PhoneNumbers { get; set; }
-        public virtual DbSet<Referrer> Referrers { get; set; }
         public virtual DbSet<School> Schools { get; set; }
         public virtual DbSet<Skill> Skills { get; set; }
         public virtual DbSet<ELMAH_Error> ELMAH_Error { get; set; }
+        public virtual DbSet<Nonprofit> Nonprofits { get; set; }
         public virtual DbSet<CaseManager> CaseManagers { get; set; }
+        public virtual DbSet<Referrer> Referrers { get; set; }
     
         public virtual ObjectResult<string> ELMAH_GetErrorsXml(string application, Nullable<int> pageIndex, Nullable<int> pageSize, ObjectParameter totalCount)
         {
