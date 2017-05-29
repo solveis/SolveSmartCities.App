@@ -530,22 +530,22 @@ namespace SolveChicago.Service
 
         public void UpdateMemberGovernmentPrograms(MemberProfileGovernmentPrograms model)
         {
-            if (model.GovernmentPrograms != null)
+            if (model.GovernmentProgramsIds != null)
             {
                 Member member = db.Members.Find(model.MemberId);
                 if (member == null)
                     throw new Exception($"Member with an id of {model.MemberId} not found");
                 else
                 {
-                        foreach (var program in model.GovernmentPrograms)
+                        foreach (var program in model.GovernmentProgramsIds)
                         {
-                            MemberGovernmentProgram mgp = member.MemberGovernmentPrograms.Where(x => x.GovernmentProgramId == program.ProgramId).FirstOrDefault();
+                            MemberGovernmentProgram mgp = member.MemberGovernmentPrograms.Where(x => x.GovernmentProgramId == program).FirstOrDefault();
                             if (mgp == null)
                             {
                                 mgp = new MemberGovernmentProgram
                                 {
                                     MemberId = member.Id,
-                                    GovernmentProgramId = program.ProgramId,
+                                    GovernmentProgramId = program,
                                 };
                                 member.MemberGovernmentPrograms.Add(mgp);
                             }
@@ -675,7 +675,7 @@ namespace SolveChicago.Service
                 {
                     if (interests.Select(x => x.Name.ToLower()).Contains(trimInterest.ToLower()))
                     {
-                        Interest existingInterest = interests.Single(x => x.Name.ToLower() == trimInterest.ToLower());
+                        Interest existingInterest = interests.First(x => x.Name.ToLower() == trimInterest.ToLower());
                         if (!member.Interests.Contains(existingInterest))
                             member.Interests.Add(existingInterest);
                     }
