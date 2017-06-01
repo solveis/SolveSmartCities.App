@@ -147,7 +147,7 @@ namespace SolveChicago.Web.Controllers
                 CommunicationService service = new CommunicationService(this.db);
                 string inviteUrl = string.Format("{0}/Register/CaseManager?id={1}", Settings.Website.BaseUrl, model.NonprofitId);
                 service.NonprofitInviteCaseManager(caseManager, State.Nonprofit.Name, inviteUrl);
-                return NonprofitRedirect(State.NonprofitId);
+                return RedirectToAction("CaseManagers");
             }
             return View(model);
         }

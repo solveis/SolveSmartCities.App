@@ -29,7 +29,7 @@ namespace SolveChicago.Service
                 using (MemoryStream target = new MemoryStream())
                 {
                     image.InputStream.CopyTo(target);
-                    byte[] fileBytes = Helpers.ConvertImageToPng(target.ToArray(), 500, 500);
+                    byte[] fileBytes = Helpers.ConvertImageToPng(target.ToArray(), 250, 250);
                     pictureUri = UploadToBlob(directory, string.Format("{0}.png", id), fileBytes);
                     return Helpers.RemoveSchemeFromUri(pictureUri);
                 }
