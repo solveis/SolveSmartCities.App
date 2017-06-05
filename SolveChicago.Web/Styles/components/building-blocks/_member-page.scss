@@ -1,0 +1,183 @@
+
+.members-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 60px;
+
+    @include breakpoint(small) {
+        flex-direction: column;
+    }
+
+    @include breakpoint(large) {
+        flex-direction: row;
+    }
+
+    .search-members {
+        @include breakpoint(small) {
+            margin-top: 12px;
+        }
+
+        @include breakpoint(large) {
+            margin-top: 0;
+        }
+    }
+}
+
+.member-card {
+    padding: 2px;
+    width: 100%;
+    background: $super-light-blue;
+    position: relative;
+
+    a {
+        margin-top: 6px;
+        width: 100%;
+        text-transform: uppercase;
+        font-weight: 800;
+        margin-bottom: 0;
+        float: right;
+        //height: 50px;
+        @include breakpoint(large) {
+            max-width: 90px;
+        }
+    }
+
+    .member-overview {
+        padding: 12px;
+    }
+
+    .member-name {
+        font-weight: 800;
+    }
+
+    .progress-bar-spacer {
+        margin-top: 20px;
+    }
+
+    .member-card-thumb {
+        width: 50px;
+        height: 50px;
+        border-radius: 100%;
+        background-color: $offwhite;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid $white;
+        //margin-bottom: 8px;
+        background: $brand-blue url('../img/profile-thumb-example.png') no-repeat center center;
+        background-size: 100% auto;
+    }
+
+    .overview-card-header {
+        color: $royal-blue;
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 24px;
+        margin-bottom: 0;
+    }
+
+    .has-space {
+        margin: 12px 0;
+    }
+
+}
+
+.member-details {
+    width: 100%;
+    //margin: 4px;
+    background: $white;
+    position: relative;
+    padding: 8px;
+
+    .member-detail-thumb {
+        width: 36px;
+        height: 36px;
+        border-radius: 100%;
+        background-color: $offwhite;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid $white;
+        background: $brand-blue url('../img/profile-thumb-example.png') no-repeat center center;
+        background-size: 100% auto;
+        margin-left: 8px;
+
+        @include breakpoint(large) {
+            margin-left: 18px;
+        }
+    }
+
+    span {
+        font-size: 14px;
+        color: $grey;
+    }
+
+    .small-progress-bar-spacer {
+        margin-top: 4px;
+    }
+
+    .small-progress-description {
+        font-size: 12px;
+        color: $grey;
+    }
+
+    .has-small-space {
+        margin: 6px 0;
+    }
+}
+
+.member-details-menu {
+  display: flex;
+  margin: 0;
+  text-transform: uppercase;
+  float: right;
+
+
+  ul {
+    list-style-type: none;
+  }
+
+  li {
+    display: flex;
+
+    &:first-child {
+      padding: 0;
+    }
+
+    .sub-menu-icon {
+        align-self: center;
+        width: 14px;
+        height: 14px;
+        margin-bottom: 2px;
+    }
+
+  }
+
+  a {
+    color: $brand-blue;
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    text-transform: none;
+    font-weight: 800;
+    margin-right: 8px;
+    border-bottom: 1px solid $white;
+
+    &:hover {
+        color: $royal-blue;
+        border-bottom: 1px solid $royal-blue;
+      //border-bottom: rgba($dark-blue, 0.20);
+    }
+
+    &:active {
+      border-left: 4px solid $brand-blue;
+      background-color: rgba($dark-blue, 0.20);
+    }
+  }
+}
+
+
+
+
+
+

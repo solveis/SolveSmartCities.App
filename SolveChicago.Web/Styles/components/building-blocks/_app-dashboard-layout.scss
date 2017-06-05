@@ -1,0 +1,493 @@
+$app-dashboard-top-nav-color: $dark-blue;
+$app-dashboard-top-nav-height: 60px;
+
+.app-dashboard {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-dashboard-body {
+  flex: 1 1 auto;
+  display: flex;
+}
+
+.app-dashboard-top-nav-bar  {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: $app-dashboard-top-nav-color;
+  height: $app-dashboard-top-nav-height;
+  width: 100%;
+  flex: 0 0 $app-dashboard-top-nav-height;
+}
+
+.app-dashboard-logo {
+  color: $white;
+  text-transform: uppercase;
+  font-weight: bold;
+  img {
+    height: 100%;
+    max-height: 40px;
+    width: auto;
+
+    @include breakpoint(small only) {
+        float: right;
+        margin-right: 60px;
+      }
+    }
+}
+
+.app-dashboard-search-bar-container {
+  position: relative;
+}
+
+.app-dashboard-search {
+  background: lighten($app-dashboard-top-nav-color, 10%);
+  border: 0;
+  margin-bottom: 0;
+  color: $white;
+
+  &:active,
+  &:focus {
+    background: darken($app-dashboard-top-nav-color, 5%);
+  }
+}
+
+.app-dashboard-search-icon {
+  position: absolute;
+  color: $white;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.app-dashboard-top-bar-actions {
+  align-items: center;
+  display: flex;
+
+  button {
+    margin-bottom: 0;
+    margin-right: 2rem;
+
+    &.hollow {
+      border-color: $white;
+      color: $white;
+      
+      &:hover {
+        background: $white;
+        color: $primary-color;
+      }
+    }
+  }
+
+  .fa-info-circle {
+    color: $white;
+    font-size: 1.5rem;
+  }
+}
+
+.app-dashboard-sidebar {
+  background-color: $royal-blue;
+  height: 100%;
+  overflow-x: visible;
+  overflow-y: auto;
+  z-index: 1;
+  transition: all $offcanvas-transition-length $offcanvas-transition-timing;
+
+
+  .app-dashboard-open-sidebar, .app-dashboard-close-sidebar{
+    align-items: baseline;
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 1rem;
+  }
+
+  .app-dashboard-sidebar-close-button {
+    font-size: 14px;
+  }
+
+  .app-dashboard-sidebar-inner {
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .menu > ul {
+      &:last-child {
+        align-self: flex-end;
+      }
+    }
+
+    .menu > li > a {
+      padding: 33px 0;
+      flex-direction: column;
+      border-bottom: 1px solid rgba($grey, 0.3);
+      align-items: center;
+      color: $white;
+      font-size: 14px;
+      text-transform: uppercase;
+
+      &:hover {
+        border-left: 15px solid $brand-blue;
+        background-color: rgba($dark-blue, 0.20);
+      }
+
+      &:active {
+        border-left: 15px solid $brand-blue;
+        background-color: rgba($dark-blue, 0.20);
+      }
+    }
+
+    .menu-icon {
+      height: 25px;
+      margin-bottom: 12px;
+      width: auto;
+    }
+
+    .sub-menu {
+      width: 100%;
+      display: flex;
+      padding-top: 20px;
+      margin: 0;
+      flex-direction: column;
+      border-bottom: 1px solid rgba($grey, 0.3);
+      color: $white;
+      font-size: 14px;
+      text-transform: uppercase;
+      align-self: center;
+
+      ul {
+        list-style-type: none;
+      }
+
+      li {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        border-bottom: 1px solid rgba($grey, 0.3);
+
+        &:first-child {
+          padding: 0;
+        }
+
+        .case-manager-profile-picture {
+          width: 50px;
+          height: 50px;
+          border-radius: 100%;
+          background-color: red;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border: 1px solid $white;
+          margin-bottom: 8px;
+          background: $brand-blue url('../img/profile-thumb-example.png') no-repeat center center;
+          background-size: 100% auto;
+        }
+
+        .case-manager-name {
+          text-transform: none;
+          font-weight: bold;
+          font-size: 14px;
+        }
+
+        .case-manager-company {
+          text-transform: none;
+          font-size: 12px;
+          margin-bottom: 12px;
+        }
+
+        .sub-menu-icon {
+          width: 25px;
+          height: auto;
+          margin-right: 12px;
+        }
+
+      }
+
+      a {
+        width: 100%;
+        padding: 20px 0;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        color: $white;
+        text-transform: none;
+
+        &:hover {
+          border-left: 4px solid $brand-blue;
+          background-color: rgba($dark-blue, 0.20);
+        }
+
+        &:active {
+          border-left: 4px solid $brand-blue;
+          background-color: rgba($dark-blue, 0.20);
+        }
+      }
+    }
+
+
+
+  }
+  .fa.large {
+    font-size: rem-calc(24);
+    width: 40px;
+  }
+}
+
+.reveal-for-medium {
+  .app-dashboard-open-sidebar {
+    display: none;
+  }
+}
+
+.app-dashboard-sidebar-footer {
+  background: rgba(42, 57, 79, 0.8);
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  position: absolute;
+  width: 100%;
+}
+
+.app-dashboard-open-sidebar {
+  text-align: center;
+}
+
+.app-dashboard-body-content {
+  header {
+    h4 {
+      margin-bottom: 60px;
+    }
+  }
+
+  .questionnaire-header {
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+    color: $grey;
+
+    // h2 {
+    //   margin-bottom: 60px;
+    // }
+  }
+
+  .app-dashboard-form-container {
+    display: flex;
+    flex-direction: column;
+    @include breakpoint(large) {
+      flex-direction: row;
+    }
+  }
+
+  .app-dashboard-form-container-space-around {
+    display: flex;
+    flex-direction: column;
+    @include breakpoint(large) {
+      flex-direction: row;
+      justify-content: space-around;
+    }
+  }
+
+  .form-holder {
+    width: 100%;
+    max-width: 360px;
+    margin: 0 auto;
+    @include breakpoint(large) {
+      &:first-child {
+        margin-right: 60px;
+      }
+
+      &:last-child {
+        float: right;
+        align-self: flex-end;
+      }
+    }
+  }
+
+  .create-profile-form-holder{
+    width: 100%;
+    max-width: 360px;
+  }
+
+  .line-divider {
+    margin-top: 60px;
+  }
+
+  .submit-create-profile {
+    text-transform: uppercase;
+    margin-bottom: 0;
+    height: 40px;
+    width: 100%;
+    max-width: 200px;
+    background-color: $brand-blue;
+    border: none;
+    color: $white;
+    //margin-top: 36px;
+    //margin-bottom: 36px;
+
+    &:hover {
+      color: $white;
+      background-color: $dark-blue;
+    }
+  }
+
+  transition: all $offcanvas-transition-length $offcanvas-transition-timing;
+  overflow-y: auto;
+  flex: 1 1 0;
+  padding: 20px;
+  @include breakpoint(medium) {
+    padding: 60px;
+  }
+  @include breakpoint(xlarge) {
+    padding: 60px 120px;
+  }
+
+  background-color: $white;
+}
+
+@mixin shrunk-sidebar() {
+  .app-dashboard-close-sidebar, .app-dashboard-sidebar-text {
+    //justify-content: space-between;
+  }
+
+  .app-dashboard-open-sidebar {
+    display: block;
+  }
+
+  .app-dashboard-sidebar {
+    width: 120px;
+    .fa.large {
+      width: auto;
+    }
+  }
+
+  .off-canvas-content {
+    margin-left: 120px;
+    width: calc(100% - 120px);
+  }
+
+  .navigation {
+    margin-top: 2rem;
+    text-align: center;
+
+  }
+  .menu.vertical > li > a {
+    justify-content: center;
+  }
+
+  .menu {
+
+    li.menu-link {
+      &::after {
+        display: none;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+      }
+
+      a {
+        padding: 0.75rem;
+        svg {
+          margin: 0;
+        }
+        span {
+          // display: none;
+          // opacity: 0;
+          transition: opacity 0.5s ease-in-out;
+        }
+      }
+    }
+  }
+}
+
+.notification-badge {
+  padding: 0 20px;
+  position: relative;
+
+  .badge {
+    position: absolute;
+    top: -5px;
+    right: 15px;
+    border-radius: 100%;
+    height: 12px;
+    width: 12px;
+    font-size: .8em;
+    background-color: $brand-red;
+  }
+}
+
+.current-employer {
+  font-weight: 800;
+  font-size: 14px;
+  color: $white;
+  @include breakpoint(small) {
+    visibility: 0;
+    display: none;
+  }
+  @include breakpoint(medium) {
+    visibility: 1;
+    display: block;
+    padding: 0 20px;
+  }
+}
+
+.add-job {
+  color: $light-blue;
+  padding: 12px 20px;
+  border: 2px solid $light-blue;
+  border-radius: 50px;
+  height: 40px;
+  margin-bottom: -20px;
+  background-color: $white;
+  font-weight: 800;
+
+  &:hover {
+    color: $white;
+    background-color: $brand-blue;
+  }
+
+  .add-job-icon {
+    margin-bottom: 4px;
+    margin-right: 10px;
+  }
+
+}
+
+.has-border {
+  margin-top: 60px;
+  margin-bottom: 60px;
+  border-bottom: 2px solid $light-blue;
+}
+
+.main-link {
+  margin-top: 8px;
+  margin-right: 20px;
+  font-weight: 800;
+
+  .go-back-icon {
+    margin-bottom: 4px;
+    margin-right: 4px;
+  }
+}
+
+.main-questions {
+  color: $grey;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 60px;
+}
+
+// mini sidebar on medium/tablet size
+@include breakpoint(medium only) {
+  .app-dashboard.shrink-medium {
+    @include shrunk-sidebar()
+  }
+}
+@include breakpoint(large) {
+  .app-dashboard.shrink-large {
+    @include shrunk-sidebar()
+  }
+}
