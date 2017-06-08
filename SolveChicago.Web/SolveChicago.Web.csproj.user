@@ -15,6 +15,7 @@
     <ProjectView>ProjectFiles</ProjectView>
     <NameOfLastUsedPublishProfile>solvesmartcities - Web Deploy</NameOfLastUsedPublishProfile>
     <ToolsVersionPromptShown>2.2</ToolsVersionPromptShown>
+    <IISExpressSSLPort>44352</IISExpressSSLPort>
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
