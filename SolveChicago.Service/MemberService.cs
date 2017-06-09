@@ -537,19 +537,19 @@ namespace SolveChicago.Service
                     throw new Exception($"Member with an id of {model.MemberId} not found");
                 else
                 {
-                        foreach (var program in model.GovernmentProgramsIds)
+                    foreach (var program in model.GovernmentProgramsIds)
+                    {
+                        MemberGovernmentProgram mgp = member.MemberGovernmentPrograms.Where(x => x.GovernmentProgramId == program).FirstOrDefault();
+                        if (mgp == null)
                         {
-                            MemberGovernmentProgram mgp = member.MemberGovernmentPrograms.Where(x => x.GovernmentProgramId == program).FirstOrDefault();
-                            if (mgp == null)
+                            mgp = new MemberGovernmentProgram
                             {
-                                mgp = new MemberGovernmentProgram
-                                {
-                                    MemberId = member.Id,
-                                    GovernmentProgramId = program,
-                                };
-                                member.MemberGovernmentPrograms.Add(mgp);
-                            }
+                                MemberId = member.Id,
+                                GovernmentProgramId = program,
+                            };
+                            member.MemberGovernmentPrograms.Add(mgp);
                         }
+                    }
                 }
                 db.SaveChanges();
             }

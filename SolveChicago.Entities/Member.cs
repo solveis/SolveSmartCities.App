@@ -53,6 +53,7 @@ namespace SolveChicago.Entities
         public string UserId { get; set; }
         public Nullable<bool> IsWorkforceInterested { get; set; }
         public Nullable<bool> IsJobSearching { get; set; }
+        public string SSN { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

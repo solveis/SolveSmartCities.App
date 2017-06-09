@@ -315,6 +315,7 @@
           <Property Name="UserId" Type="nvarchar" MaxLength="128" />
           <Property Name="IsWorkforceInterested" Type="bit" />
           <Property Name="IsJobSearching" Type="bit" />
+          <Property Name="SSN" Type="varchar" MaxLength="11" />
         </EntityType>
         <EntityType Name="MemberSchools">
           <Key>
@@ -1951,6 +1952,7 @@
           <Property Name="IsWorkforceInterested" Type="Boolean" />
           <Property Name="IsJobSearching" Type="Boolean" />
           <NavigationProperty Name="Referrers" Relationship="SolveChicagoDevModel.ReferrerMembers" FromRole="Member" ToRole="Referrer" />
+          <Property Name="SSN" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="MemberSchool">
           <Key>
@@ -3054,6 +3056,7 @@
           <EntitySetMapping Name="Members">
             <EntityTypeMapping TypeName="SolveChicagoDevModel.Member">
               <MappingFragment StoreEntitySet="Members">
+                <ScalarProperty Name="SSN" ColumnName="SSN" />
                 <ScalarProperty Name="IsJobSearching" ColumnName="IsJobSearching" />
                 <ScalarProperty Name="IsWorkforceInterested" ColumnName="IsWorkforceInterested" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
