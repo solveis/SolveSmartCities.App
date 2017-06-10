@@ -223,7 +223,7 @@ namespace SolveChicago.Service
             CreateMembersFromClientList(nonprofitId, clientList);
         }
 
-        private void CreateMembersFromClientList(int nonprofitId, List<ClientList> clientList)
+        public void CreateMembersFromClientList(int nonprofitId, List<ClientList> clientList)
         {
             MemberService service = new MemberService(this.db);
             foreach (ClientList client in clientList)
