@@ -230,5 +230,11 @@ namespace SolveChicago.Tests.Services
             Assert.Throws<ApplicationException>(() => service.AssignCaseManager(1, 4, 1));
 
         }
+
+        [Fact]
+        public void NonprofitService_UploadClients_Success()
+        {
+            
+        }
     }
 }

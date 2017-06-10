@@ -12,6 +12,7 @@ using SolveChicago.Web.Models.Nonprofit;
 using SolveChicago.Web.Models.Member;
 using SolveChicago.Common;
 using SolveChicago.Common.Models.Profile.Member;
+using SolveChicago.Common.Models;
 
 namespace SolveChicago.Web.Controllers
 {
@@ -295,6 +296,24 @@ namespace SolveChicago.Web.Controllers
             }
             db.SaveChanges();
 
+            return NonprofitRedirect(State.NonprofitId);
+        }
+
+        [Authorize(Roles = "Admin, Nonprofit, CaseManager")]
+        public ActionResult UploadClients(int? nonprofitId)
+        {
+            ImpersonateNonprofit(nonprofitId);
+            UploadModel model = new UploadModel { NonprofitId = State.NonprofitId };
+            return View(model);
+        }
+
+        [Authorize(Roles = "Admin, Nonprofit, CaseManager")]
+        [HttpPost]
+        public ActionResult UploadClients(UploadModel model)
+        {
+            ImpersonateNonprofit(model.NonprofitId);
+            NonprofitService service = new NonprofitService(this.db);
+            service.UploadClients(State.NonprofitId, model.CsvFile);
             return NonprofitRedirect(State.NonprofitId);
         }
 

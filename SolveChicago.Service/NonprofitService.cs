@@ -1,9 +1,12 @@
-﻿using SolveChicago.Common;
+﻿using CsvHelper;
+using SolveChicago.Common;
+using SolveChicago.Common.Models;
 using SolveChicago.Common.Models.Profile.Member;
 using SolveChicago.Entities;
 using SolveChicago.Web.Models.Profile;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 
@@ -167,6 +170,88 @@ namespace SolveChicago.Service
             else
             {
                 nonprofitMember.CaseManagerId = caseManagerId;
+                db.SaveChanges();
+            }
+        }
+
+        public void UploadClients(int nonprofitId, HttpPostedFileBase file)
+        {
+            List<ClientList> clientList = new List<ClientList>();
+            using (MemoryStream stream = new MemoryStream())
+            {
+                stream.Position = 0;
+                try
+                {
+                    using (StreamReader streamReader = new StreamReader(file.InputStream))
+                    {
+                        using (CsvReader reader = new CsvReader(streamReader))
+                        {
+                            while (reader.Read())
+                            {
+                                if(!string.IsNullOrEmpty(reader.GetField<string>("FirstName")) && !string.IsNullOrEmpty(reader.GetField<string>("LastName")))
+                                {
+                                    clientList.Add(new ClientList
+                                    {
+                                        SSN = reader.GetField<string>("SSN"),
+                                        FirstName = reader.GetField<string>("FirstName"),
+                                        LastName = reader.GetField<string>("LastName"),
+                                        Gender = reader.GetField<string>("Gender"),
+                                        Birthday = reader.GetField<DateTime?>("Birthday"),
+                                        IsHeadOfHousehold = reader.GetField<bool?>("IsHeadOfHousehold"),
+                                        Income = reader.GetField<decimal?>("Income"),
+                                        IsMilitary = reader.GetField<bool?>("IsMilitary"),
+                                        Address1 = reader.GetField<string>("Address1"),
+                                        Address2 = reader.GetField<string>("Address2"),
+                                        City = reader.GetField<string>("City"),
+                                        State = reader.GetField<string>("State"),
+                                        ZipCode = reader.GetField<string>("ZipCode"),
+                                        Country = reader.GetField<string>("Country"),
+                                        Skills = reader.GetField<string>("Skills"),
+                                        Interests = reader.GetField<string>("Interests"),
+                                        PhoneNumber = reader.GetField<string>("PhoneNumber"),
+                                        Email = reader.GetField<string>("Email"),
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                }
+            }
+            CreateMembersFromClientList(nonprofitId, clientList);
+        }
+
+        private void CreateMembersFromClientList(int nonprofitId, List<ClientList> clientList)
+        {
+            MemberService service = new MemberService(this.db);
+            foreach (ClientList client in clientList)
+            {
+                Member member = new Member
+                {
+                    FirstName = client.FirstName,
+                    Birthday = client.Birthday,
+                    LastName = client.LastName,
+                    CreatedDate = DateTime.UtcNow,
+                    Email = client.Email,
+                    Gender = client.Gender,
+                    Income = client.Income,
+                    IsHeadOfHousehold = client.IsHeadOfHousehold,
+                    IsMilitary = client.IsMilitary,
+                    SSN = client.SSN,
+                };
+                service.UpdateMemberAddress(client.Address1, client.Address2, client.City, client.State, client.ZipCode, client.Country, member);
+                service.UpdateMemberPhone(client.PhoneNumber, member);
+                service.MatchOrCreateFamily(member);
+                if(!string.IsNullOrEmpty(client.Skills))
+                    service.UpdateMemberSkills(client.Skills, member, true, nonprofitId);
+                if(!string.IsNullOrEmpty(client.Interests))
+                    service.UpdateMemberInterests(client.Interests, member);
+
+                db.Members.Add(member);
+                member.NonprofitMembers.Add(new NonprofitMember { NonprofitId = nonprofitId, Start = DateTime.UtcNow });
+
                 db.SaveChanges();
             }
         }

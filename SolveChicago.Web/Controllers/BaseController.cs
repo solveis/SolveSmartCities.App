@@ -500,9 +500,17 @@ namespace SolveChicago.Web.Controllers
                             Skill softSkills = db.Skills.SingleOrDefault(x => x.Name == Common.Constants.Skills.SoftSkills);
                             if (softSkills == null)
                                 softSkills = new Skill { Name = Common.Constants.Skills.SoftSkills };
-                            model.MemberSkills.Add(new MemberSkill { IsComplete = false, Skill = softSkills });
+                            if(!model.MemberSkills.Any(x => x.Skill.Name == Common.Constants.Skills.SoftSkills))
+                                model.MemberSkills.Add(new MemberSkill { IsComplete = false, Skill = softSkills });
 
-                            db.SaveChanges();
+                            try
+                            {
+                                db.SaveChanges();
+                            }
+                            catch(Exception ex)
+                            {
+                                Console.WriteLine(ex);
+                            }
                             return UpdateSurveyStatus(model, Common.Constants.Member.SurveyStep.Personal);
                         }
                         return RedirectToAction("Index");
