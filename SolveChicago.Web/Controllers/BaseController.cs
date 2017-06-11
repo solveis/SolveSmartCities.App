@@ -351,7 +351,7 @@ namespace SolveChicago.Web.Controllers
         {
             if (string.IsNullOrEmpty(entity.FirstName) || string.IsNullOrEmpty(entity.LastName) || !entity.PhoneNumbers.Any() || string.IsNullOrEmpty(entity.ProfilePicturePath))
             {
-                return RedirectToAction("CaseManager", "Profile", new { caseManagerId = entity.Id });
+                return RedirectToAction("CaseManager", "Profile", new { id = entity.Id });
             }
             else
             {
@@ -369,7 +369,7 @@ namespace SolveChicago.Web.Controllers
         {
             if (string.IsNullOrEmpty(entity.Name))
             {
-                return RedirectToAction("Referrer", "Profile", new { referrerId = entity.Id });
+                return RedirectToAction("Referrer", "Profile", new { id = entity.Id });
             }
             else
             {
@@ -405,7 +405,7 @@ namespace SolveChicago.Web.Controllers
         {
             if (!entity.Addresses.Any() || !entity.PhoneNumbers.Any())
             {
-                return RedirectToAction("Nonprofit", "Profile", new { nonprofitId = entity.Id });
+                return RedirectToAction("Nonprofit", "Profile", new { id = entity.Id });
             }
             else
             {
