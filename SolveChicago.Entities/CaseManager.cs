@@ -17,7 +17,6 @@ namespace SolveChicago.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public CaseManager()
         {
-            this.CaseNotes = new HashSet<CaseNote>();
             this.NonprofitMembers = new HashSet<NonprofitMember>();
             this.PhoneNumbers = new HashSet<PhoneNumber>();
         }
@@ -35,8 +34,6 @@ namespace SolveChicago.Entities
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual Nonprofit Nonprofit { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CaseNote> CaseNotes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NonprofitMember> NonprofitMembers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

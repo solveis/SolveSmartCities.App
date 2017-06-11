@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using SolveChicago.Entities;
 using SolveChicago.Service;
 using SolveChicago.Common.Models.Profile.Member;
+using Microsoft.AspNet.Identity;
 
 namespace SolveChicago.Web.Controllers
 {
@@ -39,28 +40,28 @@ namespace SolveChicago.Web.Controllers
                 return View(families.ToList());
         }
 
+        [Authorize(Roles = "CaseManager, Nonprofit")]
         // GET: CaseManagers/AddCaseNote
-        public ActionResult AddCaseNote(int? caseManagerId, int memberId)
+        public ActionResult AddCaseNote(string caseManagerId, int memberId, int nonprofitId)
         {
-            ImpersonateCaseManager(caseManagerId);
             Member member = db.Members.Find(memberId);
             if (member == null)
                 throw new ApplicationException($"No Member with id of {memberId}");
-            CaseNote model = new CaseNote() { CaseManagerId = State.CaseManagerId, MemberId = member.Id, Member = member };
+            CaseNote model = new CaseNote() { CaseManagerId = User.Identity.GetUserId(), MemberId = member.Id, Member = member, NonprofitId = nonprofitId };
             return View(model);
         }
 
         // POST: CaseManagers/AddCaseNote
         [HttpPost]
+        [Authorize(Roles = "CaseManager, Nonprofit")]
         public ActionResult AddCaseNote(CaseNote caseNote)
         {
-            ImpersonateCaseManager(caseNote.CaseManagerId);
             if(ModelState.IsValid)
             {
                 caseNote.CreatedDate = DateTime.UtcNow;
                 db.CaseNotes.Add(caseNote);
                 db.SaveChanges();
-               return CaseManagerRedirect(State.CaseManagerId);
+               return UserRedirect();
             }
             return View(caseNote);
         }

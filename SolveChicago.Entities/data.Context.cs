@@ -33,7 +33,6 @@ namespace SolveChicago.Entities
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
-        public virtual DbSet<CaseNote> CaseNotes { get; set; }
         public virtual DbSet<Communication> Communications { get; set; }
         public virtual DbSet<Corporation> Corporations { get; set; }
         public virtual DbSet<Family> Families { get; set; }
@@ -55,9 +54,10 @@ namespace SolveChicago.Entities
         public virtual DbSet<Skill> Skills { get; set; }
         public virtual DbSet<ELMAH_Error> ELMAH_Error { get; set; }
         public virtual DbSet<Nonprofit> Nonprofits { get; set; }
-        public virtual DbSet<CaseManager> CaseManagers { get; set; }
         public virtual DbSet<Referrer> Referrers { get; set; }
         public virtual DbSet<Admin> Admins { get; set; }
+        public virtual DbSet<CaseManager> CaseManagers { get; set; }
+        public virtual DbSet<CaseNote> CaseNotes { get; set; }
     
         public virtual ObjectResult<string> ELMAH_GetErrorsXml(string application, Nullable<int> pageIndex, Nullable<int> pageSize, ObjectParameter totalCount)
         {

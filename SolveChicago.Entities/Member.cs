@@ -17,7 +17,6 @@ namespace SolveChicago.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Member()
         {
-            this.CaseNotes = new HashSet<CaseNote>();
             this.MemberCorporations = new HashSet<MemberCorporation>();
             this.MemberEmergencyContacts = new HashSet<MemberEmergencyContact>();
             this.MemberGovernmentPrograms = new HashSet<MemberGovernmentProgram>();
@@ -34,6 +33,7 @@ namespace SolveChicago.Entities
             this.MilitaryBranches = new HashSet<MilitaryBranch>();
             this.PhoneNumbers = new HashSet<PhoneNumber>();
             this.Referrers = new HashSet<Referrer>();
+            this.CaseNotes = new HashSet<CaseNote>();
         }
     
         public int Id { get; set; }
@@ -56,8 +56,6 @@ namespace SolveChicago.Entities
         public string SSN { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CaseNote> CaseNotes { get; set; }
         public virtual Family Family { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MemberCorporation> MemberCorporations { get; set; }
@@ -91,5 +89,7 @@ namespace SolveChicago.Entities
         public virtual ICollection<PhoneNumber> PhoneNumbers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Referrer> Referrers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CaseNote> CaseNotes { get; set; }
     }
 }

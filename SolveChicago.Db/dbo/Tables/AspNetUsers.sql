@@ -10,10 +10,11 @@
     [LockoutEndDateUtc]    DATETIME       NULL,
     [LockoutEnabled]       BIT            NOT NULL,
     [AccessFailedCount]    INT            NOT NULL,
-    [UserName]             NVARCHAR (256) NOT NULL,
     [ReceiveEmail] BIT NULL, 
     [LastActivityDate] DATETIME2 NOT NULL DEFAULT ((GETDATE())), 
-    [Name] NVARCHAR(128) NULL, 
+    [UserName]                NVARCHAR (256) NULL,
+    [FirstName] NVARCHAR(128) NULL, 
+	[LastName] NVARCHAR(128) NULL, 
     [CreatedDate] DATETIME2 NOT NULL DEFAULT ((GETDATE())), 
     CONSTRAINT [PK_AspNetUser] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
