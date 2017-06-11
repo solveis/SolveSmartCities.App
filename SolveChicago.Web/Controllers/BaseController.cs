@@ -131,16 +131,18 @@ namespace SolveChicago.Web.Controllers
                     _state.Member = member;
                     _state.MemberId = member.Id;
 
+                    ViewBag.Member = member;
                     ViewBag.MemberId = member.Id;
                     ViewBag.MemberName = string.Format("{0} {1}", member.FirstName, member.LastName);
                     ViewBag.MemberProfilePicture = !string.IsNullOrEmpty(member.ProfilePicturePath) ? member.ProfilePicturePath : Common.Constants.Member.NoPhotoUrl;
 
-                    if (member.NonprofitMembers.Select(x => x.CaseManager).FirstOrDefault() != null)
+                    if (member.NonprofitMembers.Select(x => x.CaseManagers).Count() > 0)
                     {
-                        CaseManager caseManager = member.NonprofitMembers.Select(x => x.CaseManager).First();
+                        CaseManager caseManager = member.NonprofitMembers.SelectMany(x => x.CaseManagers).First();
                         _state.CaseManager = caseManager;
                         _state.CaseManagerId = caseManager.Id;
 
+                        ViewBag.CaseManager = caseManager;
                         ViewBag.CaseManagerId = caseManager.Id;
                         ViewBag.CaseManagerName = string.Format("{0} {1}", caseManager.FirstName, caseManager.LastName);
                         ViewBag.CaseManagerProfilePicture = !string.IsNullOrEmpty(caseManager.ProfilePicturePath) ? caseManager.ProfilePicturePath : Common.Constants.Member.NoPhotoUrl;
@@ -155,7 +157,8 @@ namespace SolveChicago.Web.Controllers
                 {
                     _state.CaseManager = caseManager;
                     _state.CaseManagerId = caseManager.Id;
-                    
+
+                    ViewBag.CaseManager = caseManager;
                     ViewBag.CaseManagerId = caseManager.Id;
                     ViewBag.CaseManagerName = string.Format("{0} {1}", caseManager.FirstName, caseManager.LastName);
                     ViewBag.CaseManagerProfilePicture = !string.IsNullOrEmpty(caseManager.ProfilePicturePath) ? caseManager.ProfilePicturePath : Common.Constants.Member.NoPhotoUrl;
@@ -165,6 +168,7 @@ namespace SolveChicago.Web.Controllers
                         _state.Nonprofit = caseManager.Nonprofit;
                         _state.NonprofitId = caseManager.Nonprofit.Id;
 
+                        ViewBag.Nonprofit = caseManager.Nonprofit;
                         ViewBag.NonprofitId = caseManager.Nonprofit.Id;
                         ViewBag.NonprofitName = caseManager.Nonprofit.Name;
                     }
@@ -178,7 +182,8 @@ namespace SolveChicago.Web.Controllers
                 {
                     _state.Corporation = corporation;
                     _state.CorporationId = corporation.Id;
-                    
+
+                    ViewBag.Corporation = corporation;
                     ViewBag.CorporationId = corporation.Id;
                     ViewBag.CorporationName = corporation.Name;
                 }
@@ -192,6 +197,7 @@ namespace SolveChicago.Web.Controllers
                     _state.Nonprofit = nonprofit;
                     _state.NonprofitId = nonprofit.Id;
 
+                    ViewBag.Nonprofit = nonprofit;
                     ViewBag.NonprofitId = nonprofit.Id;
                     ViewBag.NonprofitName = nonprofit.Name;
                     ViewBag.NonprofitProfilePicture = !string.IsNullOrEmpty(nonprofit.ProfilePicturePath) ? nonprofit.ProfilePicturePath : Common.Constants.Member.NoPhotoUrl;
@@ -207,6 +213,7 @@ namespace SolveChicago.Web.Controllers
                     _state.Admin = admin;
                     _state.AdminId = admin.Id;
 
+                    ViewBag.Admin = admin;
                     ViewBag.AdminId = admin.Id;
                     ViewBag.AdminName = string.Format("{0} {1}", admin.FirstName, admin.LastName);
                     ViewBag.AdminProfilePicture = !string.IsNullOrEmpty(admin.ProfilePicturePath) ? admin.ProfilePicturePath : Common.Constants.Member.NoPhotoUrl;
@@ -222,6 +229,7 @@ namespace SolveChicago.Web.Controllers
                     _state.Referrer = referrer;
                     _state.ReferrerId = referrer.Id;
 
+                    ViewBag.Referrer = referrer;
                     ViewBag.ReferrerId = referrer.Id;
                     ViewBag.ReferrerName = referrer.Name;
                 }
@@ -509,7 +517,6 @@ namespace SolveChicago.Web.Controllers
                             }
                             catch(Exception ex)
                             {
-                                Console.WriteLine(ex);
                             }
                             return UpdateSurveyStatus(model, Common.Constants.Member.SurveyStep.Personal);
                         }
@@ -675,6 +682,15 @@ namespace SolveChicago.Web.Controllers
                     ViewBag.ReferrerId = referrer.Id;
                 }
             }
+        }
+
+        protected override void OnException(ExceptionContext filterContext)
+        {
+            filterContext.ExceptionHandled = true;
+            Elmah.ErrorSignal.FromCurrentContext().Raise(filterContext.Exception);
+            TempData["ErrorMessage"] = filterContext.Exception.Message;
+            // Redirect on error:
+            filterContext.Result = RedirectToAction("Index", "Error");
         }
     }
 }

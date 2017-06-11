@@ -307,8 +307,7 @@ namespace SolveChicago.Service
             {
                 return NonprofitMembers.Select(x => new NonprofitEntity
                 {
-                    CaseManagerId = x.CaseManager?.Id,
-                    CaseManagerName = string.Format("{0} {1}", x.CaseManager?.FirstName, x.CaseManager?.LastName),
+                    CaseManagers = x.CaseManagers.ToArray(),
                     Enjoyed = x.MemberEnjoyed,
                     Struggled = x.MemberStruggled,
                     NonprofitId = x.NonprofitId,

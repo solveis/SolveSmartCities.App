@@ -520,7 +520,6 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\500.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
@@ -603,7 +602,6 @@
     <Content Include="Views\Shared\Lists\_Prospects.cshtml" />
     <Content Include="Views\Nonprofits\AddMember.cshtml" />
     <Content Include="Views\Admins\Referrers.cshtml" />
-    <Content Include="Views\Shared\404.cshtml" />
     <Content Include="Views\Shared\500.html" />
     <Content Include="Views\Shared\404.html" />
     <Content Include="Views\Nonprofits\JobPlaced.cshtml" />

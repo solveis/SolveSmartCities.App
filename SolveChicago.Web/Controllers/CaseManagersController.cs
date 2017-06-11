@@ -42,7 +42,7 @@ namespace SolveChicago.Web.Controllers
 
         [Authorize(Roles = "CaseManager, Nonprofit")]
         // GET: CaseManagers/AddCaseNote
-        public ActionResult AddCaseNote(string caseManagerId, int memberId, int nonprofitId)
+        public ActionResult AddCaseNote(string caseManagerId, int memberId, int? nonprofitId)
         {
             Member member = db.Members.Find(memberId);
             if (member == null)

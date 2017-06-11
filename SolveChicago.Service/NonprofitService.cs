@@ -169,7 +169,11 @@ namespace SolveChicago.Service
                 throw new ApplicationException("No Member-Nonprofit relationship exists between these two entities.");
             else
             {
-                nonprofitMember.CaseManagerId = caseManagerId;
+                CaseManager caseManager = db.CaseManagers.Find(caseManagerId);
+                if (caseManager == null)
+                    throw new ApplicationException($"Case Manager with Id of {caseManagerId} does not exist.");
+                else
+                    nonprofitMember.CaseManagers.Add(caseManager);
                 db.SaveChanges();
             }
         }

@@ -109,6 +109,15 @@ namespace SolveChicago.Tests.Services
                     NonprofitId = 1,
                 }
             };
+            List<CaseManager> caseManagers = new List<CaseManager>
+            {
+                new CaseManager
+                {
+                    Id = 1,
+                    FirstName = "John",
+                    LastName = "Doe"
+                }
+            };
             List<Skill> skills = new List<Skill>();
             List<Address> addresses = new List<Address>();
 
@@ -131,6 +140,11 @@ namespace SolveChicago.Tests.Services
             addressSet.Setup(m => m.Find(It.IsAny<object[]>()))
                 .Returns<object[]>(ids => addresses.FirstOrDefault(d => d.Id == (int)ids[0]));
             context.Setup(c => c.Addresses).Returns(addressSet.Object);
+
+            var caseManagerSet = new Mock<DbSet<CaseManager>>().SetupData(caseManagers);
+            caseManagerSet.Setup(m => m.Find(It.IsAny<object[]>()))
+                .Returns<object[]>(ids => caseManagers.FirstOrDefault(d => d.Id == (int)ids[0]));
+            context.Setup(c => c.CaseManagers).Returns(caseManagerSet.Object);
         }
 
         [Fact]
