@@ -16,14 +16,15 @@ namespace SolveChicago.Entities
     {
         public int Id { get; set; }
         public int MemberId { get; set; }
-        public Nullable<int> CaseManagerId { get; set; }
+        public string CaseManagerId { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public string Note { get; set; }
         public Nullable<int> OutcomeId { get; set; }
         public Nullable<decimal> OutcomeWeight { get; set; }
+        public Nullable<int> NonprofitId { get; set; }
     
+        public virtual AspNetUser AspNetUser { get; set; }
         public virtual Member Member { get; set; }
         public virtual Outcome Outcome { get; set; }
-        public virtual CaseManager CaseManager { get; set; }
     }
 }

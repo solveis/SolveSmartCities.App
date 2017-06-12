@@ -109,27 +109,27 @@ namespace SolveChicago.Service
                 model.Stage = Constants.Member.Stage.ProfileCompleted;
                 model.Percent = (int)Math.Round(37.5);
             }
-            if (member.NonprofitMembers.Any(x => x.Start > member.CreatedDate && !x.End.HasValue && x.Nonprofit.Skills.Any(y => y.Name == Constants.Skills.SoftSkills)))
+            if (member.NonprofitMembers.Any(x => x.Start >= member.CreatedDate && !x.End.HasValue && x.Nonprofit.Skills.Any(y => y.Name == Constants.Skills.SoftSkills)))
             { // they are in a soft skills NPO
                 model.Stage = Constants.Member.Stage.InSoftSkillsTraining;
                 model.Percent = (int)Math.Round(50.0);
             }
-            if (member.NonprofitMembers.Any(x => x.Start > member.CreatedDate && x.End.HasValue && x.End.Value <= DateTime.UtcNow && x.Nonprofit.Skills.Any(y => y.Name == Constants.Skills.SoftSkills)) && member.MemberSkills.Any(x => x.IsComplete && x.Skill.Name == Constants.Skills.SoftSkills))
+            if (member.NonprofitMembers.Any(x => x.Start >= member.CreatedDate && x.End.HasValue && x.End.Value <= DateTime.UtcNow && x.Nonprofit.Skills.Any(y => y.Name == Constants.Skills.SoftSkills)) && member.MemberSkills.Any(x => x.IsComplete && x.Skill.Name == Constants.Skills.SoftSkills))
             { // they have completed a soft skills NPO, and have gained soft skills
                 model.Stage = Constants.Member.Stage.SoftSkillsAcquired;
                 model.Percent = (int)Math.Round(62.5);
             }
-            if (member.NonprofitMembers.Any(x => x.Start > member.CreatedDate && !x.End.HasValue && x.Nonprofit.Skills.Any(y => y.Name != Constants.Skills.SoftSkills)))
+            if (member.NonprofitMembers.Any(x => x.Start >= member.CreatedDate && !x.End.HasValue && x.Nonprofit.Skills.Any(y => y.Name != Constants.Skills.SoftSkills)))
             { // they are in a workforce NPO
                 model.Stage = Constants.Member.Stage.InWorkforceTraining;
                 model.Percent = (int)Math.Round(75.0);
             }
-            if (member.NonprofitMembers.Any(x => x.Start > member.CreatedDate && x.End.HasValue && x.End.Value <= DateTime.UtcNow && x.Nonprofit.Skills.Any(y => y.Name != Constants.Skills.SoftSkills)) && !member.NonprofitMembers.Any(x => x.Start > member.CreatedDate && !x.End.HasValue) && member.MemberSkills.Any(x => x.IsComplete && x.Skill.Name != Constants.Skills.SoftSkills))
+            if (member.NonprofitMembers.Any(x => x.Start >= member.CreatedDate && x.End.HasValue && x.End.Value <= DateTime.UtcNow && x.Nonprofit.Skills.Any(y => y.Name != Constants.Skills.SoftSkills)) && !member.NonprofitMembers.Any(x => x.Start > member.CreatedDate && !x.End.HasValue) && member.MemberSkills.Any(x => x.IsComplete && x.Skill.Name != Constants.Skills.SoftSkills))
             { // they have completed a workforce NPO, and have a workforce skill
                 model.Stage = Constants.Member.Stage.WorkforceSkillsAcquired;
                 model.Percent = (int)Math.Round(87.5);
             }
-            if (member.MemberCorporations.Any(x => x.Start > member.CreatedDate && !x.End.HasValue))
+            if (member.MemberCorporations.Any(x => x.Start >= member.CreatedDate && !x.End.HasValue))
             { // they have a job
                 model.Stage = Constants.Member.Stage.JobPlaced;
                 model.Percent = 100;
@@ -307,8 +307,7 @@ namespace SolveChicago.Service
             {
                 return NonprofitMembers.Select(x => new NonprofitEntity
                 {
-                    CaseManagerId = x.CaseManager?.Id,
-                    CaseManagerName = string.Format("{0} {1}", x.CaseManager?.FirstName, x.CaseManager?.LastName),
+                    CaseManagers = x.CaseManagers.ToArray(),
                     Enjoyed = x.MemberEnjoyed,
                     Struggled = x.MemberStruggled,
                     NonprofitId = x.NonprofitId,
@@ -537,19 +536,19 @@ namespace SolveChicago.Service
                     throw new Exception($"Member with an id of {model.MemberId} not found");
                 else
                 {
-                        foreach (var program in model.GovernmentProgramsIds)
+                    foreach (var program in model.GovernmentProgramsIds)
+                    {
+                        MemberGovernmentProgram mgp = member.MemberGovernmentPrograms.Where(x => x.GovernmentProgramId == program).FirstOrDefault();
+                        if (mgp == null)
                         {
-                            MemberGovernmentProgram mgp = member.MemberGovernmentPrograms.Where(x => x.GovernmentProgramId == program).FirstOrDefault();
-                            if (mgp == null)
+                            mgp = new MemberGovernmentProgram
                             {
-                                mgp = new MemberGovernmentProgram
-                                {
-                                    MemberId = member.Id,
-                                    GovernmentProgramId = program,
-                                };
-                                member.MemberGovernmentPrograms.Add(mgp);
-                            }
+                                MemberId = member.Id,
+                                GovernmentProgramId = program,
+                            };
+                            member.MemberGovernmentPrograms.Add(mgp);
                         }
+                    }
                 }
                 db.SaveChanges();
             }
@@ -575,10 +574,10 @@ namespace SolveChicago.Service
                 member.Income = model.Income;
                 member.IsHeadOfHousehold = model.IsHeadOfHousehold;
 
-                UpdateMemberAddress(model, member);
-                MatchOrCreateFamily(model, member);
-                UpdateMemberPhone(model, member);
-                UpdateMemberInterests(model, member);
+                UpdateMemberAddress(model.Address1, model.Address2, model.City, model.Province, model.ZipCode, model.Country, member);
+                MatchOrCreateFamily(member);
+                UpdateMemberPhone(model.Phone, member);
+                UpdateMemberInterests(model.Interests, member);
                 UpdateMemberMilitary(model, member);
                 UpdateMemberSkills(!string.IsNullOrEmpty(model.Skills) ? model.Skills : "", member, true);
 
@@ -586,20 +585,20 @@ namespace SolveChicago.Service
             }
         }
 
-        private void MatchOrCreateFamily(MemberProfilePersonal model, Member member)
+        public void MatchOrCreateFamily(Member member)
         {
             Family[] families = db.Families.ToArray();
             Address address = member.Addresses.FirstOrDefault();
             if (member.FamilyId.HasValue)
                 return;
-            else if(families.Any(x => x.Addresses.Contains(address)))
+            else if(families.Any(x => x.Addresses.Any(y => y.Address1 == address.Address1 && y.Address2 == address.Address2 && y.City == address.City && y.Province == address.Province && y.ZipCode == address.ZipCode && y.Country == address.Country)))
             {
-                Family family = families.Where(x => x.Addresses.Contains(address)).First();
+                Family family = families.Where(x => x.Addresses.Any(y => y.Address1 == address.Address1 && y.Address2 == address.Address2 && y.City == address.City && y.Province == address.Province && y.ZipCode == address.ZipCode && y.Country == address.Country)).First();
                 family.Members.Add(member);
             }
             else
             {
-                member.Family = new Family { FamilyName = member.LastName, PhoneNumbers = member.PhoneNumbers.ToArray(), Addresses = member.Addresses.ToArray() };
+                member.Family = new Family { FamilyName = member.LastName, PhoneNumbers = member.PhoneNumbers.ToArray(), Addresses = member.Addresses.ToArray(), CreatedDate = DateTime.UtcNow };
             }
         }
 
@@ -664,10 +663,10 @@ namespace SolveChicago.Service
             }
         }
 
-        private void UpdateMemberInterests(MemberProfilePersonal model, Member member)
+        public void UpdateMemberInterests(string interestList, Member member)
         {
             List<Interest> interests = db.Interests.ToList();
-            string[] newInterests = model.Interests != null ? model.Interests.Split(',') : new string[0];
+            string[] newInterests = !string.IsNullOrEmpty(interestList) ? interestList.Split(',') : new string[0];
             foreach (string interest in newInterests)
             {
                 string trimInterest = interest.Trim();
@@ -775,14 +774,17 @@ namespace SolveChicago.Service
             db.SaveChanges();
         }
 
-        private void UpdateMemberPhone(MemberProfilePersonal model, Member member)
+        public void UpdateMemberPhone(string phoneNumber, Member member)
         {
-            PhoneNumber phone = model.Phone != null ? db.PhoneNumbers.Where(x => x.Number == model.Phone).FirstOrDefault() : null;
-            if (phone == null)
+            if(!string.IsNullOrEmpty(phoneNumber))
             {
-                phone = new PhoneNumber { Number = model.Phone };
+                PhoneNumber phone = phoneNumber != null ? db.PhoneNumbers.Where(x => x.Number == phoneNumber).FirstOrDefault() : null;
+                if (phone == null)
+                {
+                    phone = new PhoneNumber { Number = phoneNumber };
+                }
+                member.PhoneNumbers.Add(phone);
             }
-            member.PhoneNumbers.Add(phone);
         }
 
         public void UpdateMemberSchools(MemberProfileSchools model)
@@ -821,19 +823,19 @@ namespace SolveChicago.Service
             db.SaveChanges();
         }
 
-        private void UpdateMemberAddress(MemberProfilePersonal model, Member member)
+        public void UpdateMemberAddress(string address1, string address2, string city, string province, string zipcode, string country, Member member)
         {
-            Address address = db.Addresses.SingleOrDefault(x => x.Address1 == model.Address1 && x.Address2 == model.Address2 && x.City == model.City && x.Country == model.Country && x.Province == model.Province && x.ZipCode == model.ZipCode);
+            Address address = db.Addresses.SingleOrDefault(x => x.Address1 == address1 && x.Address2 == address2 && x.City == city && x.Country == country && x.Province == province && x.ZipCode == zipcode);
             if (address == null)
             {
                 address = new Address
                 {
-                    Address1 = model.Address1,
-                    Address2 = model.Address2,
-                    City = model.City,
+                    Address1 = address1,
+                    Address2 = address2,
+                    City = city,
                     Country = "USA",
-                    ZipCode = model.ZipCode,
-                    Province = model.Province,
+                    ZipCode = zipcode,
+                    Province = province,
                 };
                 db.Addresses.Add(address);
             }

@@ -25,9 +25,10 @@ namespace SolveChicago.Entities
             this.AspNetRoles = new HashSet<AspNetRole>();
             this.Corporations = new HashSet<Corporation>();
             this.Nonprofits = new HashSet<Nonprofit>();
-            this.CaseManagers = new HashSet<CaseManager>();
             this.Referrers = new HashSet<Referrer>();
             this.Admins = new HashSet<Admin>();
+            this.CaseManagers = new HashSet<CaseManager>();
+            this.CaseNotes = new HashSet<CaseNote>();
         }
     
         public string Id { get; set; }
@@ -44,8 +45,9 @@ namespace SolveChicago.Entities
         public string UserName { get; set; }
         public Nullable<bool> ReceiveEmail { get; set; }
         public System.DateTime LastActivityDate { get; set; }
-        public string Name { get; set; }
         public System.DateTime CreatedDate { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AdminInviteCode> AdminInviteCodes { get; set; }
@@ -64,10 +66,12 @@ namespace SolveChicago.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Nonprofit> Nonprofits { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CaseManager> CaseManagers { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Referrer> Referrers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Admin> Admins { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CaseManager> CaseManagers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CaseNote> CaseNotes { get; set; }
     }
 }
