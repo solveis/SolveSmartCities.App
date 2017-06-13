@@ -119,7 +119,7 @@
                                                     </a>
                                                 </li>
                                             }
-                                            @if (User.IsInRole("Nonprofit") && ViewBag.Nonprofit != null && ViewBag.Nonprofit.CaseManagers.Count() > 0)
+                                            @if (User.IsInRole("Nonprofit") && ViewBag.Nonprofit != null && ViewBag.Nonprofit.CaseManagers.Count > 0)
                                             {
                                                 <li>
                                                     <a href="/Nonprofits/AssignCaseManager?memberId=@(member.Id)&nonprofitId=@(ViewBag.NonprofitId)">

@@ -135,18 +135,6 @@ namespace SolveChicago.Web.Controllers
                     ViewBag.MemberId = member.Id;
                     ViewBag.MemberName = string.Format("{0} {1}", member.FirstName, member.LastName);
                     ViewBag.MemberProfilePicture = !string.IsNullOrEmpty(member.ProfilePicturePath) ? member.ProfilePicturePath : Common.Constants.Member.NoPhotoUrl;
-
-                    if (member.NonprofitMembers.Select(x => x.CaseManagers).Count() > 0)
-                    {
-                        CaseManager caseManager = member.NonprofitMembers.SelectMany(x => x.CaseManagers).First();
-                        _state.CaseManager = caseManager;
-                        _state.CaseManagerId = caseManager.Id;
-
-                        ViewBag.CaseManager = caseManager;
-                        ViewBag.CaseManagerId = caseManager.Id;
-                        ViewBag.CaseManagerName = string.Format("{0} {1}", caseManager.FirstName, caseManager.LastName);
-                        ViewBag.CaseManagerProfilePicture = !string.IsNullOrEmpty(caseManager.ProfilePicturePath) ? caseManager.ProfilePicturePath : Common.Constants.Member.NoPhotoUrl;
-                    }
                 }
             }
             if (_state.Roles.Contains(Enumerations.Role.CaseManager))
