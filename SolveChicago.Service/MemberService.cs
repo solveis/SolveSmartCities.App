@@ -49,6 +49,7 @@ namespace SolveChicago.Service
                     Address1 = member.Addresses.Any() ? member.Addresses.Last().Address1 : string.Empty,
                     Address2 = member.Addresses.Any() ? member.Addresses.Last().Address2 : string.Empty,
                     Birthday = member.Birthday,
+                    CaseManagers = member.NonprofitMembers.SelectMany(x => x.CaseManagers).ToArray(),
                     City = member.Addresses.Any() ? member.Addresses.Last().City : string.Empty,
                     ContactPreference = member.ContactPreference,
                     Country = member.Addresses.Any() ? member.Addresses.Last().Country : string.Empty,
