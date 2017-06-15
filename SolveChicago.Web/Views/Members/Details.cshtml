@@ -68,9 +68,20 @@
                         </div>
 
                         <div class="columns has-space">
-                            <p>Case Manager: <strong>@caseManager.FirstName @caseManager.LastName</strong></p>
+                            <p>Case Manager: 
+                                <strong>
+                                    <a href="mailto:@caseManager.Email">
+                                        @caseManager.FirstName @caseManager.LastName
+                                    </a>
+                                </strong>
+                            </p>
+                        </div>
+                        <div class="columns has-space">
+                            <p>Phone: <strong>@(caseManager.PhoneNumbers.FirstOrDefault() != null ? caseManager.PhoneNumbers.FirstOrDefault().Number : "-")</strong></p>
                         </div>
                     </div>
+
+
 
                     <hr class="profile-card-line-divider">
                 }
