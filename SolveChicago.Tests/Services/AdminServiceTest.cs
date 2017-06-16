@@ -6,12 +6,101 @@ using System.Data.Entity;
 using System.Collections.Generic;
 using SolveChicago.Service;
 using System.Diagnostics.CodeAnalysis;
+using SolveChicago.Web.Models.Profile;
+using System.Linq;
 
 namespace SolveChicago.Tests.Services
 {
     [ExcludeFromCodeCoverage]
     public class AdminServiceTest
     {
+        [Fact]
+        public void AdminService_Get_ReturnsAdminProfile()
+        {
+            List<Admin> data = new List<Admin>
+            {
+                new Admin
+                {
+                    Id = 1,
+                    UserId = "IOUIGY^*F&%^$SEXTCYTVUGYHIU",
+                    CreatedDate = DateTime.UtcNow.AddDays(-7),
+                    Email = "test@123.com",
+                    FirstName = "Joe",
+                    LastName = "Arthur",
+                    ProfilePicturePath = "../path.jpg",
+                    PhoneNumbers = new List<PhoneNumber>
+                    {
+                        new PhoneNumber
+                        {
+                            Id = 1,
+                            Number = "123456890"
+                        },
+                        new PhoneNumber
+                        {
+                            Id = 2,
+                            Number = "2345678901"
+                        }
+                    }
+                }
+            };
+
+
+            var context = new Mock<SolveChicagoEntities>();
+
+            var adminSet = new Mock<DbSet<Admin>>().SetupData(data);
+            adminSet.Setup(m => m.Find(It.IsAny<object[]>()))
+                .Returns<object[]>(ids => data.FirstOrDefault(d => d.Id == (int)ids[0]));
+            context.Setup(c => c.Admins).Returns(adminSet.Object);
+
+            AdminService service = new AdminService(context.Object);
+            AdminProfile profile = service.Get(1);
+
+            Assert.Equal(1, profile.Id);
+            Assert.Equal("IOUIGY^*F&%^$SEXTCYTVUGYHIU", profile.UserId);
+            Assert.Equal("Joe", profile.FirstName);
+            Assert.Equal("Arthur", profile.LastName);
+            Assert.Equal("2345678901", profile.Phone);
+            Assert.Equal("../path.jpg", profile.ProfilePicturePath);
+        }
+
+        [Fact]
+        public void AdminService_Post_Success()
+        {
+            List<Admin> data = new List<Admin>
+            {
+                new Admin { Id = 1, CreatedDate = DateTime.UtcNow }
+            };
+
+            List<PhoneNumber> numbers = new List<PhoneNumber>();
+
+            var context = new Mock<SolveChicagoEntities>();
+            
+            var adminSet = new Mock<DbSet<Admin>>().SetupData(data);
+            adminSet.Setup(m => m.Find(It.IsAny<object[]>()))
+                .Returns<object[]>(ids => data.FirstOrDefault(d => d.Id == (int)ids[0]));
+            context.Setup(c => c.Admins).Returns(adminSet.Object);
+
+            var numberSet = new Mock<DbSet<PhoneNumber>>().SetupData(numbers);
+            numberSet.Setup(m => m.Find(It.IsAny<object[]>()))
+                .Returns<object[]>(ids => numbers.FirstOrDefault(d => d.Id == (int)ids[0]));
+            context.Setup(c => c.PhoneNumbers).Returns(numberSet.Object);
+
+            AdminProfile model = new AdminProfile
+            {
+                FirstName = "Thomas",
+                LastName = "Jones",
+                Phone = "1234567890",
+                UserId = "()*(&*^R^TEDRFGH",
+                Id = 1
+            };
+
+            AdminService service = new AdminService(context.Object);
+            service.Post(model);
+
+            Assert.Equal("Thomas", context.Object.Admins.First().FirstName);
+            Assert.Equal("Jones", context.Object.Admins.First().LastName);
+        }
+
         [Fact]
         public void AdminService_GenerateAdminInviteCode_ReturnsString()
         {
