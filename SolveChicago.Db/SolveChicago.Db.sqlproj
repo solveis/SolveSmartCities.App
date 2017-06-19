@@ -116,6 +116,7 @@
     <Build Include="dbo\Tables\CaseManagerPhoneNumbers.sql" />
     <Build Include="dbo\Tables\ReferrerPhoneNumbers.sql" />
     <Build Include="dbo\Tables\AdminPhoneNumbers.sql" />
+    <Build Include="dbo\Tables\NonprofitMembersCaseManagers.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SolveChicago.Db.dbmdl" />

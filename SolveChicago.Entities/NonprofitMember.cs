@@ -14,9 +14,15 @@ namespace SolveChicago.Entities
     
     public partial class NonprofitMember
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public NonprofitMember()
+        {
+            this.CaseManagers = new HashSet<CaseManager>();
+        }
+    
+        public int Id { get; set; }
         public int MemberId { get; set; }
         public int NonprofitId { get; set; }
-        public Nullable<int> CaseManagerId { get; set; }
         public string MemberEnjoyed { get; set; }
         public string MemberStruggled { get; set; }
         public System.DateTime Start { get; set; }
@@ -24,6 +30,7 @@ namespace SolveChicago.Entities
     
         public virtual Member Member { get; set; }
         public virtual Nonprofit Nonprofit { get; set; }
-        public virtual CaseManager CaseManager { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CaseManager> CaseManagers { get; set; }
     }
 }

@@ -6,11 +6,12 @@ using System.Web.Mvc;
 
 namespace SolveChicago.Web.Controllers
 {
-    public class ErrorController : Controller
+    public class ErrorController : BaseController
     {
         // GET: Error/Error500
         public ActionResult Index()
         {
+            ViewBag.ErrorMessage = TempData["ErrorMessage"].ToString();
             return View();
         }
 

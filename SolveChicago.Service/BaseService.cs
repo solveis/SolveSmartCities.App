@@ -20,7 +20,7 @@ namespace SolveChicago.Service
         {
             this.db = db;
         }
-
+       
         protected string UploadPhoto(string directory, HttpPostedFileBase image, int id)
         {
             if (image != null)

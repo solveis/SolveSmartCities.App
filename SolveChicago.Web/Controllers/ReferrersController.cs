@@ -88,9 +88,8 @@ namespace SolveChicago.Web.Controllers
                 {
                     db.SaveChanges();
                 }
-                catch (Exception exception)
+                catch (Exception ex)
                 {
-                    Console.WriteLine(exception.Message);
                 }
 
                 CommunicationService service = new CommunicationService(this.db);

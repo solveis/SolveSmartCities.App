@@ -1,5 +1,8 @@
-﻿@model IEnumerable<SolveChicago.Common.Models.Profile.Member.FamilyEntity>
-@{ string memberTransformedName = (ViewBag.ReferrerId != null ? "Tenant" : ViewBag.NonprofitId != null ? "Client" : "Member"); }
+﻿@using Microsoft.AspNet.Identity;
+@model IEnumerable<SolveChicago.Common.Models.Profile.Member.FamilyEntity>
+@{ 
+    string memberTransformedName = (ViewBag.ReferrerId != null ? "Tenant" : ViewBag.NonprofitId != null ? "Client" : "Member");
+}
 
 <header class="members-header">
     <h2><strong>@(memberTransformedName)s:</strong> OVERVIEW</h2>
@@ -108,15 +111,15 @@
                                                     Edit Profile
                                                 </a>
                                             </li>
-                                            @if (User.IsInRole("CaseManager"))
+                                            @if (User.IsInRole("CaseManager") || User.IsInRole("Nonprofit"))
                                             {
                                                 <li>
-                                                    <a href="/CaseManagers/AddCaseNote?memberId=@(member.Id)&caseManagerId=@(ViewBag.CaseManagerId)">
+                                                    <a href="/CaseManagers/AddCaseNote?memberId=@(member.Id)&caseManagerId=@(User.Identity.GetUserId())&nonprofitId=@(ViewBag.NonprofitId)">
                                                         Add Note
                                                     </a>
                                                 </li>
                                             }
-                                            @if (User.IsInRole("Nonprofit") && ViewBag.Nonprofit != null && ViewBag.Nonprofit.CaseManagers.Count() > 0)
+                                            @if (User.IsInRole("Nonprofit") && ViewBag.Nonprofit != null && ViewBag.Nonprofit.CaseManagers.Count > 0)
                                             {
                                                 <li>
                                                     <a href="/Nonprofits/AssignCaseManager?memberId=@(member.Id)&nonprofitId=@(ViewBag.NonprofitId)">
@@ -130,7 +133,7 @@
                                                     <a href="/Nonprofits/JobPlaced?memberId=@(member.Id)&nonprofitId=@(ViewBag.NonprofitId)">Job Placed</a>
                                                 </li>
                                                 <li>
-                                                    <a href="/Nonprofits/NonprofitReferral?memberId=@(member.Id)&nonprofitId=@(ViewBag.NonprofitId)">Refer to Nonprofit</a>
+                                                    <a href="/Nonprofits/NonprofitReferral?memberId=@(member.Id)&nonprofitId=@(ViewBag.NonprofitId)">Refer to Service Provider</a>
                                                 </li>
                                             }
 
