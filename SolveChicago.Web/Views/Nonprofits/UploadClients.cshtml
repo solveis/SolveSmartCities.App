@@ -1,0 +1,26 @@
+﻿@model SolveChicago.Common.Models.UploadModel
+
+@{
+    ViewBag.Title = "Upload Clients";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("UploadClients", "Nonprofits", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(m => m.NonprofitId)
+    @Html.AntiForgeryToken()
+
+    <div class="row app-dashboard-form-container">
+        <div class="create-profile-form-holder">
+            <h4><strong>UPLOAD: </strong>Clients</h4>
+            <hr />
+
+            @Html.ValidationMessageFor(model => model.CsvFile, "", new { @class = "text-danger" })
+            @Html.LabelFor(model => model.CsvFile, "Client List", htmlAttributes: new { })
+            @Html.TextBoxFor(model => model.CsvFile, new { type = "file", @class = "file-input" })
+
+            <hr class="line-divider">
+            <input class="submit-create-profile" type="submit" value="Upload">
+        </div>
+    </div>
+}

@@ -12,7 +12,7 @@
 {
     @Html.AntiForgeryToken()
     <header>
-        <h4><strong>NONPROFIT:</strong> Profile</h4>
+        <h4><strong>SERVICE PROVIDER:</strong> Profile</h4>
     </header>
 
     <div class="row app-dashboard-form-container">
@@ -21,7 +21,7 @@
             @Html.HiddenFor(model => model.Id)
 
             @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { })
+            @Html.LabelFor(model => model.Name, "Organization Name", htmlAttributes: new { })
             @Html.EditorFor(model => model.Name, new { htmlAttributes = new { } })
 
             @Html.ValidationMessageFor(model => model.ProfilePicture, "", new { @class = "text-danger" })

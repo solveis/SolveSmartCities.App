@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static SolveChicago.Common.Enumerations;
 using SolveChicago.Common.Interfaces.Profile.Member;
+using SolveChicago.Entities;
 
 namespace SolveChicago.Common.Models.Profile.Member
 {
@@ -22,8 +23,7 @@ namespace SolveChicago.Common.Models.Profile.Member
     {
         public int? NonprofitId { get; set; }
         public string NonprofitName { get; set; }
-        public int? CaseManagerId { get; set; }
-        public string CaseManagerName { get; set; }
+        public CaseManager[] CaseManagers { get; set; }
         public string SkillsAcquired { get; set; }
         public string Enjoyed { get; set; }
         public string Struggled { get; set; }

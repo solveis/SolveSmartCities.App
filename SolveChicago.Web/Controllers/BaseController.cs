@@ -131,20 +131,10 @@ namespace SolveChicago.Web.Controllers
                     _state.Member = member;
                     _state.MemberId = member.Id;
 
+                    ViewBag.Member = member;
                     ViewBag.MemberId = member.Id;
                     ViewBag.MemberName = string.Format("{0} {1}", member.FirstName, member.LastName);
                     ViewBag.MemberProfilePicture = !string.IsNullOrEmpty(member.ProfilePicturePath) ? member.ProfilePicturePath : Common.Constants.Member.NoPhotoUrl;
-
-                    if (member.NonprofitMembers.Select(x => x.CaseManager).FirstOrDefault() != null)
-                    {
-                        CaseManager caseManager = member.NonprofitMembers.Select(x => x.CaseManager).First();
-                        _state.CaseManager = caseManager;
-                        _state.CaseManagerId = caseManager.Id;
-
-                        ViewBag.CaseManagerId = caseManager.Id;
-                        ViewBag.CaseManagerName = string.Format("{0} {1}", caseManager.FirstName, caseManager.LastName);
-                        ViewBag.CaseManagerProfilePicture = !string.IsNullOrEmpty(caseManager.ProfilePicturePath) ? caseManager.ProfilePicturePath : Common.Constants.Member.NoPhotoUrl;
-                    }
                 }
             }
             if (_state.Roles.Contains(Enumerations.Role.CaseManager))
@@ -155,7 +145,8 @@ namespace SolveChicago.Web.Controllers
                 {
                     _state.CaseManager = caseManager;
                     _state.CaseManagerId = caseManager.Id;
-                    
+
+                    ViewBag.CaseManager = caseManager;
                     ViewBag.CaseManagerId = caseManager.Id;
                     ViewBag.CaseManagerName = string.Format("{0} {1}", caseManager.FirstName, caseManager.LastName);
                     ViewBag.CaseManagerProfilePicture = !string.IsNullOrEmpty(caseManager.ProfilePicturePath) ? caseManager.ProfilePicturePath : Common.Constants.Member.NoPhotoUrl;
@@ -165,6 +156,7 @@ namespace SolveChicago.Web.Controllers
                         _state.Nonprofit = caseManager.Nonprofit;
                         _state.NonprofitId = caseManager.Nonprofit.Id;
 
+                        ViewBag.Nonprofit = caseManager.Nonprofit;
                         ViewBag.NonprofitId = caseManager.Nonprofit.Id;
                         ViewBag.NonprofitName = caseManager.Nonprofit.Name;
                     }
@@ -178,7 +170,8 @@ namespace SolveChicago.Web.Controllers
                 {
                     _state.Corporation = corporation;
                     _state.CorporationId = corporation.Id;
-                    
+
+                    ViewBag.Corporation = corporation;
                     ViewBag.CorporationId = corporation.Id;
                     ViewBag.CorporationName = corporation.Name;
                 }
@@ -192,6 +185,7 @@ namespace SolveChicago.Web.Controllers
                     _state.Nonprofit = nonprofit;
                     _state.NonprofitId = nonprofit.Id;
 
+                    ViewBag.Nonprofit = nonprofit;
                     ViewBag.NonprofitId = nonprofit.Id;
                     ViewBag.NonprofitName = nonprofit.Name;
                     ViewBag.NonprofitProfilePicture = !string.IsNullOrEmpty(nonprofit.ProfilePicturePath) ? nonprofit.ProfilePicturePath : Common.Constants.Member.NoPhotoUrl;
@@ -207,6 +201,7 @@ namespace SolveChicago.Web.Controllers
                     _state.Admin = admin;
                     _state.AdminId = admin.Id;
 
+                    ViewBag.Admin = admin;
                     ViewBag.AdminId = admin.Id;
                     ViewBag.AdminName = string.Format("{0} {1}", admin.FirstName, admin.LastName);
                     ViewBag.AdminProfilePicture = !string.IsNullOrEmpty(admin.ProfilePicturePath) ? admin.ProfilePicturePath : Common.Constants.Member.NoPhotoUrl;
@@ -222,6 +217,7 @@ namespace SolveChicago.Web.Controllers
                     _state.Referrer = referrer;
                     _state.ReferrerId = referrer.Id;
 
+                    ViewBag.Referrer = referrer;
                     ViewBag.ReferrerId = referrer.Id;
                     ViewBag.ReferrerName = referrer.Name;
                 }
@@ -343,7 +339,7 @@ namespace SolveChicago.Web.Controllers
         {
             if (string.IsNullOrEmpty(entity.FirstName) || string.IsNullOrEmpty(entity.LastName) || !entity.PhoneNumbers.Any() || string.IsNullOrEmpty(entity.ProfilePicturePath))
             {
-                return RedirectToAction("CaseManager", "Profile", new { caseManagerId = entity.Id });
+                return RedirectToAction("CaseManager", "Profile", new { id = entity.Id });
             }
             else
             {
@@ -361,7 +357,7 @@ namespace SolveChicago.Web.Controllers
         {
             if (string.IsNullOrEmpty(entity.Name))
             {
-                return RedirectToAction("Referrer", "Profile", new { referrerId = entity.Id });
+                return RedirectToAction("Referrer", "Profile", new { id = entity.Id });
             }
             else
             {
@@ -397,7 +393,7 @@ namespace SolveChicago.Web.Controllers
         {
             if (!entity.Addresses.Any() || !entity.PhoneNumbers.Any())
             {
-                return RedirectToAction("Nonprofit", "Profile", new { nonprofitId = entity.Id });
+                return RedirectToAction("Nonprofit", "Profile", new { id = entity.Id });
             }
             else
             {
@@ -500,9 +496,16 @@ namespace SolveChicago.Web.Controllers
                             Skill softSkills = db.Skills.SingleOrDefault(x => x.Name == Common.Constants.Skills.SoftSkills);
                             if (softSkills == null)
                                 softSkills = new Skill { Name = Common.Constants.Skills.SoftSkills };
-                            model.MemberSkills.Add(new MemberSkill { IsComplete = false, Skill = softSkills });
+                            if(!model.MemberSkills.Any(x => x.Skill.Name == Common.Constants.Skills.SoftSkills))
+                                model.MemberSkills.Add(new MemberSkill { IsComplete = false, Skill = softSkills });
 
-                            db.SaveChanges();
+                            try
+                            {
+                                db.SaveChanges();
+                            }
+                            catch(Exception ex)
+                            {
+                            }
                             return UpdateSurveyStatus(model, Common.Constants.Member.SurveyStep.Personal);
                         }
                         return RedirectToAction("Index");
@@ -667,6 +670,15 @@ namespace SolveChicago.Web.Controllers
                     ViewBag.ReferrerId = referrer.Id;
                 }
             }
+        }
+
+        protected override void OnException(ExceptionContext filterContext)
+        {
+            filterContext.ExceptionHandled = true;
+            Elmah.ErrorSignal.FromCurrentContext().Raise(filterContext.Exception);
+            TempData["ErrorMessage"] = filterContext.Exception.Message;
+            // Redirect on error:
+            filterContext.Result = RedirectToAction("Index", "Error");
         }
     }
 }
