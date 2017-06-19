@@ -54,6 +54,51 @@
         <section class="profile-card">
 
             <header>
+                <h1 class="profile-card-header">Case Managers</h1>
+            </header>
+
+            @if (Model.CaseManagers.Count() > 0)
+            {
+                foreach (var caseManager in Model.CaseManagers)
+                {
+                <!-- First Row-->
+                    <div class="row large-unstack">
+                        <div class="columns has-space">
+                            <p>Nonprofit: <strong>@caseManager.Nonprofit.Name</strong></p>
+                        </div>
+
+                        <div class="columns has-space">
+                            <p>Case Manager: 
+                                <strong>
+                                    <a href="mailto:@caseManager.Email">
+                                        @caseManager.FirstName @caseManager.LastName
+                                    </a>
+                                </strong>
+                            </p>
+                        </div>
+                        <div class="columns has-space">
+                            <p>Phone: <strong>@(caseManager.PhoneNumbers.FirstOrDefault() != null ? caseManager.PhoneNumbers.FirstOrDefault().Number : "-")</strong></p>
+                        </div>
+                    </div>
+
+
+
+                    <hr class="profile-card-line-divider">
+                }
+            }
+            else
+            {
+                    <div class="row large-unstack">
+                        <div class="columns has-space">
+                            <p>No Case Managers.</p>
+                        </div>
+                    </div>
+            }
+        </section>
+        
+        <section class="profile-card">
+
+            <header>
                 <h1 class="profile-card-header">Personal Info</h1>
             </header>
 

@@ -16,6 +16,8 @@ using SolveChicago.Entities;
 using System.Diagnostics.CodeAnalysis;
 using SolveChicago.Web.Models;
 using SolveChicago.Common;
+using System.Security.Claims;
+using System.Threading;
 
 namespace SolveChicago.Tests.Controllers
 {
@@ -472,6 +474,355 @@ namespace SolveChicago.Tests.Controllers
 
             Assert.Equal("Admin", result.RouteValues["action"]);
             Assert.Equal("Profile", result.RouteValues["controller"]);
+        }
+
+        [Fact]
+        public void BaseController_RefreshState_UpdatesCaseManager_UpdatesMember()
+        {
+            List<AspNetUser> users = new List<AspNetUser>
+            {
+                new AspNetUser
+                {
+                    Id = "JHUIGYFTRDXS",
+                    UserName = "member@solvechicago.com",
+                    AspNetRoles = new List<AspNetRole>
+                    {
+                        new AspNetRole { Id = "KJHGF", Name = "Member" }
+                    },
+                    Members = new List<Member>
+                    {
+                        new Member()
+                        {
+                            Email = "member@solvechicago.com",
+                            CreatedDate = DateTime.UtcNow.AddDays(-10),
+                            Id = 1,
+                            FirstName = "Tom",
+                            LastName = "Elliot",
+                            ProfilePicturePath = "../image.jpg",
+                            NonprofitMembers = new List<NonprofitMember>
+                            {
+                                new NonprofitMember
+                                {
+                                    MemberId = 1,
+                                    Member = new Member
+                                    {
+                                        Email = "member@solvechicago.com",
+                                        CreatedDate = DateTime.UtcNow.AddDays(-10),
+                                        Id = 1,
+                                        FirstName = "Tom",
+                                        LastName = "Elliot",
+                                        ProfilePicturePath = "../image.jpg",
+                                    },
+                                    CaseManagers = new List<CaseManager>
+                                    {
+                                        new CaseManager
+                                        {
+                                            Id = 1,
+                                            FirstName = "Terry",
+                                            LastName = "Jones",
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                }
+            };
+
+            // mock Identity
+            var username = "member@solvechicago.com";
+            var userId = "JHUIGYFTRDXS";
+            var identity = new GenericIdentity(username, "");
+            var nameIdentifierClaim = new Claim(ClaimTypes.NameIdentifier, userId);
+            identity.AddClaim(nameIdentifierClaim);
+
+            var mockPrincipal = new Mock<IPrincipal>();
+            mockPrincipal.Setup(x => x.Identity).Returns(identity);
+            Thread.CurrentPrincipal = mockPrincipal.Object;
+
+            // mock controller
+            var controllerContext = new Mock<ControllerContext>();
+            controllerContext.SetupGet(p => p.HttpContext.User).Returns(mockPrincipal.Object);
+            controllerContext.SetupGet(p => p.HttpContext.Request.IsAuthenticated).Returns(true);
+
+            var userSet = new Mock<DbSet<AspNetUser>>().SetupData(users);
+
+            var context = new Mock<SolveChicagoEntities>();
+            context.Setup(c => c.AspNetUsers).Returns(userSet.Object);
+            BaseController controller = new BaseController(context.Object) { ControllerContext = controllerContext.Object };
+
+            string name = controller.State.Member.FirstName;
+            Assert.Equal("Tom", name);
+
+            string caseManagerName = controller.State.Member.NonprofitMembers.SelectMany(x => x.CaseManagers).First().FirstName;
+            Assert.Equal("Terry", caseManagerName);
+
+        }
+
+        [Fact]
+        public void BaseController_RefreshState_UpdatesCaseManager()
+        {
+            List<AspNetUser> data = new List<AspNetUser>
+            {
+                new AspNetUser
+                {
+                    Id = "JHUIGYFTRDXS",
+                    UserName = "casemanager@solvechicago.com",
+                    AspNetRoles = new List<AspNetRole>
+                    {
+                        new AspNetRole { Id = "KJHGF", Name = "CaseManager" }
+                    },
+                    CaseManagers = new List<CaseManager>
+                    {
+                        new CaseManager()
+                        {
+                            Email = "casemanager@solvechicago.com",
+                            CreatedDate = DateTime.UtcNow.AddDays(-10),
+                            Id = 1,
+                            FirstName = "Terry",
+                            LastName = "Jones",
+                            PhoneNumbers = new List<PhoneNumber>
+                            {
+                                new PhoneNumber
+                                {
+                                    Id = 1,
+                                    Number = "1234567890",
+                                }
+                            },
+                            ProfilePicturePath = "../image.jpg",
+                        }
+                    },
+                }
+            };
+
+            // mock Identity
+            var username = "casemanager@solvechicago.com";
+            var userId = "JHUIGYFTRDXS";
+            var identity = new GenericIdentity(username, "");
+            var nameIdentifierClaim = new Claim(ClaimTypes.NameIdentifier, userId);
+            identity.AddClaim(nameIdentifierClaim);
+
+            var mockPrincipal = new Mock<IPrincipal>();
+            mockPrincipal.Setup(x => x.Identity).Returns(identity);
+            Thread.CurrentPrincipal = mockPrincipal.Object;
+
+            // mock controller
+            var controllerContext = new Mock<ControllerContext>();
+            controllerContext.SetupGet(p => p.HttpContext.User).Returns(mockPrincipal.Object);
+            controllerContext.SetupGet(p => p.HttpContext.Request.IsAuthenticated).Returns(true);
+
+            var set = new Mock<DbSet<AspNetUser>>().SetupData(data);
+
+            var context = new Mock<SolveChicagoEntities>();
+            context.Setup(c => c.AspNetUsers).Returns(set.Object);
+            BaseController controller = new BaseController(context.Object)
+            {
+                ControllerContext = controllerContext.Object
+            };
+            string name = controller.State.CaseManager.FirstName;
+            Assert.Equal("Terry", name);
+
+        }
+
+        [Fact]
+        public void BaseController_RefreshState_UpdatesCorporation()
+        {
+            List<AspNetUser> users = new List<AspNetUser>
+            {
+                new AspNetUser
+                {
+                    Id = "JHUIGYFTRDXS",
+                    UserName = "corporation@solvechicago.com",
+                    AspNetRoles = new List<AspNetRole>
+                    {
+                        new AspNetRole { Id = "KJHGF", Name = "Corporation" }
+                    },
+                    Corporations = new List<Corporation>
+                    {
+                        new Corporation()
+                        {
+                            Email = "corporation@solvechicago.com",
+                            CreatedDate = DateTime.UtcNow.AddDays(-10),
+                            Id = 1,
+                            Name = "Honda Ferguson",
+                        }
+                    },
+                }
+            };
+
+            // mock Identity
+            var username = "corporation@solvechicago.com";
+            var userId = "JHUIGYFTRDXS";
+            var identity = new GenericIdentity(username, "");
+            var nameIdentifierClaim = new Claim(ClaimTypes.NameIdentifier, userId);
+            identity.AddClaim(nameIdentifierClaim);
+
+            var mockPrincipal = new Mock<IPrincipal>();
+            mockPrincipal.Setup(x => x.Identity).Returns(identity);
+            Thread.CurrentPrincipal = mockPrincipal.Object;
+
+            // mock controller
+            var controllerContext = new Mock<ControllerContext>();
+            controllerContext.SetupGet(p => p.HttpContext.User).Returns(mockPrincipal.Object);
+            controllerContext.SetupGet(p => p.HttpContext.Request.IsAuthenticated).Returns(true);
+
+            var userSet = new Mock<DbSet<AspNetUser>>().SetupData(users);
+
+            var context = new Mock<SolveChicagoEntities>();
+            context.Setup(c => c.AspNetUsers).Returns(userSet.Object);
+            BaseController controller = new BaseController(context.Object)
+            {
+
+                //Set your controller ControllerContext with fake context
+                ControllerContext = controllerContext.Object
+            };
+            string name = controller.State.Corporation.Name;
+            Assert.Equal("Honda Ferguson", name);
+
+        }
+
+        [Fact]
+        public void BaseController_RefreshState_UpdatesNonprofit()
+        {
+            List<AspNetUser> users = new List<AspNetUser>
+            {
+                new AspNetUser
+                {
+                    Id = "JHUIGYFTRDXS",
+                    UserName = "nonprofit@solvechicago.com",
+                    AspNetRoles = new List<AspNetRole>
+                    {
+                        new AspNetRole { Id = "KJHGF", Name = "Nonprofit" }
+                    },
+                    Nonprofits = new List<Nonprofit>
+                    {
+                        new Nonprofit()
+                        {
+                            Addresses = new List<Address>
+                            {
+                                new Address
+                                {
+                                    Address1 = "123 Main Street",
+                                    Address2 = "Apt 2",
+                                    City = "Chicago",
+                                    Province = "IL",
+                                    Country = "USA",
+                                }
+                            },
+                            PhoneNumbers = new List<PhoneNumber>
+                            {
+                                new PhoneNumber
+                                {
+                                    Id = 1,
+                                    Number = "1234567890",
+                                }
+                            },
+                            Email = "nonprofit@solvechicago.com",
+                            CreatedDate = DateTime.UtcNow.AddDays(-10),
+                            Id = 1,
+                            Name = "My NPO",
+                        }
+                    },
+                }
+            };
+
+            // mock Identity
+            var username = "nonprofit@solvechicago.com";
+            var userId = "JHUIGYFTRDXS";
+            var identity = new GenericIdentity(username, "");
+            var nameIdentifierClaim = new Claim(ClaimTypes.NameIdentifier, userId);
+            identity.AddClaim(nameIdentifierClaim);
+
+            var mockPrincipal = new Mock<IPrincipal>();
+            mockPrincipal.Setup(x => x.Identity).Returns(identity);
+            Thread.CurrentPrincipal = mockPrincipal.Object;
+
+            // mock controller
+            var controllerContext = new Mock<ControllerContext>();
+            controllerContext.SetupGet(p => p.HttpContext.User).Returns(mockPrincipal.Object);
+            controllerContext.SetupGet(p => p.HttpContext.Request.IsAuthenticated).Returns(true);
+
+            var userSet = new Mock<DbSet<AspNetUser>>().SetupData(users);
+
+            var context = new Mock<SolveChicagoEntities>();
+            context.Setup(c => c.AspNetUsers).Returns(userSet.Object);
+            BaseController controller = new BaseController(context.Object)
+            {
+
+                //Set your controller ControllerContext with fake context
+                ControllerContext = controllerContext.Object
+            };
+            string name = controller.State.Nonprofit.Name;
+            Assert.Equal("My NPO", name);
+
+        }
+
+        [Fact]
+        public void BaseController_RefreshState_UpdatesAdmin()
+        {
+
+            List<AspNetUser> data = new List<AspNetUser>
+            {
+                new AspNetUser
+                {
+                    Id = "JHUIGYFTRDXS",
+                    UserName = "admin@solvechicago.com",
+                    AspNetRoles = new List<AspNetRole>
+                    {
+                        new AspNetRole { Id = "KJHGF", Name = "Admin" }
+                    },
+                    Admins = new List<Admin>
+                    {
+                        new Admin()
+                        {
+                            Email = "admin@solvechicago.com",
+                            CreatedDate = DateTime.UtcNow.AddDays(-10),
+                            Id = 1,
+                            FirstName = "Peter",
+                            LastName = "Thompson",
+                            ProfilePicturePath = "../image.jpg",
+                            PhoneNumbers = new List<PhoneNumber>
+                            {
+                                new PhoneNumber
+                                {
+                                    Id = 1,
+                                    Number = "1234567890"
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            // mock Identity
+            var username = "admin@solvechicago.com";
+            var userId = "JHUIGYFTRDXS";
+            var identity = new GenericIdentity(username, "");
+            var nameIdentifierClaim = new Claim(ClaimTypes.NameIdentifier, userId);
+            identity.AddClaim(nameIdentifierClaim);
+
+            var mockPrincipal = new Mock<IPrincipal>();
+            mockPrincipal.Setup(x => x.Identity).Returns(identity);
+            Thread.CurrentPrincipal = mockPrincipal.Object;
+
+            // mock controller
+            var controllerContext = new Mock<ControllerContext>();
+            controllerContext.SetupGet(p => p.HttpContext.User).Returns(mockPrincipal.Object);
+            controllerContext.SetupGet(p => p.HttpContext.Request.IsAuthenticated).Returns(true);
+
+            var set = new Mock<DbSet<AspNetUser>>().SetupData(data);
+
+            var context = new Mock<SolveChicagoEntities>();
+            context.Setup(c => c.AspNetUsers).Returns(set.Object);
+            BaseController controller = new BaseController(context.Object)
+            {
+
+                //Set your controller ControllerContext with fake context
+                ControllerContext = controllerContext.Object
+            };
+            string name = controller.State.Admin.FirstName;
+            Assert.Equal("Peter", name);
+
         }
     }
 }

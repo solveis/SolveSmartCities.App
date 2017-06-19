@@ -642,6 +642,21 @@ namespace SolveChicago.Web.Controllers
             }
         }
 
+        public void ImpersonateCorporation(int? corporationId)
+        {
+            if ((corporationId.HasValue) && (corporationId > 0))
+            {
+                if (State.Roles.Contains(Enumerations.Role.Corporation))
+                {
+                    Corporation corporation = db.Corporations.Find(corporationId.Value);
+                    State.CorporationId = corporation.Id;
+                    State.Corporation = corporation;
+
+                    ViewBag.CorporationId = corporation.Id;
+                }
+            }
+        }
+
         public void ImpersonateNonprofit(int? nonprofitId)
         {
             if ((nonprofitId.HasValue) && (nonprofitId > 0))
@@ -679,6 +694,22 @@ namespace SolveChicago.Web.Controllers
             TempData["ErrorMessage"] = filterContext.Exception.Message;
             // Redirect on error:
             filterContext.Result = RedirectToAction("Index", "Error");
+        }
+    }
+
+    public static class RazorViewToString
+    {
+        public static string RenderRazorViewToString(this Controller controller, string viewName, object model)
+        {
+            controller.ViewData.Model = model;
+            using (var sw = new StringWriter())
+            {
+                var viewResult = ViewEngines.Engines.FindPartialView(controller.ControllerContext, viewName);
+                var viewContext = new ViewContext(controller.ControllerContext, viewResult.View, controller.ViewData, controller.TempData, sw);
+                viewResult.View.Render(viewContext, sw);
+                viewResult.ViewEngine.ReleaseView(controller.ControllerContext, viewResult.View);
+                return sw.GetStringBuilder().ToString();
+            }
         }
     }
 }

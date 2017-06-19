@@ -1,4 +1,5 @@
 ﻿using SolveChicago.Common.Interfaces.Profile.Member;
+using SolveChicago.Entities;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -82,6 +83,7 @@ namespace SolveChicago.Common.Models.Profile.Member
         public FamilyEntity Family { get; set; }
         public SchoolEntity[] Schools { get; set; }
         public NonprofitEntity[] Nonprofits { get; set; }
+        public CaseManager[] CaseManagers { get; set; }
         public JobEntity[] Jobs { get; set; }
         public int[] GovernmentProgramsIds { get; set; }
         public GovernmentProgramEntity[] GovernmentPrograms { get; set; }
