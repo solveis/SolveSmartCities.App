@@ -347,6 +347,7 @@ namespace SolveChicago.Service
             {
                 FamilyEntity family = new FamilyEntity
                 {
+                    Id = memberFamily.Id,
                     Address1 = memberFamily.Addresses.Any() ? memberFamily.Addresses.Last().Address1 : string.Empty,
                     Address2 = memberFamily.Addresses.Any() ? memberFamily.Addresses.Last().Address2 : string.Empty,
                     City = memberFamily.Addresses.Any() ? memberFamily.Addresses.Last().City : string.Empty,
@@ -432,10 +433,11 @@ namespace SolveChicago.Service
 
         private static void GetSpouseTree(List<FamilyMember> familyMembers, Member member)
         {
+            // get spouse tree in both directions
             if (member.MemberSpouses.Any(x => x.Member1 != null))
-                familyMembers.AddRange(member.MemberSpouses.Select(x => new FamilyMember { FirstName = x.Member1.FirstName, LastName = x.Member1.LastName, Relation = "Spouse", FriendlyRelationName = x.Member1.Gender.ToLower() == "male" ? "Husband" : x.Member1.Gender.ToLower() == "female" ? "Wife" : "Spouse", Id = x.Member1.Id, Email = x.Member1.Email, Phone = x.Member1.PhoneNumbers.Any() ? string.Join(", ", x.Member1.PhoneNumbers.Select(y => y.Number).ToArray()) : string.Empty, ProfilePicturePath = string.IsNullOrEmpty(x.Member1.ProfilePicturePath) ? Constants.Member.NoPhotoUrl : x.Member1.ProfilePicturePath, MemberStage = GetMemberStage(x.Member1), CurrentOccupation = GetFamilyMemberOccupation(x.Member1), Birthday = x.Member1.Birthday, Gender = x.Member1.Gender }));
-            else if (member.MemberSpouses1.Any(x => x.Member != null))
-                familyMembers.AddRange(member.MemberSpouses1.Select(x => new FamilyMember { FirstName = x.Member.FirstName, LastName = x.Member.LastName, Relation = "Spouse", FriendlyRelationName = x.Member.Gender.ToLower() == "male" ? "Husband" : x.Member.Gender.ToLower() == "female" ? "Wife" : "Spouse", Id = x.Member.Id, Email = x.Member.Email, Phone = x.Member.PhoneNumbers.Any() ? string.Join(", ", x.Member.PhoneNumbers.Select(y => y.Number).ToArray()) : string.Empty, ProfilePicturePath = string.IsNullOrEmpty(x.Member.ProfilePicturePath) ? Constants.Member.NoPhotoUrl : x.Member.ProfilePicturePath, MemberStage = GetMemberStage(x.Member), CurrentOccupation = GetFamilyMemberOccupation(x.Member), Birthday = x.Member.Birthday, Gender = x.Member.Gender }));
+                familyMembers.AddRange(member.MemberSpouses.Select(x => new FamilyMember { FirstName = x.Member1.FirstName, LastName = x.Member1.LastName, Relation = "Spouse", FriendlyRelationName = string.Format("{0}{1}",(x.IsCurrent ? "Ex-" : ""), (x.Member1.Gender.ToLower() == "male" ? "Husband" : x.Member1.Gender.ToLower() == "female" ? "Wife" : "Spouse")), Id = x.Member1.Id, Email = x.Member1.Email, Phone = x.Member1.PhoneNumbers.Any() ? string.Join(", ", x.Member1.PhoneNumbers.Select(y => y.Number).ToArray()) : string.Empty, ProfilePicturePath = string.IsNullOrEmpty(x.Member1.ProfilePicturePath) ? Constants.Member.NoPhotoUrl : x.Member1.ProfilePicturePath, MemberStage = GetMemberStage(x.Member1), CurrentOccupation = GetFamilyMemberOccupation(x.Member1), Birthday = x.Member1.Birthday, Gender = x.Member1.Gender }));
+            if (member.MemberSpouses1.Any(x => x.Member != null))
+                familyMembers.AddRange(member.MemberSpouses1.Select(x => new FamilyMember { FirstName = x.Member.FirstName, LastName = x.Member.LastName, Relation = "Spouse", FriendlyRelationName = string.Format("{0}{1}", (x.IsCurrent ? "Ex-" : ""), (x.Member.Gender.ToLower() == "male" ? "Husband" : x.Member.Gender.ToLower() == "female" ? "Wife" : "Spouse")), Id = x.Member.Id, Email = x.Member.Email, Phone = x.Member.PhoneNumbers.Any() ? string.Join(", ", x.Member.PhoneNumbers.Select(y => y.Number).ToArray()) : string.Empty, ProfilePicturePath = string.IsNullOrEmpty(x.Member.ProfilePicturePath) ? Constants.Member.NoPhotoUrl : x.Member.ProfilePicturePath, MemberStage = GetMemberStage(x.Member), CurrentOccupation = GetFamilyMemberOccupation(x.Member), Birthday = x.Member.Birthday, Gender = x.Member.Gender }));
         }
 
         private static void GetSiblingTree(List<FamilyMember> familyMembers, Member member)

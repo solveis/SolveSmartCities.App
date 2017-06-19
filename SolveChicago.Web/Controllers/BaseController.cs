@@ -642,6 +642,21 @@ namespace SolveChicago.Web.Controllers
             }
         }
 
+        public void ImpersonateCorporation(int? corporationId)
+        {
+            if ((corporationId.HasValue) && (corporationId > 0))
+            {
+                if (State.Roles.Contains(Enumerations.Role.Corporation))
+                {
+                    Corporation corporation = db.Corporations.Find(corporationId.Value);
+                    State.CorporationId = corporation.Id;
+                    State.Corporation = corporation;
+
+                    ViewBag.CorporationId = corporation.Id;
+                }
+            }
+        }
+
         public void ImpersonateNonprofit(int? nonprofitId)
         {
             if ((nonprofitId.HasValue) && (nonprofitId > 0))

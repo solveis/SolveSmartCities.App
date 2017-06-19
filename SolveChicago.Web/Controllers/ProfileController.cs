@@ -318,8 +318,7 @@ namespace SolveChicago.Web.Controllers
             return db.Corporations.Select(x => x.Name).ToArray();
         }
 
-        private MemberProfileGovernmentProgramViewModel 
-            FormatMemberProfileGovernmentProgramsViewModel(MemberProfileGovernmentPrograms member)
+        private MemberProfileGovernmentProgramViewModel FormatMemberProfileGovernmentProgramsViewModel(MemberProfileGovernmentPrograms member)
         {
             MemberService mService = new MemberService(this.db);
             GovernmentProgramService gService = new GovernmentProgramService(this.db);
@@ -442,12 +441,13 @@ namespace SolveChicago.Web.Controllers
         [HttpPost]
         public ActionResult CaseManager(CaseManagerProfileViewModel model)
         {
+            ImpersonateCaseManager(model.CaseManager.Id);
             if (ModelState.IsValid)
             {
                 CaseManagerService service = new CaseManagerService(this.db);
                 service.Post(model.CaseManager);
             }
-            return RedirectToAction("Index", "CaseManagers");
+            return RedirectToAction("Index", "CaseManagers", new { caseManagerId = State.CaseManagerId });
         }
 
         // GET: Profile/Nonprofit
@@ -467,18 +467,20 @@ namespace SolveChicago.Web.Controllers
         [HttpPost]
         public ActionResult Nonprofit(NonprofitProfile model)
         {
+            ImpersonateNonprofit(model.Id);
             if (ModelState.IsValid)
             {
                 NonprofitService service = new NonprofitService(this.db);
                 service.Post(model);
             }
-            return RedirectToAction("Index", "Nonprofits");
+            return RedirectToAction("Index", "Nonprofits", new { nonprofitId = State.NonprofitId });
         }
 
         // GET: Profile/Corporation
         [Authorize(Roles = "Admin, Corporation")]
-        public ActionResult Corporation()
+        public ActionResult Corporation(int? id)
         {
+            ImpersonateCorporation(id);
             Corporation model = State.Corporation;
             return View(model);
         }
@@ -488,12 +490,13 @@ namespace SolveChicago.Web.Controllers
         [HttpPost]
         public ActionResult Corporation(Corporation model)
         {
+            ImpersonateCorporation(model.Id);
             if (ModelState.IsValid)
             {
                 db.Entry(model).State = EntityState.Modified;
                 db.SaveChanges();
             }
-            return RedirectToAction("Index", "Corporations");
+            return RedirectToAction("Index", "Corporations", new { corporationId = State.CorporationId });
         }
 
         // GET: Profile/Referrer
@@ -511,12 +514,13 @@ namespace SolveChicago.Web.Controllers
         [HttpPost]
         public ActionResult Referrer(ReferrerProfile model)
         {
+            ImpersonateReferrer(model.Id);
             if (ModelState.IsValid)
             {
                 ReferrerService service = new ReferrerService(this.db);
                 service.Post(model);
             }
-            return RedirectToAction("Index", "Referrers");
+            return RedirectToAction("Index", "Referrers", new { referrerId = State.ReferrerId });
         }
 
         // GET: Profile/Admin
