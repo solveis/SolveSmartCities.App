@@ -46,7 +46,6 @@ namespace SolveChicago.Entities
         public virtual DbSet<MemberSchool> MemberSchools { get; set; }
         public virtual DbSet<MemberSkill> MemberSkills { get; set; }
         public virtual DbSet<MemberSpous> MemberSpouses { get; set; }
-        public virtual DbSet<MilitaryBranch> MilitaryBranches { get; set; }
         public virtual DbSet<Outcome> Outcomes { get; set; }
         public virtual DbSet<PhoneNumber> PhoneNumbers { get; set; }
         public virtual DbSet<School> Schools { get; set; }
@@ -58,6 +57,8 @@ namespace SolveChicago.Entities
         public virtual DbSet<CaseManager> CaseManagers { get; set; }
         public virtual DbSet<CaseNote> CaseNotes { get; set; }
         public virtual DbSet<NonprofitMember> NonprofitMembers { get; set; }
+        public virtual DbSet<MemberMilitary> MemberMilitaries { get; set; }
+        public virtual DbSet<MilitaryBranch> MilitaryBranches { get; set; }
     
         public virtual ObjectResult<string> ELMAH_GetErrorsXml(string application, Nullable<int> pageIndex, Nullable<int> pageSize, ObjectParameter totalCount)
         {

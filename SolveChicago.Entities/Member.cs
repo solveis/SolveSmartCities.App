@@ -29,11 +29,11 @@ namespace SolveChicago.Entities
             this.Outcomes = new HashSet<Outcome>();
             this.Addresses = new HashSet<Address>();
             this.Interests = new HashSet<Interest>();
-            this.MilitaryBranches = new HashSet<MilitaryBranch>();
             this.PhoneNumbers = new HashSet<PhoneNumber>();
             this.Referrers = new HashSet<Referrer>();
             this.CaseNotes = new HashSet<CaseNote>();
             this.NonprofitMembers = new HashSet<NonprofitMember>();
+            this.MemberMilitaries = new HashSet<MemberMilitary>();
         }
     
         public int Id { get; set; }
@@ -54,6 +54,8 @@ namespace SolveChicago.Entities
         public Nullable<bool> IsWorkforceInterested { get; set; }
         public Nullable<bool> IsJobSearching { get; set; }
         public string SSN { get; set; }
+        public string MiddleName { get; set; }
+        public string Suffix { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual Family Family { get; set; }
@@ -82,8 +84,6 @@ namespace SolveChicago.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Interest> Interests { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MilitaryBranch> MilitaryBranches { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PhoneNumber> PhoneNumbers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Referrer> Referrers { get; set; }
@@ -91,5 +91,7 @@ namespace SolveChicago.Entities
         public virtual ICollection<CaseNote> CaseNotes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NonprofitMember> NonprofitMembers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MemberMilitary> MemberMilitaries { get; set; }
     }
 }

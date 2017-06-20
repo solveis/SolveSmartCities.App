@@ -846,6 +846,116 @@ namespace SolveChicago.Tests.Services
             service.UpdateMemberGovernmentPrograms(model);
             
         }
+
+        [Fact]
+        public void MemberService_MemberExists_True()
+        {
+            List<Member> members = new List<Member>
+            {
+                new Member
+                {
+                    FirstName = "John",
+                    MiddleName = "Dorothy",
+                    LastName = "Doe",
+                    Addresses = new List<Address>
+                    {
+                        new Address
+                        {
+                            Address1 = "123 Main St",
+                            Address2 = "Apt 2F",
+                            City = "Chicago",
+                            Country = "USA",
+                            Id = 1,
+                            Province ="IL",
+                            ZipCode = "60657"
+                        }
+                    },
+                    Email = "test@email.com",
+                    Birthday = new DateTime(1990, 1, 1),
+                    Gender = "Male",
+                }
+            };
+
+            MemberProfilePersonal model = new MemberProfilePersonal
+            {
+                FirstName = "John",
+                MiddleName = "Dorothy",
+                LastName = "Doe",
+                Address1 = "123 Main St",
+                Address2 = "Apt 2F",
+                City = "Chicago",
+                Country = "USA",
+                Id = 1,
+                Province = "IL",
+                ZipCode = "60657",
+                Email = "test@email.com",
+                Birthday = new DateTime(1990, 1, 1),
+                Gender = "Male",
+            };
+
+            var set = new Mock<DbSet<Member>>().SetupData(members);
+            set.Setup(m => m.Find(It.IsAny<object[]>()))
+                .Returns<object[]>(ids => members.FirstOrDefault(d => d.Id == (int)ids[0]));
+            context.Setup(c => c.Members).Returns(set.Object);
+
+            MemberService service = new MemberService(context.Object);
+            Assert.True(service.MemberExists(model.FirstName, model.MiddleName, model.LastName, model.Address1, model.Address2, model.City, model.Province, model.ZipCode, model.Gender, model.Birthday, model.Email));
+        }
+
+        [Fact]
+        public void MemberService_MemberExists_False ()
+        {
+            List<Member> members = new List<Member>
+            {
+                new Member
+                {
+                    FirstName = "John",
+                    MiddleName = "Dorothy",
+                    LastName = "Doe",
+                    Addresses = new List<Address>
+                    {
+                        new Address
+                        {
+                            Address1 = "123 Main St",
+                            Address2 = "Apt 2F",
+                            City = "Chicago",
+                            Country = "USA",
+                            Id = 1,
+                            Province ="IL",
+                            ZipCode = "60657"
+                        }
+                    },
+                    Email = "test@email.com",
+                    Birthday = new DateTime(1990, 1, 1),
+                    Gender = "Male",
+                }
+            };
+
+            MemberProfilePersonal model = new MemberProfilePersonal
+            {
+                FirstName = "Abe",
+                MiddleName = "Dorothy",
+                LastName = "Dinkel",
+                Address1 = "1234 Main St",
+                Address2 = "Apt 2F",
+                City = "Chicago",
+                Country = "USA",
+                Id = 1,
+                Province = "IL",
+                ZipCode = "60627",
+                Email = "test2@email.com",
+                Birthday = new DateTime(1990, 1, 1),
+                Gender = "Male",
+            };
+
+            var set = new Mock<DbSet<Member>>().SetupData(members);
+            set.Setup(m => m.Find(It.IsAny<object[]>()))
+                .Returns<object[]>(ids => members.FirstOrDefault(d => d.Id == (int)ids[0]));
+            context.Setup(c => c.Members).Returns(set.Object);
+
+            MemberService service = new MemberService(context.Object);
+            Assert.False(service.MemberExists(model.FirstName, model.MiddleName, model.LastName, model.Address1, model.Address2, model.City, model.Province, model.ZipCode, model.Gender, model.Birthday, model.Email));
+        }
     }
 }
 

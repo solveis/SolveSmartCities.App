@@ -52,6 +52,10 @@
                 @Html.ValidationMessageFor(model => model.Member.FirstName, "", new { @class = "text-danger" })
                 @Html.LabelFor(model => model.Member.FirstName, "First Name")
                 @Html.EditorFor(model => model.Member.FirstName)
+                
+                @Html.ValidationMessageFor(model => model.Member.MiddleName, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.Member.MiddleName, "Middle Name")
+                @Html.EditorFor(model => model.Member.MiddleName)
 
                 @Html.ValidationMessageFor(model => model.Member.LastName, "", new { @class = "text-danger" })
                 @Html.LabelFor(model => model.Member.LastName, "Last Name")

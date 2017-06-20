@@ -24,6 +24,7 @@ namespace SolveChicago.Service
             else
             {
                 Address address = nonprofit.Addresses.LastOrDefault();
+                PhoneNumber phone = nonprofit.PhoneNumbers.LastOrDefault();
                 NonprofitProfile npo = new NonprofitProfile
                 {
                     Id = nonprofit.Id,
@@ -31,7 +32,8 @@ namespace SolveChicago.Service
                     Address2 = address != null ? address.Address2 : string.Empty,
                     City = address != null ? address.City : string.Empty,
                     Country = address != null ? address.Country : string.Empty,
-                    Phone = nonprofit.PhoneNumbers.Any() ? nonprofit.PhoneNumbers.Last().Number : string.Empty,
+                    Phone = phone != null ? phone.Number : string.Empty,
+                    PhoneExtension = phone != null ? phone.Extension : string.Empty,
                     ProfilePicturePath = nonprofit.ProfilePicturePath,
                     Province = address != null ? address.Province : string.Empty,
                     ZipCode = address != null ? address.ZipCode : string.Empty,
@@ -78,7 +80,7 @@ namespace SolveChicago.Service
             PhoneNumber phone = model.Phone != null ? db.PhoneNumbers.Where(x => x.Number == model.Phone).FirstOrDefault() : null;
             if (phone == null)
             {
-                phone = new PhoneNumber { Number = model.Phone };
+                phone = new PhoneNumber { Number = model.Phone, Extension = model.PhoneExtension };
             }
             nonprofit.PhoneNumbers.Add(phone);
         }
@@ -198,12 +200,16 @@ namespace SolveChicago.Service
                                     {
                                         SSN = reader.GetField<string>("SSN"),
                                         FirstName = reader.GetField<string>("FirstName"),
+                                        MiddleName = reader.GetField<string>("MiddleName"),
                                         LastName = reader.GetField<string>("LastName"),
                                         Gender = reader.GetField<string>("Gender"),
                                         Birthday = reader.GetField<DateTime?>("Birthday"),
                                         IsHeadOfHousehold = reader.GetField<bool?>("IsHeadOfHousehold"),
                                         Income = reader.GetField<decimal?>("Income"),
                                         IsMilitary = reader.GetField<bool?>("IsMilitary"),
+                                        MilitaryBranch = reader.GetField<string>("MilitaryBranch"),
+                                        MilitaryLastPayGrade = reader.GetField<string>("MilitaryLastPayGrade"),
+                                        MilitaryCurrentServiceStatus = reader.GetField<string>("MilitaryCurrentServiceStatus"),
                                         Address1 = reader.GetField<string>("Address1"),
                                         Address2 = reader.GetField<string>("Address2"),
                                         City = reader.GetField<string>("City"),
@@ -232,29 +238,35 @@ namespace SolveChicago.Service
             MemberService service = new MemberService(this.db);
             foreach (ClientList client in clientList)
             {
-                Member member = new Member
+                if(!service.MemberExists(client.FirstName, client.MiddleName, client.LastName, client.Address1, client.Address2, client.City, client.State, client.ZipCode, client.Gender, client.Birthday, client.Email))
                 {
-                    FirstName = client.FirstName,
-                    Birthday = client.Birthday,
-                    LastName = client.LastName,
-                    CreatedDate = DateTime.UtcNow,
-                    Email = client.Email,
-                    Gender = client.Gender,
-                    Income = client.Income,
-                    IsHeadOfHousehold = client.IsHeadOfHousehold,
-                    IsMilitary = client.IsMilitary,
-                    SSN = client.SSN,
-                };
-                service.UpdateMemberAddress(client.Address1, client.Address2, client.City, client.State, client.ZipCode, client.Country, member);
-                service.UpdateMemberPhone(client.PhoneNumber, member);
-                service.MatchOrCreateFamily(member);
-                if(!string.IsNullOrEmpty(client.Skills))
-                    service.UpdateMemberSkills(client.Skills, member, true, nonprofitId);
-                if(!string.IsNullOrEmpty(client.Interests))
-                    service.UpdateMemberInterests(client.Interests, member);
+                    Member member = new Member
+                    {
+                        FirstName = client.FirstName,
+                        MiddleName = client.MiddleName,
+                        Birthday = client.Birthday,
+                        LastName = client.LastName,
+                        CreatedDate = DateTime.UtcNow,
+                        Email = client.Email,
+                        Gender = client.Gender,
+                        Income = client.Income,
+                        IsHeadOfHousehold = client.IsHeadOfHousehold,
+                        IsMilitary = client.IsMilitary,
+                        SSN = client.SSN,
+                    };
+                    if (client.IsMilitary ?? false)
+                        service.UpdateMemberMilitary(null, client.MilitaryBranch, client.MilitaryLastPayGrade, client.MilitaryCurrentServiceStatus, member);
+                    service.UpdateMemberAddress(client.Address1, client.Address2, client.City, client.State, client.ZipCode, client.Country, member);
+                    service.UpdateMemberPhone(client.PhoneNumber, member);
+                    service.MatchOrCreateFamily(member);
+                    if (!string.IsNullOrEmpty(client.Skills))
+                        service.UpdateMemberSkills(client.Skills, member, true, nonprofitId);
+                    if (!string.IsNullOrEmpty(client.Interests))
+                        service.UpdateMemberInterests(client.Interests, member);
 
-                db.Members.Add(member);
-                member.NonprofitMembers.Add(new NonprofitMember { NonprofitId = nonprofitId, Start = DateTime.UtcNow });
+                    db.Members.Add(member);
+                    member.NonprofitMembers.Add(new NonprofitMember { NonprofitId = nonprofitId, Start = DateTime.UtcNow });
+                }
 
                 db.SaveChanges();
             }

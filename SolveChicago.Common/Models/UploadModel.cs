@@ -18,12 +18,16 @@ namespace SolveChicago.Common.Models
     {
         public string SSN { get; set; }
         public string FirstName { get; set; }
+        public string MiddleName { get; set; }
         public string LastName { get; set; }
         public string Gender { get; set; }
         public DateTime? Birthday { get; set; }
         public bool? IsHeadOfHousehold { get; set; }
         public decimal? Income { get; set; }
         public bool? IsMilitary { get; set; }
+        public string MilitaryBranch { get; set; }
+        public string MilitaryLastPayGrade { get; set; }
+        public string MilitaryCurrentServiceStatus { get; set; }
         public string Address1 { get; set; }
         public string Address2 { get; set; }
         public string City { get; set; }

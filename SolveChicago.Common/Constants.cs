@@ -116,6 +116,8 @@ namespace SolveChicago.Common
                 public const string None = "None";
                 public const string HSDiploma = "HS Diploma";
                 public const string GED = "GED";
+                public const string Certificate = "Certificate";
+                public const string AssociateOfArts = "Associate of Arts";
                 public const string BachelorsDegree = "Bachelor's Degree";
                 public const string MastersDegree = "Master's Degree";
                 public const string PostGraduateDegree = "Post Graduate Degree";
