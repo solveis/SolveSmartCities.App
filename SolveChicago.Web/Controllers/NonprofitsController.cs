@@ -40,7 +40,7 @@ namespace SolveChicago.Web.Controllers
             ImpersonateNonprofit(nonprofitId);
             NonprofitService service = new NonprofitService(this.db);
             FamilyEntity[] members = service.GetMembers(State.NonprofitId);
-            return View(members.ToList());
+            return View(members.OrderBy(x => x.FamilyName).ToList());
         }
 
         // GET : Nonprofits/CaseManagers

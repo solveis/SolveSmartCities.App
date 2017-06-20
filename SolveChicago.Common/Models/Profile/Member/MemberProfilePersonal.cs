@@ -21,6 +21,7 @@ namespace SolveChicago.Common.Models.Profile.Member
         [Required]
         public string Email { get; set; }
         [Required]
+        [StringLength(10, ErrorMessage = "Phone cannot be longer than 10 digits.")]
         public string Phone { get; set; }
         [Required]
         public string Gender { get; set; }

@@ -110,27 +110,27 @@ namespace SolveChicago.Service
                 model.Stage = Constants.Member.Stage.ProfileCompleted;
                 model.Percent = (int)Math.Round(37.5);
             }
-            if (member.NonprofitMembers.Any(x => x.Start >= member.CreatedDate && !x.End.HasValue && x.Nonprofit.Skills.Any(y => y.Name == Constants.Skills.SoftSkills)))
+            if (member.NonprofitMembers.Any(x => (!x.End.HasValue || x.End >= member.CreatedDate) && x.Nonprofit.Skills.Any(y => y.Name == Constants.Skills.SoftSkills)))
             { // they are in a soft skills NPO
                 model.Stage = Constants.Member.Stage.InSoftSkillsTraining;
                 model.Percent = (int)Math.Round(50.0);
             }
-            if (member.NonprofitMembers.Any(x => x.Start >= member.CreatedDate && x.End.HasValue && x.End.Value <= DateTime.UtcNow && x.Nonprofit.Skills.Any(y => y.Name == Constants.Skills.SoftSkills)) && member.MemberSkills.Any(x => x.IsComplete && x.Skill.Name == Constants.Skills.SoftSkills))
+            if (member.NonprofitMembers.Any(x => x.End.HasValue && x.End <= DateTime.UtcNow && x.Nonprofit.Skills.Any(y => y.Name == Constants.Skills.SoftSkills)) && member.MemberSkills.Any(x => x.IsComplete && x.Skill.Name == Constants.Skills.SoftSkills))
             { // they have completed a soft skills NPO, and have gained soft skills
                 model.Stage = Constants.Member.Stage.SoftSkillsAcquired;
                 model.Percent = (int)Math.Round(62.5);
             }
-            if (member.NonprofitMembers.Any(x => x.Start >= member.CreatedDate && !x.End.HasValue && x.Nonprofit.Skills.Any(y => y.Name != Constants.Skills.SoftSkills)))
+            if (member.NonprofitMembers.Any(x => (!x.End.HasValue || x.End >= member.CreatedDate) && x.Nonprofit.Skills.Any(y => y.Name != Constants.Skills.SoftSkills)))
             { // they are in a workforce NPO
                 model.Stage = Constants.Member.Stage.InWorkforceTraining;
                 model.Percent = (int)Math.Round(75.0);
             }
-            if (member.NonprofitMembers.Any(x => x.Start >= member.CreatedDate && x.End.HasValue && x.End.Value <= DateTime.UtcNow && x.Nonprofit.Skills.Any(y => y.Name != Constants.Skills.SoftSkills)) && !member.NonprofitMembers.Any(x => x.Start > member.CreatedDate && !x.End.HasValue) && member.MemberSkills.Any(x => x.IsComplete && x.Skill.Name != Constants.Skills.SoftSkills))
+            if (member.NonprofitMembers.Any(x => x.End.HasValue && x.End <= DateTime.UtcNow && x.End.Value <= DateTime.UtcNow && x.Nonprofit.Skills.Any(y => y.Name != Constants.Skills.SoftSkills)) && !member.NonprofitMembers.Any(x => x.Start > member.CreatedDate && !x.End.HasValue) && member.MemberSkills.Any(x => x.IsComplete && x.Skill.Name != Constants.Skills.SoftSkills))
             { // they have completed a workforce NPO, and have a workforce skill
                 model.Stage = Constants.Member.Stage.WorkforceSkillsAcquired;
                 model.Percent = (int)Math.Round(87.5);
             }
-            if (member.MemberCorporations.Any(x => x.Start >= member.CreatedDate && !x.End.HasValue))
+            if (member.MemberCorporations.Any(x => (!x.End.HasValue || x.End >= member.CreatedDate)))
             { // they have a job
                 model.Stage = Constants.Member.Stage.JobPlaced;
                 model.Percent = 100;

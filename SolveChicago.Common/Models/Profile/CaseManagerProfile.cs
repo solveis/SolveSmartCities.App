@@ -21,6 +21,7 @@ namespace SolveChicago.Web.Models.Profile
             }
         }
         [Required]
+        [StringLength(10, ErrorMessage = "Phone cannot be longer than 10 digits.")]
         public string Phone { get; set; }
         public string ProfilePicturePath { get; set; }
         public HttpPostedFileBase ProfilePicture { get; set; }

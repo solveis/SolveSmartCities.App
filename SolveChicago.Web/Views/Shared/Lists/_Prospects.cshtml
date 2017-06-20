@@ -47,7 +47,7 @@
                         <span>@(string.Join(", ", @item.MemberSkills.Where(x => !x.IsComplete).Select(x => x.Skill.Name)))</span>
                     </div>
                     <div class="columns has-space">
-                        <span>@(item.ContactPreference == Constants.Member.ContactPreference.Phone ? string.Join(", ", item.PhoneNumbers.Select(x => x.Number)) : item.Email)</span>
+                        <span>@(item.ContactPreference != null ? item.ContactPreference == Constants.Member.ContactPreference.Phone ? string.Join(", ", item.PhoneNumbers.Select(x => x.Number)) : item.Email : item.PhoneNumbers.Any() ? string.Join(", ", item.PhoneNumbers.Select(x => x.Number)) : item.Email)</span>
                     </div>
                     <div class="columns">
                         <a href="/Prospects/InviteMember?memberId=@item.Id&nonprofitId=@ViewBag.NonprofitId" class="show-family button">Invite</a>
