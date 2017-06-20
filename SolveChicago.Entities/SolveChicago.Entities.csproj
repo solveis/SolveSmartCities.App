@@ -133,6 +133,9 @@
     <Compile Include="MemberGovernmentProgram.cs">
       <DependentUpon>data.tt</DependentUpon>
     </Compile>
+    <Compile Include="MemberMilitary.cs">
+      <DependentUpon>data.tt</DependentUpon>
+    </Compile>
     <Compile Include="MemberParent.cs">
       <DependentUpon>data.tt</DependentUpon>
     </Compile>

@@ -27,6 +27,7 @@ namespace SolveChicago.Entities
     
         public int Id { get; set; }
         public string Number { get; set; }
+        public string Extension { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Family> Families { get; set; }

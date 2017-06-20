@@ -72,7 +72,8 @@ namespace SolveChicago.Web.Controllers
             if (ModelState.IsValid)
             {
                 Member member = db.Members.SingleOrDefault(x => x.Email == model.Email);
-                if (member != null)
+                MemberService mService = new MemberService(this.db);
+                if (member != null && !mService.MemberExists(model.FirstName, null, model.LastName, null, null, null, null, null, null, null, null, model.Email))
                     throw new ApplicationException("That email already associated with an account.");
                 else
                 {
@@ -89,7 +90,7 @@ namespace SolveChicago.Web.Controllers
                         nonprofit.NonprofitMembers.Add(new NonprofitMember { Member = member, Start = DateTime.UtcNow });
                     else
                         db.Members.Add(member);
-                    
+
                     // add soft skills as a desired skill for pipeline
                     // TODO refactor this into a stored proc
                     Skill softSkills = db.Skills.SingleOrDefault(x => x.Name == Common.Constants.Skills.SoftSkills);

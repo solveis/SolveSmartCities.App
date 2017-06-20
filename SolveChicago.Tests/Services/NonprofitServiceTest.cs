@@ -2,6 +2,7 @@
 using Xunit;
 using Moq;
 using SolveChicago.Entities;
+using SolveChicago.Common;
 using System.Data.Entity;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,22 +25,9 @@ namespace SolveChicago.Tests.Services
                     Id = 1,
                     Addresses = new List<Address>
                     {
-                        new Address
-                        {
-                            Address1 = "123 Main Stree",
-                            Address2 = null,
-                            City = "Chicago",
-                            Country = "USA",
-                            Province = "Illinois",
-                            ZipCode = "60245"
-                        }
                     },
                     PhoneNumbers = new List<PhoneNumber>
                     {
-                        new PhoneNumber
-                        {
-                            Number = "1234567890",
-                        }
                     },
                     ProfilePicturePath = "../path.jpg",
                     Name = "Test Nonprofit",
@@ -120,6 +108,7 @@ namespace SolveChicago.Tests.Services
             };
             List<Skill> skills = new List<Skill>();
             List<Address> addresses = new List<Address>();
+            List<PhoneNumber> phones = new List<PhoneNumber>();
 
             var set = new Mock<DbSet<Nonprofit>>().SetupData(data);
             set.Setup(m => m.Find(It.IsAny<object[]>()))
@@ -145,6 +134,11 @@ namespace SolveChicago.Tests.Services
             caseManagerSet.Setup(m => m.Find(It.IsAny<object[]>()))
                 .Returns<object[]>(ids => caseManagers.FirstOrDefault(d => d.Id == (int)ids[0]));
             context.Setup(c => c.CaseManagers).Returns(caseManagerSet.Object);
+
+            var phoneSet = new Mock<DbSet<PhoneNumber>>().SetupData(phones);
+            phoneSet.Setup(m => m.Find(It.IsAny<object[]>()))
+                .Returns<object[]>(ids => phones.FirstOrDefault(d => d.Id == (int)ids[0]));
+            context.Setup(c => c.PhoneNumbers).Returns(phoneSet.Object);
         }
 
         [Fact]
@@ -171,13 +165,33 @@ namespace SolveChicago.Tests.Services
             NonprofitProfile model = new NonprofitProfile
             {
                 Id = 1,
-                Name = "Test 2 Nonprofit"
+                Name = "Test 2 Nonprofit",
+                Phone = "1234567890",
+                PhoneExtension = "3124",
+                Address1 = "123 Main Street",
+                Address2 = "#2F",
+                City = "Chicago",
+                Country ="USA",
+                Province = "IL",
+                SkillsOffered = "manufacturing, cooking",
+                TeachesSoftSkills = false,
+                ZipCode = "60635",
+                ProfilePicturePath = "../pathtoimg.jpg"
             };
 
 
             NonprofitService service = new NonprofitService(context.Object);
             service.Post(model);
             Assert.Equal("Test 2 Nonprofit", context.Object.Nonprofits.First().Name);
+            Assert.Equal("1234567890", context.Object.Nonprofits.First().PhoneNumbers.First().Number);
+            Assert.Equal("3124", context.Object.Nonprofits.First().PhoneNumbers.First().Extension);
+            Assert.Equal("123 Main Street", context.Object.Nonprofits.First().Addresses.First().Address1);
+            Assert.Equal("#2F", context.Object.Nonprofits.First().Addresses.First().Address2);
+            Assert.Equal("Chicago", context.Object.Nonprofits.First().Addresses.First().City);
+            Assert.Equal("USA", context.Object.Nonprofits.First().Addresses.First().Country);
+            Assert.Equal("IL", context.Object.Nonprofits.First().Addresses.First().Province);
+            Assert.False(context.Object.Nonprofits.First().Skills.Any(x => x.Name == Constants.Skills.SoftSkills));
+            Assert.Equal("manufacturing, cooking", string.Join(", ", context.Object.Nonprofits.First().Skills.Select(x => x.Name).ToArray()));
         }
 
         [Fact]
@@ -256,12 +270,16 @@ namespace SolveChicago.Tests.Services
                 {
                     SSN = Guid.NewGuid().ToString(),
                     FirstName = Guid.NewGuid().ToString(),
+                    MiddleName = Guid.NewGuid().ToString(),
                     LastName = Guid.NewGuid().ToString(),
                     Gender = "Male",
                     Birthday = new DateTime(1990, 4, 16),
                     IsHeadOfHousehold = true,
                     Income = 30000,
                     IsMilitary = true,
+                    MilitaryBranch = "Army Reserve",
+                    MilitaryCurrentServiceStatus = "Active",
+                    MilitaryLastPayGrade = "E-1",
                     Address1 = Guid.NewGuid().ToString(),
                     Address2 = "",
                     City = Guid.NewGuid().ToString(),
@@ -285,6 +303,23 @@ namespace SolveChicago.Tests.Services
             {
                 new Nonprofit { Id = 1, Name = "My NPO" }
             };
+            List <MemberMilitary> memberMilitary = new List<MemberMilitary>();
+            List<MilitaryBranch> militaryBranch = new List<MilitaryBranch>
+            {
+                new MilitaryBranch { Id = 13,    Country = "USA",    BranchName = "Air Force" },
+                new MilitaryBranch { Id = 14,   Country = "USA",    BranchName = "Air Force Reserve" },
+                new MilitaryBranch { Id = 15,   Country = "USA",    BranchName = "Air National Guard" },
+                new MilitaryBranch { Id = 16,   Country = "USA",    BranchName = "Army" },
+                new MilitaryBranch { Id = 17,   Country = "USA",    BranchName = "Army Reserve" },
+                new MilitaryBranch { Id = 18,   Country = "USA",    BranchName = "Army National Guard" },
+                new MilitaryBranch { Id = 19,   Country = "USA",    BranchName = "Coast Guard" },
+                new MilitaryBranch { Id = 20,   Country = "USA",    BranchName = "Coast Guard Reserve" },
+                new MilitaryBranch { Id = 21,   Country = "USA",    BranchName = "Marine Corps" },
+                new MilitaryBranch { Id = 22,   Country = "USA",    BranchName = "Marine Corps Reserve" },
+                new MilitaryBranch { Id = 23,   Country = "USA",    BranchName = "Navy" },
+                new MilitaryBranch { Id = 24,   Country = "USA",    BranchName = "Navy Reserve" },
+        };
+
 
 
             var MemberSet = new Mock<DbSet<Member>>().SetupData(members);
@@ -321,12 +356,23 @@ namespace SolveChicago.Tests.Services
             NonprofitSet.Setup(m => m.Find(It.IsAny<object[]>()))
                 .Returns<object[]>(ids => nonprofits.FirstOrDefault(d => d.Id == (int)ids[0]));
             context.Setup(c => c.Nonprofits).Returns(NonprofitSet.Object);
+            
+            var MemberMilitaryset = new Mock<DbSet<MemberMilitary>>().SetupData(memberMilitary);
+            MemberMilitaryset.Setup(m => m.Find(It.IsAny<object[]>()))
+                .Returns<object[]>(ids => memberMilitary.FirstOrDefault(d => d.MilitaryId == (int)ids[0]));
+            context.Setup(c => c.MemberMilitaries).Returns(MemberMilitaryset.Object);
+
+            var MilitaryBranchSet = new Mock<DbSet<MilitaryBranch>>().SetupData(militaryBranch);
+            MilitaryBranchSet.Setup(m => m.Find(It.IsAny<object[]>()))
+                .Returns<object[]>(ids => militaryBranch.FirstOrDefault(d => d.Id == (int)ids[0]));
+            context.Setup(c => c.MilitaryBranches).Returns(MilitaryBranchSet.Object);
 
 
             NonprofitService service = new NonprofitService(context.Object);
             service.CreateMembersFromClientList(1, clientList);
 
             Assert.True(context.Object.Members.Count() == 200);
+            Assert.Equal("E-1", context.Object.Members.First().MemberMilitaries.First().LastPayGrade);
         }
     }
 }

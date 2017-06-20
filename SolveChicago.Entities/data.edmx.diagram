@@ -24,7 +24,6 @@
         <EntityTypeShape EntityType="SolveChicagoDevModel.MemberSchool" Width="1.5" PointX="10.5" PointY="16.875" IsExpanded="true" />
         <EntityTypeShape EntityType="SolveChicagoDevModel.MemberSkill" Width="1.5" PointX="10.5" PointY="25.125" IsExpanded="true" />
         <EntityTypeShape EntityType="SolveChicagoDevModel.MemberSpous" Width="1.5" PointX="7.5" PointY="37.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SolveChicagoDevModel.MilitaryBranch" Width="1.5" PointX="7.5" PointY="40.625" IsExpanded="true" />
         <EntityTypeShape EntityType="SolveChicagoDevModel.Outcome" Width="1.5" PointX="7.5" PointY="46.875" IsExpanded="true" />
         <EntityTypeShape EntityType="SolveChicagoDevModel.PhoneNumber" Width="1.5" PointX="7.5" PointY="26.25" IsExpanded="true" />
         <EntityTypeShape EntityType="SolveChicagoDevModel.School" Width="1.5" PointX="8.25" PointY="11.25" IsExpanded="true" />
@@ -54,7 +53,6 @@
         <AssociationConnector Association="SolveChicagoDevModel.FamilyPhoneNumbers" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.MemberAddresses" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.MemberInterests" ManuallyRouted="false" />
-        <AssociationConnector Association="SolveChicagoDevModel.MemberMilitary" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.MemberPhoneNumbers" ManuallyRouted="false" />
         <AssociationConnector Association="SolveChicagoDevModel.UserProfileCorporations" ManuallyRouted="false" />
         <EntityTypeShape EntityType="SolveChicagoDevModel.ELMAH_Error" Width="1.5" PointX="0.75" PointY="0.75" />
@@ -84,6 +82,10 @@
         <AssociationConnector Association="SolveChicagoDevModel.FK_NonprofitMembers_Members" />
         <AssociationConnector Association="SolveChicagoDevModel.FK_NonprofitMembers_Nonprofits" />
         <AssociationConnector Association="SolveChicagoDevModel.NonprofitMembersCaseManagers" />
+        <EntityTypeShape EntityType="SolveChicagoDevModel.MemberMilitary" Width="1.5" PointX="7.5" PointY="15.375" />
+        <EntityTypeShape EntityType="SolveChicagoDevModel.MilitaryBranch" Width="1.5" PointX="5.25" PointY="4.75" />
+        <AssociationConnector Association="SolveChicagoDevModel.FK_MemberMilitary_Member" />
+        <AssociationConnector Association="SolveChicagoDevModel.FK_MemberMilitary_MilitaryBranch" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

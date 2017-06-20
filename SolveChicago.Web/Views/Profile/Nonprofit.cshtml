@@ -38,6 +38,10 @@
             @Html.LabelFor(model => model.Phone, htmlAttributes: new { })
             @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "number-entry" } })
 
+            @Html.ValidationMessageFor(model => model.PhoneExtension, "", new { @class = "text-danger" })
+            @Html.LabelFor(model => model.PhoneExtension, "Ext.", htmlAttributes: new { })
+            @Html.EditorFor(model => model.PhoneExtension, new { htmlAttributes = new { @class = "number-entry" } })
+
             @Html.ValidationMessageFor(model => model.Address1, "", new { @class = "text-danger" })
             @Html.LabelFor(model => model.Address1, "Street Address", htmlAttributes: new { })
             @Html.EditorFor(model => model.Address1, new { htmlAttributes = new { } })

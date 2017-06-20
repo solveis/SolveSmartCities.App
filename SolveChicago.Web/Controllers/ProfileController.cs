@@ -386,6 +386,8 @@ namespace SolveChicago.Web.Controllers
                 Constants.School.Degrees.None,
                 Constants.School.Degrees.HSDiploma,
                 Constants.School.Degrees.GED,
+                Constants.School.Degrees.Certificate,
+                Constants.School.Degrees.AssociateOfArts,
                 Constants.School.Degrees.BachelorsDegree,
                 Constants.School.Degrees.MastersDegree,
                 Constants.School.Degrees.PostGraduateDegree,

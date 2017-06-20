@@ -12,7 +12,9 @@ namespace SolveChicago.Web.Models.Profile
         [Required]
         public string Name { get; set; }
         [Required]
+        [StringLength(10, ErrorMessage = "Phone cannot be longer than 10 digits.")]
         public string Phone { get; set; }
+        public string PhoneExtension { get; set; }
         [Required]
         public string Address1 { get; set; }
         public string Address2 { get; set; }

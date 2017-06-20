@@ -14,6 +14,7 @@ namespace SolveChicago.Common.Interfaces.Profile.Member
     {
         int Id { get; set; }
         string FirstName { get; set; }
+        string MiddleName { get; set; }
         string LastName { get; set; }
         string Email { get; set; }
         string Phone { get; set; }

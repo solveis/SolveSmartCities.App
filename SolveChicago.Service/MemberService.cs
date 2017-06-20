@@ -251,10 +251,10 @@ namespace SolveChicago.Service
 
         private MilitaryEntity[] GetMilitary(Member member)
         {
-            return member.MilitaryBranches.Select(x => new MilitaryEntity
+            return member.MemberMilitaries.Select(x => new MilitaryEntity
             {
-                Id = x.Id,
-                MilitaryBranch = x.BranchName,
+                Id = x.MilitaryId,
+                MilitaryBranch = x.MilitaryBranch.BranchName,
             }).ToArray();
         }
 
@@ -581,7 +581,7 @@ namespace SolveChicago.Service
                 MatchOrCreateFamily(member);
                 UpdateMemberPhone(model.Phone, member);
                 UpdateMemberInterests(model.Interests, member);
-                UpdateMemberMilitary(model, member);
+                UpdateMemberMilitary(model.MilitaryId, "", "", "", member);
                 UpdateMemberSkills(!string.IsNullOrEmpty(model.Skills) ? model.Skills : "", member, true);
 
                 db.SaveChanges();
@@ -656,14 +656,22 @@ namespace SolveChicago.Service
             }
         }
 
-        private void UpdateMemberMilitary(MemberProfilePersonal model, Member member)
+        public bool MemberExists(string FirstName, string MiddleName, string LastName, string Suffix, string Address1, string Address2, string City, string State, string ZipCode, string Gender, DateTime? Birthday, string Email)
         {
-            if(model.MilitaryId.HasValue)
-            {
-                MilitaryBranch mBranch = db.MilitaryBranches.Single(x => x.Id == model.MilitaryId);
-                if (!member.MilitaryBranches.Contains(mBranch))
-                    member.MilitaryBranches.Add(mBranch);
-            }
+            return db.Members.Any(x => x.FirstName == FirstName && x.MiddleName == MiddleName && x.LastName == LastName && x.Gender == Gender && x.Birthday == Birthday && x.Email == Email &&
+                x.Addresses.Any(y => y.Address1 == Address1 && y.Address2 == Address2 && y.City == City && y.Province == State && y.ZipCode == ZipCode));
+        }
+
+        public void UpdateMemberMilitary(int? branchId, string branchName, string lastPayGrade, string currentStatus, Member member)
+        {
+            MilitaryBranch mBranch = null;
+            if (branchId.HasValue)
+                mBranch = db.MilitaryBranches.Single(x => x.Id == branchId);
+            else if (!string.IsNullOrEmpty(branchName))
+                mBranch = db.MilitaryBranches.Single(x => x.BranchName == branchName);
+
+            if (mBranch != null && !member.MemberMilitaries.Select(x => x.MilitaryId).Contains(mBranch.Id))
+                member.MemberMilitaries.Add(new MemberMilitary { CurrentStatus = currentStatus, MilitaryBranch = mBranch, LastPayGrade = lastPayGrade });
         }
 
         public void UpdateMemberInterests(string interestList, Member member)
