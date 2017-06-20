@@ -899,7 +899,7 @@ namespace SolveChicago.Tests.Services
             context.Setup(c => c.Members).Returns(set.Object);
 
             MemberService service = new MemberService(context.Object);
-            Assert.True(service.MemberExists(model.FirstName, model.MiddleName, model.LastName, model.Address1, model.Address2, model.City, model.Province, model.ZipCode, model.Gender, model.Birthday, model.Email));
+            Assert.True(service.MemberExists(model.FirstName, model.MiddleName, model.LastName, "", model.Address1, model.Address2, model.City, model.Province, model.ZipCode, model.Gender, model.Birthday, model.Email));
         }
 
         [Fact]
@@ -954,7 +954,7 @@ namespace SolveChicago.Tests.Services
             context.Setup(c => c.Members).Returns(set.Object);
 
             MemberService service = new MemberService(context.Object);
-            Assert.False(service.MemberExists(model.FirstName, model.MiddleName, model.LastName, model.Address1, model.Address2, model.City, model.Province, model.ZipCode, model.Gender, model.Birthday, model.Email));
+            Assert.False(service.MemberExists(model.FirstName, model.MiddleName, model.LastName, "", model.Address1, model.Address2, model.City, model.Province, model.ZipCode, model.Gender, model.Birthday, model.Email));
         }
     }
 }

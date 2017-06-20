@@ -73,7 +73,7 @@ namespace SolveChicago.Web.Controllers
             {
                 Member member = db.Members.SingleOrDefault(x => x.Email == model.Email);
                 MemberService mService = new MemberService(this.db);
-                if (member != null && !mService.MemberExists(model.FirstName, null, model.LastName, null, null, null, null, null, null, null, model.Email))
+                if (member != null && !mService.MemberExists(model.FirstName, null, model.LastName, null, null, null, null, null, null, null, null, model.Email))
                     throw new ApplicationException("That email already associated with an account.");
                 else
                 {

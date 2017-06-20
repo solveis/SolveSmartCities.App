@@ -238,7 +238,7 @@ namespace SolveChicago.Service
             MemberService service = new MemberService(this.db);
             foreach (ClientList client in clientList)
             {
-                if(!service.MemberExists(client.FirstName, client.MiddleName, client.LastName, client.Address1, client.Address2, client.City, client.State, client.ZipCode, client.Gender, client.Birthday, client.Email))
+                if(!service.MemberExists(client.FirstName, client.MiddleName, client.LastName, client.Suffix, client.Address1, client.Address2, client.City, client.State, client.ZipCode, client.Gender, client.Birthday, client.Email))
                 {
                     Member member = new Member
                     {
@@ -253,6 +253,7 @@ namespace SolveChicago.Service
                         IsHeadOfHousehold = client.IsHeadOfHousehold,
                         IsMilitary = client.IsMilitary,
                         SSN = client.SSN,
+                        Suffix = client.Suffix,
                     };
                     if (client.IsMilitary ?? false)
                         service.UpdateMemberMilitary(null, client.MilitaryBranch, client.MilitaryLastPayGrade, client.MilitaryCurrentServiceStatus, member);

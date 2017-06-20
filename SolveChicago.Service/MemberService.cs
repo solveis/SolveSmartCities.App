@@ -656,7 +656,7 @@ namespace SolveChicago.Service
             }
         }
 
-        public bool MemberExists(string FirstName, string MiddleName, string LastName, string Address1, string Address2, string City, string State, string ZipCode, string Gender, DateTime? Birthday, string Email)
+        public bool MemberExists(string FirstName, string MiddleName, string LastName, string Suffix, string Address1, string Address2, string City, string State, string ZipCode, string Gender, DateTime? Birthday, string Email)
         {
             return db.Members.Any(x => x.FirstName == FirstName && x.MiddleName == MiddleName && x.LastName == LastName && x.Gender == Gender && x.Birthday == Birthday && x.Email == Email &&
                 x.Addresses.Any(y => y.Address1 == Address1 && y.Address2 == Address2 && y.City == City && y.Province == State && y.ZipCode == ZipCode));
