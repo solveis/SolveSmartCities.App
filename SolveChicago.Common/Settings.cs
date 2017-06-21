@@ -109,6 +109,17 @@ namespace SolveChicago.Common
             }
         }
 
+        public class Intercom
+        {
+            public static string AppId
+            {
+                get
+                {
+                    return GetSetting<string>("Intercom.AppId", "ag67g3o5");
+                }
+            }
+        }
+
 
         /// <summary>
         /// Gets the setting.
