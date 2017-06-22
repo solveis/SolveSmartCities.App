@@ -42,8 +42,6 @@ namespace SolveChicago.Web.Controllers
                 return RedirectToAction("Nonprofit");
             else if (State.Roles.Select(x => x.ToString()).Contains(Constants.Roles.CaseManager))
                 return RedirectToAction("CaseManager");
-            else if (State.Roles.Select(x => x.ToString()).Contains(Constants.Roles.Referrer))
-                return RedirectToAction("Referrer");
             else if (State.Roles.Select(x => x.ToString()).Contains(Constants.Roles.Member))
                 return RedirectToAction("MemberPersonal");
             else if (State.Roles.Select(x => x.ToString()).Contains(Constants.Roles.Corporation))
@@ -293,7 +291,7 @@ namespace SolveChicago.Web.Controllers
 
         private Dictionary<int, string> GetAvailableSkillsList()
         {
-            Dictionary<int, string> availableSkills = db.Skills.Where(x => x.Nonprofits.Count() > 0 && x.Name != Constants.Skills.SoftSkills).ToDictionary(x => x.Id, x => x.Name);
+            Dictionary<int, string> availableSkills = db.Skills.Where(x => x.NonprofitSkills.Count() > 0 && x.Name != Constants.Skills.SoftSkills).ToDictionary(x => x.Id, x => x.Name);
 
             return availableSkills;
         }
@@ -499,30 +497,6 @@ namespace SolveChicago.Web.Controllers
                 db.SaveChanges();
             }
             return RedirectToAction("Index", "Corporations", new { corporationId = State.CorporationId });
-        }
-
-        // GET: Profile/Referrer
-        [Authorize(Roles = "Admin, Referrer")]
-        public ActionResult Referrer(int? id)
-        {
-            ImpersonateReferrer(id);
-            ReferrerService service = new ReferrerService(this.db);
-            ReferrerProfile model = service.Get(State.ReferrerId);
-            return View(model);
-        }
-
-        // POST: Profile/Referrer
-        [Authorize(Roles = "Admin, Referrer")]
-        [HttpPost]
-        public ActionResult Referrer(ReferrerProfile model)
-        {
-            ImpersonateReferrer(model.Id);
-            if (ModelState.IsValid)
-            {
-                ReferrerService service = new ReferrerService(this.db);
-                service.Post(model);
-            }
-            return RedirectToAction("Index", "Referrers", new { referrerId = State.ReferrerId });
         }
 
         // GET: Profile/Admin

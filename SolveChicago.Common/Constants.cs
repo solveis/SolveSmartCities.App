@@ -8,6 +8,20 @@ namespace SolveChicago.Common
 {
     public class Constants
     {
+        public class ServiceProviders
+        {
+            public static string Workforce = "Workforce";
+            public static string FinancialLiteracy = "Financial Literacy";
+            public static string LegalCounseling = "Legal Counseling";
+            public static string SocialWork = "Social Work";
+            public static string Housing = "Housing";
+        }
+
+        public class NonprofitRoles
+        {
+            public static string CaseManager = "CaseManager";
+        }
+
         public class Skills
         {
             public const string SoftSkills = "Soft Skills";
@@ -78,7 +92,6 @@ namespace SolveChicago.Common
             public const string CaseManager = "CaseManager";
             public const string Corporation = "Corporation";
             public const string Nonprofit = "Nonprofit";
-            public const string Referrer = "Referrer";
         }
 
         public class Upload
@@ -88,7 +101,6 @@ namespace SolveChicago.Common
             public const string CaseManagerPhotos = "casemanagerphotos";
             public const string CorporationPhotos = "corporationphotos";
             public const string NonprofitPhotos = "nonprofitphotos";
-            public const string ReferrerPhotos = "Referrerphotos";
         }
 
         public class Gender

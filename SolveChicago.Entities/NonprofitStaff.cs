@@ -12,20 +12,24 @@ namespace SolveChicago.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class Outcome
+    public partial class NonprofitStaff
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Outcome()
+        public NonprofitStaff()
         {
-            this.CaseNotes = new HashSet<CaseNote>();
+            this.NonprofitMembers = new HashSet<NonprofitMember>();
         }
     
         public int Id { get; set; }
-        public int MemberId { get; set; }
-        public string Name { get; set; }
+        public int NonprofitId { get; set; }
+        public int CaseManagerId { get; set; }
+        public Nullable<int> ProgramId { get; set; }
+        public string Role { get; set; }
     
+        public virtual CaseManager CaseManager { get; set; }
+        public virtual NonprofitProgram NonprofitProgram { get; set; }
+        public virtual Nonprofit Nonprofit { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CaseNote> CaseNotes { get; set; }
-        public virtual Member Member { get; set; }
+        public virtual ICollection<NonprofitMember> NonprofitMembers { get; set; }
     }
 }

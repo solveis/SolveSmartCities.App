@@ -31,10 +31,16 @@ namespace SolveChicago.Tests.Services
                     },
                     ProfilePicturePath = "../path.jpg",
                     Name = "Test Nonprofit",
-                    CaseManagers = new List<CaseManager>
+                    NonprofitStaffs = new List<NonprofitStaff>
                     {
-                        new CaseManager { Id = 1, FirstName = "Tim", LastName = "Keller" },
-                        new CaseManager { Id = 2, FirstName = "Esme", LastName = "Pirouet" },
+                        new NonprofitStaff
+                        {
+                            CaseManager = new CaseManager { Id = 1, FirstName = "Tim", LastName = "Keller" },
+                        },
+                        new NonprofitStaff
+                        {
+                            CaseManager = new CaseManager { Id = 2, FirstName = "Esme", LastName = "Pirouet" },
+                        }
                     },
                     NonprofitMembers = new List<NonprofitMember>
                     {
@@ -190,8 +196,8 @@ namespace SolveChicago.Tests.Services
             Assert.Equal("Chicago", context.Object.Nonprofits.First().Addresses.First().City);
             Assert.Equal("USA", context.Object.Nonprofits.First().Addresses.First().Country);
             Assert.Equal("IL", context.Object.Nonprofits.First().Addresses.First().Province);
-            Assert.False(context.Object.Nonprofits.First().Skills.Any(x => x.Name == Constants.Skills.SoftSkills));
-            Assert.Equal("manufacturing, cooking", string.Join(", ", context.Object.Nonprofits.First().Skills.Select(x => x.Name).ToArray()));
+            Assert.False(context.Object.Nonprofits.First().NonprofitSkills.Any(x => x.Skill.Name == Constants.Skills.SoftSkills));
+            Assert.Equal("manufacturing, cooking", string.Join(", ", (context.Object.Nonprofits.First().NonprofitSkills.Any() ? context.Object.Nonprofits.First().NonprofitSkills.Select(x => x.Skill.Name) : new string[0]).ToArray()));
         }
 
         [Fact]

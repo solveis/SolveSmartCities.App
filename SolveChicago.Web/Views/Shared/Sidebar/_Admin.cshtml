@@ -4,30 +4,11 @@
     <li class="menu-link @(Request.Url.AbsolutePath == "/Admins" ? "active" : "")">
         <a href="/Admins">
             <img class="menu-icon" src="../img/side-nav-members-icon.svg">
-            <span class="app-dashboard-sidebar-text">Nonprofits</span>
-        </a>
-    </li>
-    @*<li class="menu-link @(Request.Url.AbsolutePath == "/Admins/CaseManagers" ? "active" : "")">
-        <a href="/Admins/CaseManagers">
-            <img class="menu-icon" src="../img/side-nav-members-icon.svg">
-            <span class="app-dashboard-sidebar-text">CaseManagers</span>
-        </a>
-    </li>*@
-    @*<li class="menu-link @(Request.Url.AbsolutePath == "/Admins/Members" ? "active" : "")">
-        <a href="/Admins/Members">
-            <img class="menu-icon" src="../img/side-nav-members-icon.svg">
-            <span class="app-dashboard-sidebar-text">Members</span>
-        </a>
-    </li>*@
-    <li class="menu-link @(Request.Url.AbsolutePath == "/Referrers" ? "active" : "")">
-        <a href="/Admins/Referrers">
-
-            <img class="menu-icon" src="../img/side-nav-members-icon.svg">
-            <span class="app-dashboard-sidebar-text">Property Managers</span>
+            <span class="app-dashboard-sidebar-text">Service Providers</span>
         </a>
     </li>
     <li class="menu-link @(Request.Url.AbsolutePath == "/Prospects" ? "active" : "")">
-        <a href="/Prospects">
+        <a href="/Prospects@(ViewBag.NonprofitId != null ? $"?nonprofitId={ViewBag.NonprofitId}" : "")">
 
             <img class="menu-icon" src="../img/side-nav-prospect-icon.svg">
             <span class="app-dashboard-sidebar-text">Prospects</span>

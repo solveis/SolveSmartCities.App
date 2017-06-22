@@ -48,13 +48,6 @@ namespace SolveChicago.Web.Controllers
             return View(caseManagers.ToList());
         }
 
-        // GET: Admins/Referrers
-        public ActionResult Referrers()
-        {
-            var referrers = db.Referrers.ToArray();
-            return View(referrers.ToList());
-        }
-
         // GET: Admins/Members
         public ActionResult Members()
         {

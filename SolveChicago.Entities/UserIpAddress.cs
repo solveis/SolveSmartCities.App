@@ -12,15 +12,13 @@ namespace SolveChicago.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class MemberSkill
+    public partial class UserIpAddress
     {
-        public int MemberId { get; set; }
-        public int SkillId { get; set; }
-        public Nullable<int> NonprofitSkillsId { get; set; }
-        public bool IsComplete { get; set; }
+        public string UserId { get; set; }
+        public int IpAddressId { get; set; }
+        public System.DateTime Date { get; set; }
     
-        public virtual Member Member { get; set; }
-        public virtual NonprofitSkill NonprofitSkill { get; set; }
-        public virtual Skill Skill { get; set; }
+        public virtual AspNetUser AspNetUser { get; set; }
+        public virtual IpAddress IpAddress { get; set; }
     }
 }

@@ -147,4 +147,25 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="UserId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="a2ddae65-8cf9-40ad-9a8f-e6177aefedd4" ChangeDateTime="06/21/2017 20:57:11">
+    <Property Name="ElementName" Value="[dbo].[NonprofitStaff].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[NonprofitStaff]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="NonprofitId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="a442e17a-7865-4ade-a77d-91b6268191a4" ChangeDateTime="06/21/2017 20:58:40">
+    <Property Name="ElementName" Value="[dbo].[NonprofitMembersStaff].[CaseManagerId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[NonprofitMembersStaff]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="NonprofitStaffId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="a9e9c51b-48ab-4d34-a0cb-12ec75f79a34" ChangeDateTime="06/21/2017 22:26:28">
+    <Property Name="ElementName" Value="[dbo].[MemberSkills].[NonprofitId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[MemberSkills]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="NonprofitSkillsId" />
+  </Operation>
 </Operations>

@@ -121,6 +121,9 @@
     <Compile Include="Interest.cs">
       <DependentUpon>data.tt</DependentUpon>
     </Compile>
+    <Compile Include="IpAddress.cs">
+      <DependentUpon>data.tt</DependentUpon>
+    </Compile>
     <Compile Include="Member.cs">
       <DependentUpon>data.tt</DependentUpon>
     </Compile>
@@ -157,6 +160,15 @@
     <Compile Include="NonprofitMember.cs">
       <DependentUpon>data.tt</DependentUpon>
     </Compile>
+    <Compile Include="NonprofitProgram.cs">
+      <DependentUpon>data.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NonprofitSkill.cs">
+      <DependentUpon>data.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NonprofitStaff.cs">
+      <DependentUpon>data.tt</DependentUpon>
+    </Compile>
     <Compile Include="Outcome.cs">
       <DependentUpon>data.tt</DependentUpon>
     </Compile>
@@ -164,13 +176,16 @@
       <DependentUpon>data.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Referrer.cs">
+    <Compile Include="Referral.cs">
       <DependentUpon>data.tt</DependentUpon>
     </Compile>
     <Compile Include="School.cs">
       <DependentUpon>data.tt</DependentUpon>
     </Compile>
     <Compile Include="Skill.cs">
+      <DependentUpon>data.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserIpAddress.cs">
       <DependentUpon>data.tt</DependentUpon>
     </Compile>
   </ItemGroup>

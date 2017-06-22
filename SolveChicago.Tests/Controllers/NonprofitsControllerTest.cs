@@ -56,13 +56,16 @@ namespace SolveChicago.Tests.Controllers
                                         {
                                             Id = 1,
                                             Name = "NPO 1",
-                                            Skills = new List<Skill>
+                                            NonprofitSkills = new List<NonprofitSkill>
                                             {
-                                                new Skill
+                                                new NonprofitSkill
                                                 {
-                                                    Id = 1,
-                                                    Name = Constants.Skills.SoftSkills,
-                                                }
+                                                    Skill = new Skill
+                                                    {
+                                                        Id = 1,
+                                                        Name = Constants.Skills.SoftSkills,
+                                                    }
+                                                }                                                
                                             }
                                         }
                                     }
@@ -388,13 +391,16 @@ namespace SolveChicago.Tests.Controllers
                                                 {
                                                     Id = 1,
                                                     Name = "NPO 1",
-                                                    Skills = new List<Skill>
+                                                    NonprofitSkills = new List<NonprofitSkill>
                                                     {
-                                                        new Skill
+                                                        new NonprofitSkill
                                                         {
-                                                            Id = 1,
-                                                            Name = Constants.Skills.SoftSkills,
-                                                        }
+                                                            Skill = new Skill
+                                                            {
+                                                                Id = 1,
+                                                                Name = Constants.Skills.SoftSkills,
+                                                            }
+                                                        }                                                        
                                                     }
                                                 }
                                             }

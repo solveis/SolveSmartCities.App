@@ -12,26 +12,32 @@ namespace SolveChicago.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class Referrer
+    public partial class NonprofitProgram
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Referrer()
+        public NonprofitProgram()
         {
-            this.Members = new HashSet<Member>();
-            this.PhoneNumbers = new HashSet<PhoneNumber>();
-            this.AspNetUsers = new HashSet<AspNetUser>();
+            this.NonprofitMembers = new HashSet<NonprofitMember>();
+            this.NonprofitSkills = new HashSet<NonprofitSkill>();
+            this.NonprofitStaffs = new HashSet<NonprofitStaff>();
+            this.Referrals = new HashSet<Referral>();
         }
     
         public int Id { get; set; }
-        public string Email { get; set; }
-        public string Name { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public int NonprofitId { get; set; }
+        public string ProgramName { get; set; }
+        public Nullable<int> MinAge { get; set; }
+        public Nullable<int> MaxAge { get; set; }
+        public string Gender { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Member> Members { get; set; }
+        public virtual ICollection<NonprofitMember> NonprofitMembers { get; set; }
+        public virtual Nonprofit Nonprofit { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PhoneNumber> PhoneNumbers { get; set; }
+        public virtual ICollection<NonprofitSkill> NonprofitSkills { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
+        public virtual ICollection<NonprofitStaff> NonprofitStaffs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Referral> Referrals { get; set; }
     }
 }

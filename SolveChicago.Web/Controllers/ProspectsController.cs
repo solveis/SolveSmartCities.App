@@ -25,7 +25,7 @@ namespace SolveChicago.Web.Controllers
         {
             ImpersonateNonprofit(nonprofitId);
             Member[] model = new Member[0];
-            if (User.IsInRole("Nonprofit") && State.Nonprofit.Skills.Select(x => x.Name).Contains(Constants.Skills.SoftSkills))
+            if (State.Nonprofit != null && State.Nonprofit.NonprofitSkills.Any(x => !x.Skill.IsWorkforce))
                 model = db.Members.Where(x => !x.NonprofitMembers.Any(y => !y.End.HasValue || y.NonprofitId == State.NonprofitId) && !x.MemberCorporations.Any(y => y.Start > x.CreatedDate) && (x.IsWorkforceInterested ?? true)).ToArray();
             else
                 model = db.Members.Where(x =>  !x.NonprofitMembers.Any(y => !y.End.HasValue || y.NonprofitId == State.NonprofitId) && !x.MemberCorporations.Any(y => y.Start > x.CreatedDate) && (x.IsWorkforceInterested ?? true) && x.MemberSkills.Any(y => y.Skill.Name == Constants.Skills.SoftSkills && y.IsComplete == true)).ToArray();
@@ -43,10 +43,10 @@ namespace SolveChicago.Web.Controllers
             if (member != null && npo != null)
             {
                 npo.NonprofitMembers.Add(new NonprofitMember { Member = member, Start = DateTime.UtcNow, });
-                MemberSkill[] skills = member.MemberSkills.Where(x => !x.IsComplete && x.Skill.Nonprofits.Any(y => y.Id == npo.Id)).ToArray();
+                MemberSkill[] skills = member.MemberSkills.Where(x => !x.IsComplete && x.Skill.NonprofitSkills.Any(y => y.NonprofitId == npo.Id)).ToArray();
                 foreach(MemberSkill skill in skills)
                 {
-                    skill.NonprofitId = npo.Id;
+                    skill.NonprofitSkill.NonprofitId = npo.Id;
                 }
                 db.SaveChanges();
             }   

@@ -53,7 +53,7 @@ namespace SolveChicago.Service
 
         private string GetSkillsOffered(Nonprofit nonprofit)
         {
-            return string.Join(", ", nonprofit.Skills.Select(x => x.Name));
+            return string.Join(", ", nonprofit.NonprofitSkills.Any() ? nonprofit.NonprofitSkills.Select(x => x.Skill.Name) : new string[0]);
         }
 
         public void Post(NonprofitProfile model)
@@ -116,21 +116,21 @@ namespace SolveChicago.Service
                     if (skills.Select(x => x.Name.ToLower()).Contains(trimSkill.ToLower()))
                     {
                         Skill existingSkill = skills.Single(x => x.Name.ToLower() == trimSkill.ToLower());
-                        if (!nonprofit.Skills.Select(x => x.Id).Contains(existingSkill.Id))
-                            nonprofit.Skills.Add(existingSkill);
+                        if (!nonprofit.NonprofitSkills.Select(x => x.SkillId).Contains(existingSkill.Id))
+                            nonprofit.NonprofitSkills.Add(new NonprofitSkill { Skill = existingSkill });
                     }
                     else
                     {
                         Skill newSkill = new Skill { Name = trimSkill };
                         db.Skills.Add(newSkill);
-                        nonprofit.Skills.Add(newSkill);
+                        nonprofit.NonprofitSkills.Add(new NonprofitSkill { Skill = newSkill });
                     }
                 }
             }
             if(teachesSoftSkills ?? false)
             {
                 Skill existingSkill = skills.Single(x => x.Name.ToLower() == "soft skills");
-                nonprofit.Skills.Add(existingSkill);
+                nonprofit.NonprofitSkills.Add(new NonprofitSkill { Skill = existingSkill });
             }
         }
 
@@ -145,7 +145,7 @@ namespace SolveChicago.Service
 
         public CaseManager[] GetCaseManagers(Nonprofit npo)
         {
-            return npo.CaseManagers.ToArray();
+            return npo.NonprofitStaffs.Select(x => x.CaseManager).ToArray();
         }
 
         public FamilyEntity[] GetMembers(int id)
@@ -175,7 +175,7 @@ namespace SolveChicago.Service
                 if (caseManager == null)
                     throw new ApplicationException($"Case Manager with Id of {caseManagerId} does not exist.");
                 else
-                    nonprofitMember.CaseManagers.Add(caseManager);
+                    nonprofitMember.NonprofitStaffs.Add(new NonprofitStaff { CaseManager = caseManager, NonprofitId = nonprofitId, Role = Constants.NonprofitRoles.CaseManager });
                 db.SaveChanges();
             }
         }

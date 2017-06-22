@@ -85,8 +85,6 @@ namespace SolveChicago.Web.Controllers
             public Nonprofit Nonprofit { get; set; }
             public int AdminId { get; set; }
             public Admin Admin { get; set; }
-            public int ReferrerId { get; set; }
-            public Referrer Referrer { get; set; }
             public Enumerations.Role[] Roles { get; set; }
         }
 
@@ -151,14 +149,14 @@ namespace SolveChicago.Web.Controllers
                     ViewBag.CaseManagerName = string.Format("{0} {1}", caseManager.FirstName, caseManager.LastName);
                     ViewBag.CaseManagerProfilePicture = !string.IsNullOrEmpty(caseManager.ProfilePicturePath) ? caseManager.ProfilePicturePath : Common.Constants.Member.NoPhotoUrl;
 
-                    if (caseManager.NonprofitId.HasValue)
+                    if (caseManager.NonprofitStaffs.Any())
                     {
-                        _state.Nonprofit = caseManager.Nonprofit;
-                        _state.NonprofitId = caseManager.Nonprofit.Id;
+                        _state.Nonprofit = caseManager.NonprofitStaffs.First().Nonprofit;
+                        _state.NonprofitId = caseManager.NonprofitStaffs.First().Nonprofit.Id;
 
-                        ViewBag.Nonprofit = caseManager.Nonprofit;
-                        ViewBag.NonprofitId = caseManager.Nonprofit.Id;
-                        ViewBag.NonprofitName = caseManager.Nonprofit.Name;
+                        ViewBag.Nonprofit = caseManager.NonprofitStaffs.First().Nonprofit;
+                        ViewBag.NonprofitId = caseManager.NonprofitStaffs.First().Nonprofit.Id;
+                        ViewBag.NonprofitName = caseManager.NonprofitStaffs.First().Nonprofit.Name;
                     }
                 }
             }
@@ -207,21 +205,6 @@ namespace SolveChicago.Web.Controllers
                     ViewBag.AdminProfilePicture = !string.IsNullOrEmpty(admin.ProfilePicturePath) ? admin.ProfilePicturePath : Common.Constants.Member.NoPhotoUrl;
                 }
             }
-
-            if (_state.Roles.Contains(Enumerations.Role.Referrer))
-            {
-                Referrer referrer = db.AspNetUsers.Single(x => x.Id == userId).Referrers.First();
-
-                if (referrer != null)
-                {
-                    _state.Referrer = referrer;
-                    _state.ReferrerId = referrer.Id;
-
-                    ViewBag.Referrer = referrer;
-                    ViewBag.ReferrerId = referrer.Id;
-                    ViewBag.ReferrerName = referrer.Name;
-                }
-            }
         }
 
         protected string GetUserId(string userName)
@@ -247,8 +230,6 @@ namespace SolveChicago.Web.Controllers
                         return MemberRedirect(State.Member);
                     case Enumerations.Role.Nonprofit:
                         return NonprofitRedirect(State.Nonprofit);
-                    case Enumerations.Role.Referrer:
-                        return ReferrerRedirect(State.Referrer);
                     default:
                         return HttpNotFound();
                 }
@@ -351,24 +332,6 @@ namespace SolveChicago.Web.Controllers
         {
             Corporation entity = db.Corporations.Single(x => x.Id == corporationId);
             return CorporationRedirect(entity);
-        }
-
-        public ActionResult ReferrerRedirect(Referrer entity)
-        {
-            if (string.IsNullOrEmpty(entity.Name))
-            {
-                return RedirectToAction("Referrer", "Profile", new { id = entity.Id });
-            }
-            else
-            {
-                return RedirectToAction("Index", "Referrers", new { referrerId = entity.Id });
-            }
-        }
-
-        public ActionResult ReferrerRedirect(int ReferrerId)
-        {
-            Referrer entity = db.Referrers.Single(x => x.Id == ReferrerId);
-            return ReferrerRedirect(entity);
         }
 
         public ActionResult CorporationRedirect(Corporation entity)
@@ -557,20 +520,6 @@ namespace SolveChicago.Web.Controllers
                         }
                         return RedirectToAction("Index");
                     }
-                case Enumerations.Role.Referrer:
-                    {
-                        AspNetUser aspnetUser = GetUserById(user.Id);
-                        await this.UserManager.AddToRoleAsync(user.Id, Common.Constants.Roles.Referrer);
-                        if (!UserProfileHasValidMappings(aspnetUser))
-                        {
-                            Referrer model = new Referrer { Email = userName, CreatedDate = DateTime.UtcNow };
-                            model.AspNetUsers.Add(aspnetUser);
-                            db.Referrers.Add(model);
-                            db.SaveChanges();
-                            return ReferrerRedirect(model.Id);
-                        }
-                        return RedirectToAction("Index");
-                    }
                 case Enumerations.Role.Admin:
                     {
                         AspNetUser aspnetUser = GetUserById(user.Id);
@@ -631,7 +580,7 @@ namespace SolveChicago.Web.Controllers
                 {
                     CaseManager caseManager = db.CaseManagers.Find(caseManagerId.Value);
                     if (State.Roles.Contains(Enumerations.Role.Admin) ||
-                       (State.Roles.Contains(Enumerations.Role.Nonprofit) && caseManager.Nonprofit.Id == State.NonprofitId) || State.Roles.Contains(Enumerations.Role.Admin))
+                       (State.Roles.Contains(Enumerations.Role.Nonprofit) && caseManager.NonprofitStaffs.Select(x => x.NonprofitId).Contains(State.NonprofitId)) || State.Roles.Contains(Enumerations.Role.Admin))
                     {
                         State.CaseManager = caseManager;
                         State.CaseManagerId = caseManager.Id;
@@ -668,21 +617,6 @@ namespace SolveChicago.Web.Controllers
                     State.Nonprofit = nonprofit;
 
                     ViewBag.NonprofitId = nonprofit.Id;
-                }
-            }
-        }
-
-        public void ImpersonateReferrer(int? referrerId)
-        {
-            if ((referrerId.HasValue) && (referrerId > 0))
-            {
-                if (State.Roles.Contains(Enumerations.Role.Admin))
-                {
-                    Referrer referrer = db.Referrers.Find(referrerId.Value);
-                    State.ReferrerId = referrer.Id;
-                    State.Referrer = referrer;
-
-                    ViewBag.ReferrerId = referrer.Id;
                 }
             }
         }

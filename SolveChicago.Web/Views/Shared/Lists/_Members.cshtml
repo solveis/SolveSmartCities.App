@@ -1,19 +1,12 @@
 ﻿@using Microsoft.AspNet.Identity;
 @model IEnumerable<SolveChicago.Common.Models.Profile.Member.FamilyEntity>
 @{ 
-    string memberTransformedName = (ViewBag.ReferrerId != null ? "Tenant" : ViewBag.NonprofitId != null ? "Client" : "Member");
+    string memberTransformedName = (ViewBag.NonprofitId != null ? "Client" : "Member");
 }
 
 <header class="members-header">
     <h2><strong>@(memberTransformedName)s:</strong> OVERVIEW</h2>
-    @if (ViewBag.ReferrerId != null)
-    {
-        <span style="text-align:right"><a href="/Referrers/AddMember?referrerId=@ViewBag.ReferrerId">Add @memberTransformedName</a></span>
-    }
-    else if (ViewBag.NonprofitId != null)
-    {
-        <span style="text-align:right"><a href="/Nonprofits/AddMember?nonprofitId=@ViewBag.NonprofitId">Add @memberTransformedName</a></span>
-    }
+    <span style="text-align:right"><a href="/Nonprofits/AddMember?nonprofitId=@ViewBag.NonprofitId">Add @memberTransformedName</a></span>
 
     @*<div class="small-12 medium-12 large-3">
             <input class="search-members" type="text" name="search" placeholder="Search..">

@@ -12,20 +12,18 @@ namespace SolveChicago.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class Outcome
+    public partial class IpAddress
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Outcome()
+        public IpAddress()
         {
-            this.CaseNotes = new HashSet<CaseNote>();
+            this.UserIpAddresses = new HashSet<UserIpAddress>();
         }
     
         public int Id { get; set; }
-        public int MemberId { get; set; }
-        public string Name { get; set; }
+        public string Address { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CaseNote> CaseNotes { get; set; }
-        public virtual Member Member { get; set; }
+        public virtual ICollection<UserIpAddress> UserIpAddresses { get; set; }
     }
 }

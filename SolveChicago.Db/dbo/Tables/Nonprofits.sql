@@ -6,5 +6,6 @@
     [CreatedDate] DATETIME2 NULL, 
 	[ProfilePicturePath] NVARCHAR(MAX) NULL, 
 
+    [ProviderType] NVARCHAR(50) NULL, 
     CONSTRAINT [PK_Nonprofits] PRIMARY KEY CLUSTERED ([Id] ASC), 
 )

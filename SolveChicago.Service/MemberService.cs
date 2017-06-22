@@ -17,15 +17,6 @@ namespace SolveChicago.Service
             return db.Members.Single(x => x.Email == email);
         }
 
-        public void AddToReferrer(int memberId, int referrerId)
-        {
-            Member member = db.Members.Find(memberId);
-            Referrer referrer = db.Referrers.Find(referrerId);
-            if (member != null && referrer != null)
-                member.Referrers.Add(referrer);
-            db.SaveChanges();
-        }
-
         public FamilyEntity[] GetAll()
         {
             Family[] dbFamilies = db.Families.ToArray();
@@ -49,7 +40,7 @@ namespace SolveChicago.Service
                     Address1 = member.Addresses.Any() ? member.Addresses.Last().Address1 : string.Empty,
                     Address2 = member.Addresses.Any() ? member.Addresses.Last().Address2 : string.Empty,
                     Birthday = member.Birthday,
-                    CaseManagers = member.NonprofitMembers.SelectMany(x => x.CaseManagers).ToArray(),
+                    CaseManagers = member.NonprofitMembers.SelectMany(x => x.NonprofitStaffs.Select(y => y.CaseManager)).ToArray(),
                     City = member.Addresses.Any() ? member.Addresses.Last().City : string.Empty,
                     ContactPreference = member.ContactPreference,
                     Country = member.Addresses.Any() ? member.Addresses.Last().Country : string.Empty,
@@ -110,22 +101,22 @@ namespace SolveChicago.Service
                 model.Stage = Constants.Member.Stage.ProfileCompleted;
                 model.Percent = (int)Math.Round(37.5);
             }
-            if (member.NonprofitMembers.Any(x => (!x.End.HasValue || x.End >= member.CreatedDate) && x.Nonprofit.Skills.Any(y => y.Name == Constants.Skills.SoftSkills)))
+            if (member.NonprofitMembers.Any(x => (!x.End.HasValue || x.End >= member.CreatedDate) && x.Nonprofit.NonprofitSkills.Any(y => y.Skill.Name == Constants.Skills.SoftSkills)))
             { // they are in a soft skills NPO
                 model.Stage = Constants.Member.Stage.InSoftSkillsTraining;
                 model.Percent = (int)Math.Round(50.0);
             }
-            if (member.NonprofitMembers.Any(x => x.End.HasValue && x.End <= DateTime.UtcNow && x.Nonprofit.Skills.Any(y => y.Name == Constants.Skills.SoftSkills)) && member.MemberSkills.Any(x => x.IsComplete && x.Skill.Name == Constants.Skills.SoftSkills))
+            if (member.NonprofitMembers.Any(x => x.End.HasValue && x.End <= DateTime.UtcNow && x.Nonprofit.NonprofitSkills.Any(y => y.Skill.Name == Constants.Skills.SoftSkills)) && member.MemberSkills.Any(x => x.IsComplete && x.Skill.Name == Constants.Skills.SoftSkills))
             { // they have completed a soft skills NPO, and have gained soft skills
                 model.Stage = Constants.Member.Stage.SoftSkillsAcquired;
                 model.Percent = (int)Math.Round(62.5);
             }
-            if (member.NonprofitMembers.Any(x => (!x.End.HasValue || x.End >= member.CreatedDate) && x.Nonprofit.Skills.Any(y => y.Name != Constants.Skills.SoftSkills)))
+            if (member.NonprofitMembers.Any(x => (!x.End.HasValue || x.End >= member.CreatedDate) && x.Nonprofit.NonprofitSkills.Any(y => y.Skill.Name != Constants.Skills.SoftSkills)))
             { // they are in a workforce NPO
                 model.Stage = Constants.Member.Stage.InWorkforceTraining;
                 model.Percent = (int)Math.Round(75.0);
             }
-            if (member.NonprofitMembers.Any(x => x.End.HasValue && x.End <= DateTime.UtcNow && x.End.Value <= DateTime.UtcNow && x.Nonprofit.Skills.Any(y => y.Name != Constants.Skills.SoftSkills)) && !member.NonprofitMembers.Any(x => x.Start > member.CreatedDate && !x.End.HasValue) && member.MemberSkills.Any(x => x.IsComplete && x.Skill.Name != Constants.Skills.SoftSkills))
+            if (member.NonprofitMembers.Any(x => x.End.HasValue && x.End <= DateTime.UtcNow && x.End.Value <= DateTime.UtcNow && x.Nonprofit.NonprofitSkills.Any(y => y.Skill.Name != Constants.Skills.SoftSkills)) && !member.NonprofitMembers.Any(x => x.Start > member.CreatedDate && !x.End.HasValue) && member.MemberSkills.Any(x => x.IsComplete && x.Skill.Name != Constants.Skills.SoftSkills))
             { // they have completed a workforce NPO, and have a workforce skill
                 model.Stage = Constants.Member.Stage.WorkforceSkillsAcquired;
                 model.Percent = (int)Math.Round(87.5);
@@ -308,12 +299,12 @@ namespace SolveChicago.Service
             {
                 return NonprofitMembers.Select(x => new NonprofitEntity
                 {
-                    CaseManagers = x.CaseManagers.ToArray(),
+                    CaseManagers = x.NonprofitStaffs.Select(y => y.CaseManager).ToArray(),
                     Enjoyed = x.MemberEnjoyed,
                     Struggled = x.MemberStruggled,
                     NonprofitId = x.NonprofitId,
                     NonprofitName = x.Nonprofit?.Name,
-                    SkillsAcquired = member.MemberSkills.Any(y => y.NonprofitId == x.NonprofitId) ? string.Join(",", member.MemberSkills.Where(y => y.NonprofitId == x.NonprofitId).Select(y => y.Skill.Name).ToArray()) : string.Empty,
+                    SkillsAcquired = member.MemberSkills.Any(y => y.NonprofitSkill != null && y.NonprofitSkill.NonprofitId == x.NonprofitId) ? string.Join(",", member.MemberSkills.Where(y => y.NonprofitSkill != null && y.NonprofitSkill.NonprofitId == x.NonprofitId).Select(y => y.Skill.Name).ToArray()) : string.Empty,
                     Start = x.Start,
                     End = x.End,
                 }).ToArray();
@@ -733,13 +724,19 @@ namespace SolveChicago.Service
                     {
                         Skill existingSkill = skills.Single(x => x.Name.ToLower() == trimSkill.ToLower());
                         if (!member.MemberSkills.Select(x => x.SkillId).Contains(existingSkill.Id))
-                            member.MemberSkills.Add(new MemberSkill { MemberId = member.Id, SkillId = existingSkill.Id, IsComplete = isComplete, NonprofitId = nonprofitId });
+                        {
+                            MemberSkill ms = new MemberSkill { MemberId = member.Id, SkillId = existingSkill.Id, IsComplete = isComplete };
+                            ms.NonprofitSkill = new NonprofitSkill { Skill = existingSkill, NonprofitId = nonprofitId.Value };
+                        }
                     }
                     else
                     {
                         Skill newSkill = new Skill { Name = trimSkill };
+                        MemberSkill mSkill = new MemberSkill { Skill = newSkill, IsComplete = isComplete };
+                        if (nonprofitId.HasValue)
+                            mSkill.NonprofitSkill = new NonprofitSkill { Skill = newSkill, NonprofitId = nonprofitId.Value };
                         db.Skills.Add(newSkill);
-                        member.MemberSkills.Add(new MemberSkill { Skill = newSkill, IsComplete = isComplete, NonprofitId = nonprofitId });
+                        member.MemberSkills.Add(mSkill);
                     }
                 }
             }

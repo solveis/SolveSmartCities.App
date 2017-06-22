@@ -61,7 +61,6 @@ namespace SolveChicago.Web.Controllers
             MemberRegisterViewModel model = new MemberRegisterViewModel
             {
                 MemberId = id,
-                ReferrerId = referrerId
             };
             if(id.HasValue)
             {
@@ -80,11 +79,6 @@ namespace SolveChicago.Web.Controllers
         public async Task<ActionResult> Member(MemberRegisterViewModel model)
         {
             var result = await CreateAccount(model.Email, model.Password, Enumerations.Role.Member);
-            if(model.ReferrerId.HasValue)
-            {
-                MemberService service = new MemberService(this.db);
-                service.AddToReferrer(service.GetMemberByEmail(model.Email).Id, model.ReferrerId.Value);
-            }
             if (result != null)
                 return result;
             // If we got this far, something failed, redisplay form
@@ -114,28 +108,6 @@ namespace SolveChicago.Web.Controllers
         }
 
         //
-        // GET: /Register/Referrer
-        [AllowAnonymous]
-        public ActionResult Referrer()
-        {
-            return View();
-        }
-
-        //
-        // POST: /Register/Referrer
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Referrer(RegisterViewModel model)
-        {
-            var result = await CreateAccount(model.Email, model.Password, Enumerations.Role.Referrer);
-            if (result != null)
-                return result;
-            // If we got this far, something failed, redisplay form
-            return View(model);
-        }
-
-        //
         // GET: /Register/CaseManager
         [AllowAnonymous]
         public ActionResult CaseManager(int? id)
@@ -151,7 +123,7 @@ namespace SolveChicago.Web.Controllers
                 if (caseManager != null)
                 {
                     model.Email = caseManager.Email;
-                    model.NonprofitId = caseManager.NonprofitId;
+                    model.NonprofitId = caseManager.NonprofitStaffs.Any() ? caseManager.NonprofitStaffs.First().NonprofitId : (int?)null;
                 }   
             }
 

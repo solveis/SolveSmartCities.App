@@ -88,10 +88,6 @@
                     {
                         @Html.Action("CaseManager", "Sidebar")
                     }
-                    else if (User.IsInRole(Constants.Roles.Referrer))
-                    {
-                        @Html.Action("Referrer", "Sidebar")
-                    }
                     else if (User.IsInRole(Constants.Roles.Admin))
                     {
                         @Html.Action("Admin", "Sidebar")

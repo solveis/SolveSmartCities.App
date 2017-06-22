@@ -17,8 +17,8 @@ namespace SolveChicago.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public CaseManager()
         {
+            this.NonprofitStaffs = new HashSet<NonprofitStaff>();
             this.PhoneNumbers = new HashSet<PhoneNumber>();
-            this.NonprofitMembers = new HashSet<NonprofitMember>();
         }
     
         public int Id { get; set; }
@@ -29,14 +29,12 @@ namespace SolveChicago.Entities
         public Nullable<System.DateTime> Birthday { get; set; }
         public string ProfilePicturePath { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
-        public Nullable<int> NonprofitId { get; set; }
         public string UserId { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
-        public virtual Nonprofit Nonprofit { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NonprofitStaff> NonprofitStaffs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PhoneNumber> PhoneNumbers { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<NonprofitMember> NonprofitMembers { get; set; }
     }
 }

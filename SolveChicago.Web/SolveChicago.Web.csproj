@@ -215,7 +215,6 @@
     <Compile Include="Controllers\NonprofitsController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\ProspectsController.cs" />
-    <Compile Include="Controllers\ReferrersController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\SidebarController.cs" />
     <Compile Include="Controllers\ThanksController.cs" />
@@ -483,6 +482,8 @@
     <None Include="Properties\PublishProfiles\solvechicago - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\solvesmartcities - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\SolveSmartCities-Staging - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\SolveSmartCitiesProduction - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\SolveSmartCitiesStaging - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
@@ -574,8 +575,6 @@
     <Content Include="Views\GovernmentPrograms\Edit.cshtml" />
     <Content Include="Views\GovernmentPrograms\Index.cshtml" />
     <Content Include="Views\Referrers\AddMember.cshtml" />
-    <Content Include="Views\Register\Referrer.cshtml" />
-    <Content Include="Views\Profile\Referrer.cshtml" />
     <Content Include="Views\Members\Details.cshtml" />
     <Content Include="Views\CaseManagers\AddCaseNote.cshtml" />
     <Content Include="Views\Shared\_Layout_NoHeader.cshtml" />
@@ -593,15 +592,12 @@
     <Content Include="Views\Shared\Sidebar\_CaseManager.cshtml" />
     <Content Include="Views\Shared\Sidebar\_Corporation.cshtml" />
     <Content Include="Views\Shared\Sidebar\_Member.cshtml" />
-    <Content Include="Views\Shared\Sidebar\_Referrer.cshtml" />
     <Content Include="Views\Members\MemberOverview.cshtml" />
     <Content Include="Views\Shared\Lists\_Members.cshtml" />
     <Content Include="Views\Shared\Lists\_CaseManagers.cshtml" />
     <Content Include="Views\Shared\Lists\_Nonprofits.cshtml" />
-    <Content Include="Views\Shared\Lists\_Referrers.cshtml" />
     <Content Include="Views\Shared\Lists\_Prospects.cshtml" />
     <Content Include="Views\Nonprofits\AddMember.cshtml" />
-    <Content Include="Views\Admins\Referrers.cshtml" />
     <Content Include="Views\Shared\500.html" />
     <Content Include="Views\Shared\404.html" />
     <Content Include="Views\Nonprofits\JobPlaced.cshtml" />

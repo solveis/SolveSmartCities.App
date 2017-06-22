@@ -36,18 +36,11 @@ namespace SolveChicago.Web.Controllers
             return PartialView("Sidebar/_Member");
         }
 
-        // GET: Sidebar/Admin
+        // GET: Sidebar/Nonprofit
         public ActionResult Nonprofit()
         {
             StateModel state = State;
             return PartialView("Sidebar/_Nonprofit");
-        }
-
-        // GET: Sidebar/Admin
-        public ActionResult Referrer()
-        {
-            StateModel state = State;
-            return PartialView("Sidebar/_Referrer");
         }
     }
 }

@@ -1,9 +1,0 @@
-﻿CREATE TABLE [dbo].[Referrers]
-(
-	[Id] INT IDENTITY(1, 1) NOT NULL,
-    [Email] NVARCHAR(128) NOT NULL,
-	[Name] NVARCHAR(128) NULL,
-    [CreatedDate] DATETIME2 NULL, 
-
-    CONSTRAINT [PK_Referrers] PRIMARY KEY CLUSTERED ([Id] ASC), 
-)

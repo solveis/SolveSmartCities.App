@@ -101,9 +101,6 @@
     <Build Include="dbo\Tables\MemberSchools.sql" />
     <Build Include="dbo\Tables\AdminInviteCodes.sql" />
     <Build Include="dbo\Tables\Communications.sql" />
-    <Build Include="dbo\Tables\Referrers.sql" />
-    <Build Include="dbo\Tables\UserProfileReferrers.sql" />
-    <Build Include="dbo\Tables\ReferrerMembers.sql" />
     <Build Include="dbo\Tables\MilitaryBranches.sql" />
     <Build Include="dbo\Tables\MemberMilitary.sql" />
     <Build Include="dbo\Tables\ELMAH_Error.sql" />
@@ -114,12 +111,14 @@
     <Build Include="dbo\Tables\NonprofitPhoneNumbers.sql" />
     <Build Include="dbo\Tables\NonprofitAddresses.sql" />
     <Build Include="dbo\Tables\CaseManagerPhoneNumbers.sql" />
-    <Build Include="dbo\Tables\ReferrerPhoneNumbers.sql" />
     <Build Include="dbo\Tables\AdminPhoneNumbers.sql" />
-    <Build Include="dbo\Tables\NonprofitMembersCaseManagers.sql" />
+    <Build Include="dbo\Tables\NonprofitMembersStaff.sql" />
     <Build Include="dbo\Tables\IpAddresses.sql" />
     <Build Include="dbo\Tables\UserIpAddresses.sql" />
     <Build Include="dbo\Tables\NonprofitPrograms.sql" />
+    <Build Include="dbo\Tables\NonprofitStaff.sql" />
+    <None Include="PreDeploy.02.RTW1.3.sql" />
+    <Build Include="dbo\Tables\Referrals.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SolveChicago.Db.dbmdl" />

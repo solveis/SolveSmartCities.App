@@ -29,7 +29,7 @@ namespace SolveChicago.Service
                     LastName = caseManager.LastName,
                     Birthday = caseManager.Birthday,
                     Gender = caseManager.Gender,
-                    NonprofitId = caseManager.NonprofitId,
+                    NonprofitId = caseManager.NonprofitStaffs.Any() ? caseManager.NonprofitStaffs.First().NonprofitId : (int?)null,
                     UserId = caseManager.UserId
                 };
             }
@@ -68,9 +68,10 @@ namespace SolveChicago.Service
 
         public Member[] GetMembersForCaseManager(int caseManagerId)
         {
-            int? nonprofitId = db.CaseManagers.Single(x => x.Id == caseManagerId).NonprofitId;
+            CaseManager cm = db.CaseManagers.Single(x => x.Id == caseManagerId);
+            int? nonprofitId = cm.NonprofitStaffs.Any() ? cm.NonprofitStaffs.First().NonprofitId : (int?)null;
             if (nonprofitId.HasValue)
-                return db.CaseManagers.Single(x => x.Id == caseManagerId).Nonprofit.NonprofitMembers.Where(x => !x.End.HasValue).Select(x => x.Member).ToArray();
+                return db.CaseManagers.Single(x => x.Id == caseManagerId).NonprofitStaffs.SelectMany(y => y.NonprofitMembers.Where(x => !x.End.HasValue).Select(x => x.Member)).ToArray();
             else
                 return new Member[0];
         }
@@ -102,7 +103,7 @@ namespace SolveChicago.Service
             Nonprofit npo = db.Nonprofits.Find(nonprofitId);
             CaseManager cm = db.CaseManagers.Find(caseManagerId);
             if (npo != null && cm != null)
-                cm.NonprofitId = npo.Id;
+                cm.NonprofitStaffs.Add(new NonprofitStaff { NonprofitId = npo.Id });
             db.SaveChanges();
         }
     }

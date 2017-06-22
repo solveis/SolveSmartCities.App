@@ -7,4 +7,6 @@
     [MaxAge] INT NULL, 
     [Gender] NVARCHAR(50) NULL,
 
+	
+	CONSTRAINT [FK_NonprofitPrograms_Nonprofit] FOREIGN KEY ([NonprofitId]) REFERENCES [Nonprofits](Id) ON DELETE CASCADE, 
 )
