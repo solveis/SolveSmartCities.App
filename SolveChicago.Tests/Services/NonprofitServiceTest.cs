@@ -179,8 +179,8 @@ namespace SolveChicago.Tests.Services
                 City = "Chicago",
                 Country ="USA",
                 Province = "IL",
-                SkillsOffered = "manufacturing, cooking",
-                TeachesSoftSkills = false,
+                WorkforceSkillsOffered = "manufacturing, cooking",
+                SoftSkillsOffered = "poise, interview skills",
                 ZipCode = "60635",
                 ProfilePicturePath = "../pathtoimg.jpg"
             };
@@ -197,7 +197,8 @@ namespace SolveChicago.Tests.Services
             Assert.Equal("USA", context.Object.Nonprofits.First().Addresses.First().Country);
             Assert.Equal("IL", context.Object.Nonprofits.First().Addresses.First().Province);
             Assert.False(context.Object.Nonprofits.First().NonprofitSkills.Any(x => x.Skill.Name == Constants.Skills.SoftSkills));
-            Assert.Equal("manufacturing, cooking", string.Join(", ", (context.Object.Nonprofits.First().NonprofitSkills.Any() ? context.Object.Nonprofits.First().NonprofitSkills.Select(x => x.Skill.Name) : new string[0]).ToArray()));
+            Assert.Equal("manufacturing, cooking", string.Join(", ", (context.Object.Nonprofits.First().NonprofitSkills.Any(x => x.Skill.IsWorkforce) ? context.Object.Nonprofits.First().NonprofitSkills.Where(x => x.Skill.IsWorkforce).Select(x => x.Skill.Name) : new string[0]).ToArray()));
+            Assert.Equal("poise, interview skills", string.Join(", ", (context.Object.Nonprofits.First().NonprofitSkills.Any(x => !x.Skill.IsWorkforce) ? context.Object.Nonprofits.First().NonprofitSkills.Where(x => !x.Skill.IsWorkforce).Select(x => x.Skill.Name) : new string[0]).ToArray()));
         }
 
         [Fact]

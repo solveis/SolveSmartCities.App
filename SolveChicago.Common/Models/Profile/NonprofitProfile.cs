@@ -27,10 +27,10 @@ namespace SolveChicago.Web.Models.Profile
         public string ZipCode { get; set; }
         public string ProfilePicturePath { get; set; }
         public HttpPostedFileBase ProfilePicture { get; set; }
-        public string SkillsOffered { get; set; }
-        public string[] SkillsList { get; set; }
-        [Required]
-        public bool? TeachesSoftSkills { get; set; }
+        public string WorkforceSkillsOffered { get; set; }
+        public string[] WorkforceSkillsList { get; set; }
+        public string SoftSkillsOffered { get; set; }
+        public string[] SoftSkillsList { get; set; }
         public string[] CountryList { get; set; }
     }
 }

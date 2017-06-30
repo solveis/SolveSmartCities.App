@@ -413,7 +413,7 @@ namespace SolveChicago.Web.Controllers
         }
 
 
-        protected async Task<ActionResult> CreateAccount(string userName, string password, Enumerations.Role role, string invitedByUserId = "", string inviteCode = "")
+        protected async Task<ActionResult> CreateAccountAsync(string userName, string password, Enumerations.Role role, string invitedByUserId = "", string inviteCode = "")
         {
             var user = new ApplicationUser { UserName = userName, Email = userName };
             if (ModelState.IsValid)
@@ -421,8 +421,8 @@ namespace SolveChicago.Web.Controllers
                 var result = await UserManager.CreateAsync(user, password);
                 if (result.Succeeded)
                 {
-                    var eventualResult = await CreateUserAndAssignRoles(userName, password, role, invitedByUserId, user, inviteCode);
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    var eventualResult = await CreateUserAndAssignRolesAsync(userName, password, role, invitedByUserId, user, inviteCode);
+                    SignInManager.SignIn(user, isPersistent: false, rememberBrowser: false);
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -432,16 +432,43 @@ namespace SolveChicago.Web.Controllers
                 }
                 AddErrors(result);
             }
+            AddErrorsToModelState(ModelState);
             return null;
         }
 
-        private async Task<ActionResult> CreateUserAndAssignRoles(string userName, string password, Enumerations.Role role, string invitedByUserId, ApplicationUser user, string inviteCode)
+        protected ModelStateDictionary AddErrorsToModelState(ModelStateDictionary modelState)
+        {
+            foreach (var error in modelState.Values.SelectMany(x => x.Errors))
+            {
+                modelState.AddModelError("", error.ErrorMessage);
+            }
+            return modelState;
+        }
+
+        protected void AddUserIpAddress(string userName)
+        {
+            AspNetUser aspnetUser = GetUserByUserName(userName);
+            AddUserIpAddress(aspnetUser);
+        }
+
+        protected void AddUserIpAddress(AspNetUser aspNetUser)
+        {
+            IpAddress ipAddress = db.IpAddresses.SingleOrDefault(x => x.Address == Request.UserHostAddress);
+            if (ipAddress == null)
+                ipAddress = new IpAddress { Address = Request.UserHostAddress };
+            aspNetUser.UserIpAddresses.Add(new UserIpAddress { IpAddress = ipAddress, Date = DateTime.UtcNow });
+
+            db.SaveChanges();
+        }
+
+        private async Task<ActionResult> CreateUserAndAssignRolesAsync(string userName, string password, Enumerations.Role role, string invitedByUserId, ApplicationUser user, string inviteCode)
         {
             switch (role)
             {
                 case Enumerations.Role.Member:
                     {
                         AspNetUser aspnetUser = GetUserById(user.Id);
+                        AddUserIpAddress(aspnetUser);
                         await this.UserManager.AddToRoleAsync(user.Id, Common.Constants.Roles.Member);
                         if (!UserProfileHasValidMappings(aspnetUser))
                         {
@@ -476,6 +503,7 @@ namespace SolveChicago.Web.Controllers
                 case Enumerations.Role.CaseManager:
                     {
                         AspNetUser aspnetUser = GetUserById(user.Id);
+                        AddUserIpAddress(aspnetUser);
                         await this.UserManager.AddToRoleAsync(user.Id, Common.Constants.Roles.CaseManager);
                         if (!UserProfileHasValidMappings(aspnetUser))
                         {
@@ -495,6 +523,7 @@ namespace SolveChicago.Web.Controllers
                 case Enumerations.Role.Nonprofit:
                     {
                         AspNetUser aspnetUser = GetUserById(user.Id);
+                        AddUserIpAddress(aspnetUser);
                         await this.UserManager.AddToRoleAsync(user.Id, Common.Constants.Roles.Nonprofit);
                         if (!UserProfileHasValidMappings(aspnetUser))
                         {
@@ -509,6 +538,7 @@ namespace SolveChicago.Web.Controllers
                 case Enumerations.Role.Corporation:
                     {
                         AspNetUser aspnetUser = GetUserById(user.Id);
+                        AddUserIpAddress(aspnetUser);
                         await this.UserManager.AddToRoleAsync(user.Id, Common.Constants.Roles.Corporation);
                         if (!UserProfileHasValidMappings(aspnetUser))
                         {
@@ -547,6 +577,11 @@ namespace SolveChicago.Web.Controllers
         public AspNetUser GetUserById(string userId)
         {
             return db.AspNetUsers.Single(x => x.Id == userId);
+        }
+        
+        public AspNetUser GetUserByUserName(string userName)
+        {
+            return db.AspNetUsers.Single(x => x.UserName == userName);
         }
 
         public void ImpersonateMember(int? memberId)

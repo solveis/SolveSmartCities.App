@@ -120,7 +120,7 @@
                 @if (!string.IsNullOrEmpty(Model.Member.ProfilePicturePath) && Model.Member.ProfilePicturePath != "/img/noPhoto.png")
                 {
                     <div>
-                        <img src="@Model.Member.ProfilePicturePath" />
+                        <img src="@Model.Member.ProfilePicturePath" alt="Profile Picture">
                     </div>
                 }
                 @Html.TextBoxFor(model => model.Member.ProfilePicture, new { type = "file", htmlAttributes = new { @class = "form-control" } })

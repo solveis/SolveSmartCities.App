@@ -30,7 +30,7 @@
             @if (!string.IsNullOrEmpty(Model.CaseManager.ProfilePicturePath) && Model.CaseManager.ProfilePicturePath != "/img/side-nav-members-icon.svg")
             {
                 <div>
-                    <img src="@Model.CaseManager.ProfilePicturePath" />
+                    <img src="@Model.CaseManager.ProfilePicturePath" alt="Profile Picture">
                 </div>
             }
             @Html.TextBoxFor(model => model.CaseManager.ProfilePicture, new { type = "file", @class = "file-input" })

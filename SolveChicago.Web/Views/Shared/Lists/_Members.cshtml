@@ -41,7 +41,7 @@
         <section class="member-card">
             <div class="member-overview">
                 <div class="row large-unstack">
-                    <span class="member-card-thumb"><img src="@(item.HeadOfHouseholdProfilePicturePath)" /></span>
+                    <span class="member-card-thumb"><img src="@(item.HeadOfHouseholdProfilePicturePath)" alt="Profile Picture"></span>
                     <div class="columns centered has-space">
                         <span class="member-name">@(item.FamilyName)</span>
                     </div>
@@ -68,7 +68,7 @@
                 {
                     <div class="member-details">
                         <div class="row large-unstack">
-                            <span class="member-detail-thumb"><img src="@(member.ProfilePicturePath)" /></span>
+                            <span class="member-detail-thumb"><img src="@(member.ProfilePicturePath)" alt="Profile Picture"></span>
                             <div class="columns has-small-space">
                                 <span>@member.Name @(!string.IsNullOrEmpty(member.Relation) ? $"({member.Relation})" : "")</span>
                             </div>
@@ -112,7 +112,7 @@
                                                     </a>
                                                 </li>
                                             }
-                                            @if (User.IsInRole("Nonprofit") && ViewBag.Nonprofit != null && ViewBag.Nonprofit.CaseManagers.Count > 0)
+                                            @if (User.IsInRole("Nonprofit") && ViewBag.Nonprofit != null && ViewBag.Nonprofit.NonprofitStaffs.Count > 0)
                                             {
                                                 <li>
                                                     <a href="/Nonprofits/AssignCaseManager?memberId=@(member.Id)&nonprofitId=@(ViewBag.NonprofitId)">

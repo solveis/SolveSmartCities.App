@@ -29,7 +29,7 @@
             @if (!string.IsNullOrEmpty(Model.ProfilePicturePath) && Model.ProfilePicturePath != "/img/side-nav-members-icon.svg")
             {
                 <div>
-                    <img src="@Model.ProfilePicturePath" />
+                    <img src="@Model.ProfilePicturePath" alt="Profile Picture">
                 </div>
             }
             @Html.TextBoxFor(model => model.ProfilePicture, new { type = "file", @class = "file-input" })
@@ -66,15 +66,13 @@
             @Html.LabelFor(model => model.Country, htmlAttributes: new { })
             @Html.DropDownListFor(model => model.Country, Model.CountryList.Select(x => new SelectListItem { Text = x, Value = x, Selected = x == Model.Country }), new { htmlAttributes = new { } })
 
-            @Html.LabelFor(m => m.TeachesSoftSkills, "Do you provide training for Soft Skills?")
-            @Html.RadioButtonFor(m => m.TeachesSoftSkills, true)
-            <label for="Nonprofit_TeachesSoftSkills">Yes</label>
-            @Html.RadioButtonFor(m => m.TeachesSoftSkills, false)
-            <label for="Nonprofit_TeachesSoftSkills">No</label>
+            @Html.ValidationMessageFor(model => model.SoftSkillsOffered, "", new { @class = "text-danger" })
+            @Html.LabelFor(model => model.SoftSkillsOffered, "What soft skills do you teach? (i.e. leadership, pose, interview skills)")
+            @Html.EditorFor(model => model.SoftSkillsOffered, new { htmlAttributes = new { type = "text" } })
 
-            @Html.ValidationMessageFor(model => model.SkillsOffered, "", new { @class = "text-danger" })
-            @Html.LabelFor(model => model.SkillsOffered, "What workforce skills do you teach? (i.e. construction, manufacturing, coding)")
-            @Html.EditorFor(model => model.SkillsOffered, new { htmlAttributes = new { type = "text" } })
+            @Html.ValidationMessageFor(model => model.WorkforceSkillsOffered, "", new { @class = "text-danger" })
+            @Html.LabelFor(model => model.WorkforceSkillsOffered, "What workforce skills do you teach? (i.e. construction, manufacturing, coding)")
+            @Html.EditorFor(model => model.WorkforceSkillsOffered, new { htmlAttributes = new { type = "text" } })
 
             <input class="submit-create-profile" type="submit" value="Submit">
         </div>
@@ -87,12 +85,18 @@
     @Scripts.Render("~/bundles/profile_member")
     <script>
             $(document).ready(function () {
-                var skillsList = [];
-                @foreach(var skill in Model.SkillsList)
+                var workforceSkillsList = [],
+                    softSkillsList = [];
+                @foreach(var skill in Model.WorkforceSkillsList)
                 {
-                    @:skillsList.push("@skill");
+                    @:workforceSkillsList.push("@skill");
                 }
-                window.bindAutocomplete($('#SkillsOffered'), skillsList);
+                @foreach(var skill in Model.SoftSkillsList)
+                {
+                    @:softSkillsList.push("@skill");
+                }
+                window.bindAutocomplete($('#WorkforceSkillsOffered'), workforceSkillsList);
+                window.bindAutocomplete($('#SoftSkillsOffered'), softSkillsList);
             });
     </script>
 }

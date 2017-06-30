@@ -66,6 +66,7 @@ namespace SolveChicago.Web.Controllers
             {
                 case SignInStatus.Success:
                     RefreshState(model.Email);
+                    AddUserIpAddress(State.UserName);
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");

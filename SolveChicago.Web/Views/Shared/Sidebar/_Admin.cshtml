@@ -3,14 +3,14 @@
 <ul class="menu vertical">
     <li class="menu-link @(Request.Url.AbsolutePath == "/Admins" ? "active" : "")">
         <a href="/Admins">
-            <img class="menu-icon" src="../img/side-nav-members-icon.svg">
+            <img class="menu-icon" src="../img/side-nav-members-icon.svg" alt="Nonprofits">
             <span class="app-dashboard-sidebar-text">Service Providers</span>
         </a>
     </li>
     <li class="menu-link @(Request.Url.AbsolutePath == "/Prospects" ? "active" : "")">
         <a href="/Prospects@(ViewBag.NonprofitId != null ? $"?nonprofitId={ViewBag.NonprofitId}" : "")">
 
-            <img class="menu-icon" src="../img/side-nav-prospect-icon.svg">
+            <img class="menu-icon" src="../img/side-nav-prospect-icon.svg" alt="Prospects">
             <span class="app-dashboard-sidebar-text">Prospects</span>
         </a>
     </li>
@@ -19,7 +19,7 @@
 <ul class="sub-menu">
     <li>
         <span class="case-manager-profile-picture">
-            <img class="case-manager-thumb" src="@(ViewBag.AdminProfilePicture)">
+            <img class="case-manager-thumb" src="@(ViewBag.AdminProfilePicture)" alt="Profile Picture">
         </span>
 
         <span class="case-manager-name">
@@ -32,7 +32,7 @@
     </li>
     <li class="menu-link @(Request.Url.AbsolutePath == "/Account/Settings" ? "active" : "")">
         <a href="/Account/Settings">
-            <img class="sub-menu-icon" src="../img/submenu-icon-settings.svg">
+            <img class="sub-menu-icon" src="../img/submenu-icon-settings.svg" alt="Settings">
             <span class="app-dashboard-sidebar-text">Settings</span>
         </a>
     </li>

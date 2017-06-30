@@ -15,8 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolveChicago.Service", "Sol
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolveChicago.Common", "SolveChicago.Common\SolveChicago.Common.csproj", "{CA01056B-1975-4FEA-9750-03A508DE30C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolveChicago.Marketing", "SolveChicago.Marketing\SolveChicago.Marketing.csproj", "{43F52DF0-7B81-4563-83CC-AFDE3EC2C6AF}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolveChicago.LoadTests", "SolveChicago.LoadTests\SolveChicago.LoadTests.csproj", "{EAF65750-3825-4877-B3EB-0E0C1036B6E9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{503A52A7-5653-47F7-BA7F-6C3153AB2D1B}"
@@ -25,9 +23,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Global
-	GlobalSection(Performance) = preSolution
-		HasPerformanceSessions = true
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -59,10 +54,6 @@ Global
 		{CA01056B-1975-4FEA-9750-03A508DE30C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA01056B-1975-4FEA-9750-03A508DE30C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA01056B-1975-4FEA-9750-03A508DE30C4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{43F52DF0-7B81-4563-83CC-AFDE3EC2C6AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{43F52DF0-7B81-4563-83CC-AFDE3EC2C6AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{43F52DF0-7B81-4563-83CC-AFDE3EC2C6AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{43F52DF0-7B81-4563-83CC-AFDE3EC2C6AF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EAF65750-3825-4877-B3EB-0E0C1036B6E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EAF65750-3825-4877-B3EB-0E0C1036B6E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EAF65750-3825-4877-B3EB-0E0C1036B6E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -70,6 +61,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 	GlobalSection(Performance) = preSolution
 		HasPerformanceSessions = true

@@ -45,7 +45,7 @@ namespace SolveChicago.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Admin(AdminRegisterViewModel model)
         {
-            var result = await CreateAccount(model.Email, model.Password, Enumerations.Role.Admin, model.InvitedByUserId, model.InviteCode);
+            var result = await CreateAccountAsync(model.Email, model.Password, Enumerations.Role.Admin, model.InvitedByUserId, model.InviteCode);
             AdminService service = new AdminService(this.db);
             if (result != null)
                 return result;
@@ -78,7 +78,7 @@ namespace SolveChicago.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Member(MemberRegisterViewModel model)
         {
-            var result = await CreateAccount(model.Email, model.Password, Enumerations.Role.Member);
+            var result = await CreateAccountAsync(model.Email, model.Password, Enumerations.Role.Member);
             if (result != null)
                 return result;
             // If we got this far, something failed, redisplay form
@@ -100,7 +100,7 @@ namespace SolveChicago.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Corporation(RegisterViewModel model)
         {
-            var result = await CreateAccount(model.Email, model.Password, Enumerations.Role.Corporation);
+            var result = await CreateAccountAsync(model.Email, model.Password, Enumerations.Role.Corporation);
             if (result != null)
                 return result;
             // If we got this far, something failed, redisplay form
@@ -140,7 +140,7 @@ namespace SolveChicago.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> CaseManager(CaseManagerRegisterViewModel model)
         {
-            var result = await CreateAccount(model.Email, model.Password, Enumerations.Role.CaseManager);
+            var result = await CreateAccountAsync(model.Email, model.Password, Enumerations.Role.CaseManager);
             if(model.NonprofitId.HasValue)
             {
                 CaseManagerService service = new CaseManagerService(this.db);
@@ -167,7 +167,7 @@ namespace SolveChicago.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Nonprofit(RegisterViewModel model)
         {
-            var result = await CreateAccount(model.Email, model.Password, Enumerations.Role.Nonprofit);
+            var result = await CreateAccountAsync(model.Email, model.Password, Enumerations.Role.Nonprofit);
             if (result != null)
                 return result;
             // If we got this far, something failed, redisplay form
