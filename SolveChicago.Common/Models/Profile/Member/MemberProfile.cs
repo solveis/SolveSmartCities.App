@@ -13,6 +13,7 @@ namespace SolveChicago.Common.Models.Profile.Member
     {
         public int Id { get; set; }
         public int MemberId { get; set; }
+        public string Ethnicity { get; set; }
         [Required]
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
@@ -48,7 +49,10 @@ namespace SolveChicago.Common.Models.Profile.Member
         {
             get
             {
-                return this.Address1 + " " + this.Address2 + " " + this.City + ", " + this.Province + " " + this.Country;
+                if(!string.IsNullOrEmpty(this.City))
+                    return this.Address1 + " " + this.Address2 + " " + this.City + ", " + this.Province + " " + this.Country;
+                else
+                    return this.Address1 + " " + this.Address2 + " " + this.City + this.Province + " " + this.Country;
             }
         }
         public bool IsHeadOfHousehold { get; set; }

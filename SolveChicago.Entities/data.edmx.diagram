@@ -99,7 +99,10 @@
         <AssociationConnector Association="SolveChicagoDevModel.NonprofitPhoneNumbers" />
         <AssociationConnector Association="SolveChicagoDevModel.UserProfileCorporations" />
         <AssociationConnector Association="SolveChicagoDevModel.UserProfileNonprofits" />
-      </Diagram>
+        <EntityTypeShape EntityType="SolveChicagoDevModel.Ethnicity" Width="1.5" PointX="0.75" PointY="0.875" />
+        <AssociationConnector Association="SolveChicagoDevModel.FK_Member_Ethnicity" />
+        <AssociationConnector Association="SolveChicagoDevModel.FK_NonprofitPrograms_Ethnicity" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

@@ -1,5 +1,5 @@
 ﻿@using SolveChicago.Common;
-@model IEnumerable<SolveChicago.Entities.Member>
+@model IEnumerable<SolveChicago.Common.Models.Profile.Member.MemberProfile>
 <header class="members-header">
     <h2><strong>PROSPECTS:</strong> OVERVIEW</h2>
 
@@ -25,8 +25,9 @@
                 <div class="columns has-space">
                     <strong>Desired Skills</strong>
                 </div>
+
                 <div class="columns has-space">
-                    <strong>Contact</strong>
+                    <strong></strong>
                 </div>
                 <div class="columns has-space">
 
@@ -41,17 +42,103 @@
                 <div class="row large-unstack">
                     <span class="member-card-thumb"><img src="@(item.ProfilePicturePath)" alt="Profile Picture"></span>
                     <div class="columns centered has-space">
-                        <span class="member-name">@(string.Format("{0} {1}", item.FirstName, item.LastName))</span>
+                        <span class="member-name">@item.FullName</span>
                     </div>
                     <div class="columns has-space">
-                        <span>@(string.Join(", ", @item.MemberSkills.Where(x => !x.IsComplete).Select(x => x.Skill.Name)))</span>
+                        <span>@item.SkillsDesired</span>
                     </div>
                     <div class="columns has-space">
-                        <span>@(item.ContactPreference != null ? item.ContactPreference == Constants.Member.ContactPreference.Phone ? string.Join(", ", item.PhoneNumbers.Select(x => x.Number)) : item.Email : item.PhoneNumbers.Any() ? string.Join(", ", item.PhoneNumbers.Select(x => x.Number)) : item.Email)</span>
+                        <span></span>
                     </div>
-                    <div class="columns">
+                    @*<div class="columns">
                         <a href="/Prospects/InviteMember?memberId=@item.Id&nonprofitId=@ViewBag.NonprofitId" class="show-family button">Invite</a>
+                    </div>*@
+                    <div class="columns">
+                        <a href="javascript:void(0)" class="show-family button">View</a>
                     </div>
+                </div>
+            </div>
+            <div class="familyMemberWrapper" style="display:none;">
+                <div class="member-details">
+                    <div class="row large-unstack">
+                        <div class="columns has-small-space">
+                            <h4>Personal</h4>
+                        </div>
+                        <div class="columns has-small-space"></div>
+                        <div class="columns has-small-space"></div>
+                    </div>
+                    <div class="row large-unstack">
+                        <div class="columns has-small-space">
+                            <span>Gender: @item.Gender</span>
+                        </div>
+                        <div class="columns has-small-space">
+                            <span>Birthday: @(item.Birthday.HasValue ? item.Birthday.Value.ToShortDateString() : "Not Specified")</span>
+                        </div>
+                        <div class="columns has-small-space">
+                            <span>Ethnicity: @item.Ethnicity</span>
+                        </div>
+                    </div>
+                    <div class="row large-unstack">
+                        <div class="columns has-small-space">
+                            <span>Email: @item.Email</span>
+                        </div>
+                        <div class="columns has-small-space">
+                            <span>Phone: @item.Phone</span>
+                        </div>
+                        <div class="columns has-small-space">
+                            <span>Address: @item.Address</span>
+                        </div>
+                    </div>
+                    @if (item.Schools != null)
+                    {
+                        <hr />
+                        <div class="row large-unstack">
+                            <div class="columns has-small-space">
+                                <h4>Education</h4>
+                            </div>
+                            <div class="columns has-small-space"></div>
+                            <div class="columns has-small-space"></div>
+                        </div>
+                        foreach (var school in item.Schools)
+                        {
+                            <div class="row large-unstack">
+                                <div class="columns has-small-space">
+                                    <span>@school.Name</span>
+                                </div>
+                                <div class="columns has-small-space">
+                                    <span>@(school.Start.HasValue ? school.Start.Value.Year.ToString() : "") - @(school.End.HasValue ? school.End.Value.Year.ToString() : "present")</span>
+                                </div>
+                                <div class="columns has-small-space">
+                                    <span>@school.Degree</span>
+                                </div>
+                            </div>
+                        }
+                    }
+                    @if (item.Jobs != null)
+                    {
+                        <hr />
+                        <div class="row large-unstack">
+                            <div class="columns has-small-space">
+                                <h4>Jobs</h4>
+                            </div>
+                            <div class="columns has-small-space"></div>
+                            <div class="columns has-small-space"></div>
+                        </div>
+                        foreach (var job in item.Jobs)
+                        {
+                            <div class="row large-unstack">
+                                <div class="columns has-small-space">
+                                    <span>@job.Name</span>
+                                </div>
+                                <div class="columns has-small-space">
+                                    <span>@($"{(job.EmployeeStart.HasValue ? $"{job.EmployeeStart.Value.Month.ToString()}/{job.EmployeeStart.Value.Year.ToString()}" : "")}") - @($"{(job.EmployeeEnd.HasValue ? $"{job.EmployeeEnd.Value.Month.ToString()}/{job.EmployeeEnd.Value.Year.ToString()}" : "present")}")</span>
+                                </div>
+                                <div class="columns has-small-space">
+                                    <span>$@(job.EmployeePay)/hr</span>
+                                </div>
+                            </div>
+                        }
+                    }
                 </div>
             </div>
         </section>

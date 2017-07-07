@@ -35,6 +35,7 @@ namespace SolveChicago.Entities
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string ProfilePicturePath { get; set; }
         public string ProviderType { get; set; }
+        public Nullable<bool> HasPrograms { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MemberCorporation> MemberCorporations { get; set; }

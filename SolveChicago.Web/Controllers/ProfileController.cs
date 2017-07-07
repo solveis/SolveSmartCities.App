@@ -236,6 +236,18 @@ namespace SolveChicago.Web.Controllers
             return model;
         }
 
+        private string[] GetNonprofitTypeList()
+        {
+            return new List<string>
+            {
+                Constants.ServiceProviders.FinancialLiteracy,
+                Constants.ServiceProviders.Housing,
+                Constants.ServiceProviders.LegalCounseling,
+                Constants.ServiceProviders.SocialWork,
+                Constants.ServiceProviders.Workforce,
+            }.ToArray();
+        }
+
         private string[] GetCountryList()
         {
             return new string[] { "USA" };
@@ -283,7 +295,7 @@ namespace SolveChicago.Web.Controllers
         {
             MemberProfileNonprofitViewModel model = new MemberProfileNonprofitViewModel
             {
-                Member = PopulateNonprofitEmptyFields(member),
+                Member = PopulateTrainingEmptyFields(member),
                 SkillsList = GetAvailableSkillsList(),
             };
             return model;
@@ -347,7 +359,7 @@ namespace SolveChicago.Web.Controllers
             return model;
         }
 
-        private MemberProfileNonprofits PopulateNonprofitEmptyFields(MemberProfileNonprofits model)
+        private MemberProfileNonprofits PopulateTrainingEmptyFields(MemberProfileNonprofits model)
         {
             return model;
         }
@@ -458,8 +470,17 @@ namespace SolveChicago.Web.Controllers
             NonprofitService service = new NonprofitService(this.db);
             NonprofitProfile model = service.Get(State.NonprofitId);
             model.CountryList = GetCountryList();
-            return View(model);
-            
+            model.TypeList = GetNonprofitTypeList();
+            model.GenderList = GetGenderList();
+            return View(PopulateNonprofitEmptyFields(model));
+        }
+
+        private NonprofitProfile PopulateNonprofitEmptyFields(NonprofitProfile model)
+        {
+            Dictionary<int, string> ethnicities = db.Ethnicities.ToDictionary(x => x.Id, x => x.EthnicityName);
+            if (model.Programs == null || (model.Programs != null && model.Programs.Count() == 0))
+                model.Programs = new Program[1] { new Program() { EthnicityList = ethnicities } };
+            return model;
         }
 
         // POST: Profile/Nonprofit

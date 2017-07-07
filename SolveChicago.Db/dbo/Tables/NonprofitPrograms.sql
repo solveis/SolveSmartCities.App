@@ -6,7 +6,8 @@
     [MinAge] INT NULL, 
     [MaxAge] INT NULL, 
     [Gender] NVARCHAR(50) NULL,
+	[EthnicityId] INT NULL, 
 
-	
-	CONSTRAINT [FK_NonprofitPrograms_Nonprofit] FOREIGN KEY ([NonprofitId]) REFERENCES [Nonprofits](Id) ON DELETE CASCADE, 
+    CONSTRAINT [FK_NonprofitPrograms_Nonprofit] FOREIGN KEY ([NonprofitId]) REFERENCES [Nonprofits](Id) ON DELETE CASCADE, 
+    CONSTRAINT [FK_NonprofitPrograms_Ethnicity] FOREIGN KEY (EthnicityId) REFERENCES [Ethnicities](Id) ON DELETE SET NULL, 
 )

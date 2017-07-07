@@ -492,7 +492,7 @@
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="Scripts\landing.js" />
-    <Content Include="Scripts\profile_member.js" />
+    <Content Include="Scripts\profile.js" />
     <Content Include="Scripts\functions.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />

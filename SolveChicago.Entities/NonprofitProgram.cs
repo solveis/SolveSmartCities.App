@@ -29,6 +29,7 @@ namespace SolveChicago.Entities
         public Nullable<int> MinAge { get; set; }
         public Nullable<int> MaxAge { get; set; }
         public string Gender { get; set; }
+        public Nullable<int> EthnicityId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NonprofitMember> NonprofitMembers { get; set; }
@@ -39,5 +40,6 @@ namespace SolveChicago.Entities
         public virtual ICollection<NonprofitStaff> NonprofitStaffs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Referral> Referrals { get; set; }
+        public virtual Ethnicity Ethnicity { get; set; }
     }
 }

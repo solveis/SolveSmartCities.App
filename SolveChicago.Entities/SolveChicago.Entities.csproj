@@ -112,6 +112,9 @@
     <Compile Include="ELMAH_Error.cs">
       <DependentUpon>data.tt</DependentUpon>
     </Compile>
+    <Compile Include="Ethnicity.cs">
+      <DependentUpon>data.tt</DependentUpon>
+    </Compile>
     <Compile Include="Family.cs">
       <DependentUpon>data.tt</DependentUpon>
     </Compile>

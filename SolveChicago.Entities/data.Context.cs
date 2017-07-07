@@ -64,6 +64,7 @@ namespace SolveChicago.Entities
         public virtual DbSet<School> Schools { get; set; }
         public virtual DbSet<Skill> Skills { get; set; }
         public virtual DbSet<UserIpAddress> UserIpAddresses { get; set; }
+        public virtual DbSet<Ethnicity> Ethnicities { get; set; }
     
         public virtual ObjectResult<string> ELMAH_GetErrorsXml(string application, Nullable<int> pageIndex, Nullable<int> pageSize, ObjectParameter totalCount)
         {

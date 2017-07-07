@@ -28,14 +28,14 @@ namespace SolveChicago.Service
             return families.ToArray();
         }
 
-        public MemberProfile Get(int id)
+        public MemberProfile Get(int id, bool includeFamily = true)
         {
             Member member = db.Members.Find(id);
             if (member == null)
                 return null;
             else
             {
-                return new MemberProfile
+                MemberProfile memberProfile = new MemberProfile
                 {
                     Address1 = member.Addresses.Any() ? member.Addresses.Last().Address1 : string.Empty,
                     Address2 = member.Addresses.Any() ? member.Addresses.Last().Address2 : string.Empty,
@@ -45,8 +45,8 @@ namespace SolveChicago.Service
                     ContactPreference = member.ContactPreference,
                     Country = member.Addresses.Any() ? member.Addresses.Last().Country : string.Empty,
                     Email = member.Email,
+                    Ethnicity = member.Ethnicity != null ? member.Ethnicity.EthnicityName : "Not Specified",
                     Jobs = GetJobs(member),
-                    Family = GetFamily(member),
                     FirstName = member.FirstName,
                     Gender = member.Gender,
                     Id = member.Id,
@@ -68,6 +68,9 @@ namespace SolveChicago.Service
                     InterestedInWorkforceSkill = member.IsWorkforceInterested ?? false,
                     ZipCode = member.Addresses.Any() ? member.Addresses.Last().ZipCode : string.Empty,
                 };
+                if(includeFamily)
+                    memberProfile.Family = GetFamily(member);
+                return memberProfile;
             }
         }
 

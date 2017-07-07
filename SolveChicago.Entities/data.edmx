@@ -175,6 +175,13 @@
           <Property Name="Sequence" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AllXml" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
+        <EntityType Name="Ethnicities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EthnicityName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="Families">
           <Key>
             <PropertyRef Name="Id" />
@@ -330,6 +337,7 @@
           <Property Name="IsWorkforceInterested" Type="bit" />
           <Property Name="IsJobSearching" Type="bit" />
           <Property Name="SSN" Type="varchar" MaxLength="11" />
+          <Property Name="EthnicityId" Type="int" />
         </EntityType>
         <EntityType Name="MemberSchools">
           <Key>
@@ -417,6 +425,7 @@
           <Property Name="MinAge" Type="int" />
           <Property Name="MaxAge" Type="int" />
           <Property Name="Gender" Type="nvarchar" MaxLength="50" />
+          <Property Name="EthnicityId" Type="int" />
         </EntityType>
         <EntityType Name="Nonprofits">
           <Key>
@@ -428,6 +437,7 @@
           <Property Name="CreatedDate" Type="datetime2" Precision="7" />
           <Property Name="ProfilePicturePath" Type="nvarchar(max)" />
           <Property Name="ProviderType" Type="nvarchar" MaxLength="50" />
+          <Property Name="HasPrograms" Type="bit" />
         </EntityType>
         <EntityType Name="NonprofitSkills">
           <Key>
@@ -786,6 +796,18 @@
             </Principal>
             <Dependent Role="Members">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Member_Ethnicity">
+          <End Role="Ethnicities" Type="Self.Ethnicities" Multiplicity="0..1" />
+          <End Role="Members" Type="Self.Members" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ethnicities">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Members">
+              <PropertyRef Name="EthnicityId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1233,6 +1255,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_NonprofitPrograms_Ethnicity">
+          <End Role="Ethnicities" Type="Self.Ethnicities" Multiplicity="0..1" />
+          <End Role="NonprofitPrograms" Type="Self.NonprofitPrograms" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ethnicities">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NonprofitPrograms">
+              <PropertyRef Name="EthnicityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_NonprofitPrograms_Nonprofit">
           <End Role="Nonprofits" Type="Self.Nonprofits" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -1497,6 +1531,7 @@
           <EntitySet Name="Communications" EntityType="Self.Communications" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Corporations" EntityType="Self.Corporations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ELMAH_Error" EntityType="Self.ELMAH_Error" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ethnicities" EntityType="Self.Ethnicities" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Families" EntityType="Self.Families" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FamilyAddresses" EntityType="Self.FamilyAddresses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FamilyPhoneNumbers" EntityType="Self.FamilyPhoneNumbers" Schema="dbo" store:Type="Tables" />
@@ -1610,6 +1645,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_Member_AspNetUser" Association="Self.FK_Member_AspNetUser">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Members" EntitySet="Members" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Member_Ethnicity" Association="Self.FK_Member_Ethnicity">
+            <End Role="Ethnicities" EntitySet="Ethnicities" />
             <End Role="Members" EntitySet="Members" />
           </AssociationSet>
           <AssociationSet Name="FK_Member_Family" Association="Self.FK_Member_Family">
@@ -1743,6 +1782,10 @@
           <AssociationSet Name="FK_NonprofitPhoneNumbers_PhoneNumber" Association="Self.FK_NonprofitPhoneNumbers_PhoneNumber">
             <End Role="PhoneNumbers" EntitySet="PhoneNumbers" />
             <End Role="NonprofitPhoneNumbers" EntitySet="NonprofitPhoneNumbers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NonprofitPrograms_Ethnicity" Association="Self.FK_NonprofitPrograms_Ethnicity">
+            <End Role="Ethnicities" EntitySet="Ethnicities" />
+            <End Role="NonprofitPrograms" EntitySet="NonprofitPrograms" />
           </AssociationSet>
           <AssociationSet Name="FK_NonprofitPrograms_Nonprofit" Association="Self.FK_NonprofitPrograms_Nonprofit">
             <End Role="Nonprofits" EntitySet="Nonprofits" />
@@ -2105,6 +2148,15 @@
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="Nonprofit" EntitySet="Nonprofits" />
           </AssociationSet>
+          <EntitySet Name="Ethnicities" EntityType="SolveChicagoDevModel.Ethnicity" />
+          <AssociationSet Name="FK_Member_Ethnicity" Association="SolveChicagoDevModel.FK_Member_Ethnicity">
+            <End Role="Ethnicity" EntitySet="Ethnicities" />
+            <End Role="Member" EntitySet="Members" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NonprofitPrograms_Ethnicity" Association="SolveChicagoDevModel.FK_NonprofitPrograms_Ethnicity">
+            <End Role="Ethnicity" EntitySet="Ethnicities" />
+            <End Role="NonprofitProgram" EntitySet="NonprofitPrograms" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Address">
           <Key>
@@ -2431,6 +2483,8 @@
           <NavigationProperty Name="Addresses" Relationship="SolveChicagoDevModel.MemberAddresses" FromRole="Member" ToRole="Address" />
           <NavigationProperty Name="Interests" Relationship="SolveChicagoDevModel.MemberInterests" FromRole="Member" ToRole="Interest" />
           <NavigationProperty Name="PhoneNumbers" Relationship="SolveChicagoDevModel.MemberPhoneNumbers" FromRole="Member" ToRole="PhoneNumber" />
+          <Property Name="EthnicityId" Type="Int32" />
+          <NavigationProperty Name="Ethnicity" Relationship="SolveChicagoDevModel.FK_Member_Ethnicity" FromRole="Member" ToRole="Ethnicity" />
         </EntityType>
         <EntityType Name="MemberSchool">
           <Key>
@@ -2511,6 +2565,8 @@
           <NavigationProperty Name="NonprofitSkills" Relationship="SolveChicagoDevModel.FK_NonprofitSkills_NonprofitProgram" FromRole="NonprofitProgram" ToRole="NonprofitSkill" />
           <NavigationProperty Name="NonprofitStaffs" Relationship="SolveChicagoDevModel.FK_NonprofitStaff_NonprofitPrograms" FromRole="NonprofitProgram" ToRole="NonprofitStaff" />
           <NavigationProperty Name="Referrals" Relationship="SolveChicagoDevModel.FK_Referrals_NonprofitProgram" FromRole="NonprofitProgram" ToRole="Referral" />
+          <Property Name="EthnicityId" Type="Int32" />
+          <NavigationProperty Name="Ethnicity" Relationship="SolveChicagoDevModel.FK_NonprofitPrograms_Ethnicity" FromRole="NonprofitProgram" ToRole="Ethnicity" />
         </EntityType>
         <EntityType Name="Nonprofit">
           <Key>
@@ -2532,6 +2588,7 @@
           <NavigationProperty Name="Addresses" Relationship="SolveChicagoDevModel.NonprofitAddresses" FromRole="Nonprofit" ToRole="Address" />
           <NavigationProperty Name="PhoneNumbers" Relationship="SolveChicagoDevModel.NonprofitPhoneNumbers" FromRole="Nonprofit" ToRole="PhoneNumber" />
           <NavigationProperty Name="AspNetUsers" Relationship="SolveChicagoDevModel.UserProfileNonprofits" FromRole="Nonprofit" ToRole="AspNetUser" />
+          <Property Name="HasPrograms" Type="Boolean" />
         </EntityType>
         <EntityType Name="NonprofitSkill">
           <Key>
@@ -3260,6 +3317,39 @@
           <End Type="SolveChicagoDevModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
           <End Type="SolveChicagoDevModel.Nonprofit" Role="Nonprofit" Multiplicity="*" />
         </Association>
+        <EntityType Name="Ethnicity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EthnicityName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Members" Relationship="SolveChicagoDevModel.FK_Member_Ethnicity" FromRole="Ethnicity" ToRole="Member" />
+          <NavigationProperty Name="NonprofitPrograms" Relationship="SolveChicagoDevModel.FK_NonprofitPrograms_Ethnicity" FromRole="Ethnicity" ToRole="NonprofitProgram" />
+        </EntityType>
+        <Association Name="FK_Member_Ethnicity">
+          <End Type="SolveChicagoDevModel.Ethnicity" Role="Ethnicity" Multiplicity="0..1" />
+          <End Type="SolveChicagoDevModel.Member" Role="Member" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ethnicity">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Member">
+              <PropertyRef Name="EthnicityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NonprofitPrograms_Ethnicity">
+          <End Type="SolveChicagoDevModel.Ethnicity" Role="Ethnicity" Multiplicity="0..1" />
+          <End Type="SolveChicagoDevModel.NonprofitProgram" Role="NonprofitProgram" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ethnicity">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NonprofitProgram">
+              <PropertyRef Name="EthnicityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3525,6 +3615,7 @@
           <EntitySetMapping Name="Members">
             <EntityTypeMapping TypeName="SolveChicagoDevModel.Member">
               <MappingFragment StoreEntitySet="Members">
+                <ScalarProperty Name="EthnicityId" ColumnName="EthnicityId" />
                 <ScalarProperty Name="SSN" ColumnName="SSN" />
                 <ScalarProperty Name="IsJobSearching" ColumnName="IsJobSearching" />
                 <ScalarProperty Name="IsWorkforceInterested" ColumnName="IsWorkforceInterested" />
@@ -3605,6 +3696,7 @@
           <EntitySetMapping Name="NonprofitPrograms">
             <EntityTypeMapping TypeName="SolveChicagoDevModel.NonprofitProgram">
               <MappingFragment StoreEntitySet="NonprofitPrograms">
+                <ScalarProperty Name="EthnicityId" ColumnName="EthnicityId" />
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="MaxAge" ColumnName="MaxAge" />
                 <ScalarProperty Name="MinAge" ColumnName="MinAge" />
@@ -3617,6 +3709,7 @@
           <EntitySetMapping Name="Nonprofits">
             <EntityTypeMapping TypeName="SolveChicagoDevModel.Nonprofit">
               <MappingFragment StoreEntitySet="Nonprofits">
+                <ScalarProperty Name="HasPrograms" ColumnName="HasPrograms" />
                 <ScalarProperty Name="ProviderType" ColumnName="ProviderType" />
                 <ScalarProperty Name="ProfilePicturePath" ColumnName="ProfilePicturePath" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
@@ -3808,6 +3901,14 @@
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Ethnicities">
+            <EntityTypeMapping TypeName="SolveChicagoDevModel.Ethnicity">
+              <MappingFragment StoreEntitySet="Ethnicities">
+                <ScalarProperty Name="EthnicityName" ColumnName="EthnicityName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

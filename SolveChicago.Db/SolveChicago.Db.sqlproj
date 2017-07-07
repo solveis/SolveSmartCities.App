@@ -119,6 +119,7 @@
     <Build Include="dbo\Tables\NonprofitStaff.sql" />
     <None Include="PreDeploy.02.RTW1.3.sql" />
     <Build Include="dbo\Tables\Referrals.sql" />
+    <Build Include="dbo\Tables\Ethnicities.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SolveChicago.Db.dbmdl" />

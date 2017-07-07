@@ -1,5 +1,7 @@
 ﻿using SolveChicago.Common;
+using SolveChicago.Common.Models.Profile.Member;
 using SolveChicago.Entities;
+using SolveChicago.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,13 +26,20 @@ namespace SolveChicago.Web.Controllers
         public ActionResult Index(int? nonprofitId)
         {
             ImpersonateNonprofit(nonprofitId);
-            Member[] model = new Member[0];
+            int[] members = new int[0];
+            List<MemberProfile> model = new List<MemberProfile>();
+            MemberService service = new MemberService(this.db);
+            // workforce service providers only see members who have soft skills
             if (State.Nonprofit != null && State.Nonprofit.NonprofitSkills.Any(x => !x.Skill.IsWorkforce))
-                model = db.Members.Where(x => !x.NonprofitMembers.Any(y => !y.End.HasValue || y.NonprofitId == State.NonprofitId) && !x.MemberCorporations.Any(y => y.Start > x.CreatedDate) && (x.IsWorkforceInterested ?? true)).ToArray();
+                members = db.Members.Where(x => !x.NonprofitMembers.Any(y => !y.End.HasValue || y.NonprofitId == State.NonprofitId) && !x.MemberCorporations.Any(y => y.Start > x.CreatedDate) && (x.IsWorkforceInterested ?? true)).Select(x => x.Id).ToArray();
             else
-                model = db.Members.Where(x =>  !x.NonprofitMembers.Any(y => !y.End.HasValue || y.NonprofitId == State.NonprofitId) && !x.MemberCorporations.Any(y => y.Start > x.CreatedDate) && (x.IsWorkforceInterested ?? true) && x.MemberSkills.Any(y => y.Skill.Name == Constants.Skills.SoftSkills && y.IsComplete == true)).ToArray();
+                members = db.Members.Where(x => !x.NonprofitMembers.Any(y => !y.End.HasValue || y.NonprofitId == State.NonprofitId) && !x.MemberCorporations.Any(y => y.Start > x.CreatedDate) && (x.IsWorkforceInterested ?? true) && x.MemberSkills.Any(y => y.Skill.Name == Constants.Skills.SoftSkills && y.IsComplete == true)).Select(x => x.Id).ToArray();
+
+            foreach (var member in members)
+                model.Add(service.Get(member));
+
             ViewBag.NonprofitId = State.NonprofitId;
-            return View(model);
+            return View(model.ToArray());
         }
 
         // POST: Prospects/InviteMember

@@ -55,6 +55,7 @@ namespace SolveChicago.Entities
         public Nullable<bool> IsWorkforceInterested { get; set; }
         public Nullable<bool> IsJobSearching { get; set; }
         public string SSN { get; set; }
+        public Nullable<int> EthnicityId { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -90,5 +91,6 @@ namespace SolveChicago.Entities
         public virtual ICollection<Interest> Interests { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PhoneNumber> PhoneNumbers { get; set; }
+        public virtual Ethnicity Ethnicity { get; set; }
     }
 }

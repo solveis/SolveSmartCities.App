@@ -168,4 +168,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="NonprofitSkillsId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="9ba57398-abff-4cd2-956b-ae92c203df5e" ChangeDateTime="07/03/2017 19:14:36">
+    <Property Name="ElementName" Value="[dbo].[Ethnicities].[Ethnicity]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Ethnicities]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="EthnicityName" />
+  </Operation>
 </Operations>
