@@ -481,6 +481,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ReferringId" Type="int" Nullable="false" />
           <Property Name="ReferredId" Type="int" Nullable="false" />
+          <Property Name="MemberId" Type="int" Nullable="false" />
           <Property Name="ProgramId" Type="int" />
           <Property Name="Date" Type="datetime2" Precision="7" />
         </EntityType>
@@ -1373,6 +1374,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Referrals_Member">
+          <End Role="Members" Type="Self.Members" Multiplicity="1" />
+          <End Role="Referrals" Type="Self.Referrals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Referrals">
+              <PropertyRef Name="MemberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Referrals_NonprofitProgram">
           <End Role="NonprofitPrograms" Type="Self.NonprofitPrograms" Multiplicity="0..1" />
           <End Role="Referrals" Type="Self.Referrals" Multiplicity="*" />
@@ -1819,6 +1832,10 @@
             <End Role="Members" EntitySet="Members" />
             <End Role="Outcomes" EntitySet="Outcomes" />
           </AssociationSet>
+          <AssociationSet Name="FK_Referrals_Member" Association="Self.FK_Referrals_Member">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="Referrals" EntitySet="Referrals" />
+          </AssociationSet>
           <AssociationSet Name="FK_Referrals_NonprofitProgram" Association="Self.FK_Referrals_NonprofitProgram">
             <End Role="NonprofitPrograms" EntitySet="NonprofitPrograms" />
             <End Role="Referrals" EntitySet="Referrals" />
@@ -2157,6 +2174,10 @@
             <End Role="Ethnicity" EntitySet="Ethnicities" />
             <End Role="NonprofitProgram" EntitySet="NonprofitPrograms" />
           </AssociationSet>
+          <AssociationSet Name="FK_Referrals_Member" Association="SolveChicagoDevModel.FK_Referrals_Member">
+            <End Role="Member" EntitySet="Members" />
+            <End Role="Referral" EntitySet="Referrals" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Address">
           <Key>
@@ -2485,6 +2506,7 @@
           <NavigationProperty Name="PhoneNumbers" Relationship="SolveChicagoDevModel.MemberPhoneNumbers" FromRole="Member" ToRole="PhoneNumber" />
           <Property Name="EthnicityId" Type="Int32" />
           <NavigationProperty Name="Ethnicity" Relationship="SolveChicagoDevModel.FK_Member_Ethnicity" FromRole="Member" ToRole="Ethnicity" />
+          <NavigationProperty Name="Referrals" Relationship="SolveChicagoDevModel.FK_Referrals_Member" FromRole="Member" ToRole="Referral" />
         </EntityType>
         <EntityType Name="MemberSchool">
           <Key>
@@ -2652,6 +2674,8 @@
           <NavigationProperty Name="NonprofitProgram" Relationship="SolveChicagoDevModel.FK_Referrals_NonprofitProgram" FromRole="Referral" ToRole="NonprofitProgram" />
           <NavigationProperty Name="Nonprofit" Relationship="SolveChicagoDevModel.FK_Referrals_ReferredNonprofit" FromRole="Referral" ToRole="Nonprofit" />
           <NavigationProperty Name="Nonprofit1" Relationship="SolveChicagoDevModel.FK_Referrals_ReferringNonprofit" FromRole="Referral" ToRole="Nonprofit" />
+          <Property Name="MemberId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Member" Relationship="SolveChicagoDevModel.FK_Referrals_Member" FromRole="Referral" ToRole="Member" />
         </EntityType>
         <EntityType Name="School">
           <Key>
@@ -3350,6 +3374,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Referrals_Member">
+          <End Type="SolveChicagoDevModel.Member" Role="Member" Multiplicity="1" />
+          <End Type="SolveChicagoDevModel.Referral" Role="Referral" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Referral">
+              <PropertyRef Name="MemberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3761,6 +3797,7 @@
           <EntitySetMapping Name="Referrals">
             <EntityTypeMapping TypeName="SolveChicagoDevModel.Referral">
               <MappingFragment StoreEntitySet="Referrals">
+                <ScalarProperty Name="MemberId" ColumnName="MemberId" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="ProgramId" ColumnName="ProgramId" />
                 <ScalarProperty Name="ReferredId" ColumnName="ReferredId" />

@@ -19,9 +19,11 @@ namespace SolveChicago.Entities
         public int ReferredId { get; set; }
         public Nullable<int> ProgramId { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
+        public int MemberId { get; set; }
     
         public virtual NonprofitProgram NonprofitProgram { get; set; }
         public virtual Nonprofit Nonprofit { get; set; }
         public virtual Nonprofit Nonprofit1 { get; set; }
+        public virtual Member Member { get; set; }
     }
 }

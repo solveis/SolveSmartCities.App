@@ -33,6 +33,7 @@ namespace SolveChicago.Entities
             this.Addresses = new HashSet<Address>();
             this.Interests = new HashSet<Interest>();
             this.PhoneNumbers = new HashSet<PhoneNumber>();
+            this.Referrals = new HashSet<Referral>();
         }
     
         public int Id { get; set; }
@@ -92,5 +93,7 @@ namespace SolveChicago.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PhoneNumber> PhoneNumbers { get; set; }
         public virtual Ethnicity Ethnicity { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Referral> Referrals { get; set; }
     }
 }

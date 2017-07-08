@@ -1,4 +1,5 @@
 ﻿using SolveChicago.Common;
+using SolveChicago.Common.Models;
 using SolveChicago.Common.Models.Profile.Member;
 using SolveChicago.Entities;
 using SolveChicago.Service;
@@ -26,17 +27,42 @@ namespace SolveChicago.Web.Controllers
         public ActionResult Index(int? nonprofitId)
         {
             ImpersonateNonprofit(nonprofitId);
-            int[] members = new int[0];
-            List<MemberProfile> model = new List<MemberProfile>();
+            Member[] members = new Member[0];
+            List<ProspectModel> model = new List<ProspectModel>();
             MemberService service = new MemberService(this.db);
             // workforce service providers only see members who have soft skills
             if (State.Nonprofit != null && State.Nonprofit.NonprofitSkills.Any(x => !x.Skill.IsWorkforce))
-                members = db.Members.Where(x => !x.NonprofitMembers.Any(y => !y.End.HasValue || y.NonprofitId == State.NonprofitId) && !x.MemberCorporations.Any(y => y.Start > x.CreatedDate) && (x.IsWorkforceInterested ?? true)).Select(x => x.Id).ToArray();
+            {
+                members = db.Members
+                    .Where(x => 
+                        !x.NonprofitMembers.Any(y => !y.End.HasValue || y.NonprofitId == State.NonprofitId) // not currently in a nonprofit
+                        && !x.MemberCorporations.Any(y => y.Start > x.CreatedDate) // not in a job started after onboarding
+                        && (x.IsWorkforceInterested ?? true)) // is interested in training
+                    .ToArray();
+            }
             else
-                members = db.Members.Where(x => !x.NonprofitMembers.Any(y => !y.End.HasValue || y.NonprofitId == State.NonprofitId) && !x.MemberCorporations.Any(y => y.Start > x.CreatedDate) && (x.IsWorkforceInterested ?? true) && x.MemberSkills.Any(y => y.Skill.Name == Constants.Skills.SoftSkills && y.IsComplete == true)).Select(x => x.Id).ToArray();
+            {
+                members = db.Members
+                    .Where(x => 
+                        !x.NonprofitMembers.Any(y => !y.End.HasValue || y.NonprofitId == State.NonprofitId) // not currently in a nonprofit
+                        && !x.MemberCorporations.Any(y => y.Start > x.CreatedDate) // not in a job started after onboarding
+                        && (x.IsWorkforceInterested ?? true) // is interested in training
+                        && x.MemberSkills.Any(y => y.Skill.Name == Constants.Skills.SoftSkills && y.IsComplete == true)  // has completed soft skill training
+                        && (x.MemberSkills.Any(y => !y.IsComplete && y.Skill.NonprofitSkills.Any(z => z.NonprofitId == State.NonprofitId)) // is interested in a skill the nonprofit offers
+                            || x.Referrals.Any(y => y.ReferredId == State.NonprofitId))) // or has been directly referred
+                    .ToArray();
+            }
 
             foreach (var member in members)
-                model.Add(service.Get(member));
+            {
+                ProspectModel prospect = new ProspectModel()
+                {
+                    Member = service.Get(member.Id, false),
+                    ReferringNonprofit = member.Referrals.Any(x => x.ReferredId == State.NonprofitId) ? member.Referrals.First(x => x.ReferredId == State.NonprofitId).Nonprofit1 : null,
+                    ReferringCaseManagers = member.Referrals.Any(x => x.ReferredId == State.NonprofitId) && member.Referrals.First(x => x.ReferredId == State.NonprofitId).Nonprofit1.NonprofitStaffs.Any() ? member.Referrals.First(x => x.ReferredId == State.NonprofitId).Nonprofit1.NonprofitStaffs.Where(y => y.NonprofitMembers.Any(z => z.MemberId == member.Id)).Select(y => y.CaseManager).ToArray() : null,
+                };
+                model.Add(prospect);
+            }   
 
             ViewBag.NonprofitId = State.NonprofitId;
             return View(model.ToArray());

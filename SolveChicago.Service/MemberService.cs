@@ -1,4 +1,5 @@
 ﻿using SolveChicago.Common;
+using SolveChicago.Common.Models;
 using SolveChicago.Common.Models.Profile.Member;
 using SolveChicago.Entities;
 using System;

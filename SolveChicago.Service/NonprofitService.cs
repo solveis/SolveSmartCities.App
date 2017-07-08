@@ -80,7 +80,7 @@ namespace SolveChicago.Service
 
         private string GetWorkforceSkillsOffered(Nonprofit nonprofit, int programId)
         {
-            return string.Join(", ", nonprofit.NonprofitSkills.Any(x => x.Skill != null && x.Skill.IsWorkforce && x.ProgramId == programId) ? nonprofit.NonprofitSkills.Where(x => x.Skill != null && !x.Skill.IsWorkforce && x.ProgramId == programId).Select(x => x.Skill.Name) : new string[0]);
+            return string.Join(", ", nonprofit.NonprofitSkills.Any(x => x.Skill != null && x.Skill.IsWorkforce && x.ProgramId == programId) ? nonprofit.NonprofitSkills.Where(x => x.Skill != null && x.Skill.IsWorkforce && x.ProgramId == programId).Select(x => x.Skill.Name) : new string[0]);
         }
 
         private string GetSoftSkillsOffered(Nonprofit nonprofit, int programId)
