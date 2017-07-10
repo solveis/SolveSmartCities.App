@@ -29,6 +29,9 @@
                 }
             }
 
+            <p><strong>Which service provider are you referring them to?</strong></p>
+            @Html.ValidationMessageFor(x => Model.ReferredNonprofitId, "", new { @class = "text-danger" })
+            @Html.DropDownListFor(x => Model.ReferredNonprofitId, Model.NonprofitsList.Select(x => new SelectListItem { Value = x.Key.ToString(), Text = x.Value, Selected = x.Key == Model.ReferredNonprofitId }))
             <hr class="line-divider">
             <input class="submit-create-profile" type="submit" value="Submit">
         </div>

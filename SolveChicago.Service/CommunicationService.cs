@@ -115,25 +115,183 @@ namespace SolveChicago.Service
 
         public void JobPlacedVerification(string jobName, Member member, string nonprofitName, string confirmUrl)
         {
-            string communicationType = string.Format(Constants.Communication.JobPlacedVerification, member.Id);
-            EmailService service = new EmailService(db);
-            service.DeliverSendGridMessage(
-                member.Email,
-                Constants.Global.SolveSmartCities,
-                "",
-                "9ad1ac25-a038-45de-b82e-54e81a169d2d",
-                new Dictionary<string, string>
-                {
-                    { "-name-", member.FirstName },
-                    { "-nonprofitName-", nonprofitName },
-                    { "-confirmUrl-", confirmUrl },
-                    { "-year-", DateTime.UtcNow.Year.ToString() },
-                },
-                Settings.Website.FromAddress,
-                communicationType,
-                "",
-                null
-            ).Wait();
-        }        
+            if(member.AspNetUser != null) // existing user
+            {
+                string communicationType = string.Format(Constants.Communication.JobPlacedVerification, member.Id);
+                EmailService service = new EmailService(db);
+                service.DeliverSendGridMessage(
+                    member.Email,
+                    Constants.Global.SolveSmartCities,
+                    "",
+                    "9ad1ac25-a038-45de-b82e-54e81a169d2d",
+                    new Dictionary<string, string>
+                    {
+                        { "-name-", member.FirstName },
+                        { "-nonprofitName-", nonprofitName },
+                        { "-confirmUrl-", confirmUrl },
+                        { "-year-", DateTime.UtcNow.Year.ToString() },
+                    },
+                    Settings.Website.FromAddress,
+                    communicationType,
+                    "",
+                    null
+                ).Wait();
+            }
+            else // new user
+            {
+                string communicationType = string.Format(Constants.Communication.JobPlacedVerification, member.Id);
+                EmailService service = new EmailService(db);
+                service.DeliverSendGridMessage(
+                    member.Email,
+                    Constants.Global.SolveSmartCities,
+                    "",
+                    "b7fa9616-63d8-4bde-9400-0cc26516c1ec",
+                    new Dictionary<string, string>
+                    {
+                        { "-memberFirstName-", member.FirstName },
+                        { "-nonprofitName-", nonprofitName },
+                        { "-confirmUrl-", confirmUrl },
+                        { "-year-", DateTime.UtcNow.Year.ToString() },
+                    },
+                    Settings.Website.FromAddress,
+                    communicationType,
+                    "",
+                    null
+                ).Wait();
+            }
+            
+        }
+        
+        public void Referral(Nonprofit referredNpo, Member member, Nonprofit referringNpo)
+        {
+            // referred NPO email notification
+            foreach(AspNetUser user in referredNpo.AspNetUsers.Where(x => (x.ReceiveEmail ?? true)))
+            {
+                string communicationType = string.Format(Constants.Communication.Referral, referredNpo.Id, member.Id, referringNpo.Id);
+                EmailService service = new EmailService(db);
+                service.DeliverSendGridMessage(
+                    user.Email,
+                    Constants.Global.SolveSmartCities,
+                    referringNpo.Name,
+                    "79bd8009-7796-4c7e-b94b-568aad9ee7d7",
+                    new Dictionary<string, string>
+                    {
+                        { "-referredNPO-", referredNpo.Name },
+                        { "-referringNPO-", referringNpo.Name},
+                        { "-member-", $"{member.FirstName} {member.LastName}" },
+                        { "-confirmUrl-", Settings.Website.BaseUrl },
+                        { "-year-", DateTime.UtcNow.Year.ToString() },
+                    },
+                    Settings.Website.FromAddress,
+                    communicationType,
+                    user.Id,
+                    null
+                ).Wait();
+            }
+        }
+
+        public void InviteMemberToNonprofit(Member member, Nonprofit nonprofit)
+        {
+            // member email notification
+            if (member.AspNetUser != null) // member already has a Solve Smart Cities login
+            {
+                string communicationType = string.Format(Constants.Communication.InviteExistingMemberToNonprofit, member.Id, nonprofit.Id);
+                EmailService service = new EmailService(db);
+                service.DeliverSendGridMessage(
+                    member.AspNetUser.Email,
+                    Constants.Global.SolveSmartCities,
+                    nonprofit.Name,
+                    "107d9612-8577-4df0-9f6b-0b066428944d",
+                    new Dictionary<string, string>
+                    {
+                        { "-invitingNpo-", nonprofit.Name},
+                        { "-memberFirstName-", $"{member.FirstName}" },
+                        { "-confirmUrl-", $"{Settings.Website.BaseUrl}/Prospects/AcceptInvitation?memberId={member.Id}&nonprofitId={nonprofit.Id}" },
+                        { "-year-", DateTime.UtcNow.Year.ToString() },
+                    },
+                    Settings.Website.FromAddress,
+                    communicationType,
+                    member.AspNetUser.Id,
+                    null
+                ).Wait();
+            }
+            else // member needs to create a Solve Smart Cities login
+            {
+                // member email notification
+                string communicationType = string.Format(Constants.Communication.InviteNewMemberToNonprofit, member.Id, nonprofit.Id);
+                EmailService service = new EmailService(db);
+                service.DeliverSendGridMessage(
+                    member.Email,
+                    Constants.Global.SolveSmartCities,
+                    nonprofit.Name,
+                    "d85301f0-8313-4970-8271-f1d5624366d0",
+                    new Dictionary<string, string>
+                    {
+                        { "-invitingNpo-", nonprofit.Name},
+                        { "-memberFirstName-", $"{member.FirstName}" },
+                        { "-confirmUrl-", $"{Settings.Website.BaseUrl}/Prospects/AcceptInvitation?memberId={member.Id}&nonprofitId={nonprofit.Id}" },
+                        { "-year-", DateTime.UtcNow.Year.ToString() },
+                    },
+                    Settings.Website.FromAddress,
+                    communicationType,
+                    member.AspNetUser.Id,
+                    null
+                ).Wait();
+            }
+        }
+
+        public void InvitationAccepted(Nonprofit nonprofit, Member member)
+        {
+            // alert NPO that invitation was accepted
+            foreach (AspNetUser user in nonprofit.AspNetUsers.Where(x => (x.ReceiveEmail ?? true)))
+            {
+                string communicationType = string.Format(Constants.Communication.InvitationAccepted, nonprofit.Id, member.Id);
+                EmailService service = new EmailService(db);
+                service.DeliverSendGridMessage(
+                    user.Email,
+                    Constants.Global.SolveSmartCities,
+                    $"{member.FirstName} {member.LastName}",
+                    "ba0fbe64-cf88-48c1-97a8-45b133ffc78a",
+                    new Dictionary<string, string>
+                    {
+                        { "-nonprofit-", nonprofit.Name},
+                        { "-memberName-", $"{member.FirstName} {member.LastName}" },
+                        { "-confirmUrl-", Settings.Website.BaseUrl },
+                        { "-year-", DateTime.UtcNow.Year.ToString() },
+                    },
+                    Settings.Website.FromAddress,
+                    communicationType,
+                    user.Id,
+                    null
+                ).Wait();
+            }
+        }
+
+        public void ReferralSucceeded(Nonprofit nonprofit, Member member, Nonprofit referredNonprofit)
+        {
+            // alert NPO that their referral was successful
+            foreach (AspNetUser user in nonprofit.AspNetUsers.Where(x => (x.ReceiveEmail ?? true)))
+            {
+                string communicationType = string.Format(Constants.Communication.ReferralSucceeded, referredNonprofit.Id, member.Id, nonprofit.Id);
+                EmailService service = new EmailService(db);
+                service.DeliverSendGridMessage(
+                    user.Email,
+                    Constants.Global.SolveSmartCities,
+                    $"{member.FirstName} {member.LastName} to {referredNonprofit.Name}",
+                    "637b8a6a-a254-4415-881f-7b11d197ac64",
+                    new Dictionary<string, string>
+                    {
+                        { "-nonprofit-", referredNonprofit.Name},
+                        { "-member-", $"{member.FirstName} {member.LastName}" },
+                        { "-confirmUrl-", Settings.Website.BaseUrl },
+                        { "-year-", DateTime.UtcNow.Year.ToString() },
+                    },
+                    Settings.Website.FromAddress,
+                    communicationType,
+                    user.Id,
+                    null
+                ).Wait();
+            }
+        }
     }
 }

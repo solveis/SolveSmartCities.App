@@ -44,12 +44,12 @@ namespace SolveChicago.Web.Controllers
             {
                 members = db.Members
                     .Where(x => 
-                        !x.NonprofitMembers.Any(y => !y.End.HasValue || y.NonprofitId == State.NonprofitId) // not currently in a nonprofit
+                        (!x.NonprofitMembers.Any(y => !y.End.HasValue || y.NonprofitId == State.NonprofitId) // not currently in a nonprofit
                         && !x.MemberCorporations.Any(y => y.Start > x.CreatedDate) // not in a job started after onboarding
                         && (x.IsWorkforceInterested ?? true) // is interested in training
-                        && x.MemberSkills.Any(y => y.Skill.Name == Constants.Skills.SoftSkills && y.IsComplete == true)  // has completed soft skill training
-                        && (x.MemberSkills.Any(y => !y.IsComplete && y.Skill.NonprofitSkills.Any(z => z.NonprofitId == State.NonprofitId)) // is interested in a skill the nonprofit offers
-                            || x.Referrals.Any(y => y.ReferredId == State.NonprofitId))) // or has been directly referred
+                        && x.MemberSkills.Any(y => !y.Skill.IsWorkforce && y.IsComplete == true)  // has completed soft skill training
+                        && x.MemberSkills.Any(y => !y.IsComplete && y.Skill.NonprofitSkills.Any(z => z.NonprofitId == State.NonprofitId))) // is interested in a skill the nonprofit offers
+                        || x.Referrals.Any(y => y.ReferredId == State.NonprofitId)) // or has been directly referred
                     .ToArray();
             }
 
@@ -77,18 +77,46 @@ namespace SolveChicago.Web.Controllers
             Nonprofit npo = db.Nonprofits.Find(State.NonprofitId);
             if (member != null && npo != null)
             {
-                npo.NonprofitMembers.Add(new NonprofitMember { Member = member, Start = DateTime.UtcNow, });
-                MemberSkill[] skills = member.MemberSkills.Where(x => !x.IsComplete && x.Skill.NonprofitSkills.Any(y => y.NonprofitId == npo.Id)).ToArray();
-                foreach(MemberSkill skill in skills)
-                {
-                    skill.NonprofitSkill.NonprofitId = npo.Id;
-                }
-                db.SaveChanges();
+                CommunicationService service = new CommunicationService(this.db);
+                    service.InviteMemberToNonprofit(member, npo);
             }   
             else
                 throw new ApplicationException("We're sorry, we are unable to make this match at this time");
 
             return Redirect(Request.UrlReferrer.ToString());
+        }
+
+        public ActionResult AcceptInvitation(int memberId, int nonprofitId, int? referringNonprofitId)
+        {
+            Member member = db.Members.Find(memberId);
+            Nonprofit npo = db.Nonprofits.Find(State.NonprofitId);
+            if (member != null && npo != null)
+            {
+                npo.NonprofitMembers.Add(new NonprofitMember { Member = member, Start = DateTime.UtcNow, });
+                MemberSkill[] skills = member.MemberSkills.Where(x => !x.IsComplete && x.Skill.NonprofitSkills.Any(y => y.NonprofitId == npo.Id)).ToArray();
+                foreach (MemberSkill skill in skills)
+                {
+                    skill.NonprofitSkill.NonprofitId = npo.Id;
+                }
+
+                CommunicationService service = new CommunicationService(this.db);
+                service.InvitationAccepted(npo, member);
+                if (referringNonprofitId.HasValue)
+                {
+                    Nonprofit referringNpo = db.Nonprofits.Find(referringNonprofitId.Value);
+                    if (referringNpo != null)
+                        service.ReferralSucceeded(referringNpo, member, npo);
+                }
+
+                db.SaveChanges();
+            }
+            else
+                throw new ApplicationException("We're sorry, we are unable to make this match at this time");
+
+            if (member.AspNetUser != null)
+                return RedirectToAction("Index", "Thanks");
+            else
+                return RedirectToAction("Member", "Register", new { id = member.Id });
         }
     }
 }

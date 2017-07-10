@@ -214,6 +214,7 @@ namespace SolveChicago.Web.Controllers
                 foreach (var ms in model.Skills)
                 {
                     NonprofitSkill npoSkill = nonprofitMember.Nonprofit.NonprofitSkills.FirstOrDefault(x => x.NonprofitId == State.NonprofitId && x.SkillId == ms.Id);
+                    npoSkill.ProgramId = nonprofitMember.ProgramId;
                     MemberSkill memberSkill = member.MemberSkills.Where(x => x.SkillId == ms.Id).FirstOrDefault();
                     if (memberSkill != null)
                     {
@@ -270,6 +271,7 @@ namespace SolveChicago.Web.Controllers
             {
                 MemberId = memberId,
                 NonprofitId = State.NonprofitId,
+                NonprofitsList = db.Nonprofits.ToDictionary(x => x.Id, x => x.Name),
                 Skills = npoSkills.Select(x => new GraduateMemberCheckbox { Id = x.Id, Name = x.Name, IsComplete = false }).ToArray(),
             };
             return View(model);
@@ -283,11 +285,13 @@ namespace SolveChicago.Web.Controllers
             Member member = db.Members.Single(x => x.Id == model.MemberId);
             NonprofitMember nonprofitMember = member.NonprofitMembers.Single(x => x.NonprofitId == State.NonprofitId);
             nonprofitMember.End = DateTime.UtcNow;
+            // complete skills
             if (model.Skills != null)
             {
                 foreach (var ms in model.Skills)
                 {
                     NonprofitSkill npoSkill = nonprofitMember.Nonprofit.NonprofitSkills.FirstOrDefault(x => x.NonprofitId == State.NonprofitId && x.SkillId == ms.Id);
+                    npoSkill.ProgramId = nonprofitMember.ProgramId;
                     MemberSkill memberSkill = member.MemberSkills.Where(x => x.NonprofitSkill != null && x.NonprofitSkillsId == npoSkill.Id && x.SkillId == ms.Id).FirstOrDefault();
                     if (memberSkill != null)
                         memberSkill.IsComplete = ms.IsComplete;
@@ -299,6 +303,21 @@ namespace SolveChicago.Web.Controllers
                         }   
                     }
                 }
+            }
+            // create referral
+            if(model.ReferredNonprofitId.HasValue)
+            {
+                Nonprofit referredNpo = db.Nonprofits.Single(x => x.Id == model.ReferredNonprofitId.Value);
+                db.Referrals.Add(new Referral
+                {
+                    ReferredId = model.ReferredNonprofitId.Value,
+                    ReferringId = model.NonprofitId,
+                    Date = DateTime.UtcNow,
+                    MemberId = model.MemberId,
+                    // TODO: Add ProgramId referral feature.
+                });
+                CommunicationService commService = new CommunicationService(this.db);
+                commService.Referral(referredNpo, member, nonprofitMember.Nonprofit);
             }
             db.SaveChanges();
 

@@ -64,7 +64,7 @@
                 <!-- First Row-->
                     <div class="row large-unstack">
                         <div class="columns has-space">
-                            <p>Nonprofit: <strong>@caseManager.Nonprofit.Name</strong></p>
+                            <p>Nonprofit: <strong>@(caseManager.NonprofitStaffs.Any(x => x.Nonprofit != null) ? caseManager.NonprofitStaffs.First().Nonprofit.Name : "")</strong></p>
                         </div>
 
                         <div class="columns has-space">
@@ -212,7 +212,25 @@
             </div>
         </section>
 
+        @if (Model.CaseNotes != null)
+        {
+            <section class="profile-card">
 
+                <header>
+                    <h1 class="profile-card-header">Case Notes</h1>
+                </header>
+                @foreach (var note in Model.CaseNotes)
+                {
+                    <div class="row large-unstack">
+                        <div class="columns has-space">
+                            <p>@note.CreatedDate.ToShortDateString() @@ @note.CreatedDate.ToShortTimeString() - @note.Note</p>
+                        </div>
+                    </div>
+                    <hr class="profile-card-line-divider">
+                }
+
+            </section>
+        }
     </article>
 
 

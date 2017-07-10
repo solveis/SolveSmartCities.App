@@ -231,7 +231,7 @@ namespace SolveChicago.Tests.Services
             Assert.Equal("IL", context.Object.Nonprofits.First().Addresses.First().Province);
             Assert.Equal("Black", context.Object.Nonprofits.First().NonprofitPrograms.First().Ethnicity.EthnicityName);
             Assert.Equal(Constants.ServiceProviders.Workforce, context.Object.Nonprofits.First().ProviderType);
-            Assert.False(context.Object.Nonprofits.First().NonprofitSkills.Any(x => x.Skill.Name == Constants.Skills.SoftSkills));
+            Assert.True(context.Object.Nonprofits.First().NonprofitSkills.Any(x => !x.Skill.IsWorkforce));
             Assert.Equal("manufacturing, cooking", string.Join(", ", (context.Object.Nonprofits.First().NonprofitSkills.Any(x => x.Skill.IsWorkforce && x.ProgramId.HasValue && x.ProgramId.Value == 1) ? context.Object.Nonprofits.First().NonprofitSkills.Where(x => x.Skill.IsWorkforce && x.ProgramId.HasValue && x.ProgramId.Value == 1).Select(x => x.Skill.Name) : new string[0]).ToArray()));
             Assert.Equal("poise, interview skills", string.Join(", ", (context.Object.Nonprofits.First().NonprofitSkills.Any(x => !x.Skill.IsWorkforce && x.ProgramId.HasValue && x.ProgramId.Value == 1) ? context.Object.Nonprofits.First().NonprofitSkills.Where(x => !x.Skill.IsWorkforce && x.ProgramId.HasValue && x.ProgramId.Value == 1).Select(x => x.Skill.Name) : new string[0]).ToArray()));
         }

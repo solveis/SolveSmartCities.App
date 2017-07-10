@@ -101,6 +101,7 @@ namespace SolveChicago.Common.Models.Profile.Member
         public int[] SkillsDesiredIds { get; set; }
         public bool? CurrentlyLooking { get; set; }
         public bool? InterestedInWorkforceSkill { get; set; }
+        public CaseNote[] CaseNotes { get; set; }
     }
 
     public class MemberStage

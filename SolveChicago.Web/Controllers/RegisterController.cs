@@ -56,7 +56,7 @@ namespace SolveChicago.Web.Controllers
         //
         // GET: /Register/Member
         [AllowAnonymous]
-        public ActionResult Member(int? id, int? referrerId)
+        public ActionResult Member(int? id)
         {
             MemberRegisterViewModel model = new MemberRegisterViewModel
             {

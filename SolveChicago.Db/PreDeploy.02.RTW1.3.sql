@@ -39,3 +39,5 @@ INSERT INTO dbo.Ethnicities
         ( EthnicityName )
 VALUES  ( N'White'  -- EthnicityName - nvarchar(50)
           )
+
+-- update all soft skills

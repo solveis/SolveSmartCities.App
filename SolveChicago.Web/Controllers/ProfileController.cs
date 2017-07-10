@@ -303,7 +303,7 @@ namespace SolveChicago.Web.Controllers
 
         private Dictionary<int, string> GetAvailableSkillsList()
         {
-            Dictionary<int, string> availableSkills = db.Skills.Where(x => x.NonprofitSkills.Count() > 0 && x.Name != Constants.Skills.SoftSkills).ToDictionary(x => x.Id, x => x.Name);
+            Dictionary<int, string> availableSkills = db.Skills.Where(x => x.NonprofitSkills.Count() > 0 && x.IsWorkforce).ToDictionary(x => x.Id, x => x.Name);
 
             return availableSkills;
         }

@@ -480,15 +480,7 @@ namespace SolveChicago.Web.Controllers
                             }
                             else
                                 model.AspNetUser = aspnetUser;
-
-                            // add soft skills as a desired skill for pipeline
-                            // TODO refactor this into a stored proc
-                            Skill softSkills = db.Skills.SingleOrDefault(x => x.Name == Common.Constants.Skills.SoftSkills);
-                            if (softSkills == null)
-                                softSkills = new Skill { Name = Common.Constants.Skills.SoftSkills };
-                            if(!model.MemberSkills.Any(x => x.Skill.Name == Common.Constants.Skills.SoftSkills))
-                                model.MemberSkills.Add(new MemberSkill { IsComplete = false, Skill = softSkills });
-
+                            
                             try
                             {
                                 db.SaveChanges();
@@ -619,8 +611,17 @@ namespace SolveChicago.Web.Controllers
                     {
                         State.CaseManager = caseManager;
                         State.CaseManagerId = caseManager.Id;
-
                         ViewBag.CaseManagerId = caseManager.Id;
+
+                        if (caseManager.NonprofitStaffs.Any())
+                        {
+                            State.Nonprofit = caseManager.NonprofitStaffs.First().Nonprofit;
+                            State.NonprofitId = caseManager.NonprofitStaffs.First().Nonprofit.Id;
+
+                            ViewBag.Nonprofit = caseManager.NonprofitStaffs.First().Nonprofit;
+                            ViewBag.NonprofitId = caseManager.NonprofitStaffs.First().Nonprofit.Id;
+                            ViewBag.NonprofitName = caseManager.NonprofitStaffs.First().Nonprofit.Name;
+                        }
                     }
                 }
             }

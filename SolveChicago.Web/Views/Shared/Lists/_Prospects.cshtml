@@ -50,9 +50,6 @@
                     <div class="columns has-space">
                         <span></span>
                     </div>
-                    @*<div class="columns">
-                        <a href="/Prospects/InviteMember?memberId=@item.Member.Id&nonprofitId=@ViewBag.NonprofitId" class="show-family button">Invite</a>
-                    </div>*@
                     <div class="columns">
                         <a href="javascript:void(0)" class="show-family button">View</a>
                     </div>
@@ -65,7 +62,11 @@
                             <h4>Personal</h4>
                         </div>
                         <div class="columns has-small-space"></div>
-                        <div class="columns has-small-space"></div>
+                        <div class="columns has-small-space">
+                            <div class="columns">
+                                <a href="/Prospects/InviteMember?memberId=@item.Member.Id&nonprofitId=@ViewBag.NonprofitId" class="show-family button">Invite</a>
+                            </div>
+                        </div>
                     </div>
                     <div class="row large-unstack">
                         <div class="columns has-small-space">

@@ -95,7 +95,7 @@
                                         <span class="arrow-right"></span>
                                         <ul class="member-details-menu">
                                             <li>
-                                                <a href="/Members/Details?memberId=@(member.Id)">
+                                                <a href="/Members/Details?memberId=@(member.Id)@(User.Identity.GetUserId() != null ? $"&userId={User.Identity.GetUserId()}" : "")">
                                                     View Profile
                                                 </a>
                                             </li>

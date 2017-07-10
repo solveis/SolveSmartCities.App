@@ -63,7 +63,8 @@ namespace SolveChicago.Tests.Controllers
                                                     Skill = new Skill
                                                     {
                                                         Id = 1,
-                                                        Name = Constants.Skills.SoftSkills,
+                                                        Name = "Poise",
+                                                        IsWorkforce = false,
                                                     }
                                                 }                                                
                                             }
@@ -398,7 +399,8 @@ namespace SolveChicago.Tests.Controllers
                                                             Skill = new Skill
                                                             {
                                                                 Id = 1,
-                                                                Name = Constants.Skills.SoftSkills,
+                                                                Name = "Poise",
+                                                                IsWorkforce = false,
                                                             }
                                                         }                                                        
                                                     }

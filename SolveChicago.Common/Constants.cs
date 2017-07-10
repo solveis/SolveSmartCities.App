@@ -22,11 +22,6 @@ namespace SolveChicago.Common
             public static string CaseManager = "CaseManager";
         }
 
-        public class Skills
-        {
-            public const string SoftSkills = "Soft Skills";
-        }
-
         public class Regex
         {
             public static string UrlPattern = @"(mailto\:|(news|(ht|f)tp(s?))\://)(([^[:space:]]+)|([^[:space:]]+)( #([^#]+)#)?)";
@@ -48,6 +43,11 @@ namespace SolveChicago.Common
             public const string AdminInvite = "AdminInvite";
             public const string PasswordReset = "PasswordReset";
             public const string JobPlacedVerification = "JobPlacedVerification";
+            public const string Referral = "Referral_{0}_{1}_{2}";
+            public const string InviteExistingMemberToNonprofit = "InviteExistingMemberToNonprofit_{0}_{1}";
+            public const string InviteNewMemberToNonprofit = "InviteNewMemberToNonprofit_{0}_{1}";
+            public const string InvitationAccepted = "InvitationAccepted_{0}_{1}";
+            public const string ReferralSucceeded = "ReferralSucceeded_{0}_{1}_{2}";
         }
 
         public class Member
