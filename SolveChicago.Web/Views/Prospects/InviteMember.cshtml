@@ -1,0 +1,28 @@
+﻿@model SolveChicago.Common.Models.Prospects.InviteMember
+
+@{
+    ViewBag.Title = "Invite Member";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("InviteMember", "Prospects", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <header>
+        <h4><strong>SERVICE PROVIDER:</strong> Invite @Model.MemberName to Join @Model.NonprofitName</h4>
+    </header>
+
+    <div class="row app-dashboard-form-container">
+        <div class="create-profile-form-holder">
+            @Html.HiddenFor(m => m.MemberId)
+            @Html.HiddenFor(m => m.NonprofitId)
+            
+            @Html.ValidationMessageFor(model => model.ProgramId, "", new { @class = "text-danger" })
+            @Html.LabelFor(model => model.ProgramId, "Which program are you inviting them to?")
+            @Html.DropDownListFor(model => model.ProgramId, Model.ProgramList.Select(x => new SelectListItem { Value = x.Key.ToString(), Text = x.Value, Selected = x.Key == Model.ProgramId }), new { htmlAttributes = new { type = "text" } })
+
+
+            <input class="submit-create-profile" type="submit" value="Submit">
+        </div>
+    </div>
+}

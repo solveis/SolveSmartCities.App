@@ -12,8 +12,8 @@
     <WebStackScaffolding_IsViewGenerationSelected>True</WebStackScaffolding_IsViewGenerationSelected>
     <WebStackScaffolding_IsAsyncSelected>False</WebStackScaffolding_IsAsyncSelected>
     <WebStackScaffolding_ViewDialogWidth>600</WebStackScaffolding_ViewDialogWidth>
-    <ProjectView>ProjectFiles</ProjectView>
-    <NameOfLastUsedPublishProfile>SolveSmartCitiesProduction - Web Deploy</NameOfLastUsedPublishProfile>
+    <ProjectView>ShowAllFiles</ProjectView>
+    <NameOfLastUsedPublishProfile>SolveSmartCitiesStaging - Web Deploy</NameOfLastUsedPublishProfile>
     <ToolsVersionPromptShown>2.2</ToolsVersionPromptShown>
     <IISExpressSSLPort>44352</IISExpressSSLPort>
   </PropertyGroup>

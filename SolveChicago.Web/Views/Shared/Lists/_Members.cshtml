@@ -79,7 +79,7 @@
                                 <span>@(member.CurrentOccupation)</span>
                             </div>
                             <div class="columns">
-                                <div class="small-progress-bar-spacer progress @(item.AverageScore == 100 ? "green" : "lilac")" role="progressbar" tabindex="0" aria-valuenow="@(member.MemberStage.Percent)" aria-valuemin="0" aria-valuetext="@(member.MemberStage.Percent) percent" aria-valuemax="100">
+                                <div class="small-progress-bar-spacer progress @(member.MemberStage.Percent == 100 ? "green" : "lilac")" role="progressbar" tabindex="0" aria-valuenow="@(member.MemberStage.Percent)" aria-valuemin="0" aria-valuetext="@(member.MemberStage.Percent) percent" aria-valuemax="100">
                                     <!-- value added by tweaking inline-style-->
                                     <div class="progress-meter" style="width: @(member.MemberStage.Percent)%">
 

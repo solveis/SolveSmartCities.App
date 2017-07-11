@@ -27,7 +27,7 @@
                 </div>
 
                 <div class="columns has-space">
-                    <strong></strong>
+                    <strong>Status</strong>
                 </div>
                 <div class="columns has-space">
 
@@ -48,7 +48,13 @@
                         <span>@item.Member.SkillsDesired</span>
                     </div>
                     <div class="columns has-space">
-                        <span></span>
+                        <div class="small-progress-bar-spacer progress @(item.Member.MemberStage.Percent == 100 ? "green" : "lilac")" role="progressbar" tabindex="0" aria-valuenow="@(item.Member.MemberStage.Percent)" aria-valuemin="0" aria-valuetext="@(item.Member.MemberStage.Percent) percent" aria-valuemax="100">
+                            <!-- value added by tweaking inline-style-->
+                            <div class="progress-meter" style="width: @(item.Member.MemberStage.Percent)%">
+
+                            </div>
+                            <p class="small-progress-description" style="font-size:.8rem">@(item.Member.MemberStage.Stage)</p>
+                        </div>
                     </div>
                     <div class="columns">
                         <a href="javascript:void(0)" class="show-family button">View</a>
@@ -73,7 +79,7 @@
                             <span>Gender: @item.Member.Gender</span>
                         </div>
                         <div class="columns has-small-space">
-                            <span>Birthday: @item.Member.Birthday</span>
+                            <span>Birthday: @(item.Member.Birthday.HasValue ? item.Member.Birthday.Value.ToShortDateString() : "Not Specified")</span>
                         </div>
                         <div class="columns has-small-space">
                             <span>Ethnicity: @item.Member.Ethnicity</span>

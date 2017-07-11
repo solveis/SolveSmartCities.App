@@ -210,6 +210,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\GovernmentProgramsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImpactController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MembersController.cs" />
     <Compile Include="Controllers\NonprofitsController.cs" />
@@ -339,6 +340,8 @@
     <Content Include="img\icon-edit.svg" />
     <Content Include="img\icon-notification.svg" />
     <Content Include="img\icon-view.svg" />
+    <Content Include="img\Impact-icon.png" />
+    <Content Include="img\impact.png" />
     <Content Include="img\landing\1_One%402x.jpg" />
     <Content Include="img\landing\1_One.jpg" />
     <Content Include="img\landing\2_Two%402x.jpg" />
@@ -480,8 +483,6 @@
     <Content Include="Content\semantic\themes\material\assets\fonts\icons.woff" />
     <Content Include="img\icon-view.sketch" />
     <None Include="Properties\PublishProfiles\solvechicago - Web Deploy.pubxml" />
-    <None Include="Properties\PublishProfiles\solvesmartcities - Web Deploy.pubxml" />
-    <None Include="Properties\PublishProfiles\SolveSmartCities-Staging - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\SolveSmartCitiesProduction - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\SolveSmartCitiesStaging - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
@@ -605,6 +606,8 @@
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Nonprofits\NonprofitReferral.cshtml" />
     <Content Include="Views\Nonprofits\UploadClients.cshtml" />
+    <Content Include="Views\Prospects\InviteMember.cshtml" />
+    <Content Include="Views\Impact\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

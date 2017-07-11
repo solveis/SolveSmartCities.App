@@ -43,6 +43,14 @@ namespace SolveChicago.Common
                     return GetSetting<bool>("Website.UseCdn", false);
                 }
             }
+
+            public static bool ShowStagingFeatures
+            {
+                get
+                {
+                    return GetSetting<bool>("Website.ShowStagingFeatures", false);
+                }
+            }
         }
 
         public class Crypto

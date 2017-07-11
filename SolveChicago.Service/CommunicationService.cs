@@ -190,8 +190,9 @@ namespace SolveChicago.Service
             }
         }
 
-        public void InviteMemberToNonprofit(Member member, Nonprofit nonprofit)
+        public void InviteMemberToNonprofit(Member member, Nonprofit nonprofit, int programId)
         {
+            int? referringNpoId = member.Referrals.Any(x => x.ReferredId == nonprofit.Id) ? member.Referrals.First(x => x.ReferredId == nonprofit.Id).ReferringId : (int?)null;
             // member email notification
             if (member.AspNetUser != null) // member already has a Solve Smart Cities login
             {
@@ -206,7 +207,7 @@ namespace SolveChicago.Service
                     {
                         { "-invitingNpo-", nonprofit.Name},
                         { "-memberFirstName-", $"{member.FirstName}" },
-                        { "-confirmUrl-", $"{Settings.Website.BaseUrl}/Prospects/AcceptInvitation?memberId={member.Id}&nonprofitId={nonprofit.Id}" },
+                        { "-confirmUrl-", $"{Settings.Website.BaseUrl}/Prospects/AcceptInvitation?memberId={member.Id}&nonprofitId={nonprofit.Id}&programId={programId}&referringNonprofitId={referringNpoId}" },
                         { "-year-", DateTime.UtcNow.Year.ToString() },
                     },
                     Settings.Website.FromAddress,
@@ -229,12 +230,12 @@ namespace SolveChicago.Service
                     {
                         { "-invitingNpo-", nonprofit.Name},
                         { "-memberFirstName-", $"{member.FirstName}" },
-                        { "-confirmUrl-", $"{Settings.Website.BaseUrl}/Prospects/AcceptInvitation?memberId={member.Id}&nonprofitId={nonprofit.Id}" },
+                        { "-confirmUrl-", $"{Settings.Website.BaseUrl}/Prospects/AcceptInvitation?memberId={member.Id}&nonprofitId={nonprofit.Id}&programId={programId}&referringNonprofitId={referringNpoId}" },
                         { "-year-", DateTime.UtcNow.Year.ToString() },
                     },
                     Settings.Website.FromAddress,
                     communicationType,
-                    member.AspNetUser.Id,
+                    "",
                     null
                 ).Wait();
             }

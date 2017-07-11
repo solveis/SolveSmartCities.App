@@ -14,6 +14,15 @@
             <span class="app-dashboard-sidebar-text">Prospects</span>
         </a>
     </li>
+    @if (Settings.Website.ShowStagingFeatures)
+    {
+        <li class="menu-link @(Request.Url.AbsolutePath == "/Impact" ? "active" : "")">
+            <a href="/Impact">
+                <img class="menu-icon" src="../img/Impact-icon.png" alt="Impact">
+                <span class="app-dashboard-sidebar-text">Impact</span>
+            </a>
+        </li>
+    }
 </ul>
 
 <ul class="sub-menu">
