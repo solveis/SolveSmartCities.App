@@ -39,6 +39,7 @@ namespace SolveChicago.Web.Controllers
                     .Where(x => 
                         (!x.NonprofitMembers.Any(y => !y.End.HasValue || y.NonprofitId == State.NonprofitId) // not currently in a nonprofit
                             && !x.MemberCorporations.Any(y => y.Start > x.CreatedDate) // not in a job started after onboarding
+                            && x.SurveyStep == Constants.Member.SurveyStep.Complete // profile is complete
                             && (x.IsWorkforceInterested ?? false) // is interested in training
                             && !x.MemberSkills.Any(y => !y.Skill.IsWorkforce && y.IsComplete == true))  // has not completed soft skill training
                         || x.Referrals.Any(y => y.ReferredId == State.NonprofitId)) // or has been directly referred
@@ -51,6 +52,7 @@ namespace SolveChicago.Web.Controllers
                     .Where(x => 
                         (!x.NonprofitMembers.Any(y => !y.End.HasValue || y.NonprofitId == State.NonprofitId) // not currently in a nonprofit
                             && !x.MemberCorporations.Any(y => y.Start > x.CreatedDate) // not in a job started after onboarding
+                            && x.SurveyStep == Constants.Member.SurveyStep.Complete // profile is complete
                             && (x.IsWorkforceInterested ?? false) // is interested in training
                             && x.MemberSkills.Any(y => !y.Skill.IsWorkforce && y.IsComplete == true)  // has completed soft skill training
                             && x.MemberSkills.Any(y => !y.IsComplete && y.Skill.NonprofitSkills.Any(z => z.NonprofitId == State.NonprofitId))) // is interested in a skill the nonprofit offers
@@ -64,6 +66,7 @@ namespace SolveChicago.Web.Controllers
                        .Where(x =>
                            (!x.NonprofitMembers.Any(y => !y.End.HasValue || y.NonprofitId == State.NonprofitId) // not currently in a nonprofit
                                && !x.MemberCorporations.Any(y => y.Start > x.CreatedDate) // not in a job started after onboarding
+                               && x.SurveyStep == Constants.Member.SurveyStep.Complete // profile is complete
                                && (x.IsWorkforceInterested ?? false) // is interested in training
                                && (!x.MemberSkills.Any(y => !y.Skill.IsWorkforce && y.IsComplete == true) // has not completed soft skill training
                                     || !x.MemberSkills.Any(y => y.Skill.IsWorkforce && y.IsComplete == true)))  // has not completed workforce training
