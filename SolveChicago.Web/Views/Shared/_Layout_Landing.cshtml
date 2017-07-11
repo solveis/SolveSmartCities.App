@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using SolveChicago.Common;
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -9,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css?family=Bitter:400,700" rel="stylesheet">
     @Styles.Render("~/Content/landing")
     @Styles.Render("~/Content/bootstrap")
+    <link rel="alternate" href="https://solvesmartcities.com" hreflang="en-us" />
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
@@ -55,7 +57,7 @@
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <a class="navbar-brand internalLink" href="#Home">
-                    <img id="logo" src="/img/landing/logo@2x.png" height="80" alt="">
+                    <img id="logo" src="/img/landing/logo@2x.png" height="80" alt="Solve Smart Cities">
                 </a>
                 <a type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse" href="javascript:void(0)">
                     <span class="icon-bar"></span>
@@ -80,7 +82,7 @@
         <div class="container text-center">
             <div class="col-sm-2 col-sm-push-10 text-center">
                 <a href="#Home" class="regress text-center internalLink">
-                    <img width="30" src="/img/landing/Go_top@2x.png">
+                    <img width="30" src="/img/landing/Go_top@2x.png" alt="Go to Top">
                     <br>Back To Top
                 </a>
             </div>
@@ -88,7 +90,7 @@
                 <p>Created with the community for our communities. <br> &copy; @DateTime.UtcNow.Year Solve Smart Cities. All Rights Reserved.</p>
             </div>
             <div class="col-sm-2 col-sm-pull-10">
-                <img src="/img/landing/logo_white@2x.png" height="45" alt="">
+                <img src="/img/landing/logo_white@2x.png" height="45" alt="Solve Smart Cities">
             </div>
         </div>
     </footer>
@@ -125,6 +127,14 @@
                 })();
             </script>
         <!--End of Tawk.to Script-->
+        <!-- Start of Intercom.io Script -->
+        <script>
+                window.intercomSettings = {
+                    app_id: "@(Settings.Intercom.AppId)"
+                };
+        </script>
+        <script>(function () { var w = window; var ic = w.Intercom; if (typeof ic === "function") { ic('reattach_activator'); ic('update', intercomSettings); } else { var d = document; var i = function () { i.c(arguments) }; i.q = []; i.c = function (args) { i.q.push(args) }; w.Intercom = i; function l() { var s = d.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = 'https://widget.intercom.io/widget/p1vwlpne'; var x = d.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x); } if (w.attachEvent) { w.attachEvent('onload', l); } else { w.addEventListener('load', l, false); } } })()</script>
+        <!-- End of Intercom.io Script -->
     }
 </body>
 </html>

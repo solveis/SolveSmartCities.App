@@ -85,8 +85,6 @@ namespace SolveChicago.Web.Controllers
             public Nonprofit Nonprofit { get; set; }
             public int AdminId { get; set; }
             public Admin Admin { get; set; }
-            public int ReferrerId { get; set; }
-            public Referrer Referrer { get; set; }
             public Enumerations.Role[] Roles { get; set; }
         }
 
@@ -151,14 +149,14 @@ namespace SolveChicago.Web.Controllers
                     ViewBag.CaseManagerName = string.Format("{0} {1}", caseManager.FirstName, caseManager.LastName);
                     ViewBag.CaseManagerProfilePicture = !string.IsNullOrEmpty(caseManager.ProfilePicturePath) ? caseManager.ProfilePicturePath : Common.Constants.Member.NoPhotoUrl;
 
-                    if (caseManager.NonprofitId.HasValue)
+                    if (caseManager.NonprofitStaffs.Any())
                     {
-                        _state.Nonprofit = caseManager.Nonprofit;
-                        _state.NonprofitId = caseManager.Nonprofit.Id;
+                        _state.Nonprofit = caseManager.NonprofitStaffs.First().Nonprofit;
+                        _state.NonprofitId = caseManager.NonprofitStaffs.First().Nonprofit.Id;
 
-                        ViewBag.Nonprofit = caseManager.Nonprofit;
-                        ViewBag.NonprofitId = caseManager.Nonprofit.Id;
-                        ViewBag.NonprofitName = caseManager.Nonprofit.Name;
+                        ViewBag.Nonprofit = caseManager.NonprofitStaffs.First().Nonprofit;
+                        ViewBag.NonprofitId = caseManager.NonprofitStaffs.First().Nonprofit.Id;
+                        ViewBag.NonprofitName = caseManager.NonprofitStaffs.First().Nonprofit.Name;
                     }
                 }
             }
@@ -207,21 +205,6 @@ namespace SolveChicago.Web.Controllers
                     ViewBag.AdminProfilePicture = !string.IsNullOrEmpty(admin.ProfilePicturePath) ? admin.ProfilePicturePath : Common.Constants.Member.NoPhotoUrl;
                 }
             }
-
-            if (_state.Roles.Contains(Enumerations.Role.Referrer))
-            {
-                Referrer referrer = db.AspNetUsers.Single(x => x.Id == userId).Referrers.First();
-
-                if (referrer != null)
-                {
-                    _state.Referrer = referrer;
-                    _state.ReferrerId = referrer.Id;
-
-                    ViewBag.Referrer = referrer;
-                    ViewBag.ReferrerId = referrer.Id;
-                    ViewBag.ReferrerName = referrer.Name;
-                }
-            }
         }
 
         protected string GetUserId(string userName)
@@ -247,8 +230,6 @@ namespace SolveChicago.Web.Controllers
                         return MemberRedirect(State.Member);
                     case Enumerations.Role.Nonprofit:
                         return NonprofitRedirect(State.Nonprofit);
-                    case Enumerations.Role.Referrer:
-                        return ReferrerRedirect(State.Referrer);
                     default:
                         return HttpNotFound();
                 }
@@ -353,24 +334,6 @@ namespace SolveChicago.Web.Controllers
             return CorporationRedirect(entity);
         }
 
-        public ActionResult ReferrerRedirect(Referrer entity)
-        {
-            if (string.IsNullOrEmpty(entity.Name))
-            {
-                return RedirectToAction("Referrer", "Profile", new { id = entity.Id });
-            }
-            else
-            {
-                return RedirectToAction("Index", "Referrers", new { referrerId = entity.Id });
-            }
-        }
-
-        public ActionResult ReferrerRedirect(int ReferrerId)
-        {
-            Referrer entity = db.Referrers.Single(x => x.Id == ReferrerId);
-            return ReferrerRedirect(entity);
-        }
-
         public ActionResult CorporationRedirect(Corporation entity)
         {
             if (string.IsNullOrEmpty(entity.Name))
@@ -450,7 +413,7 @@ namespace SolveChicago.Web.Controllers
         }
 
 
-        protected async Task<ActionResult> CreateAccount(string userName, string password, Enumerations.Role role, string invitedByUserId = "", string inviteCode = "")
+        protected async Task<ActionResult> CreateAccountAsync(string userName, string password, Enumerations.Role role, string invitedByUserId = "", string inviteCode = "")
         {
             var user = new ApplicationUser { UserName = userName, Email = userName };
             if (ModelState.IsValid)
@@ -458,8 +421,8 @@ namespace SolveChicago.Web.Controllers
                 var result = await UserManager.CreateAsync(user, password);
                 if (result.Succeeded)
                 {
-                    var eventualResult = await CreateUserAndAssignRoles(userName, password, role, invitedByUserId, user, inviteCode);
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    var eventualResult = await CreateUserAndAssignRolesAsync(userName, password, role, invitedByUserId, user, inviteCode);
+                    SignInManager.SignIn(user, isPersistent: false, rememberBrowser: false);
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -469,16 +432,43 @@ namespace SolveChicago.Web.Controllers
                 }
                 AddErrors(result);
             }
+            AddErrorsToModelState(ModelState);
             return null;
         }
 
-        private async Task<ActionResult> CreateUserAndAssignRoles(string userName, string password, Enumerations.Role role, string invitedByUserId, ApplicationUser user, string inviteCode)
+        protected ModelStateDictionary AddErrorsToModelState(ModelStateDictionary modelState)
+        {
+            foreach (var error in modelState.Values.SelectMany(x => x.Errors))
+            {
+                modelState.AddModelError("", error.ErrorMessage);
+            }
+            return modelState;
+        }
+
+        protected void AddUserIpAddress(string userName)
+        {
+            AspNetUser aspnetUser = GetUserByUserName(userName);
+            AddUserIpAddress(aspnetUser);
+        }
+
+        protected void AddUserIpAddress(AspNetUser aspNetUser)
+        {
+            IpAddress ipAddress = db.IpAddresses.SingleOrDefault(x => x.Address == Request.UserHostAddress);
+            if (ipAddress == null)
+                ipAddress = new IpAddress { Address = Request.UserHostAddress };
+            aspNetUser.UserIpAddresses.Add(new UserIpAddress { IpAddress = ipAddress, Date = DateTime.UtcNow });
+
+            db.SaveChanges();
+        }
+
+        private async Task<ActionResult> CreateUserAndAssignRolesAsync(string userName, string password, Enumerations.Role role, string invitedByUserId, ApplicationUser user, string inviteCode)
         {
             switch (role)
             {
                 case Enumerations.Role.Member:
                     {
                         AspNetUser aspnetUser = GetUserById(user.Id);
+                        AddUserIpAddress(aspnetUser);
                         await this.UserManager.AddToRoleAsync(user.Id, Common.Constants.Roles.Member);
                         if (!UserProfileHasValidMappings(aspnetUser))
                         {
@@ -490,15 +480,7 @@ namespace SolveChicago.Web.Controllers
                             }
                             else
                                 model.AspNetUser = aspnetUser;
-
-                            // add soft skills as a desired skill for pipeline
-                            // TODO refactor this into a stored proc
-                            Skill softSkills = db.Skills.SingleOrDefault(x => x.Name == Common.Constants.Skills.SoftSkills);
-                            if (softSkills == null)
-                                softSkills = new Skill { Name = Common.Constants.Skills.SoftSkills };
-                            if(!model.MemberSkills.Any(x => x.Skill.Name == Common.Constants.Skills.SoftSkills))
-                                model.MemberSkills.Add(new MemberSkill { IsComplete = false, Skill = softSkills });
-
+                            
                             try
                             {
                                 db.SaveChanges();
@@ -513,6 +495,7 @@ namespace SolveChicago.Web.Controllers
                 case Enumerations.Role.CaseManager:
                     {
                         AspNetUser aspnetUser = GetUserById(user.Id);
+                        AddUserIpAddress(aspnetUser);
                         await this.UserManager.AddToRoleAsync(user.Id, Common.Constants.Roles.CaseManager);
                         if (!UserProfileHasValidMappings(aspnetUser))
                         {
@@ -532,6 +515,7 @@ namespace SolveChicago.Web.Controllers
                 case Enumerations.Role.Nonprofit:
                     {
                         AspNetUser aspnetUser = GetUserById(user.Id);
+                        AddUserIpAddress(aspnetUser);
                         await this.UserManager.AddToRoleAsync(user.Id, Common.Constants.Roles.Nonprofit);
                         if (!UserProfileHasValidMappings(aspnetUser))
                         {
@@ -546,6 +530,7 @@ namespace SolveChicago.Web.Controllers
                 case Enumerations.Role.Corporation:
                     {
                         AspNetUser aspnetUser = GetUserById(user.Id);
+                        AddUserIpAddress(aspnetUser);
                         await this.UserManager.AddToRoleAsync(user.Id, Common.Constants.Roles.Corporation);
                         if (!UserProfileHasValidMappings(aspnetUser))
                         {
@@ -554,20 +539,6 @@ namespace SolveChicago.Web.Controllers
                             db.Corporations.Add(model);
                             db.SaveChanges();
                             return CorporationRedirect(model.Id);
-                        }
-                        return RedirectToAction("Index");
-                    }
-                case Enumerations.Role.Referrer:
-                    {
-                        AspNetUser aspnetUser = GetUserById(user.Id);
-                        await this.UserManager.AddToRoleAsync(user.Id, Common.Constants.Roles.Referrer);
-                        if (!UserProfileHasValidMappings(aspnetUser))
-                        {
-                            Referrer model = new Referrer { Email = userName, CreatedDate = DateTime.UtcNow };
-                            model.AspNetUsers.Add(aspnetUser);
-                            db.Referrers.Add(model);
-                            db.SaveChanges();
-                            return ReferrerRedirect(model.Id);
                         }
                         return RedirectToAction("Index");
                     }
@@ -598,6 +569,11 @@ namespace SolveChicago.Web.Controllers
         public AspNetUser GetUserById(string userId)
         {
             return db.AspNetUsers.Single(x => x.Id == userId);
+        }
+        
+        public AspNetUser GetUserByUserName(string userName)
+        {
+            return db.AspNetUsers.Single(x => x.UserName == userName);
         }
 
         public void ImpersonateMember(int? memberId)
@@ -631,12 +607,21 @@ namespace SolveChicago.Web.Controllers
                 {
                     CaseManager caseManager = db.CaseManagers.Find(caseManagerId.Value);
                     if (State.Roles.Contains(Enumerations.Role.Admin) ||
-                       (State.Roles.Contains(Enumerations.Role.Nonprofit) && caseManager.Nonprofit.Id == State.NonprofitId) || State.Roles.Contains(Enumerations.Role.Admin))
+                       (State.Roles.Contains(Enumerations.Role.Nonprofit) && caseManager.NonprofitStaffs.Select(x => x.NonprofitId).Contains(State.NonprofitId)) || State.Roles.Contains(Enumerations.Role.Admin))
                     {
                         State.CaseManager = caseManager;
                         State.CaseManagerId = caseManager.Id;
-
                         ViewBag.CaseManagerId = caseManager.Id;
+
+                        if (caseManager.NonprofitStaffs.Any())
+                        {
+                            State.Nonprofit = caseManager.NonprofitStaffs.First().Nonprofit;
+                            State.NonprofitId = caseManager.NonprofitStaffs.First().Nonprofit.Id;
+
+                            ViewBag.Nonprofit = caseManager.NonprofitStaffs.First().Nonprofit;
+                            ViewBag.NonprofitId = caseManager.NonprofitStaffs.First().Nonprofit.Id;
+                            ViewBag.NonprofitName = caseManager.NonprofitStaffs.First().Nonprofit.Name;
+                        }
                     }
                 }
             }
@@ -668,21 +653,6 @@ namespace SolveChicago.Web.Controllers
                     State.Nonprofit = nonprofit;
 
                     ViewBag.NonprofitId = nonprofit.Id;
-                }
-            }
-        }
-
-        public void ImpersonateReferrer(int? referrerId)
-        {
-            if ((referrerId.HasValue) && (referrerId > 0))
-            {
-                if (State.Roles.Contains(Enumerations.Role.Admin))
-                {
-                    Referrer referrer = db.Referrers.Find(referrerId.Value);
-                    State.ReferrerId = referrer.Id;
-                    State.Referrer = referrer;
-
-                    ViewBag.ReferrerId = referrer.Id;
                 }
             }
         }

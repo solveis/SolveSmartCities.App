@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using SolveChicago.Common;
+<!DOCTYPE html>
 <html lang="en-us">
 <head>
     <meta charset="utf-8" />
@@ -6,15 +7,38 @@
     <title>@ViewBag.Title - Solve Smart Cities</title>
     @Styles.Render("~/Content/css")
     @RenderSection("styles", required: false)
+    <link rel="alternate" href="https://solvesmartcities.com" hreflang="en-us" />
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
 
-    <meta name="description" content="The description of my page" />
+    <meta property="og:title" content="Solve Smart Cities" />
+    <meta property="og:description" content="Our software creates smart cities in underserved communities by measure job training &amp; placement." />
+    <meta property="og:url" content="https://solvesmartcities.com" />
+    <meta property="og:type" content="Website" />
+    <meta property="og:image" content="https://solvesmartcities.com/img/og.image.jpg" />
+    <meta name="author" content="Solve Smart Cities" />
 </head>
 <body>
     <div class="app-dashboard shrink-medium">
         <div class="row expanded app-dashboard-top-nav-bar">
             <div class="columns">
                 <a class="app-dashboard-logo" href="/">
-                    <img src="/img/solve-logo@2x.png">
+                    <img src="/img/solve-logo@2x.png" alt="Solve Smart Cities">
                 </a>
             </div>
 
@@ -70,6 +94,15 @@
                 })();
             </script>
         <!--End of Tawk.to Script-->
+        <!-- Start of Intercom.io Script -->
+        <script>
+                window.intercomSettings = {
+                    app_id: "@(Settings.Intercom.AppId)",
+                    email: "@(User.Identity.Name)", // Email address
+                };
+        </script>
+        <script>(function () { var w = window; var ic = w.Intercom; if (typeof ic === "function") { ic('reattach_activator'); ic('update', intercomSettings); } else { var d = document; var i = function () { i.c(arguments) }; i.q = []; i.c = function (args) { i.q.push(args) }; w.Intercom = i; function l() { var s = d.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = 'https://widget.intercom.io/widget/p1vwlpne'; var x = d.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x); } if (w.attachEvent) { w.attachEvent('onload', l); } else { w.addEventListener('load', l, false); } } })()</script>
+        <!-- End of Intercom.io Script -->
     }
 </body>
 </html>

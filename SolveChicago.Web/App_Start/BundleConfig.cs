@@ -34,8 +34,8 @@ namespace SolveChicago.Web
             bundles.Add(new ScriptBundle("~/bundles/landing").Include(
                       "~/Scripts/landing.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/profile_member").Include(
-                      "~/Scripts/profile_member.js"));
+            bundles.Add(new ScriptBundle("~/bundles/profile").Include(
+                      "~/Scripts/profile.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryui", "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js").Include(
                         "~/Scripts/jquery-ui-{version}.js"));

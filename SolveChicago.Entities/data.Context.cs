@@ -29,36 +29,42 @@ namespace SolveChicago.Entities
     
         public virtual DbSet<Address> Addresses { get; set; }
         public virtual DbSet<AdminInviteCode> AdminInviteCodes { get; set; }
+        public virtual DbSet<Admin> Admins { get; set; }
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
+        public virtual DbSet<CaseManager> CaseManagers { get; set; }
+        public virtual DbSet<CaseNote> CaseNotes { get; set; }
         public virtual DbSet<Communication> Communications { get; set; }
         public virtual DbSet<Corporation> Corporations { get; set; }
+        public virtual DbSet<ELMAH_Error> ELMAH_Error { get; set; }
         public virtual DbSet<Family> Families { get; set; }
         public virtual DbSet<GovernmentProgram> GovernmentPrograms { get; set; }
         public virtual DbSet<Interest> Interests { get; set; }
+        public virtual DbSet<IpAddress> IpAddresses { get; set; }
         public virtual DbSet<MemberCorporation> MemberCorporations { get; set; }
         public virtual DbSet<MemberEmergencyContact> MemberEmergencyContacts { get; set; }
         public virtual DbSet<MemberGovernmentProgram> MemberGovernmentPrograms { get; set; }
+        public virtual DbSet<MemberMilitary> MemberMilitaries { get; set; }
         public virtual DbSet<MemberParent> MemberParents { get; set; }
         public virtual DbSet<Member> Members { get; set; }
         public virtual DbSet<MemberSchool> MemberSchools { get; set; }
         public virtual DbSet<MemberSkill> MemberSkills { get; set; }
         public virtual DbSet<MemberSpous> MemberSpouses { get; set; }
+        public virtual DbSet<MilitaryBranch> MilitaryBranches { get; set; }
+        public virtual DbSet<NonprofitMember> NonprofitMembers { get; set; }
+        public virtual DbSet<NonprofitProgram> NonprofitPrograms { get; set; }
+        public virtual DbSet<Nonprofit> Nonprofits { get; set; }
+        public virtual DbSet<NonprofitSkill> NonprofitSkills { get; set; }
+        public virtual DbSet<NonprofitStaff> NonprofitStaffs { get; set; }
         public virtual DbSet<Outcome> Outcomes { get; set; }
         public virtual DbSet<PhoneNumber> PhoneNumbers { get; set; }
+        public virtual DbSet<Referral> Referrals { get; set; }
         public virtual DbSet<School> Schools { get; set; }
         public virtual DbSet<Skill> Skills { get; set; }
-        public virtual DbSet<ELMAH_Error> ELMAH_Error { get; set; }
-        public virtual DbSet<Nonprofit> Nonprofits { get; set; }
-        public virtual DbSet<Referrer> Referrers { get; set; }
-        public virtual DbSet<Admin> Admins { get; set; }
-        public virtual DbSet<CaseManager> CaseManagers { get; set; }
-        public virtual DbSet<CaseNote> CaseNotes { get; set; }
-        public virtual DbSet<NonprofitMember> NonprofitMembers { get; set; }
-        public virtual DbSet<MemberMilitary> MemberMilitaries { get; set; }
-        public virtual DbSet<MilitaryBranch> MilitaryBranches { get; set; }
+        public virtual DbSet<UserIpAddress> UserIpAddresses { get; set; }
+        public virtual DbSet<Ethnicity> Ethnicities { get; set; }
     
         public virtual ObjectResult<string> ELMAH_GetErrorsXml(string application, Nullable<int> pageIndex, Nullable<int> pageSize, ObjectParameter totalCount)
         {

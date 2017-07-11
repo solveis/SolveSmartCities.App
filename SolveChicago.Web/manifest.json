@@ -1,5 +1,6 @@
 {
- "name": "App",
+  "name": "Solve Smart Cities",
+  "short_name": "Solve",
  "icons": [
   {
    "src": "\/android-icon-36x36.png",

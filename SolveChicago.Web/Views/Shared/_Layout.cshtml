@@ -7,6 +7,7 @@
     <title>@ViewBag.Title - Solve Smart Cities</title>
     @Styles.Render("~/Content/css")
     @RenderSection("styles", required: false)
+    <link rel="alternate" href="https://solvesmartcities.com" hreflang="en-us" />
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
@@ -37,9 +38,9 @@
 
         <div class="row expanded app-dashboard-top-nav-bar">
             <div class="columns">
-                <button data-toggle="app-dashboard-sidebar" class="menu-icon hide-for-medium"></button>
+                <button data-toggle="app-dashboard-sidebar" class="menu-icon hide-for-medium" aria-label="menu"></button>
                 <a href="/" class="app-dashboard-logo">
-                    <img src="/img/solve-logo@2x.png">
+                    <img src="/img/solve-logo@2x.png" alt="Solve Smart Cities">
                 </a>
             </div>
 
@@ -87,10 +88,6 @@
                     else if (User.IsInRole(Constants.Roles.CaseManager))
                     {
                         @Html.Action("CaseManager", "Sidebar")
-                    }
-                    else if (User.IsInRole(Constants.Roles.Referrer))
-                    {
-                        @Html.Action("Referrer", "Sidebar")
                     }
                     else if (User.IsInRole(Constants.Roles.Admin))
                     {
@@ -149,6 +146,15 @@
                 })();
             </script>
         <!--End of Tawk.to Script-->
+        <!-- Start of Intercom.io Script -->
+        <script>
+            window.intercomSettings = {
+                app_id: "@(Settings.Intercom.AppId)",
+                email: "@(User.Identity.Name)", // Email address
+          };
+        </script>
+        <script>(function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',intercomSettings);}else{var d=document;var i=function(){i.c(arguments)};i.q=[];i.c=function(args){i.q.push(args)};w.Intercom=i;function l(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/p1vwlpne';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);}if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})()</script>
+        <!-- End of Intercom.io Script -->
     }
 </body>
 </html>

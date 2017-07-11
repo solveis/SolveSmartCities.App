@@ -31,10 +31,34 @@ namespace SolveChicago.Tests.Services
                     },
                     ProfilePicturePath = "../path.jpg",
                     Name = "Test Nonprofit",
-                    CaseManagers = new List<CaseManager>
+                    NonprofitPrograms = new List<NonprofitProgram>
                     {
-                        new CaseManager { Id = 1, FirstName = "Tim", LastName = "Keller" },
-                        new CaseManager { Id = 2, FirstName = "Esme", LastName = "Pirouet" },
+                        new NonprofitProgram
+                        {
+                            Id = 1,
+                            MaxAge = 18,
+                            MinAge = 13,
+                            Gender = "Female",
+                            EthnicityId = 1,
+                            Ethnicity = new Ethnicity
+                            {
+                                Id = 1,
+                                EthnicityName = "Black"
+                            },
+                            NonprofitId = 1,
+                            ProgramName = "Manufacturing Training"
+                        }
+                    },
+                    NonprofitStaffs = new List<NonprofitStaff>
+                    {
+                        new NonprofitStaff
+                        {
+                            CaseManager = new CaseManager { Id = 1, FirstName = "Tim", LastName = "Keller" },
+                        },
+                        new NonprofitStaff
+                        {
+                            CaseManager = new CaseManager { Id = 2, FirstName = "Esme", LastName = "Pirouet" },
+                        }
                     },
                     NonprofitMembers = new List<NonprofitMember>
                     {
@@ -106,6 +130,11 @@ namespace SolveChicago.Tests.Services
                     LastName = "Doe"
                 }
             };
+            List<Ethnicity> ethnicities = new List<Ethnicity>
+            {
+                new Ethnicity { Id = 1, EthnicityName = "Black" },
+                new Ethnicity { Id = 2, EthnicityName = "White" },
+            };
             List<Skill> skills = new List<Skill>();
             List<Address> addresses = new List<Address>();
             List<PhoneNumber> phones = new List<PhoneNumber>();
@@ -119,6 +148,11 @@ namespace SolveChicago.Tests.Services
             NonprofitMemberset.Setup(m => m.Find(It.IsAny<object[]>()))
                 .Returns<object[]>(ids => NonprofitMembers.FirstOrDefault(d => d.NonprofitId == (int)ids[0]));
             context.Setup(c => c.NonprofitMembers).Returns(NonprofitMemberset.Object);
+
+            var ethnicitySet = new Mock<DbSet<Ethnicity>>().SetupData(ethnicities);
+            ethnicitySet.Setup(m => m.Find(It.IsAny<object[]>()))
+                .Returns<object[]>(ids => ethnicities.FirstOrDefault(d => d.Id == (int)ids[0]));
+            context.Setup(c => c.Ethnicities).Returns(ethnicitySet.Object);
 
             var skillSet = new Mock<DbSet<Skill>>().SetupData(skills);
             skillSet.Setup(m => m.Find(It.IsAny<object[]>()))
@@ -148,6 +182,8 @@ namespace SolveChicago.Tests.Services
             NonprofitProfile npo = service.Get(1);
 
             Assert.Equal("Test Nonprofit", npo.Name);
+            Assert.Equal(1, npo.Programs.Count());
+            Assert.Equal("Black", npo.Programs.First().Ethnicity);
         }
 
         [Fact]
@@ -171,12 +207,15 @@ namespace SolveChicago.Tests.Services
                 Address1 = "123 Main Street",
                 Address2 = "#2F",
                 City = "Chicago",
-                Country ="USA",
+                Country = "USA",
                 Province = "IL",
-                SkillsOffered = "manufacturing, cooking",
-                TeachesSoftSkills = false,
                 ZipCode = "60635",
-                ProfilePicturePath = "../pathtoimg.jpg"
+                ProfilePicturePath = "../pathtoimg.jpg",
+                Type = Constants.ServiceProviders.Workforce,
+                Programs = new List<Program>
+                {
+                    new Program { Id = 1, ProgramName = "Success!", Gender = "Female", EthnicityId = 1, MaxAge = 18, MinAge = 13, WorkforceSkillsOffered =  "manufacturing, cooking", SoftSkillsOffered = "poise, interview skills" }
+                }.ToArray()
             };
 
 
@@ -190,8 +229,11 @@ namespace SolveChicago.Tests.Services
             Assert.Equal("Chicago", context.Object.Nonprofits.First().Addresses.First().City);
             Assert.Equal("USA", context.Object.Nonprofits.First().Addresses.First().Country);
             Assert.Equal("IL", context.Object.Nonprofits.First().Addresses.First().Province);
-            Assert.False(context.Object.Nonprofits.First().Skills.Any(x => x.Name == Constants.Skills.SoftSkills));
-            Assert.Equal("manufacturing, cooking", string.Join(", ", context.Object.Nonprofits.First().Skills.Select(x => x.Name).ToArray()));
+            Assert.Equal("Black", context.Object.Nonprofits.First().NonprofitPrograms.First().Ethnicity.EthnicityName);
+            Assert.Equal(Constants.ServiceProviders.Workforce, context.Object.Nonprofits.First().ProviderType);
+            Assert.True(context.Object.Nonprofits.First().NonprofitSkills.Any(x => !x.Skill.IsWorkforce));
+            Assert.Equal("manufacturing, cooking", string.Join(", ", (context.Object.Nonprofits.First().NonprofitSkills.Any(x => x.Skill.IsWorkforce && x.ProgramId.HasValue && x.ProgramId.Value == 1) ? context.Object.Nonprofits.First().NonprofitSkills.Where(x => x.Skill.IsWorkforce && x.ProgramId.HasValue && x.ProgramId.Value == 1).Select(x => x.Skill.Name) : new string[0]).ToArray()));
+            Assert.Equal("poise, interview skills", string.Join(", ", (context.Object.Nonprofits.First().NonprofitSkills.Any(x => !x.Skill.IsWorkforce && x.ProgramId.HasValue && x.ProgramId.Value == 1) ? context.Object.Nonprofits.First().NonprofitSkills.Where(x => !x.Skill.IsWorkforce && x.ProgramId.HasValue && x.ProgramId.Value == 1).Select(x => x.Skill.Name) : new string[0]).ToArray()));
         }
 
         [Fact]

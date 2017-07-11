@@ -24,24 +24,25 @@ namespace SolveChicago.Tests.Services
                     Id = 1,
                     FirstName = "John",
                     LastName = "Doe",
-                    NonprofitId = 1,
-                    Nonprofit = new Nonprofit
+                    
+                    NonprofitStaffs = new List<NonprofitStaff>
                     {
-                        Id = 1,
-                        Name = "Nonprofit 1",
-                         NonprofitMembers = new List<NonprofitMember>
-                         {
-                            new NonprofitMember
+                        new NonprofitStaff
+                        {
+                            NonprofitMembers = new List<NonprofitMember>
                             {
-                                NonprofitId = 1,
-                                Member = new Member
+                                new NonprofitMember
                                 {
-                                    Id = 123,
-                                    FirstName = "Terry",
-                                    LastName = "Jones"
+                                    NonprofitId = 1,
+                                    Member = new Member
+                                    {
+                                        Id = 123,
+                                        FirstName = "Terry",
+                                        LastName = "Jones"
+                                    }
                                 }
                             }
-                         }
+                        }
                     }
                 }
             };

@@ -1,5 +1,5 @@
 ﻿@using SolveChicago.Common;
-@model IEnumerable<SolveChicago.Entities.Member>
+@model IEnumerable<SolveChicago.Common.Models.ProspectModel>
 <header class="members-header">
     <h2><strong>PROSPECTS:</strong> OVERVIEW</h2>
 
@@ -25,8 +25,9 @@
                 <div class="columns has-space">
                     <strong>Desired Skills</strong>
                 </div>
+
                 <div class="columns has-space">
-                    <strong>Contact</strong>
+                    <strong>Status</strong>
                 </div>
                 <div class="columns has-space">
 
@@ -39,19 +40,152 @@
         <section class="member-card prospects">
             <div class="member-overview">
                 <div class="row large-unstack">
-                    <span class="member-card-thumb"><img src="@(item.ProfilePicturePath)" /></span>
+                    <span class="member-card-thumb"><img src="@(item.Member.ProfilePicturePath)" alt="Profile Picture"></span>
                     <div class="columns centered has-space">
-                        <span class="member-name">@(string.Format("{0} {1}", item.FirstName, item.LastName))</span>
+                        <span class="member-name">@item.Member.FullName</span>
                     </div>
                     <div class="columns has-space">
-                        <span>@(string.Join(", ", @item.MemberSkills.Where(x => !x.IsComplete).Select(x => x.Skill.Name)))</span>
+                        <span>@item.Member.SkillsDesired</span>
                     </div>
                     <div class="columns has-space">
-                        <span>@(item.ContactPreference == Constants.Member.ContactPreference.Phone ? string.Join(", ", item.PhoneNumbers.Select(x => x.Number)) : item.Email)</span>
+                        <div class="small-progress-bar-spacer progress @(item.Member.MemberStage.Percent == 100 ? "green" : "lilac")" role="progressbar" tabindex="0" aria-valuenow="@(item.Member.MemberStage.Percent)" aria-valuemin="0" aria-valuetext="@(item.Member.MemberStage.Percent) percent" aria-valuemax="100">
+                            <!-- value added by tweaking inline-style-->
+                            <div class="progress-meter" style="width: @(item.Member.MemberStage.Percent)%">
+
+                            </div>
+                            <p class="small-progress-description" style="font-size:.8rem">@(item.Member.MemberStage.Stage)</p>
+                        </div>
                     </div>
                     <div class="columns">
-                        <a href="/Prospects/InviteMember?memberId=@item.Id&nonprofitId=@ViewBag.NonprofitId" class="show-family button">Invite</a>
+                        <a href="javascript:void(0)" class="show-family button">View</a>
                     </div>
+                </div>
+            </div>
+            <div class="familyMemberWrapper" style="display:none;">
+                <div class="member-details">
+                    <div class="row large-unstack">
+                        <div class="columns has-small-space">
+                            <h4>Personal</h4>
+                        </div>
+                        <div class="columns has-small-space"></div>
+                        <div class="columns has-small-space">
+                            <div class="columns">
+                                <a href="/Prospects/InviteMember?memberId=@item.Member.Id&nonprofitId=@ViewBag.NonprofitId" class="show-family button">Invite</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row large-unstack">
+                        <div class="columns has-small-space">
+                            <span>Gender: @item.Member.Gender</span>
+                        </div>
+                        <div class="columns has-small-space">
+                            <span>Birthday: @(item.Member.Birthday.HasValue ? item.Member.Birthday.Value.ToShortDateString() : "Not Specified")</span>
+                        </div>
+                        <div class="columns has-small-space">
+                            <span>Ethnicity: @item.Member.Ethnicity</span>
+                        </div>
+                    </div>
+                    <div class="row large-unstack">
+                        <div class="columns has-small-space">
+                            <span>Email: @item.Member.Email</span>
+                        </div>
+                        <div class="columns has-small-space">
+                            <span>Phone: @item.Member.Phone</span>
+                        </div>
+                        <div class="columns has-small-space">
+                            <span>Address: @item.Member.Address</span>
+                        </div>
+                    </div>
+                    @if (item.Member.Schools != null)
+                    {
+                        <hr />
+                        <div class="row large-unstack">
+                            <div class="columns has-small-space">
+                                <h4>Education</h4>
+                            </div>
+                            <div class="columns has-small-space"></div>
+                            <div class="columns has-small-space"></div>
+                        </div>
+                        foreach (var school in item.Member.Schools)
+                        {
+                            <div class="row large-unstack">
+                                <div class="columns has-small-space">
+                                    <span>@school.Name</span>
+                                </div>
+                                <div class="columns has-small-space">
+                                    <span>@(school.Start.HasValue ? school.Start.Value.Year.ToString() : "") - @(school.End.HasValue ? school.End.Value.Year.ToString() : "present")</span>
+                                </div>
+                                <div class="columns has-small-space">
+                                    <span>@school.Degree</span>
+                                </div>
+                            </div>
+                        }
+                    }
+                    @if (item.Member.Jobs != null)
+                    {
+                        <hr />
+                        <div class="row large-unstack">
+                            <div class="columns has-small-space">
+                                <h4>Jobs</h4>
+                            </div>
+                            <div class="columns has-small-space"></div>
+                            <div class="columns has-small-space"></div>
+                        </div>
+                        foreach (var job in item.Member.Jobs)
+                        {
+                            <div class="row large-unstack">
+                                <div class="columns has-small-space">
+                                    <span>@job.Name</span>
+                                </div>
+                                <div class="columns has-small-space">
+                                    <span>@($"{(job.EmployeeStart.HasValue ? $"{job.EmployeeStart.Value.Month.ToString()}/{job.EmployeeStart.Value.Year.ToString()}" : "")}") - @($"{(job.EmployeeEnd.HasValue ? $"{job.EmployeeEnd.Value.Month.ToString()}/{job.EmployeeEnd.Value.Year.ToString()}" : "present")}")</span>
+                                </div>
+                                <div class="columns has-small-space">
+                                    <span>$@(job.EmployeePay)/hr</span>
+                                </div>
+                            </div>
+                        }
+                    }
+                    @if (item.ReferringNonprofit != null)
+                    {
+                        <hr />
+                        <div class="row large-unstack">
+                            <div class="columns has-small-space">
+                                <h4>Referral</h4>
+                            </div>
+                            <div class="columns has-small-space"></div>
+                            <div class="columns has-small-space"></div>
+                        </div>
+                        <div class="row large-unstack">
+                            <div class="columns has-small-space">
+                                <span>@item.ReferringNonprofit.Name</span>
+                            </div>
+                            <div class="columns has-small-space">
+                                <span>@(string.Join(", ", item.ReferringNonprofit.PhoneNumbers.Select(x => x.Number)))</span>
+                            </div>
+                            <div class="columns has-small-space">
+                                <span></span>
+                            </div>
+                        </div>
+                        if (item.ReferringCaseManagers != null)
+                        {
+                            foreach (var cm in item.ReferringCaseManagers)
+                            {
+
+                                <div class="row large-unstack">
+                                    <div class="columns has-small-space">
+                                        <span>@($"{cm.FirstName} {cm.LastName}")</span>
+                                    </div>
+                                    <div class="columns has-small-space">
+                                        <span>@(string.Join(", ", cm.PhoneNumbers.Select(x => x.Number)))</span>
+                                    </div>
+                                    <div class="columns has-small-space">
+                                        <span>@cm.Email</span>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    }
                 </div>
             </div>
         </section>

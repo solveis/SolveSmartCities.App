@@ -20,7 +20,9 @@
         $entry.find('select').prop('selectedIndex', 0);
     }
 
-    $('.ui.fluid.dropdown').dropdown();
+    // TODO: refactor this so we aren't using semantic.js calls in here
+    if ($('.ui.fluid.dropdown').length > 0)
+        $('.ui.fluid.dropdown').dropdown();
 
     // make date validation more flexible for month/year
 
@@ -77,6 +79,47 @@ window.bindRadioContent = function ($boundElement, $trueElement, $falseElement, 
             }
         }
         
+    }
+}
+
+window.bindSelectList = function ($boundElement, $elem1, $elem2, $elem3, $elem4, $elem5, isPageLoad) {
+    if (isPageLoad)
+        showHideContent($boundElement);
+    $boundElement.on('change', function (e) {
+        showHideContent(e);
+    });
+    function showHideContent(item) {
+        $elem1.length > 0 ? $elem1.addClass('hide') : "";
+        $elem2.length > 0 ? $elem2.addClass('hide') : "";
+        $elem3.length > 0 ? $elem3.addClass('hide') : "";
+        $elem4.length > 0 ? $elem4.addClass('hide') : "";
+        $elem5.length > 0 ? $elem5.addClass('hide') : "";
+        if (item.target != null) {
+            toggleContent(item.target.selectedIndex);
+        } else if (item.find(':selected').length > 0)
+        {
+            toggleContent(item.find(':selected').index());
+        }
+        function toggleContent(index)
+        {
+            switch (index) {
+                case 0:
+                    $elem1.length > 0 ? $elem1.removeClass('hide') : "";
+                    break;
+                case 1:
+                    $elem2.length > 0 ? $elem2.removeClass('hide') : "";
+                    break;
+                case 2:
+                    $elem3.length > 0 ? $elem3.removeClass('hide') : "";
+                    break;
+                case 3:
+                    $elem4.length > 0 ? $elem4.removeClass('hide') : "";
+                    break;
+                case 4:
+                    $elem5.length > 0 ? $elem5.removeClass('hide') : "";
+                    break;
+            }
+        }
     }
 }
 

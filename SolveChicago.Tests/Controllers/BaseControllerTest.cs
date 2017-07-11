@@ -308,52 +308,6 @@ namespace SolveChicago.Tests.Controllers
             Assert.Equal("Corporation", result.RouteValues["action"]);
             Assert.Equal("Profile", result.RouteValues["controller"]);
         }
-        
-        [Fact]
-        public void BaseController_ReferrerRedirect_ReturnsRedirectToRouteResult_ReferrerIndex()
-        {
-            List<Referrer> data = new List<Referrer>
-            {
-                new Referrer()
-                {
-                    Email = "Referrer@solvechicago.com",
-                    CreatedDate = DateTime.UtcNow.AddDays(-10),
-                    Id = 1,
-                    Name = "Tom Elliot",
-                }
-            };
-
-            var set = new Mock<DbSet<Referrer>>().SetupData(data);
-
-            var context = new Mock<SolveChicagoEntities>();
-            context.Setup(c => c.Referrers).Returns(set.Object);
-
-            BaseController controller = new BaseController(context.Object);
-            var result = (RedirectToRouteResult)controller.ReferrerRedirect(1);
-
-            Assert.Equal("Index", result.RouteValues["action"]);
-            Assert.Equal("Referrers", result.RouteValues["controller"]);
-        }
-
-        [Fact]
-        public void BaseController_ReferrerRedirect_ReturnsRedirectToRouteResult_ProfileReferrer()
-        {
-            List<Referrer> data = new List<Referrer>
-            {
-                new Referrer() { Id = 1 }
-            };
-
-            var set = new Mock<DbSet<Referrer>>().SetupData(data);
-
-            var context = new Mock<SolveChicagoEntities>();
-            context.Setup(c => c.Referrers).Returns(set.Object);
-
-            BaseController controller = new BaseController(context.Object);
-            var result = (RedirectToRouteResult)controller.ReferrerRedirect(1);
-
-            Assert.Equal("Referrer", result.RouteValues["action"]);
-            Assert.Equal("Profile", result.RouteValues["controller"]);
-        }
 
         [Fact]
         public void BaseController_NonprofitRedirect_ReturnsRedirectToRouteResult_NonprofitIndex()
@@ -513,13 +467,16 @@ namespace SolveChicago.Tests.Controllers
                                         LastName = "Elliot",
                                         ProfilePicturePath = "../image.jpg",
                                     },
-                                    CaseManagers = new List<CaseManager>
+                                    NonprofitStaffs = new List<NonprofitStaff>
                                     {
-                                        new CaseManager
+                                        new NonprofitStaff
                                         {
-                                            Id = 1,
-                                            FirstName = "Terry",
-                                            LastName = "Jones",
+                                            CaseManager = new CaseManager
+                                            {
+                                                Id = 1,
+                                                FirstName = "Terry",
+                                                LastName = "Jones",
+                                            },
                                         }
                                     }
                                 }
@@ -554,7 +511,7 @@ namespace SolveChicago.Tests.Controllers
             string name = controller.State.Member.FirstName;
             Assert.Equal("Tom", name);
 
-            string caseManagerName = controller.State.Member.NonprofitMembers.SelectMany(x => x.CaseManagers).First().FirstName;
+            string caseManagerName = controller.State.Member.NonprofitMembers.SelectMany(x => x.NonprofitStaffs).First().CaseManager.FirstName;
             Assert.Equal("Terry", caseManagerName);
 
         }

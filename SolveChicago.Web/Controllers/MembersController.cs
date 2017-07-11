@@ -36,11 +36,13 @@ namespace SolveChicago.Web.Controllers
             return MemberRedirect(State.MemberId);
         }
 
-        public ActionResult Details(int? memberId)
+        public ActionResult Details(int? memberId, string userId)
         {
             ImpersonateMember(memberId);
             MemberService service = new MemberService(this.db);
             MemberProfile model = service.Get(State.MemberId);
+            if (!string.IsNullOrEmpty(userId))
+                model.CaseNotes = service.GetCaseNotes(State.MemberId, userId);
             return View(model);
         }
 

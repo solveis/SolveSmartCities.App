@@ -97,7 +97,6 @@ namespace SolveChicago.Web.Models
     public class MemberRegisterViewModel : RegisterViewModel
     {
         public int? MemberId { get; set; }
-        public int? ReferrerId { get; set; }
     }
 
     public class CaseManagerRegisterViewModel : RegisterViewModel

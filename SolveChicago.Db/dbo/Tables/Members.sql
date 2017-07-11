@@ -20,7 +20,9 @@
     [IsWorkforceInterested] BIT NULL, 
     [IsJobSearching] BIT NULL, 
     [SSN] VARCHAR(11) NULL, 
+    [EthnicityId] INT NULL, 
     CONSTRAINT [PK_Members] PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_Member_Family] FOREIGN KEY (FamilyId) REFERENCES [Families]([Id]) ON DELETE SET NULL,
     CONSTRAINT [FK_Member_AspNetUser] FOREIGN KEY (UserId) REFERENCES [AspNetUsers](Id) ON DELETE SET NULL, 
+    CONSTRAINT [FK_Member_Ethnicity] FOREIGN KEY (EthnicityId) REFERENCES [Ethnicities](Id) ON DELETE SET NULL, 
 )

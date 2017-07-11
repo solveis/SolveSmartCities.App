@@ -15,8 +15,7 @@ namespace SolveChicago.Common
             CaseManager,
             Corporation,
             Nonprofit,
-            Admin,
-            Referrer
+            Admin
         }
 
         public enum FamilyRelationshipTypes

@@ -153,12 +153,12 @@ namespace SolveChicago.Tests.Services
                     MemberSkills = new List<MemberSkill>
                     {
                             new MemberSkill { MemberId = 1, Skill = new Skill{ Id = 1, Name = "Powerpoint" }, IsComplete = false },
-                            new MemberSkill { MemberId = 1, NonprofitId = 1, Skill = new Skill{ Id = 2, Name = "Excel" }, IsComplete = false },
-                            new MemberSkill { MemberId = 1, NonprofitId = 1, Skill = new Skill{ Id = 3, Name = "Word" }, IsComplete = false },
-                            new MemberSkill { MemberId = 1, NonprofitId = 1, Skill = new Skill{ Id = 4, Name = "Interviewing" }, IsComplete = true },
-                            new MemberSkill { MemberId = 1, NonprofitId = 1, Skill = new Skill{ Id = 5, Name = "Reading" }, IsComplete = true },
-                            new MemberSkill { MemberId = 1, NonprofitId = 1, Skill = new Skill{ Id = 6, Name = "Bookkeeping" }, IsComplete = true },
-                            new MemberSkill { MemberId = 1, NonprofitId = 1, Skill = new Skill{ Id = 7, Name = "Manufacturing" }, IsComplete = true },
+                            new MemberSkill { MemberId = 1, NonprofitSkill = new NonprofitSkill { Id = 1, NonprofitId = 1, SkillId = 2 }, Skill = new Skill{ Id = 2, Name = "Excel" }, IsComplete = false },
+                            new MemberSkill { MemberId = 1, NonprofitSkill = new NonprofitSkill { Id = 2, NonprofitId = 1, SkillId = 3 }, Skill = new Skill{ Id = 3, Name = "Word" }, IsComplete = false },
+                            new MemberSkill { MemberId = 1, NonprofitSkill = new NonprofitSkill { Id = 3, NonprofitId = 1, SkillId = 4 }, Skill = new Skill{ Id = 4, Name = "Interviewing" }, IsComplete = true },
+                            new MemberSkill { MemberId = 1, NonprofitSkill = new NonprofitSkill { Id = 4, NonprofitId = 1, SkillId = 5 }, Skill = new Skill{ Id = 5, Name = "Reading" }, IsComplete = true },
+                            new MemberSkill { MemberId = 1, NonprofitSkill = new NonprofitSkill { Id = 5, NonprofitId = 1, SkillId = 6 }, Skill = new Skill{ Id = 6, Name = "Bookkeeping" }, IsComplete = true },
+                            new MemberSkill { MemberId = 1, NonprofitSkill = new NonprofitSkill { Id = 6, NonprofitId = 1, SkillId = 7 }, Skill = new Skill{ Id = 7, Name = "Manufacturing" }, IsComplete = true },
                     },
                     MemberSchools = new List<MemberSchool>
                     {
@@ -451,10 +451,10 @@ namespace SolveChicago.Tests.Services
                     },
                     MemberSkills = new List<MemberSkill>
                     {
-                            new MemberSkill { MemberId = 1, NonprofitId = 1, Skill = new Skill{ Id = 1, Name = "Powerpoint" } },
-                            new MemberSkill { MemberId = 1, NonprofitId = 1, Skill = new Skill{ Id = 2, Name = "Excel" } },
-                            new MemberSkill { MemberId = 1, NonprofitId = 1, Skill = new Skill{ Id = 3, Name = "Word" } },
-                            new MemberSkill { MemberId = 1, NonprofitId = 1, Skill = new Skill{ Id = 4, Name = "Interviewing" } },
+                            new MemberSkill { MemberId = 1, NonprofitSkill = new NonprofitSkill{ Id = 1, SkillId = 1, NonprofitId = 1 }, Skill = new Skill{ Id = 1, Name = "Powerpoint" } },
+                            new MemberSkill { MemberId = 1, NonprofitSkill = new NonprofitSkill{ Id = 2, SkillId = 2, NonprofitId = 1 }, Skill = new Skill{ Id = 2, Name = "Excel" } },
+                            new MemberSkill { MemberId = 1, NonprofitSkill = new NonprofitSkill{ Id = 3, SkillId = 3, NonprofitId = 1 }, Skill = new Skill{ Id = 3, Name = "Word" } },
+                            new MemberSkill { MemberId = 1, NonprofitSkill = new NonprofitSkill{ Id = 4, SkillId = 4, NonprofitId = 1 }, Skill = new Skill{ Id = 4, Name = "Interviewing" } },
                     },
                     MemberSchools = new List<MemberSchool>
                     {

@@ -10,7 +10,7 @@
 
         <section class="hero-main-profile">
             <div class="profile-image-container">
-                <img class="profile-image" src="@Model.ProfilePicturePath">
+                <img class="profile-image" src="@Model.ProfilePicturePath" alt="Profile Picture">
             </div>
 
             <div class="profile-information-container">
@@ -64,7 +64,7 @@
                 <!-- First Row-->
                     <div class="row large-unstack">
                         <div class="columns has-space">
-                            <p>Nonprofit: <strong>@caseManager.Nonprofit.Name</strong></p>
+                            <p>Nonprofit: <strong>@(caseManager.NonprofitStaffs.Any(x => x.Nonprofit != null) ? caseManager.NonprofitStaffs.First().Nonprofit.Name : "")</strong></p>
                         </div>
 
                         <div class="columns has-space">
@@ -122,17 +122,17 @@
             <!-- Second Row-->
             <div class="row large-unstack">
                 <div class="columns has-space">
-                    <img class="profile-icon" src="../img/profile-icon-location.svg">
+                    <img class="profile-icon" src="../img/profile-icon-location.svg" alt="Address">
                     <p> @Model.Address</p>
                 </div>
 
                 <div class="columns has-space">
-                    <img class="profile-icon" src="../img/profile-icon-email.svg">
+                    <img class="profile-icon" src="../img/profile-icon-email.svg" alt="Email">
                     <p>@Model.Email</p>
                 </div>
 
                 <div class="columns has-space">
-                    <img class="profile-icon" src="../img/profile-icon-phone.svg">
+                    <img class="profile-icon" src="../img/profile-icon-phone.svg" alt="Phone">
                     <p><strong>@Model.Phone</strong></p>
                 </div>
             </div>
@@ -212,7 +212,25 @@
             </div>
         </section>
 
+        @if (Model.CaseNotes != null)
+        {
+            <section class="profile-card">
 
+                <header>
+                    <h1 class="profile-card-header">Case Notes</h1>
+                </header>
+                @foreach (var note in Model.CaseNotes)
+                {
+                    <div class="row large-unstack">
+                        <div class="columns has-space">
+                            <p>@note.CreatedDate.ToShortDateString() @@ @note.CreatedDate.ToShortTimeString() - @note.Note</p>
+                        </div>
+                    </div>
+                    <hr class="profile-card-line-divider">
+                }
+
+            </section>
+        }
     </article>
 
 

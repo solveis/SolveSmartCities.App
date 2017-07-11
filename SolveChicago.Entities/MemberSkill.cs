@@ -16,11 +16,11 @@ namespace SolveChicago.Entities
     {
         public int MemberId { get; set; }
         public int SkillId { get; set; }
-        public Nullable<int> NonprofitId { get; set; }
+        public Nullable<int> NonprofitSkillsId { get; set; }
         public bool IsComplete { get; set; }
     
         public virtual Member Member { get; set; }
+        public virtual NonprofitSkill NonprofitSkill { get; set; }
         public virtual Skill Skill { get; set; }
-        public virtual Nonprofit Nonprofit { get; set; }
     }
 }

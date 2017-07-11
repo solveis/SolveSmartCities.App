@@ -29,7 +29,7 @@
             @if (!string.IsNullOrEmpty(Model.ProfilePicturePath) && Model.ProfilePicturePath != "/img/side-nav-members-icon.svg")
             {
                 <div>
-                    <img src="@Model.ProfilePicturePath" />
+                    <img src="@Model.ProfilePicturePath" alt="Profile Picture">
                 </div>
             }
             @Html.TextBoxFor(model => model.ProfilePicture, new { type = "file", @class = "file-input" })
@@ -65,16 +65,68 @@
             @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
             @Html.LabelFor(model => model.Country, htmlAttributes: new { })
             @Html.DropDownListFor(model => model.Country, Model.CountryList.Select(x => new SelectListItem { Text = x, Value = x, Selected = x == Model.Country }), new { htmlAttributes = new { } })
+            
+            @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+            @Html.LabelFor(model => model.Type, "What service do you provide?", htmlAttributes: new { })
+            @Html.DropDownListFor(model => model.Type, Model.TypeList.Select(x => new SelectListItem { Text = x, Value = x, Selected = x == Model.Type }), new { htmlAttributes = new { } })
+            
+            <div id="programInfo">
+                @if (!Model.HasPrograms.HasValue)
+                {
+                    @Html.ValidationMessageFor(model => model.HasPrograms, "", new { @class = "text-danger" })
+                    @Html.LabelFor(model => model.HasPrograms, "Do you have multiple programs?")
+                    <div>
+                        @Html.RadioButtonFor(model => model.HasPrograms, true, new { @class = "npo-hasPrograms" })
+                        <label for="HasPrograms">Yes</label>
+                        @Html.RadioButtonFor(model => model.HasPrograms, false, new { @class = "npo-hasPrograms" })
+                        <label for="HasPrograms">No</label>
+                    </div>
+                }
+                <div class="programs @(!Model.HasPrograms.HasValue ? "hide" : "")">
+                    <hr />
+                    <h5>Programs</h5>
+                    <div>
+                        @for (int i = 0; i < Model.Programs.Length; i++)
+                        {
+                            <div class="program entry" data-id="@(i)">
+                                @Html.HiddenFor(m => m.Programs[i].Id)
+                                <div class="multipleProgramFeatures">
+                                    @Html.ValidationMessageFor(model => model.Programs[i].ProgramName, "")
+                                    @Html.LabelFor(model => model.Programs[i].ProgramName, "What is the name of the program?")
+                                    @Html.EditorFor(model => model.Programs[i].ProgramName, new { htmlAttributes = new { type = "text" } })
+                                </div>
 
-            @Html.LabelFor(m => m.TeachesSoftSkills, "Do you provide training for Soft Skills?")
-            @Html.RadioButtonFor(m => m.TeachesSoftSkills, true)
-            <label for="Nonprofit_TeachesSoftSkills">Yes</label>
-            @Html.RadioButtonFor(m => m.TeachesSoftSkills, false)
-            <label for="Nonprofit_TeachesSoftSkills">No</label>
+                                @Html.ValidationMessageFor(model => model.Programs[i].MinAge, "", new { @class = "text-danger" })
+                                @Html.LabelFor(model => model.Programs[i].MinAge, "What is the minimum age? (leave blank if none)")
+                                @Html.EditorFor(model => model.Programs[i].MinAge, new { htmlAttributes = new { type = "text", @class = "number-entry" } })
 
-            @Html.ValidationMessageFor(model => model.SkillsOffered, "", new { @class = "text-danger" })
-            @Html.LabelFor(model => model.SkillsOffered, "What workforce skills do you teach? (i.e. construction, manufacturing, coding)")
-            @Html.EditorFor(model => model.SkillsOffered, new { htmlAttributes = new { type = "text" } })
+                                @Html.ValidationMessageFor(model => model.Programs[i].MaxAge, "", new { @class = "text-danger" })
+                                @Html.LabelFor(model => model.Programs[i].MaxAge, "What is the maximum age? (leave blank if none)")
+                                @Html.EditorFor(model => model.Programs[i].MaxAge, new { htmlAttributes = new { type = "text", @class = "number-entry" } })
+                                
+                                @Html.ValidationMessageFor(model => model.Programs[i].Gender, "", new { @class = "text-danger" })
+                                @Html.LabelFor(model => model.Programs[i].Gender, "What gender do you target? (leave blank if none)")
+                                @Html.DropDownListFor(model => model.Programs[i].Gender, Model.GenderList.Select(x => new SelectListItem { Text = x, Value = x, Selected = x == Model.Programs[i].Gender }), "All/No restrictions", new { htmlAttributes = new { } })
+
+                                @Html.ValidationMessageFor(model => model.Programs[i].EthnicityId, "", new { @class = "text-danger" })
+                                @Html.LabelFor(model => model.Programs[i].EthnicityId, "What ethnicity do you target?", htmlAttributes: new { })
+                                @Html.DropDownListFor(model => model.Programs[i].EthnicityId, Model.Programs[i].EthnicityList.Select(x => new SelectListItem { Text = x.Value, Value = x.Key.ToString(), Selected = x.Key == Model.Programs[i].EthnicityId }), "All/No restrictions", new { htmlAttributes = new { } })
+
+                                @Html.ValidationMessageFor(model => model.Programs[i].SoftSkillsOffered, "", new { @class = "text-danger" })
+                                @Html.LabelFor(model => model.Programs[i].SoftSkillsOffered, "What soft skills do you teach? (i.e. leadership, poise, interview skills)")
+                                @Html.EditorFor(model => model.Programs[i].SoftSkillsOffered, new { htmlAttributes = new { type = "text", @class = "soft-list" } })
+
+                                @Html.ValidationMessageFor(model => model.Programs[i].WorkforceSkillsOffered, "", new { @class = "text-danger" })
+                                @Html.LabelFor(model => model.Programs[i].WorkforceSkillsOffered, "What workforce skills do you teach? (i.e. construction, manufacturing, coding)")
+                                @Html.EditorFor(model => model.Programs[i].WorkforceSkillsOffered, new { htmlAttributes = new { type = "text", @class = "workforce-list" } })
+                            </div>
+                        }
+                        <div class="row align-center has-border multipleProgramFeatures">
+                            <a class="add-job addEntry" href="javascript:void(0)"> <img class="add-job-icon" src="../img/icon-add.svg" alt="Add Program"> Add Program</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <input class="submit-create-profile" type="submit" value="Submit">
         </div>
@@ -84,15 +136,31 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryui")
     @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/profile_member")
+    @Scripts.Render("~/bundles/profile")
     <script>
-            $(document).ready(function () {
-                var skillsList = [];
-                @foreach(var skill in Model.SkillsList)
-                {
-                    @:skillsList.push("@skill");
-                }
-                window.bindAutocomplete($('#SkillsOffered'), skillsList);
-            });
+
+        window.addEntryCallback = function (newEntry, isPageLoad) {
+            var workforceSkillsList = [],
+                softSkillsList = [];
+            @foreach(var skill in Model.WorkforceSkillsList)
+            {
+                @:workforceSkillsList.push("@skill");
+            }
+            @foreach(var skill in Model.SoftSkillsList)
+            {
+                @:softSkillsList.push("@skill");
+            }
+            newEntry.find('.soft-list').autocomplete({ source: softSkillsList });
+            newEntry.find('.workforce-list').autocomplete({ source: workforceSkillsList });
+        }
+        
+        window.bindSelectList($('#Type'), "", "", "", "", $('#programInfo'), true);
+        window.bindRadioContent($('.npo-hasPrograms'), $('.programs, .multipleProgramFeatures'), $('.programs'), "", true);
+
+        $('.program').each(function () { window.addEntryCallback($(this), true) });
+
+
+
+
     </script>
 }

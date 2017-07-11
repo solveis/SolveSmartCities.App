@@ -45,7 +45,7 @@ namespace SolveChicago.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Admin(AdminRegisterViewModel model)
         {
-            var result = await CreateAccount(model.Email, model.Password, Enumerations.Role.Admin, model.InvitedByUserId, model.InviteCode);
+            var result = await CreateAccountAsync(model.Email, model.Password, Enumerations.Role.Admin, model.InvitedByUserId, model.InviteCode);
             AdminService service = new AdminService(this.db);
             if (result != null)
                 return result;
@@ -56,12 +56,11 @@ namespace SolveChicago.Web.Controllers
         //
         // GET: /Register/Member
         [AllowAnonymous]
-        public ActionResult Member(int? id, int? referrerId)
+        public ActionResult Member(int? id)
         {
             MemberRegisterViewModel model = new MemberRegisterViewModel
             {
                 MemberId = id,
-                ReferrerId = referrerId
             };
             if(id.HasValue)
             {
@@ -79,12 +78,7 @@ namespace SolveChicago.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Member(MemberRegisterViewModel model)
         {
-            var result = await CreateAccount(model.Email, model.Password, Enumerations.Role.Member);
-            if(model.ReferrerId.HasValue)
-            {
-                MemberService service = new MemberService(this.db);
-                service.AddToReferrer(service.GetMemberByEmail(model.Email).Id, model.ReferrerId.Value);
-            }
+            var result = await CreateAccountAsync(model.Email, model.Password, Enumerations.Role.Member);
             if (result != null)
                 return result;
             // If we got this far, something failed, redisplay form
@@ -106,29 +100,7 @@ namespace SolveChicago.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Corporation(RegisterViewModel model)
         {
-            var result = await CreateAccount(model.Email, model.Password, Enumerations.Role.Corporation);
-            if (result != null)
-                return result;
-            // If we got this far, something failed, redisplay form
-            return View(model);
-        }
-
-        //
-        // GET: /Register/Referrer
-        [AllowAnonymous]
-        public ActionResult Referrer()
-        {
-            return View();
-        }
-
-        //
-        // POST: /Register/Referrer
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Referrer(RegisterViewModel model)
-        {
-            var result = await CreateAccount(model.Email, model.Password, Enumerations.Role.Referrer);
+            var result = await CreateAccountAsync(model.Email, model.Password, Enumerations.Role.Corporation);
             if (result != null)
                 return result;
             // If we got this far, something failed, redisplay form
@@ -151,7 +123,7 @@ namespace SolveChicago.Web.Controllers
                 if (caseManager != null)
                 {
                     model.Email = caseManager.Email;
-                    model.NonprofitId = caseManager.NonprofitId;
+                    model.NonprofitId = caseManager.NonprofitStaffs.Any() ? caseManager.NonprofitStaffs.First().NonprofitId : (int?)null;
                 }   
             }
 
@@ -168,7 +140,7 @@ namespace SolveChicago.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> CaseManager(CaseManagerRegisterViewModel model)
         {
-            var result = await CreateAccount(model.Email, model.Password, Enumerations.Role.CaseManager);
+            var result = await CreateAccountAsync(model.Email, model.Password, Enumerations.Role.CaseManager);
             if(model.NonprofitId.HasValue)
             {
                 CaseManagerService service = new CaseManagerService(this.db);
@@ -195,7 +167,7 @@ namespace SolveChicago.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Nonprofit(RegisterViewModel model)
         {
-            var result = await CreateAccount(model.Email, model.Password, Enumerations.Role.Nonprofit);
+            var result = await CreateAccountAsync(model.Email, model.Password, Enumerations.Role.Nonprofit);
             if (result != null)
                 return result;
             // If we got this far, something failed, redisplay form

@@ -34,10 +34,10 @@ namespace SolveChicago.Web.Controllers
         public ActionResult Index(int? caseManagerId)
         {
             ImpersonateCaseManager(caseManagerId);
-            CaseManagerService service = new CaseManagerService(this.db);
-            
-                FamilyEntity[] families = service.GetFamiliesForCaseManager(State.CaseManagerId);
-                return View(families.ToList());
+            // for now, case managers mimic nonprofits
+            NonprofitService service = new NonprofitService(this.db);
+            FamilyEntity[] members = service.GetMembers(State.NonprofitId);
+            return View(members.OrderBy(x => x.FamilyName).ToList());
         }
 
         [Authorize(Roles = "CaseManager, Nonprofit")]

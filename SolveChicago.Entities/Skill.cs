@@ -18,15 +18,17 @@ namespace SolveChicago.Entities
         public Skill()
         {
             this.MemberSkills = new HashSet<MemberSkill>();
-            this.Nonprofits = new HashSet<Nonprofit>();
+            this.NonprofitSkills = new HashSet<NonprofitSkill>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
+        public Nullable<int> Level { get; set; }
+        public bool IsWorkforce { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MemberSkill> MemberSkills { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Nonprofit> Nonprofits { get; set; }
+        public virtual ICollection<NonprofitSkill> NonprofitSkills { get; set; }
     }
 }

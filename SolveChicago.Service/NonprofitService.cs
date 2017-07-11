@@ -38,22 +38,54 @@ namespace SolveChicago.Service
                     Province = address != null ? address.Province : string.Empty,
                     ZipCode = address != null ? address.ZipCode : string.Empty,
                     Name = nonprofit.Name,
-                    SkillsOffered = GetSkillsOffered(nonprofit),
-                    SkillsList = GetSkillsList()
+                    Type = nonprofit.ProviderType,
+                    HasPrograms = nonprofit.HasPrograms,
+                    Programs = GetNonprofitPrograms(nonprofit),
+                    WorkforceSkillsList = GetWorkforceSkillsList(),
+                    SoftSkillsList = GetSoftSkillsList(),
                 };
-                npo.TeachesSoftSkills = npo.SkillsOffered.Contains(Constants.Skills.SoftSkills);
                 return npo;
             }
         }
 
-        private string[] GetSkillsList()
+        private Program[] GetNonprofitPrograms(Nonprofit nonprofit)
         {
-            return db.Skills.Where(x => x.Name.ToLower() != "soft skills").Select(x => x.Name).ToArray();
+            Dictionary<int, string> ethnicities = db.Ethnicities.ToDictionary(y => y.Id, y => y.EthnicityName);
+            return nonprofit.NonprofitPrograms.Select(x => new Program
+            {
+                EthnicityId = x.EthnicityId,
+                Ethnicity = x.Ethnicity != null ? x.Ethnicity.EthnicityName : "",
+                Gender = x.Gender,
+                Id = x.Id,
+                MaxAge = x.MaxAge,
+                MinAge = x.MinAge,
+                ProgramName = x.ProgramName,
+                NonprofitId = x.NonprofitId,
+                NonprofitName = x.Nonprofit != null ? x.Nonprofit.Name : "",
+                SoftSkillsOffered = GetSoftSkillsOffered(nonprofit, x.Id),
+                WorkforceSkillsOffered = GetWorkforceSkillsOffered(nonprofit, x.Id),
+                EthnicityList = ethnicities
+            }).ToArray();
         }
 
-        private string GetSkillsOffered(Nonprofit nonprofit)
+        private string[] GetWorkforceSkillsList()
         {
-            return string.Join(", ", nonprofit.Skills.Select(x => x.Name));
+            return db.Skills.Where(x => x.IsWorkforce).Select(x => x.Name).ToArray();
+        }
+
+        private string[] GetSoftSkillsList()
+        {
+            return db.Skills.Where(x => !x.IsWorkforce).Select(x => x.Name).ToArray();
+        }
+
+        private string GetWorkforceSkillsOffered(Nonprofit nonprofit, int programId)
+        {
+            return string.Join(", ", nonprofit.NonprofitSkills.Any(x => x.Skill != null && x.Skill.IsWorkforce && x.ProgramId == programId) ? nonprofit.NonprofitSkills.Where(x => x.Skill != null && x.Skill.IsWorkforce && x.ProgramId == programId).Select(x => x.Skill.Name) : new string[0]);
+        }
+
+        private string GetSoftSkillsOffered(Nonprofit nonprofit, int programId)
+        {
+            return string.Join(", ", nonprofit.NonprofitSkills.Any(x => x.Skill != null && !x.Skill.IsWorkforce && x.ProgramId == programId) ? nonprofit.NonprofitSkills.Where(x => x.Skill != null && !x.Skill.IsWorkforce && x.ProgramId == programId).Select(x => x.Skill.Name) : new string[0]);
         }
 
         public void Post(NonprofitProfile model)
@@ -67,10 +99,11 @@ namespace SolveChicago.Service
                     nonprofit.ProfilePicturePath = UploadPhoto(Constants.Upload.NonprofitPhotos, model.ProfilePicture, model.Id);
                 
                 nonprofit.Name = model.Name;
+                nonprofit.ProviderType = model.Type;
+                nonprofit.HasPrograms = model.HasPrograms;
                 UpdateNonprofitPhone(model, nonprofit);
                 UpdateNonprofitAddress(model, nonprofit);
-                UpdateNonprofitSkills(nonprofit, model, model.TeachesSoftSkills);
-
+                UpdateNonprofitPrograms(nonprofit, model);
                 db.SaveChanges();
             }
         }
@@ -104,11 +137,35 @@ namespace SolveChicago.Service
             nonprofit.Addresses.Add(address);
         }
 
-        private void UpdateNonprofitSkills(Nonprofit nonprofit, NonprofitProfile model, bool? teachesSoftSkills)
+        private void UpdateNonprofitPrograms(Nonprofit nonprofit, NonprofitProfile model)
+        {
+            foreach (var program in model.Programs)
+            {
+                NonprofitProgram npoProgram = new NonprofitProgram();
+                if (program.Id.HasValue && program.Id.Value > 0)
+                    npoProgram = nonprofit.NonprofitPrograms.FirstOrDefault(x => x.Id == program.Id.Value);
+
+                npoProgram.EthnicityId = program.EthnicityId;
+                npoProgram.Gender = program.Gender;
+                npoProgram.MaxAge = program.MaxAge;
+                npoProgram.MinAge = program.MinAge;
+                npoProgram.ProgramName = !string.IsNullOrEmpty(program.ProgramName) ? program.ProgramName : model.Name;
+
+                if (!nonprofit.NonprofitPrograms.Any(x => x.Id == program.Id))
+                    nonprofit.NonprofitPrograms.Add(npoProgram);
+
+                db.SaveChanges();
+
+                UpdateNonprofitSkills(nonprofit, npoProgram.Id, program.SoftSkillsOffered, program.WorkforceSkillsOffered);
+            }
+        }
+
+        private void UpdateNonprofitSkills(Nonprofit nonprofit, int programId, string softSkillsOffered, string workforceSkillsOffered)
         {
             List<Skill> skills = db.Skills.ToList();
-            string[] newSkills = model.SkillsOffered != null ? model.SkillsOffered.Split(',') : new string[0];
-            foreach (string skill in newSkills)
+            string[] newWorkforceSkills = workforceSkillsOffered != null ? workforceSkillsOffered.Split(',') : new string[0];
+            string[] newSoftSkills = softSkillsOffered != null ? softSkillsOffered.Split(',') : new string[0];
+            foreach (string skill in newWorkforceSkills)
             {
                 string trimSkill = skill.Trim();
                 if (!string.IsNullOrEmpty(trimSkill))
@@ -116,21 +173,35 @@ namespace SolveChicago.Service
                     if (skills.Select(x => x.Name.ToLower()).Contains(trimSkill.ToLower()))
                     {
                         Skill existingSkill = skills.Single(x => x.Name.ToLower() == trimSkill.ToLower());
-                        if (!nonprofit.Skills.Select(x => x.Id).Contains(existingSkill.Id))
-                            nonprofit.Skills.Add(existingSkill);
+                        if (!nonprofit.NonprofitSkills.Select(x => x.SkillId).Contains(existingSkill.Id))
+                            nonprofit.NonprofitSkills.Add(new NonprofitSkill { Skill = existingSkill, ProgramId = programId });
                     }
                     else
                     {
-                        Skill newSkill = new Skill { Name = trimSkill };
+                        Skill newSkill = new Skill { Name = trimSkill, IsWorkforce = true };
                         db.Skills.Add(newSkill);
-                        nonprofit.Skills.Add(newSkill);
+                        nonprofit.NonprofitSkills.Add(new NonprofitSkill { Skill = newSkill, ProgramId = programId });
                     }
                 }
             }
-            if(teachesSoftSkills ?? false)
+            foreach (string skill in newSoftSkills)
             {
-                Skill existingSkill = skills.Single(x => x.Name.ToLower() == "soft skills");
-                nonprofit.Skills.Add(existingSkill);
+                string trimSkill = skill.Trim();
+                if (!string.IsNullOrEmpty(trimSkill))
+                {
+                    if (skills.Select(x => x.Name.ToLower()).Contains(trimSkill.ToLower()))
+                    {
+                        Skill existingSkill = skills.Single(x => x.Name.ToLower() == trimSkill.ToLower());
+                        if (!nonprofit.NonprofitSkills.Select(x => x.SkillId).Contains(existingSkill.Id))
+                            nonprofit.NonprofitSkills.Add(new NonprofitSkill { Skill = existingSkill, ProgramId = programId });
+                    }
+                    else
+                    {
+                        Skill newSkill = new Skill { Name = trimSkill, IsWorkforce = false };
+                        db.Skills.Add(newSkill);
+                        nonprofit.NonprofitSkills.Add(new NonprofitSkill { Skill = newSkill, ProgramId = programId });
+                    }
+                }
             }
         }
 
@@ -145,7 +216,7 @@ namespace SolveChicago.Service
 
         public CaseManager[] GetCaseManagers(Nonprofit npo)
         {
-            return npo.CaseManagers.ToArray();
+            return npo.NonprofitStaffs.Select(x => x.CaseManager).ToArray();
         }
 
         public FamilyEntity[] GetMembers(int id)
@@ -155,7 +226,7 @@ namespace SolveChicago.Service
             if(npo != null)
             {
                 MemberService service = new MemberService(this.db);
-                foreach(var member in npo.NonprofitMembers.Where(x => !x.End.HasValue))
+                foreach(var member in npo.NonprofitMembers)
                 {
                     families.Add(service.GetFamily(member.Member, true));
                 }
@@ -175,7 +246,7 @@ namespace SolveChicago.Service
                 if (caseManager == null)
                     throw new ApplicationException($"Case Manager with Id of {caseManagerId} does not exist.");
                 else
-                    nonprofitMember.CaseManagers.Add(caseManager);
+                    nonprofitMember.NonprofitStaffs.Add(new NonprofitStaff { CaseManager = caseManager, NonprofitId = nonprofitId, Role = Constants.NonprofitRoles.CaseManager });
                 db.SaveChanges();
             }
         }

@@ -43,6 +43,14 @@ namespace SolveChicago.Common
                     return GetSetting<bool>("Website.UseCdn", false);
                 }
             }
+
+            public static bool ShowStagingFeatures
+            {
+                get
+                {
+                    return GetSetting<bool>("Website.ShowStagingFeatures", false);
+                }
+            }
         }
 
         public class Crypto
@@ -105,6 +113,17 @@ namespace SolveChicago.Common
                 get
                 {
                     return GetSetting<string>("Mail.FromAddress", "dev+info@solvechicago.com");
+                }
+            }
+        }
+
+        public class Intercom
+        {
+            public static string AppId
+            {
+                get
+                {
+                    return GetSetting<string>("Intercom.AppId", "ag67g3o5");
                 }
             }
         }

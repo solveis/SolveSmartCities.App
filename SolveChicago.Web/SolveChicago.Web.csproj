@@ -210,12 +210,12 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\GovernmentProgramsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImpactController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MembersController.cs" />
     <Compile Include="Controllers\NonprofitsController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\ProspectsController.cs" />
-    <Compile Include="Controllers\ReferrersController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\SidebarController.cs" />
     <Compile Include="Controllers\ThanksController.cs" />
@@ -340,6 +340,8 @@
     <Content Include="img\icon-edit.svg" />
     <Content Include="img\icon-notification.svg" />
     <Content Include="img\icon-view.svg" />
+    <Content Include="img\Impact-icon.png" />
+    <Content Include="img\impact.png" />
     <Content Include="img\landing\1_One%402x.jpg" />
     <Content Include="img\landing\1_One.jpg" />
     <Content Include="img\landing\2_Two%402x.jpg" />
@@ -481,8 +483,8 @@
     <Content Include="Content\semantic\themes\material\assets\fonts\icons.woff" />
     <Content Include="img\icon-view.sketch" />
     <None Include="Properties\PublishProfiles\solvechicago - Web Deploy.pubxml" />
-    <None Include="Properties\PublishProfiles\solvesmartcities - Web Deploy.pubxml" />
-    <None Include="Properties\PublishProfiles\SolveSmartCities-Staging - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\SolveSmartCitiesProduction - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\SolveSmartCitiesStaging - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
@@ -491,7 +493,7 @@
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="Scripts\landing.js" />
-    <Content Include="Scripts\profile_member.js" />
+    <Content Include="Scripts\profile.js" />
     <Content Include="Scripts\functions.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
@@ -574,8 +576,6 @@
     <Content Include="Views\GovernmentPrograms\Edit.cshtml" />
     <Content Include="Views\GovernmentPrograms\Index.cshtml" />
     <Content Include="Views\Referrers\AddMember.cshtml" />
-    <Content Include="Views\Register\Referrer.cshtml" />
-    <Content Include="Views\Profile\Referrer.cshtml" />
     <Content Include="Views\Members\Details.cshtml" />
     <Content Include="Views\CaseManagers\AddCaseNote.cshtml" />
     <Content Include="Views\Shared\_Layout_NoHeader.cshtml" />
@@ -593,15 +593,12 @@
     <Content Include="Views\Shared\Sidebar\_CaseManager.cshtml" />
     <Content Include="Views\Shared\Sidebar\_Corporation.cshtml" />
     <Content Include="Views\Shared\Sidebar\_Member.cshtml" />
-    <Content Include="Views\Shared\Sidebar\_Referrer.cshtml" />
     <Content Include="Views\Members\MemberOverview.cshtml" />
     <Content Include="Views\Shared\Lists\_Members.cshtml" />
     <Content Include="Views\Shared\Lists\_CaseManagers.cshtml" />
     <Content Include="Views\Shared\Lists\_Nonprofits.cshtml" />
-    <Content Include="Views\Shared\Lists\_Referrers.cshtml" />
     <Content Include="Views\Shared\Lists\_Prospects.cshtml" />
     <Content Include="Views\Nonprofits\AddMember.cshtml" />
-    <Content Include="Views\Admins\Referrers.cshtml" />
     <Content Include="Views\Shared\500.html" />
     <Content Include="Views\Shared\404.html" />
     <Content Include="Views\Nonprofits\JobPlaced.cshtml" />
@@ -609,6 +606,8 @@
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Nonprofits\NonprofitReferral.cshtml" />
     <Content Include="Views\Nonprofits\UploadClients.cshtml" />
+    <Content Include="Views\Prospects\InviteMember.cshtml" />
+    <Content Include="Views\Impact\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
