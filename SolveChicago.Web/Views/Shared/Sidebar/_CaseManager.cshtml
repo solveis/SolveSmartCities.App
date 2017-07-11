@@ -12,7 +12,7 @@
             <span class="app-dashboard-sidebar-text">Prospects</span>
         </a>
     </li>
-    @if (Settings.Website.ShowStagingFeatures)
+    @if (Settings.Website.ShowStagingFeatures == true)
     {
         <li class="menu-link @(Request.Url.AbsolutePath == "/Impact" ? "active" : "")">
             <a href="/Impact">

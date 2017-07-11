@@ -11,7 +11,29 @@ INSERT INTO dbo.NonprofitStaff
           ProgramId ,
           Role
         )
-VALUES (  1 , -- NonprofitId - int
+VALUES (   3, -- NonprofitId - int
+          1 , -- CaseManagerId - int
+          NULL , -- ProgramId - int
+          N'CaseManager'  -- Role - nvarchar(50)
+        )
+INSERT INTO dbo.NonprofitStaff
+        ( NonprofitId ,
+          CaseManagerId ,
+          ProgramId ,
+          Role
+        )
+VALUES (   3, -- NonprofitId - int
+          2 , -- CaseManagerId - int
+          NULL , -- ProgramId - int
+          N'CaseManager'  -- Role - nvarchar(50)
+        )
+INSERT INTO dbo.NonprofitStaff
+        ( NonprofitId ,
+          CaseManagerId ,
+          ProgramId ,
+          Role
+        )
+VALUES (   7, -- NonprofitId - int
           3 , -- CaseManagerId - int
           NULL , -- ProgramId - int
           N'CaseManager'  -- Role - nvarchar(50)
@@ -22,8 +44,8 @@ INSERT INTO dbo.NonprofitStaff
           ProgramId ,
           Role
         )
-VALUES (  2 , -- NonprofitId - int
-          3 , -- CaseManagerId - int
+VALUES (   7, -- NonprofitId - int
+          4 , -- CaseManagerId - int
           NULL , -- ProgramId - int
           N'CaseManager'  -- Role - nvarchar(50)
         )
@@ -33,7 +55,29 @@ INSERT INTO dbo.NonprofitStaff
           ProgramId ,
           Role
         )
-VALUES (  3 , -- NonprofitId - int
+VALUES (   7, -- NonprofitId - int
+          5 , -- CaseManagerId - int
+          NULL , -- ProgramId - int
+          N'CaseManager'  -- Role - nvarchar(50)
+        )
+INSERT INTO dbo.NonprofitStaff
+        ( NonprofitId ,
+          CaseManagerId ,
+          ProgramId ,
+          Role
+        )
+VALUES (   8, -- NonprofitId - int
+          6 , -- CaseManagerId - int
+          NULL , -- ProgramId - int
+          N'CaseManager'  -- Role - nvarchar(50)
+        )
+INSERT INTO dbo.NonprofitStaff
+        ( NonprofitId ,
+          CaseManagerId ,
+          ProgramId ,
+          Role
+        )
+VALUES (   8, -- NonprofitId - int
           7 , -- CaseManagerId - int
           NULL , -- ProgramId - int
           N'CaseManager'  -- Role - nvarchar(50)
@@ -44,52 +88,8 @@ INSERT INTO dbo.NonprofitStaff
           ProgramId ,
           Role
         )
-VALUES (  4 , -- NonprofitId - int
-          7 , -- CaseManagerId - int
-          NULL , -- ProgramId - int
-          N'CaseManager'  -- Role - nvarchar(50)
-        )
-INSERT INTO dbo.NonprofitStaff
-        ( NonprofitId ,
-          CaseManagerId ,
-          ProgramId ,
-          Role
-        )
-VALUES (  5 , -- NonprofitId - int
-          7 , -- CaseManagerId - int
-          NULL , -- ProgramId - int
-          N'CaseManager'  -- Role - nvarchar(50)
-        )
-INSERT INTO dbo.NonprofitStaff
-        ( NonprofitId ,
-          CaseManagerId ,
-          ProgramId ,
-          Role
-        )
-VALUES (  6 , -- NonprofitId - int
+VALUES (   9, -- NonprofitId - int
           8 , -- CaseManagerId - int
-          NULL , -- ProgramId - int
-          N'CaseManager'  -- Role - nvarchar(50)
-        )
-INSERT INTO dbo.NonprofitStaff
-        ( NonprofitId ,
-          CaseManagerId ,
-          ProgramId ,
-          Role
-        )
-VALUES (  7 , -- NonprofitId - int
-          8 , -- CaseManagerId - int
-          NULL , -- ProgramId - int
-          N'CaseManager'  -- Role - nvarchar(50)
-        )
-INSERT INTO dbo.NonprofitStaff
-        ( NonprofitId ,
-          CaseManagerId ,
-          ProgramId ,
-          Role
-        )
-VALUES (  8 , -- NonprofitId - int
-          9 , -- CaseManagerId - int
           NULL , -- ProgramId - int
           N'CaseManager'  -- Role - nvarchar(50)
         )
