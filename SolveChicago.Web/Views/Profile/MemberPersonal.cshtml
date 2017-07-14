@@ -158,8 +158,23 @@
             <input type="submit"  value="Submit" class="submit-create-profile" />
         </div>
 
-        <div><span class="back-button">< back</span></div>
-        
+       
+           <div class="text-center history">
+        <a href="#" class="previous"onclick="goBack()"  >&laquo; Previous</a>
+              </div>
+
+            @*<button onclick="goBack()">Go Back</button>*@
+
+            <script>
+    function goBack() {
+        window.history.back();
+    }
+            </script>
+
+
+
+        @*<a href="#" class="previous round">&#8249;</a>
+        <a href="#" class="next round">&#8250;</a>*@
     }
 </div>
 @section Scripts {
