@@ -3,6 +3,7 @@
 @using SolveChicago.Common
 @model SolveChicago.Web.Models.Profile.MemberProfilePersonalViewModel
 
+
 @{
     ViewBag.Title = "Personal";
     Layout = "~/Views/Shared/_Layout_MemberProfile.cshtml";
@@ -86,6 +87,9 @@
                 @Html.DropDownListFor(model => model.Member.Country, Model.CountryList.Select(x => new SelectListItem { Value = x, Text = x, Selected = x == Model.Member.Country }))
 
 
+               
+
+
                 @Html.ValidationMessageFor(model => model.Member.Income, "", new { @class = "text-danger" })
                 @Html.LabelFor(model => model.Member.Income, "Annual Income")
                 @Html.EditorFor(model => model.Member.Income, new { htmlAttributes = new { @type = "number" } })
@@ -155,21 +159,19 @@
             </div>
         </div>
         <div class="row align-center">
-            <input type="submit"  value="Submit" class="submit-create-profile" />
+            <a href="#" class="previous history" id="back">&laquo; Back</a>
+            <input type="submit"   value="Submit" class="submit-create-profile" />
         </div>
 
        
-           <div class="text-center history">
-        <a href="#" class="previous"onclick="goBack()"  >&laquo; Previous</a>
-              </div>
 
-            @*<button onclick="goBack()">Go Back</button>*@
 
-            <script>
-    function goBack() {
-        window.history.back();
-    }
-            </script>
+
+
+
+
+
+           
 
 
 

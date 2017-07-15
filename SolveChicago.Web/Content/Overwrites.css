@@ -48,13 +48,13 @@ a {
 }
 
     a:hover {
-        background-color: #ddd;
+        /*background-color: #ddd*/;
         color: black;
     }
 
 .previous {
-    background-color: #f1f1f1;
-    color: black;
+    /*background-color: #f1f1f1;*/
+    color: ;
 }
 
 .next {
@@ -68,14 +68,14 @@ a {
 
 
 .history {
-    margin-top: 25px;
+    margin-top: 0px;
     margin-bottom: 25px;
 }
 
 .back-button {
     padding-left: 80px;
     color: blue;
-    font-size: 20px;
+    font-size: 10px;
 }
 
 .add-job {

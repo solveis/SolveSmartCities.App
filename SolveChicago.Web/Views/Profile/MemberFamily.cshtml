@@ -97,10 +97,30 @@
             </div>
         </div>
         <div class="row align-center">
+            <a href="#" class="previous history" id="back">&laquo; Back</a>
             <input type="submit" value="Submit" class="submit-create-profile" />
         </div>
+
+    }
+
+
+    
+    <script>
+        function goBack() {
+            window.history.back();
         }
+    </script>
+
+
+
     </div>
+
+
+    
+
+
+            
+              
 
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
