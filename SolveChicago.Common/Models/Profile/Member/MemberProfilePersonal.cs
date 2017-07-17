@@ -40,7 +40,7 @@ namespace SolveChicago.Common.Models.Profile.Member
         [Required]
         public int EthnicityId { get; set; }
         public string Ethnicity { get; set; }
-        public Dictionary<int, string> EthnicityList { get; set; }
+       
         [Required]
         public string ZipCode { get; set; }
         [Required]
