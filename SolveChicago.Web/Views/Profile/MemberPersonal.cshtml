@@ -93,9 +93,9 @@
 
 
 
-                @Html.ValidationMessageFor(model => model.Member.Income, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.Member.Income, "", new { @class = "number-entry" })
                 @Html.LabelFor(model => model.Member.Income, "Annual Income")
-                @Html.EditorFor(model => model.Member.Income, new { htmlAttributes = new { @type = "number" } })
+                @Html.EditorFor(model => model.Member.Income, new { htmlAttributes = new { @type = "text" } })
             </div>
 
             <div class="form-holder">
