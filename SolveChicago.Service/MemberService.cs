@@ -173,6 +173,10 @@ namespace SolveChicago.Service
                     ContactPreference = member.ContactPreference,
                     IsMilitary = member.IsMilitary ?? false,
                     Skills = member.MemberSkills.Any(x => x.IsComplete) ? string.Join(", ", member.MemberSkills.Where(x => x.IsComplete).Select(x => x.Skill.Name).ToArray()) : string.Empty,
+                    EthnicityId = member.EthnicityId,
+                    Ethnicity =  member.Ethnicity !=null ? member.Ethnicity.EthnicityName: "",
+
+                
                 };
             }
         }
@@ -575,6 +579,7 @@ namespace SolveChicago.Service
                 member.FirstName = model.FirstName;
                 member.Gender = model.Gender;
                 member.Id = model.Id;
+                member.EthnicityId = model.EthnicityId;
                 member.LastName = model.LastName;
                 if(model.ProfilePicture != null)
                     member.ProfilePicturePath = UploadPhoto(Constants.Upload.MemberPhotos, model.ProfilePicture, member.Id);

@@ -56,23 +56,23 @@ namespace SolveChicago.Web.Controllers
 
 
        // GET: Profile/MemberPersonal
-       [Authorize(Roles = "Admin, MemberPersonal")]
-        public ActionResult EthinicityId(int? id)
-        {
-            model.EthnicityId = member.Ethinicty;
-            return View(model);
-        }
+       //[Authorize(Roles = "Admin, MemberPersonal")]
+       // public ActionResult EthinicityId(int? id)
+       // {
+       //         model.EthnicityId = member.EthinictyId;
+       //         return View(model);
+       // }
 
 
 
        // POST: Profile/Nonprofit
-       [Authorize(Roles = "Admin, Nonprofit")]
-       [HttpPost]
-        public ActionResult Nonprofit(NonprofitProfile model)
-        {
-            model.EthnicityId = member.Ethnicity;
-            return View(model);
-        }
+       //[Authorize(Roles = "Admin, Nonprofit")]
+       //[HttpPost]
+       // public ActionResult Nonprofit(NonprofitProfile model)
+       // {
+       //     model.EthnicityId = member.EthnicityId;
+       //     return View(model);
+       // }
 
 
         [Authorize(Roles = "Admin, Nonprofit, CaseManager, Member")]
@@ -250,8 +250,9 @@ namespace SolveChicago.Web.Controllers
         {
             MemberProfilePersonalViewModel model = new MemberProfilePersonalViewModel
             {
-                 model.EthnicityList = db.Ethnicities.ToDictionary(x => x.Id, x => x.EthnicityName);
-                Member = member,
+                 EthnicityList = db.Ethnicities.ToDictionary(x => x.Id, x => x.EthnicityName),
+                
+                 Member = member,
                 GenderList = GetGenderList(),
                 MilitaryBranchList = GetMilitaryBranchList(),
                 InterestList = GetInterestList(),

@@ -38,7 +38,7 @@ namespace SolveChicago.Common.Models.Profile.Member
         [Required]
         public string Country { get; set; }
         [Required]
-        public int EthnicityId { get; set; }
+        public int? EthnicityId { get; set; }
         public string Ethnicity { get; set; }
        
         [Required]
@@ -59,6 +59,7 @@ namespace SolveChicago.Common.Models.Profile.Member
         public MilitaryEntity[] Military { get; set; }
         [Required]
         public string ContactPreference { get; set; }
+       
     }
 
     public class MilitaryEntity
