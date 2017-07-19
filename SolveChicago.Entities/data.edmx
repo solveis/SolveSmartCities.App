@@ -169,7 +169,7 @@
           <Property Name="Type" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Source" Type="nvarchar" MaxLength="60" Nullable="false" />
           <Property Name="Message" Type="nvarchar" MaxLength="500" Nullable="false" />
-          <Property Name="User" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="User" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="StatusCode" Type="int" Nullable="false" />
           <Property Name="TimeUtc" Type="datetime" Nullable="false" />
           <Property Name="Sequence" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
@@ -1911,7 +1911,6 @@
           <EntitySet Name="CaseNotes" EntityType="SolveChicagoDevModel.CaseNote" />
           <EntitySet Name="Communications" EntityType="SolveChicagoDevModel.Communication" />
           <EntitySet Name="Corporations" EntityType="SolveChicagoDevModel.Corporation" />
-          <EntitySet Name="ELMAH_Error" EntityType="SolveChicagoDevModel.ELMAH_Error" />
           <EntitySet Name="Families" EntityType="SolveChicagoDevModel.Family" />
           <EntitySet Name="GovernmentPrograms" EntityType="SolveChicagoDevModel.GovernmentProgram" />
           <EntitySet Name="Interests" EntityType="SolveChicagoDevModel.Interest" />
@@ -2178,6 +2177,7 @@
             <End Role="Member" EntitySet="Members" />
             <End Role="Referral" EntitySet="Referrals" />
           </AssociationSet>
+          <EntitySet Name="ELMAH_Error" EntityType="SolveChicagoDevModel.ELMAH_Error" />
           </EntityContainer>
         <EntityType Name="Address">
           <Key>
@@ -2338,22 +2338,6 @@
           <Property Name="CreatedDate" Type="DateTime" Precision="7" />
           <NavigationProperty Name="MemberCorporations" Relationship="SolveChicagoDevModel.FK_MemberCorporations_Corporations" FromRole="Corporation" ToRole="MemberCorporation" />
           <NavigationProperty Name="AspNetUsers" Relationship="SolveChicagoDevModel.UserProfileCorporations" FromRole="Corporation" ToRole="AspNetUser" />
-        </EntityType>
-        <EntityType Name="ELMAH_Error">
-          <Key>
-            <PropertyRef Name="ErrorId" />
-          </Key>
-          <Property Name="ErrorId" Type="Guid" Nullable="false" />
-          <Property Name="Application" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="true" />
-          <Property Name="Host" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Type" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Source" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="true" />
-          <Property Name="Message" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="User" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="StatusCode" Type="Int32" Nullable="false" />
-          <Property Name="TimeUtc" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Sequence" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="AllXml" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Family">
           <Key>
@@ -3386,6 +3370,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ELMAH_Error">
+          <Key>
+            <PropertyRef Name="ErrorId" />
+          </Key>
+          <Property Name="ErrorId" Type="Guid" Nullable="false" />
+          <Property Name="Application" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="Host" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Source" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="Message" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="User" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="StatusCode" Type="Int32" Nullable="false" />
+          <Property Name="TimeUtc" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Sequence" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AllXml" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3531,23 +3531,6 @@
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ELMAH_Error">
-            <EntityTypeMapping TypeName="SolveChicagoDevModel.ELMAH_Error">
-              <MappingFragment StoreEntitySet="ELMAH_Error">
-                <ScalarProperty Name="AllXml" ColumnName="AllXml" />
-                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
-                <ScalarProperty Name="TimeUtc" ColumnName="TimeUtc" />
-                <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
-                <ScalarProperty Name="User" ColumnName="User" />
-                <ScalarProperty Name="Message" ColumnName="Message" />
-                <ScalarProperty Name="Source" ColumnName="Source" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="Host" ColumnName="Host" />
-                <ScalarProperty Name="Application" ColumnName="Application" />
-                <ScalarProperty Name="ErrorId" ColumnName="ErrorId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3943,6 +3926,23 @@
               <MappingFragment StoreEntitySet="Ethnicities">
                 <ScalarProperty Name="EthnicityName" ColumnName="EthnicityName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ELMAH_Error">
+            <EntityTypeMapping TypeName="SolveChicagoDevModel.ELMAH_Error">
+              <MappingFragment StoreEntitySet="ELMAH_Error">
+                <ScalarProperty Name="AllXml" ColumnName="AllXml" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+                <ScalarProperty Name="TimeUtc" ColumnName="TimeUtc" />
+                <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
+                <ScalarProperty Name="User" ColumnName="User" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Source" ColumnName="Source" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Host" ColumnName="Host" />
+                <ScalarProperty Name="Application" ColumnName="Application" />
+                <ScalarProperty Name="ErrorId" ColumnName="ErrorId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

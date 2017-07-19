@@ -26,3 +26,9 @@
     CONSTRAINT [FK_Member_AspNetUser] FOREIGN KEY (UserId) REFERENCES [AspNetUsers](Id) ON DELETE SET NULL, 
     CONSTRAINT [FK_Member_Ethnicity] FOREIGN KEY (EthnicityId) REFERENCES [Ethnicities](Id) ON DELETE SET NULL, 
 )
+GO
+EXEC sp_addextendedproperty N'MS_Description', N'Stores information about Members', 'SCHEMA', N'dbo', 'TABLE', N'Members', NULL, NULL
+GO
+EXEC sp_addextendedproperty N'MS_Description', N'i.e Phone or Email', 'SCHEMA', N'dbo', 'TABLE', N'Members', 'COLUMN', N'ContactPreference'
+GO
+EXEC sp_addextendedproperty N'MS_Description', N'Controls whether they show up in Prospects', 'SCHEMA', N'dbo', 'TABLE', N'Members', 'COLUMN', N'IsWorkforceInterested'

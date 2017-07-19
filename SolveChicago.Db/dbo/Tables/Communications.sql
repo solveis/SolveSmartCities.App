@@ -9,3 +9,8 @@
     CONSTRAINT [PK_Communications] PRIMARY KEY (Id), 
 	CONSTRAINT [FK_Communications_AspNetUsers] FOREIGN KEY (UserId) REFERENCES AspNetUsers(Id) ON DELETE CASCADE
 )
+GO
+EXEC sp_addextendedproperty N'MS_Description', N'Stores information about Communications', 'SCHEMA', N'dbo', 'TABLE', N'Communications', NULL, NULL
+GO
+EXEC sp_addextendedproperty N'MS_Description', N'Unused - idea is to store content of message here for auditing', 'SCHEMA', N'dbo', 'TABLE', N'Communications', 'COLUMN', N'HtmlContent'
+

@@ -8,3 +8,6 @@
     [Country] NVARCHAR(50) NULL, 
 	[ZipCode] NVARCHAR(10) NULL,
 )
+
+GO
+EXEC sp_addextendedproperty N'MS_Description', N'Stores address information', 'SCHEMA', N'dbo', 'TABLE', N'Addresses', NULL, NULL

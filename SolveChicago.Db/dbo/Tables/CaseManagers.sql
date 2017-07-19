@@ -12,3 +12,5 @@
     CONSTRAINT [PK_CaseManagers] PRIMARY KEY CLUSTERED ([Id] ASC), 
     CONSTRAINT [FK_CaseManagers_AspNetUser] FOREIGN KEY (UserId) REFERENCES [AspNetUsers](Id) ON DELETE SET NULL, 
 )
+GO
+EXEC sp_addextendedproperty N'MS_Description', N'Stores information about CaseManagers', 'SCHEMA', N'dbo', 'TABLE', N'CaseManagers', NULL, NULL

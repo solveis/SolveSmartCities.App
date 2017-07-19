@@ -11,3 +11,5 @@
     CONSTRAINT [FK_NonprofitPrograms_Nonprofit] FOREIGN KEY ([NonprofitId]) REFERENCES [Nonprofits](Id) ON DELETE CASCADE, 
     CONSTRAINT [FK_NonprofitPrograms_Ethnicity] FOREIGN KEY (EthnicityId) REFERENCES [Ethnicities](Id) ON DELETE SET NULL, 
 )
+GO
+EXEC sp_addextendedproperty N'MS_Description', N'Stores information about a Nonprofit''s Programs', 'SCHEMA', N'dbo', 'TABLE', N'NonprofitPrograms', NULL, NULL

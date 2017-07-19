@@ -5,16 +5,16 @@
     [Type]        NVARCHAR (100)   NOT NULL,
     [Source]      NVARCHAR (60)    NOT NULL,
     [Message]     NVARCHAR (500)   NOT NULL,
-    [User]        NVARCHAR (50)    NOT NULL,
+    [User]        NVARCHAR (256)    NOT NULL,
     [StatusCode]  INT              NOT NULL,
     [TimeUtc]     DATETIME         NOT NULL,
     [Sequence]    INT              IDENTITY (1, 1) NOT NULL,
     [AllXml]      NVARCHAR (MAX)   NOT NULL,
-    CONSTRAINT [PK_ELMAH_Error] PRIMARY KEY NONCLUSTERED ([ErrorId] ASC)
+    CONSTRAINT [PK_ELMAH_Error] PRIMARY KEY NONCLUSTERED ([ErrorId] ASC), 
 );
 GO
 
 CREATE NONCLUSTERED INDEX [IX_ELMAH_Error_App_Time_Seq]
     ON [dbo].[ELMAH_Error]([Application] ASC, [TimeUtc] DESC, [Sequence] DESC);
 GO
-
+EXEC sp_addextendedproperty N'MS_Description', N'Stores information about Error Log', 'SCHEMA', N'dbo', 'TABLE', N'ELMAH_Error', NULL, NULL

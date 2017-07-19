@@ -76,7 +76,6 @@
     <Build Include="dbo\Tables\Corporations.sql" />
     <Build Include="dbo\Tables\GovernmentPrograms.sql" />
     <Build Include="dbo\Tables\MemberCorporations.sql" />
-    <Build Include="dbo\Tables\MemberEmergencyContacts.sql" />
     <Build Include="dbo\Tables\MemberGovernmentPrograms.sql" />
     <Build Include="dbo\Tables\NonprofitMembers.sql" />
     <Build Include="dbo\Tables\Members.sql" />

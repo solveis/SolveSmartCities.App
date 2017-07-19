@@ -10,4 +10,5 @@ GO
 CREATE NONCLUSTERED INDEX [IX_UserId]
     ON [dbo].[AspNetUserLogins]([UserId] ASC);
 GO
+EXEC sp_addextendedproperty N'MS_Description', N'Default ASP.NET Identity Table', 'SCHEMA', N'dbo', 'TABLE', N'AspNetUserLogins', NULL, NULL
 
