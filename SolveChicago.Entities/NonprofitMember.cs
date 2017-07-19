@@ -29,10 +29,10 @@ namespace SolveChicago.Entities
         public System.DateTime Start { get; set; }
         public Nullable<System.DateTime> End { get; set; }
     
-        public virtual Member Member { get; set; }
         public virtual NonprofitProgram NonprofitProgram { get; set; }
         public virtual Nonprofit Nonprofit { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NonprofitStaff> NonprofitStaffs { get; set; }
+        public virtual Member Member { get; set; }
     }
 }

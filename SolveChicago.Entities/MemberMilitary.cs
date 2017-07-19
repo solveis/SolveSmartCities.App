@@ -21,7 +21,7 @@ namespace SolveChicago.Entities
         public string LastPayGrade { get; set; }
         public string CurrentStatus { get; set; }
     
-        public virtual Member Member { get; set; }
         public virtual MilitaryBranch MilitaryBranch { get; set; }
+        public virtual Member Member { get; set; }
     }
 }

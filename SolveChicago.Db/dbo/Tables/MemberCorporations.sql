@@ -14,3 +14,9 @@
     CONSTRAINT [FK_MemberCorporations_Corporations] FOREIGN KEY (CorporationId) REFERENCES [Corporations]([Id]) ON DELETE CASCADE,
     CONSTRAINT [FK_MemberCorporations_Nonprofits] FOREIGN KEY (NonprofitId) REFERENCES [Nonprofits]([Id]) ON DELETE SET NULL
 )
+GO
+EXEC sp_addextendedproperty N'MS_Description', N'Maps Members to Corporations', 'SCHEMA', N'dbo', 'TABLE', N'MemberCorporations', NULL, NULL
+GO
+EXEC sp_addextendedproperty N'MS_Description', N'Member must confirm job for it to count in Impact', 'SCHEMA', N'dbo', 'TABLE', N'MemberCorporations', 'COLUMN', N'IsMemberConfirmed'
+GO
+EXEC sp_addextendedproperty N'MS_Description', N'The Nonprofit that placed the Job', 'SCHEMA', N'dbo', 'TABLE', N'MemberCorporations', 'COLUMN', N'NonprofitId'

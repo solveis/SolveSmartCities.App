@@ -133,9 +133,6 @@
     <Compile Include="MemberCorporation.cs">
       <DependentUpon>data.tt</DependentUpon>
     </Compile>
-    <Compile Include="MemberEmergencyContact.cs">
-      <DependentUpon>data.tt</DependentUpon>
-    </Compile>
     <Compile Include="MemberGovernmentProgram.cs">
       <DependentUpon>data.tt</DependentUpon>
     </Compile>

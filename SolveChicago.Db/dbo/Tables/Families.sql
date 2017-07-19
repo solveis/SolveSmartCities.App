@@ -6,3 +6,5 @@
 
     CONSTRAINT [PK_Families] PRIMARY KEY CLUSTERED ([Id] ASC),
 )
+GO
+EXEC sp_addextendedproperty N'MS_Description', N'Stores information about Families', 'SCHEMA', N'dbo', 'TABLE', N'Families', NULL, NULL

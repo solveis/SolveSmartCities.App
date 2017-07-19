@@ -17,16 +17,16 @@ namespace SolveChicago.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Ethnicity()
         {
-            this.Members = new HashSet<Member>();
             this.NonprofitPrograms = new HashSet<NonprofitProgram>();
+            this.Members = new HashSet<Member>();
         }
     
         public int Id { get; set; }
         public string EthnicityName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Member> Members { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NonprofitProgram> NonprofitPrograms { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Member> Members { get; set; }
     }
 }

@@ -11,3 +11,9 @@
 
     CONSTRAINT [PK_GovernmentPrograms] PRIMARY KEY CLUSTERED ([Id] ASC)
 )
+GO
+EXEC sp_addextendedproperty N'MS_Description', N'Lookup table for GovernmentPrograms', 'SCHEMA', N'dbo', 'TABLE', N'GovernmentPrograms', NULL, NULL
+GO
+EXEC sp_addextendedproperty N'MS_Description', N'i.e. USA - Illinois - Cook - Chicago', 'SCHEMA', N'dbo', 'TABLE', N'GovernmentPrograms', 'COLUMN', N'Locality'
+GO
+EXEC sp_addextendedproperty N'MS_Description', N'i.e. City, County, State, Federal', 'SCHEMA', N'dbo', 'TABLE', N'GovernmentPrograms', 'COLUMN', N'Tier'
