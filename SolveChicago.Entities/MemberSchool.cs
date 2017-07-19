@@ -21,7 +21,7 @@ namespace SolveChicago.Entities
         public bool IsCurrent { get; set; }
         public string Degree { get; set; }
     
-        public virtual Member Member { get; set; }
         public virtual School School { get; set; }
+        public virtual Member Member { get; set; }
     }
 }

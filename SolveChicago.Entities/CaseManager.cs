@@ -31,10 +31,10 @@ namespace SolveChicago.Entities
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string UserId { get; set; }
     
-        public virtual AspNetUser AspNetUser { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NonprofitStaff> NonprofitStaffs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PhoneNumber> PhoneNumbers { get; set; }
+        public virtual AspNetUser AspNetUser { get; set; }
     }
 }

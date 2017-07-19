@@ -24,7 +24,7 @@ namespace SolveChicago.Entities
         public Nullable<bool> IsMemberConfirmed { get; set; }
     
         public virtual Corporation Corporation { get; set; }
-        public virtual Member Member { get; set; }
         public virtual Nonprofit Nonprofit { get; set; }
+        public virtual Member Member { get; set; }
     }
 }

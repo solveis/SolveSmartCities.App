@@ -33,7 +33,6 @@ namespace SolveChicago.Entities
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
-        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<CaseManager> CaseManagers { get; set; }
         public virtual DbSet<CaseNote> CaseNotes { get; set; }
         public virtual DbSet<Communication> Communications { get; set; }
@@ -43,11 +42,9 @@ namespace SolveChicago.Entities
         public virtual DbSet<Interest> Interests { get; set; }
         public virtual DbSet<IpAddress> IpAddresses { get; set; }
         public virtual DbSet<MemberCorporation> MemberCorporations { get; set; }
-        public virtual DbSet<MemberEmergencyContact> MemberEmergencyContacts { get; set; }
         public virtual DbSet<MemberGovernmentProgram> MemberGovernmentPrograms { get; set; }
         public virtual DbSet<MemberMilitary> MemberMilitaries { get; set; }
         public virtual DbSet<MemberParent> MemberParents { get; set; }
-        public virtual DbSet<Member> Members { get; set; }
         public virtual DbSet<MemberSchool> MemberSchools { get; set; }
         public virtual DbSet<MemberSkill> MemberSkills { get; set; }
         public virtual DbSet<MemberSpous> MemberSpouses { get; set; }
@@ -65,6 +62,8 @@ namespace SolveChicago.Entities
         public virtual DbSet<UserIpAddress> UserIpAddresses { get; set; }
         public virtual DbSet<Ethnicity> Ethnicities { get; set; }
         public virtual DbSet<ELMAH_Error> ELMAH_Error { get; set; }
+        public virtual DbSet<Member> Members { get; set; }
+        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
     
         public virtual ObjectResult<string> ELMAH_GetErrorsXml(string application, Nullable<int> pageIndex, Nullable<int> pageSize, ObjectParameter totalCount)
         {
