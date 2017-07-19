@@ -10,6 +10,8 @@
     }
 }
 
+
+
 @media print, screen and (max-height: 630px) {
     .case-manager-profile-picture{display:none !important;}
 }
@@ -34,6 +36,12 @@ body, h1, h2, h3, h4, h5, h6 {
 input[type="radio"], input[type="checkbox"] {
     margin: 4px 0 1rem;
     line-height: normal;
+}
+
+.back-button {
+    padding-left: 80px;
+    color: blue;
+    font-size: 20px;
 }
 
 .add-job {
