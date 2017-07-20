@@ -1079,26 +1079,12 @@
     <Content Include="Views\Impact\Index.cshtml" />
     <Content Include="Styles\app.scss" />
     <Content Include="Styles\components\.gitkeep" />
-    <Content Include="Styles\components\building-blocks\_alert-callout-border.scss" />
-    <Content Include="Styles\components\building-blocks\_alert-callout-subtle.scss" />
     <Content Include="Styles\components\building-blocks\_app-dashboard-layout.scss" />
-    <Content Include="Styles\components\building-blocks\_bar-graph.scss" />
-    <Content Include="Styles\components\building-blocks\_card-tabs.scss" />
-    <Content Include="Styles\components\building-blocks\_circle-graph.scss" />
-    <Content Include="Styles\components\building-blocks\_clipped-circle-graph.scss" />
-    <Content Include="Styles\components\building-blocks\_dashboard-nav-card.scss" />
-    <Content Include="Styles\components\building-blocks\_dashboard-number-card.scss" />
-    <Content Include="Styles\components\building-blocks\_dashboard-table.scss" />
     <Content Include="Styles\components\building-blocks\_form-registration.scss" />
-    <Content Include="Styles\components\building-blocks\_input-number-group.scss" />
     <Content Include="Styles\components\building-blocks\_member-page.scss" />
-    <Content Include="Styles\components\building-blocks\_multilevel-accordion-menu.scss" />
     <Content Include="Styles\components\building-blocks\_overview-page.scss" />
     <Content Include="Styles\components\building-blocks\_profile-page.scss" />
     <Content Include="Styles\components\building-blocks\_progress-indicator.scss" />
-    <Content Include="Styles\components\building-blocks\_searchbar-expand-on-click.scss" />
-    <Content Include="Styles\components\building-blocks\_switch-toggle-all.scss" />
-    <Content Include="Styles\components\building-blocks\_todo-list-card.scss" />
     <Content Include="Styles\_settings.scss" />
     <Content Include="Styles\components\building-blocks\_validation.scss" />
   </ItemGroup>

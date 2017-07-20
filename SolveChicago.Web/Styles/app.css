@@ -5988,6 +5988,16 @@ input[type="radio"], input[type="checkbox"] {
     .app-dashboard.shrink-large .menu li.menu-link a span {
       transition: opacity 0.5s ease-in-out; } }
 
+@media print, screen and (min-width: 40em) {
+  .off-canvas-content {
+    margin-left: 120px;
+    width: calc(100% - 120px); } }
+
+@media screen and (max-width: 39.9375em) {
+  .member-overview .column, .member-overview .columns {
+    display: block;
+    flex: none; } }
+
 .user-profile {
   position: absolute;
   top: 0;

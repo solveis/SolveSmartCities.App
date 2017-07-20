@@ -521,3 +521,17 @@ input[type="radio"], input[type="checkbox"] {
     @include shrunk-sidebar()
   }
 }
+// i.e. has a weird side effect without this rule on medium+ screens
+@include breakpoint(medium) {
+    .off-canvas-content {
+        margin-left: 120px;
+        width: calc(100% - 120px);
+    }
+}
+// columns get too skinny on small screens with flex
+@include breakpoint(small only) {
+    .member-overview .column {
+        display:block;
+        flex:none;
+    }
+}
