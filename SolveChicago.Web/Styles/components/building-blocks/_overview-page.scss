@@ -6,6 +6,11 @@
     background: $white;
     //padding: 20px;
     position: relative;
+    margin-bottom: 30px;
+    
+    .row {
+        padding: 0 30px;
+    }
 
     header {
         padding-left: 15px;
@@ -54,12 +59,15 @@
     .overview-image {
         display: block;
         //width: 100%;
+        img {
+            max-width: 230px;
+        }
 
         @include breakpoint(large) {
-          //max-width: 300px;
-          display: inline-block;
-          float: right;
-            
+            //max-width: 300px;
+            display: inline-block;
+            float: right;
+
             img {
                 margin: 36px;
             }
@@ -70,7 +78,6 @@
                 margin: 36px 0;
             }
         }
-
     }
 
     .overview-wrapper {
@@ -78,11 +85,11 @@
         width: 100%;
         //margin: 0 auto;
         @include breakpoint(large) {
-          max-width: 720px;
-          display: inline-block;
-          float: left;
+            max-width: 720px;
+            display: inline-block;
+            float: left;
         }
-      }
+    }
 
     .overview-line-divider {
         width: 100%;

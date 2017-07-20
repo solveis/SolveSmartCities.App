@@ -1,6 +1,17 @@
 $app-dashboard-top-nav-color: $dark-blue;
 $app-dashboard-top-nav-height: 60px;
 
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
+
+body, h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+input[type="radio"], input[type="checkbox"] {
+    margin: 4px 0 1rem;
+    line-height: normal;
+}
+
 .app-dashboard {
   height: 100vh;
   display: flex;
@@ -27,13 +38,15 @@ $app-dashboard-top-nav-height: 60px;
   text-transform: uppercase;
   font-weight: bold;
   img {
-    height: 100%;
+    height: auto;
     max-height: 40px;
     width: auto;
 
     @include breakpoint(small only) {
-        float: right;
-        margin-right: 60px;
+        float: none;
+        margin-right: 0;
+        margin-left:30px;
+        height:auto;
       }
     }
 }
@@ -88,153 +101,167 @@ $app-dashboard-top-nav-height: 60px;
 }
 
 .app-dashboard-sidebar {
-  background-color: $royal-blue;
-  height: 100%;
-  overflow-x: visible;
-  overflow-y: auto;
-  z-index: 1;
-  transition: all $offcanvas-transition-length $offcanvas-transition-timing;
-
-
-  .app-dashboard-open-sidebar, .app-dashboard-close-sidebar{
-    align-items: baseline;
-    display: flex;
-    justify-content: space-between;
-    padding: 2rem 1rem;
-  }
-
-  .app-dashboard-sidebar-close-button {
-    font-size: 14px;
-  }
-
-  .app-dashboard-sidebar-inner {
+    background-color: $royal-blue;
     height: 100%;
-    overflow-x: hidden;
+    overflow-x: visible;
     overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    z-index: 1;
+    transition: all $offcanvas-transition-length $offcanvas-transition-timing;
 
-    .menu > ul {
-      &:last-child {
-        align-self: flex-end;
-      }
+
+    .app-dashboard-open-sidebar, .app-dashboard-close-sidebar {
+        align-items: baseline;
+        display: flex;
+        justify-content: space-between;
+        padding: 2rem 1rem;
     }
 
-    .menu > li > a {
-      padding: 33px 0;
-      flex-direction: column;
-      border-bottom: 1px solid rgba($grey, 0.3);
-      align-items: center;
-      color: $white;
-      font-size: 14px;
-      text-transform: uppercase;
-
-      &:hover {
-        border-left: 15px solid $brand-blue;
-        background-color: rgba($dark-blue, 0.20);
-      }
-
-      &:active {
-        border-left: 15px solid $brand-blue;
-        background-color: rgba($dark-blue, 0.20);
-      }
+    .app-dashboard-sidebar-close-button {
+        font-size: 14px;
     }
 
-    .menu-icon {
-      height: 25px;
-      margin-bottom: 12px;
-      width: auto;
-    }
-
-    .sub-menu {
-      width: 100%;
-      display: flex;
-      padding-top: 20px;
-      margin: 0;
-      flex-direction: column;
-      border-bottom: 1px solid rgba($grey, 0.3);
-      color: $white;
-      font-size: 14px;
-      text-transform: uppercase;
-      align-self: center;
-
-      ul {
-        list-style-type: none;
-      }
-
-      li {
-        align-items: center;
+    .app-dashboard-sidebar-inner {
+        height: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
         display: flex;
         flex-direction: column;
-        border-bottom: 1px solid rgba($grey, 0.3);
+        -webkit-flex-direction: column;
+        justify-content: space-between;
 
-        &:first-child {
-          padding: 0;
+        .menu > ul {
+            &:last-child {
+                align-self: flex-end;
+            }
         }
 
-        .case-manager-profile-picture {
-          width: 50px;
-          height: 50px;
-          border-radius: 100%;
-          background-color: red;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          border: 1px solid $white;
-          margin-bottom: 8px;
-          background: $brand-blue url('../img/profile-thumb-example.png') no-repeat center center;
-          background-size: 100% auto;
+        .menu {
+            .active {
+                a {
+                    background-color: rgba(34, 49, 63, 0.2);
+                    border-left: 15px solid #22A7F0;
+                }
+            }
+            > li > a {
+                padding: 25px 0;
+                -webkit-flex-direction: column;
+                -ms-flex-direction: column;
+                flex-direction: column;
+                border-bottom: 1px solid rgba(57,65,72,.3);
+                -webkit-align-content: center;
+                -ms-flex-align: center;
+                align-items: center;
+                color: #fff;
+                font-size: 14px;
+                text-transform: uppercase;
+                display:flex;
+                display:-ms-flexbox;
+
+                &:hover, &:active {
+                    border-left: none;
+                    background-color: rgba($dark-blue, 0.20);
+                }
+            }
         }
 
-        .case-manager-name {
-          text-transform: none;
-          font-weight: bold;
-          font-size: 14px;
+        .menu-icon {
+            height: 25px;
+            margin-bottom: 12px;
+            width: auto;
         }
 
-        .case-manager-company {
-          text-transform: none;
-          font-size: 12px;
-          margin-bottom: 12px;
+        .sub-menu {
+            width: 100%;
+            display: flex;
+            padding-top: 20px;
+            margin: 0;
+            flex-direction: column;
+            border-bottom: 1px solid rgba($grey, 0.3);
+            color: $white;
+            font-size: 14px;
+            text-transform: uppercase;
+            align-self: center;
+
+            ul {
+                list-style-type: none;
+            }
+
+            li {
+                align-items: center;
+                display: flex;
+                flex-direction: column;
+                border-bottom: 1px solid rgba($grey, 0.3);
+
+                &:first-child {
+                    padding: 0;
+                }
+
+                .case-manager-profile-picture {
+                    width: 50px;
+                    height: 50px;
+                    min-height: 50px;
+                    border-radius: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border: 1px solid $white;
+                    margin-bottom: 8px;
+                    background-size: 100% auto;
+                    overflow: hidden;
+                }
+
+                .case-manager-name {
+                    text-transform: none;
+                    font-weight: bold;
+                    font-size: 14px;
+                }
+
+                .case-manager-company {
+                    text-transform: none;
+                    font-size: 12px;
+                    margin-bottom: 12px;
+                }
+
+                .sub-menu-icon {
+                    width: 25px;
+                    height: auto;
+                    margin-right: 12px;
+                }
+            }
+
+            .active {
+                > a {
+                    background: #1779ba;
+                    color: #ffffff;
+                }
+            }
+
+            a {
+                width: 100%;
+                padding: 20px 0;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                color: $white;
+                text-transform: none;
+
+                &:hover {
+                    border-left: 4px solid $brand-blue;
+                    background-color: rgba($dark-blue, 0.20);
+                }
+
+                &:active {
+                    border-left: 4px solid $brand-blue;
+                    background-color: rgba($dark-blue, 0.20);
+                }
+            }
         }
-
-        .sub-menu-icon {
-          width: 25px;
-          height: auto;
-          margin-right: 12px;
-        }
-
-      }
-
-      a {
-        width: 100%;
-        padding: 20px 0;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        color: $white;
-        text-transform: none;
-
-        &:hover {
-          border-left: 4px solid $brand-blue;
-          background-color: rgba($dark-blue, 0.20);
-        }
-
-        &:active {
-          border-left: 4px solid $brand-blue;
-          background-color: rgba($dark-blue, 0.20);
-        }
-      }
     }
 
-
-
-  }
-  .fa.large {
-    font-size: rem-calc(24);
-    width: 40px;
-  }
+    .fa.large {
+        font-size: rem-calc(24);
+        width: 40px;
+    }
 }
 
 .reveal-for-medium {
@@ -297,12 +324,12 @@ $app-dashboard-top-nav-height: 60px;
     margin: 0 auto;
     @include breakpoint(large) {
       &:first-child {
-        margin-right: 60px;
+        margin-right: auto;
       }
 
       &:last-child {
         float: right;
-        align-self: flex-end;
+        align-self: flex-start;
       }
     }
   }
@@ -349,57 +376,60 @@ $app-dashboard-top-nav-height: 60px;
 }
 
 @mixin shrunk-sidebar() {
-  .app-dashboard-close-sidebar, .app-dashboard-sidebar-text {
-    //justify-content: space-between;
-  }
-
-  .app-dashboard-open-sidebar {
-    display: block;
-  }
-
-  .app-dashboard-sidebar {
-    width: 120px;
-    .fa.large {
-      width: auto;
+    .app-dashboard-close-sidebar, .app-dashboard-sidebar-text {
+        //justify-content: space-between;
     }
-  }
 
-  .off-canvas-content {
-    margin-left: 120px;
-    width: calc(100% - 120px);
-  }
-
-  .navigation {
-    margin-top: 2rem;
-    text-align: center;
-
-  }
-  .menu.vertical > li > a {
-    justify-content: center;
-  }
-
-  .menu {
-
-    li.menu-link {
-      &::after {
-        display: none;
-        opacity: 0;
-        transition: opacity 0.5s ease-in-out;
-      }
-
-      a {
-        padding: 0.75rem;
-        svg {
-          margin: 0;
-        }
-        span {
-          // display: none;
-          // opacity: 0;
-          transition: opacity 0.5s ease-in-out;
-        }
-      }
+    .app-dashboard-open-sidebar {
+        display: block;
     }
-  }
+
+    .app-dashboard-sidebar {
+        width: 120px;
+
+        .fa.large {
+            width: auto;
+        }
+    }
+
+    .off-canvas-content {
+        margin-left: 120px;
+        width: calc(100% - 120px);
+    }
+
+    .navigation {
+        margin-top: 2rem;
+        text-align: center;
+    }
+
+    .menu.vertical > li > a {
+        justify-content: center;
+    }
+
+    .menu {
+        
+        li.menu-link {
+            &::after {
+                display: none;
+                opacity: 0;
+                transition: opacity 0.5s ease-in-out;
+            }
+
+            a {
+                padding: 0.75rem;
+
+                svg {
+                    margin: 0;
+                }
+
+                span {
+                    // display: none;
+                    // opacity: 0;
+                    transition: opacity 0.5s ease-in-out;
+                }
+            }
+        }
+    }
 }
 
 .notification-badge {
@@ -438,8 +468,8 @@ $app-dashboard-top-nav-height: 60px;
   padding: 12px 20px;
   border: 2px solid $light-blue;
   border-radius: 50px;
-  height: 40px;
-  margin-bottom: -20px;
+  height: 50px;
+  margin-bottom: -25px;
   background-color: $white;
   font-weight: 800;
 

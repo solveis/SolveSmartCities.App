@@ -1,5 +1,12 @@
 {
   "name": "asp.net",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "foundation-sites": "v6.4.1",
+    "motion-ui": "v1.2.3"
+  },
+  "resolutions": {
+    "foundation-sites": "v6.4.1",
+    "what-input": "~4.1.3"
+  }
 }

@@ -28,10 +28,11 @@
     width: 100%;
     background: $super-light-blue;
     position: relative;
+    border-bottom: 1px solid $white;
 
     a {
         margin-top: 6px;
-        width: 100%;
+        width: auto;
         text-transform: uppercase;
         font-weight: 800;
         margin-bottom: 0;
@@ -39,6 +40,10 @@
         //height: 50px;
         @include breakpoint(large) {
             max-width: 90px;
+        }
+
+        &.show-family {
+            max-width: 150px;
         }
     }
 
@@ -54,18 +59,26 @@
         margin-top: 20px;
     }
 
+    &.member-card-header {
+        background: none;
+        height: 50px;
+        color: #aaa;
+    }
+
+    &.prospects:nth-child(2n) {
+        background: #ececec;
+    }
+
     .member-card-thumb {
         width: 50px;
         height: 50px;
         border-radius: 100%;
-        background-color: $offwhite;
         display: flex;
         justify-content: center;
         align-items: center;
         border: 1px solid $white;
-        //margin-bottom: 8px;
-        background: $brand-blue url('../img/profile-thumb-example.png') no-repeat center center;
         background-size: 100% auto;
+        overflow: hidden;
     }
 
     .overview-card-header {
@@ -79,7 +92,6 @@
     .has-space {
         margin: 12px 0;
     }
-
 }
 
 .member-details {
@@ -93,14 +105,13 @@
         width: 36px;
         height: 36px;
         border-radius: 100%;
-        background-color: $offwhite;
         display: flex;
         justify-content: center;
         align-items: center;
         border: 1px solid $white;
-        background: $brand-blue url('../img/profile-thumb-example.png') no-repeat center center;
         background-size: 100% auto;
         margin-left: 8px;
+        overflow: hidden;
 
         @include breakpoint(large) {
             margin-left: 18px;
@@ -119,61 +130,86 @@
     .small-progress-description {
         font-size: 12px;
         color: $grey;
+        position: absolute;
     }
 
     .has-small-space {
         margin: 6px 0;
     }
+
+    .arrow-right {
+        width: 0;
+        height: 0;
+        border-left: 10px solid white;
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+        position: absolute;
+        top: 11px;
+        right: 15px;
+        z-index: 101;
+    }
+}
+
+.member-details-menu-wrapper {
+    position: relative;
 }
 
 .member-details-menu {
-  display: flex;
-  margin: 0;
-  text-transform: uppercase;
-  float: right;
-
-
-  ul {
-    list-style-type: none;
-  }
-
-  li {
     display: flex;
+    margin: 0;
+    text-transform: uppercase;
+    float: right;
+    position: absolute;
+    z-index: 1;
+    background: #fff;
+    top: -30px;
+    box-shadow: 3px 0px 15px #aaa;
+    border-radius: 7px;
+    display: block !important;
+    padding-bottom: 5px;
+    right: 20px;
 
-    &:first-child {
-      padding: 0;
+
+    ul {
+        list-style-type: none;
     }
 
-    .sub-menu-icon {
-        align-self: center;
-        width: 14px;
-        height: 14px;
-        margin-bottom: 2px;
+    li {
+        display: block;
+
+        &:first-child {
+            padding: 0;
+        }
+
+        .sub-menu-icon {
+            align-self: center;
+            width: 14px;
+            height: 14px;
+            margin-bottom: 2px;
+        }
     }
 
-  }
-
-  a {
-    color: $brand-blue;
-    font-size: 12px;
-    display: flex;
-    flex-direction: column;
-    text-transform: none;
-    font-weight: 800;
-    margin-right: 8px;
-    border-bottom: 1px solid $white;
-
-    &:hover {
+    a, button {
         color: $royal-blue;
-        border-bottom: 1px solid $royal-blue;
-      //border-bottom: rgba($dark-blue, 0.20);
-    }
+        font-size: 12px;
+        display: block;
+        flex-direction: column;
+        text-transform: none;
+        font-weight: 800;
+        margin-right: 8px;
+        border-bottom: 1px solid $white;
+        padding: 0 15px;
+        max-width: 120px;
+        float: left;
 
-    &:active {
-      border-left: 4px solid $brand-blue;
-      background-color: rgba($dark-blue, 0.20);
+        &:hover, &:active {
+            color: $royal-blue;
+            border: none;
+            background:none;
+            text-decoration:underline;
+        }
+
     }
-  }
 }
 
 

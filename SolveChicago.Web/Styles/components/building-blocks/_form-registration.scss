@@ -2,6 +2,9 @@ $form-registration-bg: $white;
 $form-registration-highlight-color: $blue;
 $social-brand-facebook: #3b5998;
 
+body.register {
+    background: #22323f;
+}
 
 .form-registration-bg {
   display: flex;
@@ -35,78 +38,100 @@ $social-brand-facebook: #3b5998;
 }
 
 .form-registration-group {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  width: 100%;
-  padding: 0 $global-padding;
-  margin-bottom: 60px;
-
-  .form-registration-input {
-    position: relative;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
     width: 100%;
-    max-width: 350px; 
-    border-radius: 40px;
-    height: 50px;
-    color: $white;
-    background: rgba($white, 0.25);
-    padding-left:50px;
-    border: none;
+    padding: 0 $global-padding;
+    margin-bottom: 60px;
 
-    &::placeholder {
-      text-transform: uppercase;
-      color: $offwhite;
-      font-size: 14px;
-    }
+    .form-registration-input {
+        position: relative;
+        width: 100%;
+        max-width: 350px;
+        border-radius: 40px;
+        height: 50px;
+        min-height: 50px;
+        color: $white;
+        background: rgba($white, 0.25);
+        padding-left: 50px;
+        border: none;
 
-    &:focus {
-      background: transparent;
-      border: 2px solid $form-registration-highlight-color;
-      box-shadow: 0 0 4px $form-registration-highlight-color;
-    }
+        &::placeholder {
+            text-transform: uppercase;
+            color: $offwhite;
+            font-size: 14px;
+        }
 
-    &--has-email-icon {
-      background: rgba($white, 0.25) url('../img/email-icon.svg') no-repeat scroll 20px 16px;
-        
         &:focus {
-          background: url('../img/email-icon.svg') no-repeat scroll 18px 14px;
+            background: transparent;
+            border: 2px solid $form-registration-highlight-color;
+            box-shadow: 0 0 4px $form-registration-highlight-color;
+        }
+
+        &--has-email-icon {
+            background: rgba($white, 0.25) url('../img/email-icon.svg') no-repeat scroll 20px 16px;
+
+            &:focus {
+                background: url('../img/email-icon.svg') no-repeat scroll 18px 14px;
+            }
+        }
+
+        &--has-password-icon {
+            background: rgba($white, 0.25) url('../img/password-icon.svg') no-repeat scroll 20px 12px;
+
+            &:focus {
+                background: url('../img/password-icon.svg') no-repeat scroll 18px 10px;
+            }
+        }
+
+        &--has-error {
+            color: $white;
+            border: 1px solid $brand-red;
+            box-shadow: 0 0 4px $brand-red;
+            background: url('../img/error-icon.svg') no-repeat scroll 20px 14px;
         }
     }
 
-    &--has-password-icon {
-      background: rgba($white, 0.25) url('../img/password-icon.svg') no-repeat scroll 20px 12px;
-        
-        &:focus {
-          background: url('../img/password-icon.svg') no-repeat scroll 18px 10px;
+    .form-registration-submit-button {
+        text-transform: uppercase;
+        margin-bottom: 0;
+        height: 40px;
+        min-height: 40px;
+        width: 100%;
+        max-width: 200px;
+        background-color: transparent;
+        border: 2px solid $white;
+        color: $white;
+        margin-top: 20px;
+        margin-bottom: 36px;
+
+        &:hover {
+            color: $brand-blue;
+            background-color: $white;
         }
     }
+}
 
-    &--has-error {
-      color: $white;
-      border: 1px solid $brand-red;
-      box-shadow: 0 0 4px $brand-red;
-      background: url('../img/error-icon.svg') no-repeat scroll 20px 14px; 
+.checkbox label {
+    display: inline;
+}
+
+.login-helper {
+    font-size: 14px;
+    color: #fff;
+    text-align: center;
+    max-width: 80%;
+
+    a {
+        color: #fff;
+        text-decoration: underline;
     }
 
-  }
-
-  .form-registration-submit-button {
-    text-transform: uppercase;
-    margin-bottom: 0;
-    height: 40px;
-    width: 100%;
-    max-width: 200px;
-    background-color: transparent;
-    border: 2px solid $white;
-    color: $white;
-    margin-top: 36px;
-    margin-bottom: 36px;
-
-    &:hover {
-      color: $brand-blue;
-      background-color: $white;
+    &:hover,
+    &:active {
+        color: #eee;
     }
-  }
 }
 
   .form-registration-member-signup, 

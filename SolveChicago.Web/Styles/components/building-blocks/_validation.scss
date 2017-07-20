@@ -1,0 +1,13 @@
+﻿.validation-summary-errors, .input-validation-error {
+    background: #fee9e7;
+    color: #f22613;
+    padding: 20px 40px;
+    border-radius: 10px;
+    height: auto;
+    width: 80%;
+    margin-bottom: 30px;
+
+    ul {
+        margin: 0;
+    }
+}

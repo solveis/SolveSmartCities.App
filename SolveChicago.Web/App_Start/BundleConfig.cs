@@ -48,8 +48,7 @@ namespace SolveChicago.Web
                       "~/Content/themes/base/jquery-ui.css"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/overwrites.css",
-                      "~/Content/site.css"));
+                      "~/Styles/app.css"));
 
             bundles.Add(new StyleBundle("~/Content/bootstrap", "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css").Include(
                         "~/Content/bootstrap.css"));

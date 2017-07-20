@@ -2,7 +2,6 @@
 
 @import 'settings';
 @import '../bower_components/foundation-sites/scss/foundation.scss';
-@import '../bower_components/foundation-sites/scss/_global.scss';
 @import '../bower_components/motion-ui/motion-ui.scss';
 
 
@@ -62,3 +61,5 @@
 
 @import 'components/building-blocks/form-registration';
 @import 'components/building-blocks/progress-indicator';
+
+@import 'components/building-blocks/validation';

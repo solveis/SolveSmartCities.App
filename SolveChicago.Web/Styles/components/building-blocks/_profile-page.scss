@@ -23,6 +23,25 @@
     overflow-y: scroll;
 }
 
+.entry {
+    padding: 30px 0;
+
+    &:not(:nth-last-child(2)) {
+        border-bottom: 1px solid #888;
+    }
+}
+
+#npo-wrapper, #GovernmentProgram {
+    width: 80%;
+    margin: 50px auto;
+}
+
+.back-button {
+    padding-left: 80px;
+    color: blue;
+    font-size: 20px;
+}
+
 .hero-main-profile {
     clear: both;
     display: flex;
@@ -37,10 +56,10 @@
         margin: 36px 0;
         border: 1px solid $white;
         border-radius: 100%;
-        background: $brand-blue url('../img/profile-thumb-example.png') no-repeat center center;
         background-size: 100% auto;
         align-self: center;
         justify-content: center;
+        overflow:hidden;
     }
 
     .profile-information-container {
