@@ -13,6 +13,7 @@ using SolveChicago.Service;
 using SolveChicago.Common.Models.Profile.Member;
 using SolveChicago.Common.Models.Profile;
 
+
 namespace SolveChicago.Web.Controllers
 {
     [Authorize]
@@ -52,6 +53,28 @@ namespace SolveChicago.Web.Controllers
 
         }
 
+
+
+       // GET: Profile/MemberPersonal
+       //[Authorize(Roles = "Admin, MemberPersonal")]
+       // public ActionResult EthinicityId(int? id)
+       // {
+       //         model.EthnicityId = member.EthinictyId;
+       //         return View(model);
+       // }
+
+
+
+       // POST: Profile/Nonprofit
+       //[Authorize(Roles = "Admin, Nonprofit")]
+       //[HttpPost]
+       // public ActionResult Nonprofit(NonprofitProfile model)
+       // {
+       //     model.EthnicityId = member.EthnicityId;
+       //     return View(model);
+       // }
+
+
         [Authorize(Roles = "Admin, Nonprofit, CaseManager, Member")]
         // GET: Profile/MemberPersonal
         public ActionResult MemberPersonal(int? id)
@@ -71,9 +94,9 @@ namespace SolveChicago.Web.Controllers
             if (ModelState.IsValid)
             {
                 MemberService service = new MemberService(this.db);
-                
-                    service.UpdateMemberPersonal(model.Member);
-                    return UpdateSurveyStatus(model.Member.Id, Constants.Member.SurveyStep.Family);
+
+                service.UpdateMemberPersonal(model.Member);
+                return UpdateSurveyStatus(model.Member.Id, Constants.Member.SurveyStep.Family);
             }
             model = FormatMemberProfilePersonalViewModel(model.Member);
             return View(model);
@@ -227,7 +250,9 @@ namespace SolveChicago.Web.Controllers
         {
             MemberProfilePersonalViewModel model = new MemberProfilePersonalViewModel
             {
-                Member = member,
+                 EthnicityList = db.Ethnicities.ToDictionary(x => x.Id, x => x.EthnicityName),
+                
+                 Member = member,
                 GenderList = GetGenderList(),
                 MilitaryBranchList = GetMilitaryBranchList(),
                 InterestList = GetInterestList(),
@@ -497,6 +522,22 @@ namespace SolveChicago.Web.Controllers
             return RedirectToAction("Index", "Nonprofits", new { nonprofitId = State.NonprofitId });
         }
 
+
+
+        // { 
+        
+        // Dictionary<int, string> ethnicitiies = db.Ethnicities.ToDictionary(x => x.EthnicityName);
+
+        //}
+
+        //    {
+             
+        //        member.EthnicityId = model.EthnicityId
+
+        //    }
+
+
+
         // GET: Profile/Corporation
         [Authorize(Roles = "Admin, Corporation")]
         public ActionResult Corporation(int? id)
@@ -519,6 +560,8 @@ namespace SolveChicago.Web.Controllers
             }
             return RedirectToAction("Index", "Corporations", new { corporationId = State.CorporationId });
         }
+
+
 
         // GET: Profile/Admin
         [Authorize(Roles = "Admin")]
