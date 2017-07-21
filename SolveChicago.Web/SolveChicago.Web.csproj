@@ -1079,11 +1079,11 @@
     <Content Include="Views\Impact\Index.cshtml" />
     <Content Include="Styles\app.scss" />
     <Content Include="Styles\components\.gitkeep" />
-    <Content Include="Styles\components\building-blocks\_app-dashboard-layout.scss" />
-    <Content Include="Styles\components\building-blocks\_form-registration.scss" />
-    <Content Include="Styles\components\building-blocks\_member-page.scss" />
-    <Content Include="Styles\components\building-blocks\_overview-page.scss" />
-    <Content Include="Styles\components\building-blocks\_profile-page.scss" />
+    <Content Include="Styles\components\building-blocks\_list.scss" />
+    <Content Include="Styles\components\building-blocks\_login-register.scss" />
+    <Content Include="Styles\components\building-blocks\_member-detail.scss" />
+    <Content Include="Styles\components\building-blocks\_member-overview.scss" />
+    <Content Include="Styles\components\building-blocks\_profile.scss" />
     <Content Include="Styles\components\building-blocks\_progress-indicator.scss" />
     <Content Include="Styles\_settings.scss" />
     <Content Include="Styles\components\building-blocks\_validation.scss" />

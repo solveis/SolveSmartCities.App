@@ -53,13 +53,13 @@
 @include motion-ui-transitions;
 @include motion-ui-animations;
 
-@import 'components/building-blocks/app-dashboard-layout';
+@import 'components/building-blocks/list';
 
-@import 'components/building-blocks/profile-page';
-@import 'components/building-blocks/overview-page';
-@import 'components/building-blocks/member-page';
+@import 'components/building-blocks/profile';
+@import 'components/building-blocks/member-overview';
+@import 'components/building-blocks/member-detail';
 
-@import 'components/building-blocks/form-registration';
+@import 'components/building-blocks/login-register';
 @import 'components/building-blocks/progress-indicator';
 
 @import 'components/building-blocks/validation';
