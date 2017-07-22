@@ -6029,9 +6029,15 @@ input[type="radio"], input[type="checkbox"] {
   margin: 50px auto; }
 
 .back-button {
-  padding-left: 80px;
-  color: blue;
-  font-size: 20px; }
+  color: #22A7F0;
+  font-size: 14px;
+  text-transform: uppercase;
+  padding-top: 9px;
+  padding-right: 20px;
+  font-weight: bold; }
+
+.back-button span {
+  font-weight: normal; }
 
 .hero-main-profile {
   clear: both;
@@ -6524,7 +6530,7 @@ body.register {
       .progress-indicator > li.is-current span {
         color: #22A7F0; }
 
-.validation-summary-errors, .input-validation-error {
+.validation-summary-errors {
   background: #fee9e7;
   color: #f22613;
   padding: 20px 40px;
@@ -6532,6 +6538,9 @@ body.register {
   height: auto;
   width: 80%;
   margin-bottom: 30px; }
-  .validation-summary-errors ul, .input-validation-error ul {
+  .validation-summary-errors ul {
     margin: 0; }
+
+.input-validation-error {
+  background: #fee9e7; }
 

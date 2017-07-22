@@ -1,4 +1,4 @@
-﻿.validation-summary-errors, .input-validation-error {
+﻿.validation-summary-errors {
     background: #fee9e7;
     color: #f22613;
     padding: 20px 40px;
@@ -10,4 +10,12 @@
     ul {
         margin: 0;
     }
+}
+
+.input-validation-error {
+    background: #fee9e7;
+}
+
+.field-validation-error {
+    
 }

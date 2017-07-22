@@ -37,9 +37,16 @@
 }
 
 .back-button {
-    padding-left: 80px;
-    color: blue;
-    font-size: 20px;
+    color: #22A7F0;
+    font-size: 14px;
+    text-transform: uppercase;
+    padding-top: 9px;
+    padding-right: 20px;
+    font-weight: bold;
+}
+
+.back-button span {
+    font-weight:normal;
 }
 
 .hero-main-profile {
