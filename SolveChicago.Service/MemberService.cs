@@ -639,6 +639,23 @@ namespace SolveChicago.Service
                         }
                         else if (string.IsNullOrEmpty(familyMember.FirstName) && string.IsNullOrEmpty(familyMember.LastName))
                             db.Members.Remove(existingFamilyMember);
+
+                        if (existingFamilyMember != null)
+                        {
+
+                            existingFamilyMember.FirstName = familyMember.FirstName;
+                            existingFamilyMember.LastName = familyMember.LastName;
+                            existingFamilyMember.Birthday = familyMember.Birthday;
+                            existingFamilyMember.IsHeadOfHousehold = familyMember.IsHeadOfHousehold;
+                            existingFamilyMember.Gender = familyMember.Gender;
+                            existingFamilyMember.Email = familyMember.Email;
+                            
+                            
+                            
+                            db.SaveChanges();
+                        }
+                        else if (string.IsNullOrEmpty(familyMember.FirstName) && string.IsNullOrEmpty(familyMember.LastName))
+                            db.Members.Remove(existingFamilyMember);
                         if (!familyMembers.Select(x => x.Id).Contains(existingFamilyMember.Id))
                             AddFamilyMemberRelationship(existingFamilyMember, member, familyMember.Relation);
                     }
@@ -775,6 +792,7 @@ namespace SolveChicago.Service
                     if(!string.IsNullOrEmpty(job.Name) || job.CorporationId.HasValue) // not the best way to do this, but the default value for IsCurrent makes the model bind an empty object to itself on POST. Should refactor this later.
                     {
                         Corporation corporation = db.Corporations.Where(x => (x.Name == job.Name)).FirstOrDefault();
+
                         if (corporation == null)
                         {
                             corporation = new Corporation
@@ -784,6 +802,14 @@ namespace SolveChicago.Service
                             };
                             db.Corporations.Add(corporation);
                         }
+
+                        if(corporation != null)
+                        {
+                            corporation.Name = job.Name;
+                            
+                        };
+
+                        db.SaveChanges();
                         if (!member.MemberCorporations.Select(x => x.CorporationId).Contains(corporation.Id))
                         {
                             member.MemberCorporations.Add(new MemberCorporation
@@ -833,7 +859,28 @@ namespace SolveChicago.Service
                             Type = s.Type,
                         };
                         db.Schools.Add(school);
+
+
                     }
+
+                   if (school != null)
+
+                    {
+                        school.SchoolName = s.Name;
+                        school.Type = s.Type;
+
+
+                    };
+
+                    db.SaveChanges();
+
+                
+
+
+
+
+
+
                     if (!member.MemberSchools.Select(x => x.SchoolId).Contains(school.Id))
                     {
                         member.MemberSchools.Add(new MemberSchool
@@ -845,6 +892,8 @@ namespace SolveChicago.Service
                             Start = s.Start.Value
                         });
                     }
+
+                   
                 }
             }
 
