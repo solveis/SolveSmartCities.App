@@ -86,10 +86,10 @@
                 @Html.LabelFor(model => model.Member.Country)
                 @Html.DropDownListFor(model => model.Member.Country, Model.CountryList.Select(x => new SelectListItem { Value = x, Text = x, Selected = x == Model.Member.Country }))
 
-                @Html.ValidationMessageFor(model => model.Member.Ethnicity, "", new { @class = "text-danger" })
-                @Html.LabelFor(model => model.Member.Ethnicity, "What Ethnicity Best Describes You?", htmlAttributes: new { })
-                @Html.LabelFor(model => model.Member.Ethnicity, "Choose an Ethnicity", htmlAttributes: new { })
-                @Html.DropDownListFor(model => model.Member.Ethnicity, Model.EthnicityList.Select(x => new SelectListItem { Text = x.Value, Value = x.Key.ToString(), Selected = x.Key == Model.Member.EthnicityId }))
+                @Html.ValidationMessageFor(model => model.Member.EthnicityId, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.Member.EthnicityId, "What Ethnicity Best Describes You?", htmlAttributes: new { })
+                @Html.LabelFor(model => model.Member.EthnicityId, "Choose an Ethnicity", htmlAttributes: new { })
+                @Html.DropDownListFor(model => model.Member.EthnicityId, Model.EthnicityList.Select(x => new SelectListItem { Text = x.Value, Value = x.Key.ToString(), Selected = x.Key == Model.Member.EthnicityId }))
 
 
 
