@@ -17,7 +17,6 @@ namespace SolveChicago.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Nonprofit()
         {
-            this.MemberCorporations = new HashSet<MemberCorporation>();
             this.NonprofitMembers = new HashSet<NonprofitMember>();
             this.NonprofitPrograms = new HashSet<NonprofitProgram>();
             this.NonprofitSkills = new HashSet<NonprofitSkill>();
@@ -27,6 +26,7 @@ namespace SolveChicago.Entities
             this.Addresses = new HashSet<Address>();
             this.PhoneNumbers = new HashSet<PhoneNumber>();
             this.AspNetUsers = new HashSet<AspNetUser>();
+            this.MemberCorporations = new HashSet<MemberCorporation>();
         }
     
         public int Id { get; set; }
@@ -37,8 +37,6 @@ namespace SolveChicago.Entities
         public string ProviderType { get; set; }
         public Nullable<bool> HasPrograms { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MemberCorporation> MemberCorporations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NonprofitMember> NonprofitMembers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -57,5 +55,7 @@ namespace SolveChicago.Entities
         public virtual ICollection<PhoneNumber> PhoneNumbers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MemberCorporation> MemberCorporations { get; set; }
     }
 }

@@ -1,0 +1,55 @@
+﻿@using SolveChicago.Common;
+<ul class="menu vertical">
+    @*<li class="menu-link @(Request.Url.AbsolutePath == "/Nonprofits/AddCaseManager" ? "active" : "")">
+        <a href="/Nonprofits/AddCaseManager">
+            <img class="menu-icon" src="../img/side-nav-add-member-icon.svg">
+            <span class="app-dashboard-sidebar-text">Add Case Manager</span>
+        </a>
+    </li>*@
+    <li class="menu-link @(Request.Url.AbsolutePath == "/Nonprofits" ? "active" : "")">
+        <a href="/Nonprofits">
+            <img class="menu-icon" src="../img/side-nav-members-icon.svg" alt="Nonprofits">
+            <span class="app-dashboard-sidebar-text">Tenants</span>
+        </a>
+    </li>
+    <li class="menu-link @(Request.Url.AbsolutePath == "/Prospects" ? "active" : "")">
+        <a href="/Prospects">
+            <img class="menu-icon" src="../img/side-nav-prospect-icon.svg" alt="Prospects">
+            <span class="app-dashboard-sidebar-text">Prospective Tenants</span>
+        </a>
+    </li>
+    @if (Settings.Website.ShowStagingFeatures == true)
+    {
+        <li class="menu-link">
+            <a href="javascript:void(0)">
+                <img class="menu-icon" src="../img/side-nav-prospect-icon.svg" alt="Impact">
+                <span class="app-dashboard-sidebar-text">Prospective Hires</span>
+            </a>
+        </li>
+        <li class="menu-link @(Request.Url.AbsolutePath == "/Impact" ? "active" : "")">
+            <a href="/Impact">
+                <img class="menu-icon" src="../img/Impact-icon.png" alt="Impact">
+                <span class="app-dashboard-sidebar-text">Impact</span>
+            </a>
+        </li>
+    }
+</ul>
+<ul class="sub-menu">
+    <li>
+        <span class="case-manager-profile-picture">
+            <img class="case-manager-thumb" src="@(ViewBag.NonprofitProfilePicture)" alt="Profile Picture">
+        </span>
+        <span class="case-manager-company">
+            @ViewBag.NonprofitName
+        </span>
+    </li>
+    <li class="menu-link @(Request.Url.AbsolutePath == "/Account/Settings" ? "active" : "")">
+        <a href="/Account/Settings">
+            <img class="sub-menu-icon" src="../img/submenu-icon-settings.svg" alt="Settings">
+            <span class="app-dashboard-sidebar-text">Settings</span>
+        </a>
+    </li>
+    <li>
+        @Html.Partial("_LoginPartial")
+    </li>
+</ul>

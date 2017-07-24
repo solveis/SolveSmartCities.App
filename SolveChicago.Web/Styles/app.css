@@ -5991,7 +5991,9 @@ input[type="radio"], input[type="checkbox"] {
 @media print, screen and (min-width: 40em) {
   .off-canvas-content {
     margin-left: 120px;
-    width: calc(100% - 120px); } }
+    width: calc(100% - 120px); }
+    .profile .off-canvas-content {
+      margin-left: 0; } }
 
 @media screen and (max-width: 39.9375em) {
   .member-overview .column, .member-overview .columns {

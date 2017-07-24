@@ -14,6 +14,7 @@ namespace SolveChicago.Entities
     
     public partial class MemberSchool
     {
+        public int Id { get; set; }
         public int MemberId { get; set; }
         public int SchoolId { get; set; }
         public System.DateTime Start { get; set; }
@@ -21,7 +22,7 @@ namespace SolveChicago.Entities
         public bool IsCurrent { get; set; }
         public string Degree { get; set; }
     
-        public virtual School School { get; set; }
         public virtual Member Member { get; set; }
+        public virtual School School { get; set; }
     }
 }

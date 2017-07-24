@@ -51,14 +51,32 @@
                     <div class="row app-dashboard-form-container-space-around">
                         <div class="form-holder">
                             @Html.HiddenFor(m => Model.Member.Schools[i].Id)
+                            @if (Model.Member.Schools[i].MemberSchoolId.HasValue)
+                            {
+                                // if mapping already exists, do not allow to edit school name/type. 
+                                @Html.HiddenFor(m => Model.Member.Schools[i].MemberSchoolId)
+                                @Html.HiddenFor(m => Model.Member.Schools[i].Name)
+                                @Html.HiddenFor(m => Model.Member.Schools[i].Type)
 
-                            @Html.ValidationMessageFor(model => Model.Member.Schools[i].Name, "", new { @class = "text-danger" })
-                            @Html.LabelFor(model => Model.Member.Schools[i].Name, "School Name", htmlAttributes: new { })
-                            @Html.EditorFor(model => Model.Member.Schools[i].Name, new { htmlAttributes = new { @class = "school-list" } })
+                                @Html.ValidationMessageFor(model => Model.Member.Schools[i].Name, "", new { @class = "text-danger" })
+                                @Html.LabelFor(model => Model.Member.Schools[i].Name, "School Name", htmlAttributes: new { })
+                                @Html.EditorFor(model => Model.Member.Schools[i].Name, new { htmlAttributes = new { @class = "school-list", @disabled = true } })
 
-                            @Html.ValidationMessageFor(model => Model.Member.Schools[i].Type, "", new { @class = "text-danger" })
-                            @Html.LabelFor(model => Model.Member.Schools[i].Type, "School Type", htmlAttributes: new { })
-                            @Html.DropDownListFor(model => Model.Member.Schools[i].Type, Model.SchoolTypeList.Select(x => new SelectListItem { Value = x, Text = x, Selected = x == Model.Member.Schools[i].Type }), "Choose a School Type", new { htmlAttributes = new { } })
+                                @Html.ValidationMessageFor(model => Model.Member.Schools[i].Type, "", new { @class = "text-danger" })
+                                @Html.LabelFor(model => Model.Member.Schools[i].Type, "School Type", htmlAttributes: new { })
+                                @Html.DropDownListFor(model => Model.Member.Schools[i].Type, Model.SchoolTypeList.Select(x => new SelectListItem { Value = x, Text = x, Selected = x == Model.Member.Schools[i].Type }), "Choose a School Type", new { @disabled = true })
+                            }
+                            else
+                            { 
+                                // else, allow these fields to be edited
+                                @Html.ValidationMessageFor(model => Model.Member.Schools[i].Name, "", new { @class = "text-danger" })
+                                @Html.LabelFor(model => Model.Member.Schools[i].Name, "School Name", htmlAttributes: new { })
+                                @Html.EditorFor(model => Model.Member.Schools[i].Name, new { htmlAttributes = new { @class = "school-list" } })
+
+                                @Html.ValidationMessageFor(model => Model.Member.Schools[i].Type, "", new { @class = "text-danger" })
+                                @Html.LabelFor(model => Model.Member.Schools[i].Type, "School Type", htmlAttributes: new { })
+                                @Html.DropDownListFor(model => Model.Member.Schools[i].Type, Model.SchoolTypeList.Select(x => new SelectListItem { Value = x, Text = x, Selected = x == Model.Member.Schools[i].Type }), "Choose a School Type", new { })
+                            }
 
                         </div>
                         <div class="form-holder">

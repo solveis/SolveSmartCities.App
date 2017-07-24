@@ -16,7 +16,8 @@ namespace SolveChicago.Common.Models.Profile.Member
 
     public class SchoolEntity
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
+        public int? MemberSchoolId { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]

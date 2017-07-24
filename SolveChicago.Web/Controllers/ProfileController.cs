@@ -148,8 +148,8 @@ namespace SolveChicago.Web.Controllers
             if (ModelState.IsValid)
             {
                 MemberService service = new MemberService(this.db);
-
                 service.UpdateMemberSchools(model.Member);
+                
                 return UpdateSurveyStatus(model.Member.MemberId, Constants.Member.SurveyStep.Jobs);
             }
             model = FormatMemberProfileSchoolsViewModel(model.Member);

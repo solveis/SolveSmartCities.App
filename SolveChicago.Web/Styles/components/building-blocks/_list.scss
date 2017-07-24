@@ -526,6 +526,11 @@ input[type="radio"], input[type="checkbox"] {
     .off-canvas-content {
         margin-left: 120px;
         width: calc(100% - 120px);
+
+        // make sure it doesn't affect the profile page though
+        .profile & {
+            margin-left:0;
+        }
     }
 }
 // columns get too skinny on small screens with flex

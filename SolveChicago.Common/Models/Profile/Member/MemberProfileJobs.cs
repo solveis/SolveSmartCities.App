@@ -21,6 +21,7 @@ namespace SolveChicago.Common.Models.Profile.Member
     public class JobEntity
     {
         public int? CorporationId { get; set; }
+        public int? MemberCorporationId { get; set; }
         public string Name { get; set; }
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime? EmployeeStart { get; set; }

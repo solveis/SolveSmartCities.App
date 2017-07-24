@@ -18,12 +18,10 @@ namespace SolveChicago.Entities
         public Member()
         {
             this.CaseNotes = new HashSet<CaseNote>();
-            this.MemberCorporations = new HashSet<MemberCorporation>();
             this.MemberGovernmentPrograms = new HashSet<MemberGovernmentProgram>();
             this.MemberMilitaries = new HashSet<MemberMilitary>();
             this.MemberParents = new HashSet<MemberParent>();
             this.MemberParents1 = new HashSet<MemberParent>();
-            this.MemberSchools = new HashSet<MemberSchool>();
             this.MemberSkills = new HashSet<MemberSkill>();
             this.MemberSpouses = new HashSet<MemberSpous>();
             this.MemberSpouses1 = new HashSet<MemberSpous>();
@@ -33,6 +31,8 @@ namespace SolveChicago.Entities
             this.Addresses = new HashSet<Address>();
             this.Interests = new HashSet<Interest>();
             this.PhoneNumbers = new HashSet<PhoneNumber>();
+            this.MemberCorporations = new HashSet<MemberCorporation>();
+            this.MemberSchools = new HashSet<MemberSchool>();
         }
     
         public int Id { get; set; }
@@ -62,8 +62,6 @@ namespace SolveChicago.Entities
         public virtual Ethnicity Ethnicity { get; set; }
         public virtual Family Family { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MemberCorporation> MemberCorporations { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MemberGovernmentProgram> MemberGovernmentPrograms { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MemberMilitary> MemberMilitaries { get; set; }
@@ -71,8 +69,6 @@ namespace SolveChicago.Entities
         public virtual ICollection<MemberParent> MemberParents { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MemberParent> MemberParents1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MemberSchool> MemberSchools { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MemberSkill> MemberSkills { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -92,5 +88,9 @@ namespace SolveChicago.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PhoneNumber> PhoneNumbers { get; set; }
         public virtual AspNetUser AspNetUser { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MemberCorporation> MemberCorporations { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MemberSchool> MemberSchools { get; set; }
     }
 }

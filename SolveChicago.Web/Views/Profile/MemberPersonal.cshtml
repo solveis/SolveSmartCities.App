@@ -86,14 +86,6 @@
                 @Html.LabelFor(model => model.Member.Country)
                 @Html.DropDownListFor(model => model.Member.Country, Model.CountryList.Select(x => new SelectListItem { Value = x, Text = x, Selected = x == Model.Member.Country }))
 
-                @Html.ValidationMessageFor(model => model.Member.EthnicityId, "", new { @class = "text-danger" })
-                @Html.LabelFor(model => model.Member.EthnicityId, "What Ethnicity Best Describes You?", htmlAttributes: new { })
-                @Html.LabelFor(model => model.Member.EthnicityId, "Choose an Ethnicity", htmlAttributes: new { })
-                @Html.DropDownListFor(model => model.Member.EthnicityId, Model.EthnicityList.Select(x => new SelectListItem { Text = x.Value, Value = x.Key.ToString(), Selected = x.Key == Model.Member.EthnicityId }))
-
-
-
-
                 @Html.ValidationMessageFor(model => model.Member.Income, "", new { @class = "number-entry" })
                 @Html.LabelFor(model => model.Member.Income, "Annual Income")
                 @Html.EditorFor(model => model.Member.Income, new { htmlAttributes = new { @type = "text" } })
@@ -103,6 +95,10 @@
                 @Html.ValidationMessageFor(model => model.Member.Gender, "", new { @class = "text-danger" })
                 @Html.LabelFor(model => model.Member.Gender)
                 @Html.DropDownListFor(model => model.Member.Gender, Model.GenderList.Select(x => new SelectListItem { Value = x, Text = x, Selected = x == Model.Member.Gender }), "Choose a Gender")
+
+                @Html.ValidationMessageFor(model => model.Member.EthnicityId, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.Member.EthnicityId, "What Ethnicity Best Describes You?", htmlAttributes: new { })
+                @Html.DropDownListFor(model => model.Member.EthnicityId, Model.EthnicityList.Select(x => new SelectListItem { Text = x.Value, Value = x.Key.ToString(), Selected = x.Key == Model.Member.EthnicityId }), "Choose an Ethnicity")
 
                 @Html.ValidationMessageFor(model => model.Member.Birthday, "", new { @class = "text-danger" })
                 @Html.LabelFor(model => model.Member.Birthday)
@@ -163,24 +159,9 @@
             </div>
         </div>
         <div class="row align-center">
-            <a href="#" class="previous history" id="back">&laquo; Back</a>
+            <a href="#" class="back-button previous history" id="back"><span>&lt;</span> Back</a>
             <input type="submit"   value="Submit" class="submit-create-profile" />
         </div>
-
-       
-
-
-
-
-
-
-
-           
-
-
-
-        @*<a href="#" class="previous round">&#8249;</a>
-        <a href="#" class="next round">&#8250;</a>*@
     }
 </div>
 @section Scripts {

@@ -1087,6 +1087,7 @@
     <Content Include="Styles\components\building-blocks\_progress-indicator.scss" />
     <Content Include="Styles\_settings.scss" />
     <Content Include="Styles\components\building-blocks\_validation.scss" />
+    <Content Include="Views\Shared\Sidebar\_Housing.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
