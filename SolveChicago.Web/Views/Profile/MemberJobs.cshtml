@@ -69,11 +69,20 @@
                     <div class="Job entry" data-id="@(i)">
                         <div class="row app-dashboard-form-container-space-around">
                             <div class="form-holder">
-                                @Html.HiddenFor(model => Model.Member.Jobs[i].CorporationId)
+                                @if (Model.Member.Jobs[i].MemberCorporationId.HasValue)
+                                {
+                                    @Html.HiddenFor(model => Model.Member.Jobs[i].CorporationId)
 
-                                @Html.ValidationMessageFor(model => Model.Member.Jobs[i].Name, "", new { @class = "text-danger" })
-                                @Html.LabelFor(model => Model.Member.Jobs[i].Name, "Company Name", htmlAttributes: new { })
-                                @Html.EditorFor(model => Model.Member.Jobs[i].Name, new { htmlAttributes = new { @class = "corporation-list" } })
+                                    @Html.ValidationMessageFor(model => Model.Member.Jobs[i].Name, "", new { @class = "text-danger" })
+                                    @Html.LabelFor(model => Model.Member.Jobs[i].Name, "Company Name", htmlAttributes: new { })
+                                    @Html.EditorFor(model => Model.Member.Jobs[i].Name, new { htmlAttributes = new { @class = "corporation-list", @disabled = true } })
+                                }
+                                else
+                                {
+                                    @Html.ValidationMessageFor(model => Model.Member.Jobs[i].Name, "", new { @class = "text-danger" })
+                                    @Html.LabelFor(model => Model.Member.Jobs[i].Name, "Company Name", htmlAttributes: new { })
+                                    @Html.EditorFor(model => Model.Member.Jobs[i].Name, new { htmlAttributes = new { @class = "corporation-list" } })
+                                }
 
                                 @Html.ValidationMessageFor(model => Model.Member.Jobs[i].EmployeePay, "", new { @class = "text-danger" })
                                 @Html.LabelFor(model => Model.Member.Jobs[i].EmployeePay, "What was your hourly pay?", htmlAttributes: new { })
@@ -110,9 +119,18 @@
             </div>
         </div>
         <div class="row align-center">
+            <a href="#" class="back-button previous history" id="back"><span>&lt;</span> Back</a>
             <input type="submit" value="Submit" class="submit-create-profile" />
         </div>
+
     }
+
+
+
+   
+    
+
+
 </div>
 
 @section Scripts {

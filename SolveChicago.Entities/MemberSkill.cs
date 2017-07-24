@@ -19,8 +19,8 @@ namespace SolveChicago.Entities
         public Nullable<int> NonprofitSkillsId { get; set; }
         public bool IsComplete { get; set; }
     
-        public virtual Member Member { get; set; }
         public virtual NonprofitSkill NonprofitSkill { get; set; }
         public virtual Skill Skill { get; set; }
+        public virtual Member Member { get; set; }
     }
 }

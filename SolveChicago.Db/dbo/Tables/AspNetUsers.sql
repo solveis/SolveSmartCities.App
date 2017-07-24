@@ -10,11 +10,9 @@
     [LockoutEndDateUtc]    DATETIME       NULL,
     [LockoutEnabled]       BIT            NOT NULL,
     [AccessFailedCount]    INT            NOT NULL,
+	[UserName]             NVARCHAR (256) NOT NULL,
     [ReceiveEmail] BIT NULL, 
     [LastActivityDate] DATETIME2 NOT NULL DEFAULT ((GETDATE())), 
-    [UserName]                NVARCHAR (256) NULL,
-    [FirstName] NVARCHAR(128) NULL, 
-	[LastName] NVARCHAR(128) NULL, 
     [CreatedDate] DATETIME2 NOT NULL DEFAULT ((GETDATE())), 
     CONSTRAINT [PK_AspNetUser] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
@@ -23,4 +21,6 @@ GO
 CREATE UNIQUE NONCLUSTERED INDEX [UserNameIndex]
     ON [dbo].[AspNetUsers]([UserName] ASC);
 GO
-
+EXEC sp_addextendedproperty N'MS_Description', N'Default ASP.NET Identity Table', 'SCHEMA', N'dbo', 'TABLE', N'AspNetUsers', NULL, NULL
+GO
+EXEC sp_addextendedproperty N'MS_Description', N'Opt-out user wishes to receive email', 'SCHEMA', N'dbo', 'TABLE', N'AspNetUsers', 'COLUMN', N'ReceiveEmail'

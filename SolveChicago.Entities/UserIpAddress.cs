@@ -18,7 +18,7 @@ namespace SolveChicago.Entities
         public int IpAddressId { get; set; }
         public System.DateTime Date { get; set; }
     
-        public virtual AspNetUser AspNetUser { get; set; }
         public virtual IpAddress IpAddress { get; set; }
+        public virtual AspNetUser AspNetUser { get; set; }
     }
 }

@@ -23,8 +23,8 @@ namespace SolveChicago.Entities
         public Nullable<decimal> OutcomeWeight { get; set; }
         public Nullable<int> NonprofitId { get; set; }
     
-        public virtual AspNetUser AspNetUser { get; set; }
-        public virtual Member Member { get; set; }
         public virtual Outcome Outcome { get; set; }
+        public virtual Member Member { get; set; }
+        public virtual AspNetUser AspNetUser { get; set; }
     }
 }

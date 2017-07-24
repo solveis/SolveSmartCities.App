@@ -48,7 +48,7 @@ namespace SolveChicago.Common
             {
                 get
                 {
-                    return GetSetting<bool>("Website.ShowStagingFeatures", false);
+                    return GetSetting<bool>("Website.ShowStagingFeatures", true);
                 }
             }
         }

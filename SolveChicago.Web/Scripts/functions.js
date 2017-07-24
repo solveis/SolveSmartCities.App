@@ -41,3 +41,15 @@
         $(this).closest('.graduateMember').submit();
     });
 });
+
+
+
+//back button method applied to back for client profile to access browser history
+function goBack() {
+    window.history.back();
+}
+
+
+$("#back").click(function () {
+    goBack();
+});

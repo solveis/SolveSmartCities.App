@@ -173,6 +173,10 @@ namespace SolveChicago.Service
                     ContactPreference = member.ContactPreference,
                     IsMilitary = member.IsMilitary ?? false,
                     Skills = member.MemberSkills.Any(x => x.IsComplete) ? string.Join(", ", member.MemberSkills.Where(x => x.IsComplete).Select(x => x.Skill.Name).ToArray()) : string.Empty,
+                    EthnicityId = member.EthnicityId,
+                    Ethnicity =  member.Ethnicity !=null ? member.Ethnicity.EthnicityName: "",
+
+                
                 };
             }
         }
@@ -332,14 +336,14 @@ namespace SolveChicago.Service
         {
             MemberCorporation[] memberCorporations = member.MemberCorporations.OrderByDescending(x => x.Start).ToArray();
             if (memberCorporations.Count() > 0)
-                return memberCorporations.Select(x => new JobEntity { CorporationId = x.CorporationId, EmployeeEnd = x.End, EmployeePay = x.Pay, EmployeeStart = x.Start, Name = x.Corporation.Name, IsCurrent = !x.End.HasValue, EmployeeReasonForLeaving = x.ReasonForLeaving }).ToArray();
+                return memberCorporations.Select(x => new JobEntity { CorporationId = x.CorporationId, MemberCorporationId = x.Id, EmployeeEnd = x.End, EmployeePay = x.Pay, EmployeeStart = x.Start, Name = x.Corporation.Name, IsCurrent = !x.End.HasValue, EmployeeReasonForLeaving = x.ReasonForLeaving }).ToArray();
             else
                 return null;
         }
 
         private SchoolEntity[] GetSchools(Member member)
         {
-            SchoolEntity[] schools = member.MemberSchools.Select(x => new SchoolEntity { Id = x.School.Id, Degree = x.Degree, End = x.End, IsCurrent = x.IsCurrent, Name = x.School.SchoolName, Type = x.School.Type, Start = x.Start, }).ToArray();
+            SchoolEntity[] schools = member.MemberSchools.Select(x => new SchoolEntity { Id = x.School.Id, MemberSchoolId = x.Id, Degree = x.Degree, End = x.End, IsCurrent = x.IsCurrent, Name = x.School.SchoolName, Type = x.School.Type, Start = x.Start, }).ToArray();
             if (schools.Count() > 0)
                 return schools.OrderByDescending(x => x.Start).ToArray();
             else
@@ -575,6 +579,7 @@ namespace SolveChicago.Service
                 member.FirstName = model.FirstName;
                 member.Gender = model.Gender;
                 member.Id = model.Id;
+                member.EthnicityId = model.EthnicityId;
                 member.LastName = model.LastName;
                 if(model.ProfilePicture != null)
                     member.ProfilePicturePath = UploadPhoto(Constants.Upload.MemberPhotos, model.ProfilePicture, member.Id);
@@ -630,16 +635,23 @@ namespace SolveChicago.Service
                         {
                             existingFamilyMember = new Member { FirstName = familyMember.FirstName, LastName = familyMember.LastName, IsHeadOfHousehold = familyMember.IsHeadOfHousehold, Birthday = familyMember.Birthday, Gender = familyMember.Gender, FamilyId = member.FamilyId, Email = familyMember.Email, CreatedDate = DateTime.UtcNow };
                             db.Members.Add(existingFamilyMember);
+                            // save member so id populates
                             db.SaveChanges();
                         }
-                        else if (string.IsNullOrEmpty(familyMember.FirstName) && string.IsNullOrEmpty(familyMember.LastName))
-                            db.Members.Remove(existingFamilyMember);
+                        else
+                        {
+                            existingFamilyMember.FirstName = familyMember.FirstName;
+                            existingFamilyMember.LastName = familyMember.LastName;
+                            existingFamilyMember.Birthday = familyMember.Birthday;
+                            existingFamilyMember.IsHeadOfHousehold = familyMember.IsHeadOfHousehold;
+                            existingFamilyMember.Gender = familyMember.Gender;
+                            existingFamilyMember.Email = familyMember.Email;
+                        }
                         if (!familyMembers.Select(x => x.Id).Contains(existingFamilyMember.Id))
                             AddFamilyMemberRelationship(existingFamilyMember, member, familyMember.Relation);
                     }
                 }
             }                
-
             db.SaveChanges();
         }
 
@@ -767,29 +779,43 @@ namespace SolveChicago.Service
                 member.IsJobSearching = model.CurrentlyLooking;
                 foreach (var job in model.Jobs)
                 {
-                    if(!string.IsNullOrEmpty(job.Name) || job.CorporationId.HasValue) // not the best way to do this, but the default value for IsCurrent makes the model bind an empty object to itself on POST. Should refactor this later.
+                    Corporation corporation = null;
+                    if (job.CorporationId.HasValue)
+                        corporation = db.Corporations.First(x => (x.Id == job.CorporationId));
+                    else
                     {
-                        Corporation corporation = db.Corporations.Where(x => (x.Name == job.Name)).FirstOrDefault();
-                        if (corporation == null)
+                        if (db.Corporations.Any(x => (x.Name == job.Name)))
+                            corporation = db.Corporations.First(x => (x.Name == job.Name));
+                        else
                         {
                             corporation = new Corporation
                             {
                                 Name = job.Name,
                                 CreatedDate = DateTime.UtcNow,
                             };
-                            db.Corporations.Add(corporation);
                         }
-                        if (!member.MemberCorporations.Select(x => x.CorporationId).Contains(corporation.Id))
+                        db.Corporations.Add(corporation);
+                        db.SaveChanges();
+                    }
+
+                    if (job.MemberCorporationId.HasValue)
+                    {
+                        MemberCorporation mc = member.MemberCorporations.First(x => x.Id == job.MemberCorporationId.Value);
+                        mc.Start = job.EmployeeStart.Value;
+                        mc.End = job.EmployeeEnd;
+                        mc.Pay = job.EmployeePay;
+                        mc.ReasonForLeaving = job.EmployeeReasonForLeaving;
+                    }
+                    else
+                    {
+                        member.MemberCorporations.Add(new MemberCorporation
                         {
-                            member.MemberCorporations.Add(new MemberCorporation
-                            {
-                                End = job.EmployeeEnd,
-                                Pay = job.EmployeePay,
-                                ReasonForLeaving = job.EmployeeReasonForLeaving,
-                                Start = job.EmployeeStart.Value,
-                                Corporation = corporation
-                            });
-                        }
+                            End = job.EmployeeEnd,
+                            Pay = job.EmployeePay,
+                            ReasonForLeaving = job.EmployeeReasonForLeaving,
+                            Start = job.EmployeeStart.Value,
+                            Corporation = corporation
+                        });
                     }
                 }
             }
@@ -819,17 +845,37 @@ namespace SolveChicago.Service
             {
                 foreach (var s in model.Schools)
                 {
-                    School school = db.Schools.Where(x => (x.SchoolName == s.Name)).FirstOrDefault();
-                    if (school == null)
+
+                    School school = null;
+                    if(s.Id.HasValue)
+                        school = db.Schools.Where(x => (x.Id == s.Id)).FirstOrDefault();
+                    else
                     {
-                        school = new School
+                        if(db.Schools.Any(x => (x.SchoolName == s.Name)))
+                            school = db.Schools.Where(x => (x.SchoolName == s.Name)).FirstOrDefault();
+                        else
                         {
-                            SchoolName = s.Name,
-                            Type = s.Type,
-                        };
-                        db.Schools.Add(school);
+                            school = new School
+                            {
+                                SchoolName = s.Name,
+                                Type = s.Type,
+                            };
+                            db.Schools.Add(school);
+                            // save so the school id is created
+                            db.SaveChanges();
+                        }
                     }
-                    if (!member.MemberSchools.Select(x => x.SchoolId).Contains(school.Id))
+
+
+                    if (s.MemberSchoolId.HasValue)
+                    {
+                        MemberSchool ms = member.MemberSchools.FirstOrDefault(x => x.Id == s.MemberSchoolId);
+                        ms.Degree = s.Degree;
+                        ms.End = s.End;
+                        ms.IsCurrent = s.IsCurrent;
+                        ms.Start = s.Start.Value;
+                    }
+                    else
                     {
                         member.MemberSchools.Add(new MemberSchool
                         {
@@ -840,6 +886,7 @@ namespace SolveChicago.Service
                             Start = s.Start.Value
                         });
                     }
+                   
                 }
             }
 

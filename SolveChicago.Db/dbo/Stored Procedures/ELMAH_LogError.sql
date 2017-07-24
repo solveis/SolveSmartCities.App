@@ -44,4 +44,4 @@ AS
             @TimeUtc
         )
 GO
-
+EXEC sp_addextendedproperty N'MS_Description', N'Default SP for ELMAH Error Logging', 'SCHEMA', N'dbo', 'PROCEDURE', N'ELMAH_LogError', NULL, NULL

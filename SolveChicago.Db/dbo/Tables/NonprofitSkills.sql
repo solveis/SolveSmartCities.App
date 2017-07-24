@@ -8,3 +8,5 @@
     CONSTRAINT [FK_NonprofitSkills_Skill] FOREIGN KEY (SkillId) REFERENCES [Skills]([Id]) ON DELETE CASCADE,
     CONSTRAINT [FK_NonprofitSkills_NonprofitProgram] FOREIGN KEY (ProgramId) REFERENCES [NonprofitPrograms]([Id]) ON DELETE NO ACTION,
 )
+GO
+EXEC sp_addextendedproperty N'MS_Description', N'Maps Nonprofits to Skills', 'SCHEMA', N'dbo', 'TABLE', N'NonprofitSkills', NULL, NULL

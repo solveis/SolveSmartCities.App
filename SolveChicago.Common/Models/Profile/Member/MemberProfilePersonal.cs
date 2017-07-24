@@ -38,6 +38,10 @@ namespace SolveChicago.Common.Models.Profile.Member
         [Required]
         public string Country { get; set; }
         [Required]
+        public int? EthnicityId { get; set; }
+        public string Ethnicity { get; set; }
+       
+        [Required]
         public string ZipCode { get; set; }
         [Required]
         public bool IsHeadOfHousehold { get; set; }
@@ -55,6 +59,7 @@ namespace SolveChicago.Common.Models.Profile.Member
         public MilitaryEntity[] Military { get; set; }
         [Required]
         public string ContactPreference { get; set; }
+       
     }
 
     public class MilitaryEntity

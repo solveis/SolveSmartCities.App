@@ -40,7 +40,15 @@ namespace SolveChicago.Web.Controllers
         public ActionResult Nonprofit()
         {
             StateModel state = State;
-            return PartialView("Sidebar/_Nonprofit");
+            switch (State.Nonprofit.ProviderType)
+            {
+                case "Housing":
+                    return PartialView("Sidebar/_Housing");
+                case "Workforce":
+                default:
+                    return PartialView("Sidebar/_Nonprofit");
+            }  
+            
         }
     }
 }

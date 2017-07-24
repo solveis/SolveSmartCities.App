@@ -14,6 +14,7 @@ namespace SolveChicago.Entities
     
     public partial class MemberCorporation
     {
+        public int Id { get; set; }
         public int MemberId { get; set; }
         public int CorporationId { get; set; }
         public System.DateTime Start { get; set; }

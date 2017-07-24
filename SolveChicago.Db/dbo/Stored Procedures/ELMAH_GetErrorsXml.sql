@@ -78,4 +78,4 @@ AS
     FOR
         XML AUTO
 GO
-
+EXEC sp_addextendedproperty N'MS_Description', N'Default SP for ELMAH Error Logging', 'SCHEMA', N'dbo', 'PROCEDURE', N'ELMAH_GetErrorsXml', NULL, NULL

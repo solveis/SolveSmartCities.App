@@ -13,3 +13,5 @@
     CONSTRAINT [FK_Referrals_Member] FOREIGN KEY (MemberId) REFERENCES [Members](Id) ON DELETE NO ACTION, 
     CONSTRAINT [FK_Referrals_NonprofitProgram] FOREIGN KEY (ProgramId) REFERENCES [NonprofitPrograms](Id) ON DELETE NO ACTION, 
 )
+GO
+EXEC sp_addextendedproperty N'MS_Description', N'Maps Referrals from Nonprofits to Nonprofits, in a vertical hierarchy', 'SCHEMA', N'dbo', 'TABLE', N'Referrals', NULL, NULL

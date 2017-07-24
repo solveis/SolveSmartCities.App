@@ -15,5 +15,6 @@ AS
         [ErrorId] = @ErrorId
     AND
         [Application] = @Application
-GO
 
+GO
+EXEC sp_addextendedproperty N'MS_Description', N'Default SP for ELMAH Error Logging', 'SCHEMA', N'dbo', 'PROCEDURE', N'ELMAH_GetErrorXml', NULL, NULL
