@@ -136,6 +136,8 @@ input[type="radio"], input[type="checkbox"] {
         }
 
         .menu {
+            display:block;
+
             .active {
                 a {
                     background-color: rgba(34, 49, 63, 0.2);
@@ -172,7 +174,7 @@ input[type="radio"], input[type="checkbox"] {
 
         .sub-menu {
             width: 100%;
-            display: flex;
+            display: block;
             padding-top: 20px;
             margin: 0;
             flex-direction: column;
@@ -407,6 +409,8 @@ input[type="radio"], input[type="checkbox"] {
     }
 
     .menu {
+
+
         
         li.menu-link {
             &::after {

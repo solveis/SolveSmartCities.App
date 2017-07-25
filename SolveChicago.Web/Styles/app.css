@@ -5712,33 +5712,35 @@ input[type="radio"], input[type="checkbox"] {
     justify-content: space-between; }
     .app-dashboard-sidebar .app-dashboard-sidebar-inner .menu > ul:last-child {
       align-self: flex-end; }
-    .app-dashboard-sidebar .app-dashboard-sidebar-inner .menu .active a {
-      background-color: rgba(34, 49, 63, 0.2);
-      border-left: 15px solid #22A7F0; }
-    .app-dashboard-sidebar .app-dashboard-sidebar-inner .menu > li > a {
-      padding: 25px 0;
-      -webkit-flex-direction: column;
-      -ms-flex-direction: column;
-      flex-direction: column;
-      border-bottom: 1px solid rgba(57, 65, 72, 0.3);
-      -webkit-align-content: center;
-      -ms-flex-align: center;
-      align-items: center;
-      color: #fff;
-      font-size: 14px;
-      text-transform: uppercase;
-      display: flex;
-      display: -ms-flexbox; }
-      .app-dashboard-sidebar .app-dashboard-sidebar-inner .menu > li > a:hover, .app-dashboard-sidebar .app-dashboard-sidebar-inner .menu > li > a:active {
-        border-left: none;
-        background-color: rgba(34, 49, 63, 0.2); }
+    .app-dashboard-sidebar .app-dashboard-sidebar-inner .menu {
+      display: block; }
+      .app-dashboard-sidebar .app-dashboard-sidebar-inner .menu .active a {
+        background-color: rgba(34, 49, 63, 0.2);
+        border-left: 15px solid #22A7F0; }
+      .app-dashboard-sidebar .app-dashboard-sidebar-inner .menu > li > a {
+        padding: 25px 0;
+        -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        border-bottom: 1px solid rgba(57, 65, 72, 0.3);
+        -webkit-align-content: center;
+        -ms-flex-align: center;
+        align-items: center;
+        color: #fff;
+        font-size: 14px;
+        text-transform: uppercase;
+        display: flex;
+        display: -ms-flexbox; }
+        .app-dashboard-sidebar .app-dashboard-sidebar-inner .menu > li > a:hover, .app-dashboard-sidebar .app-dashboard-sidebar-inner .menu > li > a:active {
+          border-left: none;
+          background-color: rgba(34, 49, 63, 0.2); }
     .app-dashboard-sidebar .app-dashboard-sidebar-inner .menu-icon {
       height: 25px;
       margin-bottom: 12px;
       width: auto; }
     .app-dashboard-sidebar .app-dashboard-sidebar-inner .sub-menu {
       width: 100%;
-      display: flex;
+      display: block;
       padding-top: 20px;
       margin: 0;
       flex-direction: column;
